@@ -57,22 +57,24 @@ modules = {
 
     }
 
-    'personProfileAppLTR' {
-        dependsOn "bannerWebLTR, personProfileApp, bootstrapLTR"
+    if (System.properties['BANNERXE_APP_NAME'].equals("PersonProfile") || System.properties['BANNERXE_APP_NAME'] == null) {
+        'personProfileAppLTR' {
+            dependsOn "bannerWebLTR, personProfileApp, bootstrapLTR"
 
-        // CSS
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/main.css'],   attrs: [media: 'screen, projection']
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/responsive.css'], attrs: [media: 'screen, projection']
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font.css'],   attrs: [media: 'screen, projection']
-    }
+            // CSS
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/main.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/responsive.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font.css'], attrs: [media: 'screen, projection']
+        }
 
-    'personProfileAppRTL' {
-        dependsOn "bannerWebRTL, personProfileApp, bootstrapRTL"
+        'personProfileAppRTL' {
+            dependsOn "bannerWebRTL, personProfileApp, bootstrapRTL"
 
-        // CSS
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/main-rtl.css'],   attrs: [media: 'screen, projection']
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/responsive-rtl.css'],   attrs: [media: 'screen, projection']
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font-rtl.css'],   attrs: [media: 'screen, projection']
+            // CSS
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/main-rtl.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/responsive-rtl.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font-rtl.css'], attrs: [media: 'screen, projection']
+        }
     }
 
 }
