@@ -48,12 +48,14 @@ modules = {
 
         // Controllers
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppMain/ppMain-controller.js']
+        resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppAddress/ppAddAddress-controller.js']
 
         // Filters
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/filters/i18n-filter.js']
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/filters/webAppResourcePath-filter.js']
 
         // Directives
+        resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/directives/selectBox-directive.js']
 
     }
 
@@ -65,6 +67,7 @@ modules = {
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/main.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/responsive.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/select2-box.css'], attrs: [media: 'screen, projection']
         }
 
         'personProfileAppRTL' {
@@ -74,6 +77,7 @@ modules = {
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/main-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/responsive-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/banner-icon-font-rtl.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-person-profile-ui', file: 'css/select2-box-rtl.css'], attrs: [media: 'screen, projection']
         }
     }
 
