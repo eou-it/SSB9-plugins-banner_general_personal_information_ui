@@ -8,7 +8,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class ControllerUtilityTests extends BaseIntegrationTestCase {
+class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
 
     /**
      * The setup method will run before all test case method executions start.
@@ -34,14 +34,14 @@ class ControllerUtilityTests extends BaseIntegrationTestCase {
     void testGetPrincipalPidmLoggedIn(){
         loginSSB 'MYE000001', '111111'
 
-        def pidm = ControllerUtility.getPrincipalPidm()
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
         assertNotNull pidm
         assertEquals(36732, pidm)
     }
 
     @Test
     void testGetPrincipalPidmNotLoggedIn(){
-        def pidm = ControllerUtility.getPrincipalPidm()
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
         assertNull pidm
     }
 
@@ -49,7 +49,7 @@ class ControllerUtilityTests extends BaseIntegrationTestCase {
     void testReturnFailureMessage(){
         String EXCEPTION_MESSAGE = "sample exception message"
         def e = new ApplicationException('entityClassOrName', EXCEPTION_MESSAGE)
-        def model = ControllerUtility.returnFailureMessage(e)
+        def model = PersonProfileControllerUtility.returnFailureMessage(e)
 
         assertNotNull model
         assertTrue(model.failure)
@@ -62,7 +62,7 @@ class ControllerUtilityTests extends BaseIntegrationTestCase {
     void testReturnFailureMessageForSQLException(){
         def sqlEx = new SQLException("SQL exception message: ORA-123456: ")
         def e = new ApplicationException('entityClassOrName', sqlEx)
-        def model = ControllerUtility.returnFailureMessage(e)
+        def model = PersonProfileControllerUtility.returnFailureMessage(e)
 
         assertNotNull model
         assertTrue(model.failure)

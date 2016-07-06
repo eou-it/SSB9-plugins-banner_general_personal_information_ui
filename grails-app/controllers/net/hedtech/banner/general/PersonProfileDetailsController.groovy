@@ -10,12 +10,12 @@ class PersonProfileDetailsController {
     def personAddressService
 
     private def findPerson() {
-        return PersonUtility.getPerson(ControllerUtility.getPrincipalPidm())
+        return PersonUtility.getPerson(PersonProfileControllerUtility.getPrincipalPidm())
     }
 
     def getAddressesForCurrentUser() {
         def model = [:]
-        def pidm = ControllerUtility.getPrincipalPidm()
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
 
         if (pidm) {
             def map = [pidm: pidm]
@@ -23,7 +23,7 @@ class PersonProfileDetailsController {
             try {
                 model = personAddressService.getActiveAddresses(map)
             } catch (ApplicationException e) {
-                render ControllerUtility.returnFailureMessage(e) as JSON
+                render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
             }
         }
 

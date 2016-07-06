@@ -5,9 +5,9 @@ import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.security.core.context.SecurityContextHolder
 
-class ControllerUtility {
+class PersonProfileControllerUtility {
 
-    static def log = Logger.getLogger('net.hedtech.banner.general.ControllerUtility')
+    static def log = Logger.getLogger('net.hedtech.banner.general.PersonProfileControllerUtility')
 
     def static getPrincipalPidm() {
         try {
