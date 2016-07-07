@@ -41,4 +41,20 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertNotNull data
     }
 
+    @Test
+    void testGetStateList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "p", offset: 1, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getStateList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 2, data.size()
+        assertEquals 'Provence of Quebec', data[0].description
+    }
+
 }

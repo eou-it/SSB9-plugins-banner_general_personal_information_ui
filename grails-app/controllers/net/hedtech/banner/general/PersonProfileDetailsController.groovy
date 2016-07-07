@@ -34,17 +34,12 @@ class PersonProfileDetailsController {
     }
 
     def getStateList() {
-        def maxItems = params.int('max')
-        def map = [
-            max: maxItems,
-            offset: params.int('offset') * maxItems,  // Convert the page-level offset passed as a param to an item-level offset
-            searchString: params.searchString
-        ]
+        def map = PersonProfileControllerUtility.getFetchListParams(params)
 
         try {
             render stateService.fetchStateList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
-            render ControllerUtility.returnFailureMessage(e) as JSON
+            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 }
