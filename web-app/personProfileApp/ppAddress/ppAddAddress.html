@@ -1,5 +1,9 @@
 <h1>Add Address</h1>
 <div class="select2-container">
-    <input select-box for-select='{"action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
+    <input select-box for-select='{"placeholder": "State", "action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
 </div>
-State selected: {{address.state}}
+State selected: {{address.state}}<br>
+<div class="select2-container">
+    <input select-box for-select='{"placeholder": "Nation", "action": "PersonProfileDetails/getNationList", "model": "address.nation"}' type="hidden" />
+</div>
+Nation selected: {{address.nation}}<br>

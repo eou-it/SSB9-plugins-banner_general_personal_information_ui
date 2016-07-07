@@ -7,7 +7,7 @@ personProfileAppDirectives.directive('selectBox', function() {
 
             elem.select2({
                 width: '200px',
-                placeholder: 'State',
+                placeholder: data.placeholder,
                 ajax: {
                     url: data.action,
                     dataType: 'json',
@@ -25,9 +25,20 @@ personProfileAppDirectives.directive('selectBox', function() {
                     results: function(data, page) {
                         var results = [];
                         $.each(data, function(i, item) {
+                            var desc;
+                            if('webDescription' in item && item.webDescription) {
+                                desc = item.webDescription;
+                            }
+                            else if('nation' in item && item.nation) {
+                                desc = item.nation;
+                            }
+                            else {
+                                desc = item.description;
+                            }
+
                             results.push({
                                 id: item.code,
-                                text: ('webDescription' in item && item.webDescription) ? item.webDescription : item.description
+                                text: desc
                             });
                         });
                         var more = (page * 1) < data.length;

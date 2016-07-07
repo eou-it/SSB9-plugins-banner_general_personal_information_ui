@@ -57,4 +57,20 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals 'Provence of Quebec', data[0].description
     }
 
+    @Test
+    void testGetNationList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 6, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getNationList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'Haiti', data[0].nation
+    }
+
 }
