@@ -42,6 +42,22 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
     }
 
     @Test
+    void testGetCountyList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getCountyList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'Ada County', data[0].description
+    }
+
+    @Test
     void testGetStateList() {
         loginSSB 'HOSH00018', '111111'
 

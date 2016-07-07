@@ -4,10 +4,12 @@ import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.person.PersonAddressService
 import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.system.CountyService
 import net.hedtech.banner.general.system.StateService
 import net.hedtech.banner.general.system.NationService
 
 class PersonProfileDetailsController {
+    def countyService
     def stateService
     def nationService
     def personAddressService
@@ -32,6 +34,16 @@ class PersonProfileDetailsController {
 
         JSON.use("deep") {
             render model as JSON
+        }
+    }
+
+    def getCountyList() {
+        def map = PersonProfileControllerUtility.getFetchListParams(params)
+
+        try {
+            render countyService.fetchCountyList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
