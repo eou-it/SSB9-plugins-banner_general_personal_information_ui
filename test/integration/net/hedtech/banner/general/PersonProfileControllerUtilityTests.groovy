@@ -40,6 +40,16 @@ class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
     }
 
     @Test
+    void testGetFetchListParams(){
+        def parameters = [ searchString: 'Mal', offset: '2', max: '10' ]
+        def map = PersonProfileControllerUtility.getFetchListParams(parameters)
+
+        assertEquals 10, map.max
+        assertEquals 20, map.offset
+        assertEquals 'Mal', map.searchString
+    }
+
+    @Test
     void testGetPrincipalPidmNotLoggedIn(){
         def pidm = PersonProfileControllerUtility.getPrincipalPidm()
         assertNull pidm
