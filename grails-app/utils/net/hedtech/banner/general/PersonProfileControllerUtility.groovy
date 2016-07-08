@@ -19,6 +19,17 @@ class PersonProfileControllerUtility {
         }
     }
 
+    public static getFetchListParams(params) {
+        def maxItems = params.max as int
+        def map = [
+                max: maxItems,
+                offset: (params.offset as int) * maxItems,  // Convert the page-level offset passed as a param to an item-level offset
+                searchString: params.searchString
+        ]
+
+        map
+    }
+
     public static  returnFailureMessage(ApplicationException e) {
         def model = [:]
 

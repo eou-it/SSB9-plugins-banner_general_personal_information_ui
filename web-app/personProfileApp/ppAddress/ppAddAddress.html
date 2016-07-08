@@ -1,0 +1,13 @@
+<h1>Add Address</h1>
+<div class="select2-container">
+    <input select-box for-select='{"placeholder": "County", "action": "PersonProfileDetails/getCountyList", "model": "address.county"}' type="hidden" />
+</div>
+County selected: {{address.county}}<br>
+<div class="select2-container">
+    <input select-box for-select='{"placeholder": "State", "action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
+</div>
+State selected: {{address.state}}<br>
+<div class="select2-container">
+    <input select-box for-select='{"placeholder": "Nation", "action": "PersonProfileDetails/getNationList", "model": "address.nation"}' type="hidden" />
+</div>
+Nation selected: {{address.nation}}<br>
