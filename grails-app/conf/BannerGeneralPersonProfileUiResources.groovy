@@ -45,6 +45,7 @@ modules = {
         // Services
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/services/breadcrumb-service.js']
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/services/notificationcenter-service.js']
+        resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppAddress/ppAddressService.js']
 
         // Controllers
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppMain/ppMain-controller.js']

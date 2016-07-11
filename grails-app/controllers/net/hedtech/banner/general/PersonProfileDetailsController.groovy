@@ -83,19 +83,22 @@ class PersonProfileDetailsController {
         newAddress.pidm = pidm
 
         try {
-            // convert date Stings to Date objects
+            // convert date Strings to Date objects
             if(map.fromDate) {
-                newAddress.fromDate = DateUtility.parseDateString(map.fromDate, "yyyy-MM-dd'T'HH:mm:ss'Z'")
+                newAddress.fromDate = DateUtility.parseDateString(map.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
             }
             if(map.toDate) {
-                newAddress.toDate = DateUtility.parseDateString(map.toDate, "yyyy-MM-dd'T'HH:mm:ss'Z'")
+                newAddress.toDate = DateUtility.parseDateString(map.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
             }
 
             // inner entities need to be actual domain objects
             newAddress.addressType = addressTypeService.fetchByCode(newAddress.addressType.code)
-            newAddress.county = countyService.fetchCounty(newAddress.county.code)
-            newAddress.state = stateService.fetchState(newAddress.state.code)
-            newAddress.nation = nationService.fetchNation(newAddress.nation.code)
+            if(newAddress.county)
+                newAddress.county = countyService.fetchCounty(newAddress.county.code)
+            if(newAddress.state)
+                newAddress.state = stateService.fetchState(newAddress.state.code)
+            if(newAddress.nation)
+                newAddress.nation = nationService.fetchNation(newAddress.nation.code)
 
             def addresses = []
             addresses[0] = [:]

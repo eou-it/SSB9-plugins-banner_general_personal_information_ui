@@ -104,7 +104,7 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
                 code:"261",
                 description:"Kittitas County"
             },
-            fromDate:"2016-07-07T01:11:00Z",
+            fromDate:"2016-07-07T01:11:00.000Z",
             houseNumber:null,
             nation:{
                 code:"157",
