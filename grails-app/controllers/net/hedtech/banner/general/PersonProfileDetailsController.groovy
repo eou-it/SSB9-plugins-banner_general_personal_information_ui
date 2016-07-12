@@ -3,6 +3,7 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.person.PersonAddressService
+import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.general.system.CountyService
 import net.hedtech.banner.general.system.StateService
@@ -18,18 +19,44 @@ class PersonProfileDetailsController {
         return PersonUtility.getPerson(PersonProfileControllerUtility.getPrincipalPidm())
     }
 
-    def getAddressesForCurrentUser() {
+    def getActiveAddressesForCurrentUser() {
         def model = [:]
         def pidm = PersonProfileControllerUtility.getPrincipalPidm()
 
         if (pidm) {
             def map = [pidm: pidm]
+            def addresses
 
             try {
-                model = personAddressService.getActiveAddresses(map)
+                addresses = personAddressService.getActiveAddresses(map).list
             } catch (ApplicationException e) {
                 render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
             }
+
+            // TODO: if masking turns out to be needed here, search for "maskingRule" in EmployeeProfileController.groovy
+            // TODO: in Employee Profile app.
+            model.addresses = []
+            def personAddress
+            addresses.each { it ->
+                personAddress = [:]
+                personAddress.addressType = it.addressType?.description
+                personAddress.fromDate = it.fromDate
+                personAddress.toDate = it.toDate
+                personAddress.address = PersonAddressUtility.formatDefaultAddress(
+                        [houseNumber:it.houseNumber,
+                         streetLine1:it.streetLine1,
+                         streetLine2:it.streetLine2,
+                         streetLine3:it.streetLine3,
+                         streetLine4:it.streetLine4,
+                         city:it.city,
+                         state:it.state?.description,
+                         zip:it.zip,
+                         county:it.county,
+                         country:it.nation])
+
+                model.addresses << personAddress
+            }
+
         }
 
         JSON.use("deep") {

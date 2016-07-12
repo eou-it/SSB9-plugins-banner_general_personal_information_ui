@@ -34,7 +34,7 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         loginSSB 'MYE000001', '111111'
 
         controller.request.contentType = "text/json"
-        controller.getAddressesForCurrentUser()
+        controller.getActiveAddressesForCurrentUser()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse(dataForNullCheck)
         println data

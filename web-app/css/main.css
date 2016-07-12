@@ -468,6 +468,43 @@ button.closebtn {
 }
 
 
+/************************/
+/* Person Detail Layout */
+/************************/
+.details-section-heading {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.address-detail {
+    float: left;
+    padding: 15px;
+}
+
+.address-type-view {
+    font-weight: bold;
+}
+
+.address-date-range {
+    float: left;
+}
+
+.address-date-range-label {
+    font-weight: bold;
+    float: left;
+    padding-right: 5px;
+}
+
+.address-zip {
+    padding-left: 10px;
+}
+
+.address-last-line {
+    float: left;
+}
+
+
 /*  Dropdown menu  */
 .form-spacing,
 .dropdown-menu > li > a.form-spacing {
