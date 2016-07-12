@@ -74,30 +74,26 @@ class PersonProfileDetailsController {
     }
 
     def addAddress() {
-        def map = request?.JSON ?: params
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def newAddress = request?.JSON ?: params
+        newAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(map)
-
-        def newAddress = map
-        newAddress.pidm = pidm
+        fixJSONObjectForCast(newAddress)
 
         try {
+            personAddressService.checkAddressFieldsValid(newAddress)
+
             // convert date Strings to Date objects
-            if(map.fromDate) {
-                newAddress.fromDate = DateUtility.parseDateString(map.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-            }
-            if(map.toDate) {
-                newAddress.toDate = DateUtility.parseDateString(map.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-            }
+            newAddress.fromDate = DateUtility.parseDateString(newAddress.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+            if(newAddress.toDate)
+                newAddress.toDate = DateUtility.parseDateString(newAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
 
             // inner entities need to be actual domain objects
             newAddress.addressType = addressTypeService.fetchByCode(newAddress.addressType.code)
-            if(newAddress.county)
+            if(newAddress.county?.code)
                 newAddress.county = countyService.fetchCounty(newAddress.county.code)
-            if(newAddress.state)
+            if(newAddress.state?.code)
                 newAddress.state = stateService.fetchState(newAddress.state.code)
-            if(newAddress.nation)
+            if(newAddress.nation?.code)
                 newAddress.nation = nationService.fetchNation(newAddress.nation.code)
 
             def addresses = []

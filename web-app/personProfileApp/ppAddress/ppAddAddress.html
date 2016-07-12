@@ -1,43 +1,64 @@
-<h1>Add Address</h1>
-<div>
-    <input ng-model="address.addressType.code" type="text" placeholder="Address Type (Code)">
+<h2 class="add-address-title">Add Address</h2>
+<button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+<div class="row pad-dialog-lr">
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label">Address Type</label><br>
+        <input ng-model="address.addressType.code" class="text-input-field semi-bold form-spacing" type="text" placeholder="Address Type (Code)">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label">Valid From Date</label><br>
+        <input ng-model="address.fromDate" class="text-input-field semi-bold form-spacing" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label">Valid To Date</label><br>
+        <input ng-model="address.toDate" class="text-input-field semi-bold form-spacing" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="select2-container col-sm-6 col-md-6">
+        <label class="input-field-label">Nation</label><br>
+        <input select-box for-select='{"placeholder": "Nation", "action": "PersonProfileDetails/getNationList", "model": "address.nation"}' type="hidden" />
+    </div>
+    <div class="clearfix hidden-xs"></div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="houseNumber">House Number</label><br>
+        <input ng-model="address.houseNumber" class="text-input-field semi-bold form-spacing" type="text" id="houseNumber">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="addrLine1">Address Line 1</label><br>
+        <input ng-model="address.streetLine1" class="text-input-field semi-bold form-spacing" type="text" id="addrLine1">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="addrLine2">Address Line 2</label><br>
+        <input ng-model="address.streetLine2" class="text-input-field semi-bold form-spacing" type="text" id="addrLine2">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="addrLine3">Address Line 3</label><br>
+        <input ng-model="address.streetLine3" class="text-input-field semi-bold form-spacing" type="text" id="addrLine3">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="addrLine4">Address Line 4</label><br>
+        <input ng-model="address.streetLine4" class="text-input-field semi-bold form-spacing" type="text" id="addrLine4">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="city">City</label><br>
+        <input ng-model="address.city" class="text-input-field semi-bold form-spacing" type="text" id="city">
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <label class="input-field-label" for="zip">ZIP or Postal Code</label><br>
+        <input ng-model="address.zip" class="text-input-field semi-bold form-spacing" type="text" id="zip">
+    </div>
+    <div class="select2-container col-sm-6 col-md-6">
+        <label class="input-field-label">State</label><br>
+        <input select-box for-select='{"placeholder": "State", "action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
+    </div>
+    <div class="clearfix hidden-xs"></div>
+    <div class="select2-container col-sm-6 col-md-6">
+        <label class="input-field-label">County</label><br>
+        <input select-box for-select='{"placeholder": "County", "action": "PersonProfileDetails/getCountyList", "model": "address.county"}' type="hidden" />
+    </div>
+    <div class="clearfix hidden-xs"></div>
 </div>
-<div>
-    <input ng-model="address.fromDate" placeholder="Valid From Date (MM/DD/YYYY)">
-</div>
-<div>
-    <input ng-model="address.toDate" type="date" placeholder="Valid To Date (MM/DD/YYYY)" >
-</div>
-<div class="select2-container">
-    <input select-box for-select='{"placeholder": "Nation", "action": "PersonProfileDetails/getNationList", "model": "address.nation"}' type="hidden" />
-</div>
-<div>
-    <input ng-model="address.houseNumber" type="text" placeholder="House Number">
-</div>
-<div>
-    <input ng-model="address.streetLine1" type="text" placeholder="Address Line 1">
-</div>
-<div>
-    <input ng-model="address.streetLine2" type="text" placeholder="Address Line 2">
-</div>
-<div>
-    <input ng-model="address.streetLine3" type="text" placeholder="Address Line 3">
-</div>
-<div>
-    <input ng-model="address.streetLine4" type="text" placeholder="Address Line 4">
-</div>
-<div>
-    <input ng-model="address.city" type="text" placeholder="City">
-</div>
-<div>
-    <input ng-model="address.zip" type="text" placeholder="ZIP or Postal Code">
-</div>
-<div class="select2-container">
-    <input select-box for-select='{"placeholder": "State", "action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
-</div>
-<div class="select2-container">
-    <input select-box for-select='{"placeholder": "County", "action": "PersonProfileDetails/getCountyList", "model": "address.county"}' type="hidden" />
-</div>
-<div>
-    <button ng-click="saveNewAddress()">Save</button>
+<div class="dialog-footer-margin modal-footer addAddr">
+    <button class="dialog-btn save-btn"ng-click="saveNewAddress()">
+        <span class="">Save<!--//TODO just keeping this around for reference edit-modal-save-button/--></span>
+    </button>
 </div>
