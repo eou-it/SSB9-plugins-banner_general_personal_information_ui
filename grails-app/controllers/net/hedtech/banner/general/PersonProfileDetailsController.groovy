@@ -52,7 +52,7 @@ class PersonProfileDetailsController {
                          state:it.state?.description,
                          zip:it.zip,
                          county:it.county?.description,
-                         country:it.nation?.description])
+                         country:it.nation?.nation])
 
                 model.addresses << personAddress
             }
