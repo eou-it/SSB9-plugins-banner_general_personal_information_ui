@@ -51,8 +51,8 @@ class PersonProfileDetailsController {
                          city:it.city,
                          state:it.state?.description,
                          zip:it.zip,
-                         county:it.county,
-                         country:it.nation])
+                         county:it.county?.description,
+                         country:it.nation?.description])
 
                 model.addresses << personAddress
             }
