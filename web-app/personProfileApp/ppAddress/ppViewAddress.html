@@ -1,0 +1,47 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+********************************************************************************-->
+
+<div class="address-detail">
+    <div class="address-type-view">
+        {{addressItem.addressType}}
+    </div>
+    <div class="clearfix">
+        <div class="address-date-range-label">
+            {{'personInformation.label.current'|i18n}}:
+        </div>
+        <div class="address-date-range">
+            {{addressItem.fromDate}}&nbsp;-&nbsp;
+        </div>
+        <div class="address-date-range" ng-if="addressItem.toDate">
+            {{addressItem.toDate}}
+        </div>
+        <div class="address-date-range" ng-if="!addressItem.toDate">
+            ({{'personInformation.no.end.date'|i18n}})
+        </div>
+    </div>
+    <div ng-if="addressItem.address.addressLine1">
+        {{addressItem.address.addressLine1}}
+    </div>
+    <div ng-if="addressItem.address.addressLine2">
+        {{addressItem.address.addressLine2}}
+    </div>
+    <div ng-if="addressItem.address.addressLine3">
+        {{addressItem.address.addressLine3}}
+    </div>
+    <div ng-if="addressItem.address.addressLine4">
+        {{addressItem.address.addressLine4}}
+    </div>
+    <div ng-if="addressItem.address.addressLine5">
+        {{addressItem.address.addressLine5}}
+    </div>
+    <div ng-if="addressItem.address.addressLine6">
+        {{addressItem.address.addressLine6}}
+    </div>
+    <div ng-if="addressItem.address.addressLine7">
+        {{addressItem.address.addressLine7}}
+    </div>
+    <div ng-if="addressItem.address.addressLine8">
+        {{addressItem.address.addressLine8}}
+    </div>
+</div>

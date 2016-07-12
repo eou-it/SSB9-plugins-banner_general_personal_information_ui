@@ -2,6 +2,11 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 
-<person-address-list></person-address-list>
-<br>
-<a ng-click="openAddAddressModal()">Add an Address</a>
+<div class="details-section-heading">
+    {{'personInformation.title.address'|i18n}}
+</div>
+<div class="clearfix">
+    <div ng-repeat="addressItem in addresses">
+        <person-address></person-address>
+    </div>
+</div>

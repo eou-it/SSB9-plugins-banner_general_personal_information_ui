@@ -2,8 +2,29 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService',
-    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService){
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'ppAddressService',
+    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
+              ppAddressService) {
+
+
+        /**
+         * Initialize controller
+         */
+        this.init = function() {
+
+            ppAddressService.getAddresses().$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.addresses = response.addresses;
+                }
+            });
+        };
+
+
+        // CONTROLLER VARIABLES
+        // --------------------
+        $scope.addresses = null;
 
         $scope.openAddAddressModal = function() {
 
@@ -16,5 +37,9 @@ personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope
             });
         };
 
+
+        // INITIALIZE
+        // ----------
+        this.init();
     }
 ]);
