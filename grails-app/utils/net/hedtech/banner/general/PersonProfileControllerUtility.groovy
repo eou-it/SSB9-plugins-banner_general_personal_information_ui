@@ -47,7 +47,7 @@ class PersonProfileControllerUtility {
 
             return model
         }
-        catch (ApplicationException ex) {
+        catch (Exception ex) {
             log.error(ex)
             model.message = e.message
             return model

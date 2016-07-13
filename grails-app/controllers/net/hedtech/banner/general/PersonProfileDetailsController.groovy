@@ -2,18 +2,24 @@ package net.hedtech.banner.general
 
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.PersonAddressService
+import net.hedtech.banner.general.person.PersonAddressCompositeService
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.system.AddressTypeService
 import net.hedtech.banner.general.system.CountyService
 import net.hedtech.banner.general.system.StateService
 import net.hedtech.banner.general.system.NationService
+import org.codehaus.groovy.grails.web.json.JSONObject
 
 class PersonProfileDetailsController {
+    def addressTypeService
     def countyService
     def stateService
     def nationService
     def personAddressService
+    def personAddressCompositeService
 
     private def findPerson() {
         return PersonUtility.getPerson(PersonProfileControllerUtility.getPrincipalPidm())
@@ -91,6 +97,54 @@ class PersonProfileDetailsController {
             render nationService.fetchNationList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def addAddress() {
+        def newAddress = request?.JSON ?: params
+        newAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(newAddress)
+
+        try {
+            personAddressService.checkAddressFieldsValid(newAddress)
+
+            // convert date Strings to Date objects
+            newAddress.fromDate = DateUtility.parseDateString(newAddress.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+            if(newAddress.toDate)
+                newAddress.toDate = DateUtility.parseDateString(newAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+
+            // inner entities need to be actual domain objects
+            newAddress.addressType = addressTypeService.fetchByCode(newAddress.addressType.code)
+            if(newAddress.county?.code)
+                newAddress.county = countyService.fetchCounty(newAddress.county.code)
+            if(newAddress.state?.code)
+                newAddress.state = stateService.fetchState(newAddress.state.code)
+            if(newAddress.nation?.code)
+                newAddress.nation = nationService.fetchNation(newAddress.nation.code)
+
+            def addresses = []
+            addresses[0] = [:]
+            addresses[0].personAddress = newAddress
+            personAddressCompositeService.createOrUpdate([createPersonAddressTelephones: addresses])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    private def fixJSONObjectForCast(JSONObject json) {
+        json.each {entry ->
+            // Make JSONObject.NULL a real Java null
+            if (entry.value == JSONObject.NULL) {
+                entry.value = null
+
+//            If we ever want to fix dates, this is one possible solution
+//            } else if (entry.key == "lastModified") {
+//                // Make this date string a real Date object
+//                entry.value = DateUtility.parseDateString(entry.value, "yyyy-MM-dd'T'HH:mm:ss'Z'")
+            }
         }
     }
 }

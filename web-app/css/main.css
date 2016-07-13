@@ -177,12 +177,8 @@ input:disabled {
     border: 0;
 }
 
-.existing-accts-old {
-    padding-left: 2em;
-}
-
-.existing-accts {
-    padding-left: 2em;
+.add-address-title {
+    display: inline;
 }
 
 .input-field-label {
@@ -336,7 +332,7 @@ input:disabled {
 }
 
 .text-input-field:focus,
-.radio-txt-input:focus, {
+.radio-txt-input:focus {
     border-style: solid;
     border-width: 1px;
     border-color: #206E9F;
@@ -352,6 +348,11 @@ input:disabled {
 
 .dialog-footer-margin {
     margin-top: 1.5em;
+}
+
+.modal-footer.addAddr {
+    padding: 0px;
+    border-top: 1px solid black;
 }
 
 .dialog-hdr2 {
@@ -388,35 +389,6 @@ button.closebtn {
     padding: 1em;
 }
 
-#buttonFooter {
-    background: #f6f6f6;
-    position: fixed;
-    bottom: 30px;
-    left: 0px;
-    width: 98%;
-    z-index: 15;
-    border: 2px #ddd;
-    border-style: solid;
-    border-bottom: none;
-
-    /* IE 10 flex */
-    display: -ms-flexbox;
-    -ms-flex-align: center;
-    -ms-flex-pack: justify;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#footerChunk {
-    width: 100%;
-    height: 30px;
-}
-
-#buttonFooter input[type="checkbox"] {
-    top: 8px;
-}
 
 .desktop-save .lbl-text {
     width: 98%;
@@ -426,6 +398,11 @@ button.closebtn {
 
 .save-btn {
     padding: 0em;
+}
+
+.addAddr .save-btn {
+    width: 100%;
+    padding: 1em;
 }
 
 .save-btn[disabled] {
@@ -710,6 +687,10 @@ span.radio-list.no-padding {
 .misc-message {
     padding-top: 15px;
     display: inline-block;
+}
+
+.pad-dialog-lr {
+    padding: 0em 2em;
 }
 
 

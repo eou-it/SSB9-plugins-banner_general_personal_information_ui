@@ -89,4 +89,87 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals 'Haiti', data[0].nation
     }
 
+    @Test
+    void testAddAddress() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            addressType:{
+                code:"MA",
+                description:"Mailing"
+            },
+            city:"SomeCity",
+            county:{
+                code:"261",
+                description:"Kittitas County"
+            },
+            fromDate:"2016-07-07T01:11:00.000Z",
+            houseNumber:null,
+            nation:{
+                code:"157",
+                description:"United States of America"
+            },
+            state:{
+                code:"CM",
+                description:"Northern Mariana Islands"
+            },
+            streetLine1:"123 Fake Street",
+            streetLine2:"Apt 333",
+            streetLine3:null,
+            streetLine4:null,
+            toDate:null,
+            zip:"101112"
+        }""".toString()
+
+        controller.addAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    @Test
+    void testAddInvalidAddress() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            addressType:{
+                code:"MA",
+                description:"Mailing"
+            },
+            city:"SomeCity",
+            county:{
+                code:"261",
+                description:"Kittitas County"
+            },
+            fromDate:"2016-07-07T01:11:00.000Z",
+            houseNumber:null,
+            nation:{
+                code:"157",
+                description:"United States of America"
+            },
+            state:{
+                code:"CM",
+                description:"Northern Mariana Islands"
+            },
+            streetLine1:null,
+            streetLine2:"Apt 333",
+            streetLine3:null,
+            streetLine4:null,
+            toDate:null,
+            zip:"101112"
+        }""".toString()
+
+        controller.addAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data.message
+        assertEquals true, data.failure
+    }
+
 }
