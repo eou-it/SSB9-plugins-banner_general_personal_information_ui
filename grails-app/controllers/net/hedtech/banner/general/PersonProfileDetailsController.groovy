@@ -100,6 +100,16 @@ class PersonProfileDetailsController {
         }
     }
 
+    def getAddressTypeList() {
+        def map = PersonProfileControllerUtility.getFetchListParams(params)
+
+        try {
+            render addressTypeService.fetchAddressTypeList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def addAddress() {
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
