@@ -172,4 +172,19 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals true, data.failure
     }
 
+    @Test
+    void testDeleteAddresses() {
+        loginSSB 'MYE000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = '''[{
+            id:5814
+        }]'''
+
+        controller.deleteAddresses()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+    }
+
 }
