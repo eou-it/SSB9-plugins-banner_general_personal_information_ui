@@ -5,3 +5,5 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 <person-address-list></person-address-list>
 <br>
 <a ng-click="openAddAddressModal()">Add an Address</a>
+<a class="delete-address-link" ng-if="selectedForDelete.address" ng-click="confirmAddressDelete()" enter-key="confirmAddressDelete()"><span class="icon-delete-CO"></span> <span>{{'personInfo.account.label.delete'|i18n}}</span></a>
+<a class="delete-address-link disabled" ng-if="!selectedForDelete.address" aria-disabled="true" ng-click="confirmAddressDelete()" enter-key="confirmAddressDelete()"><span class="icon-delete-CO"></span> <span>{{'personInfo.account.label.delete'|i18n}}</span></a>

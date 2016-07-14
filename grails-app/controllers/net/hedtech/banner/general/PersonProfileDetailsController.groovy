@@ -46,6 +46,7 @@ class PersonProfileDetailsController {
             def personAddress
             addresses.each { it ->
                 personAddress = [:]
+                personAddress.id = it.id
                 personAddress.addressType = it.addressType?.description
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
@@ -142,6 +143,23 @@ class PersonProfileDetailsController {
         }
         catch (ApplicationException e) {
             render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def deleteAddresses() {
+        def map = request?.JSON ?: params
+
+        try {
+            def model = [:]
+            def result = personAddressService.delete(map)
+
+            render result as JSON
+
+        } catch (ApplicationException e) {
+            def arrayResult = [];
+            arrayResult[0] = ControllerUtility.returnFailureMessage(e)
+
+            render arrayResult as JSON
         }
     }
 
