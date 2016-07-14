@@ -454,7 +454,16 @@ button.closebtn {
     padding-bottom: 10px;
 }
 
+.address-delete-checkbox {
+    float: left;
+    padding-right: 8px;
+}
+
 .address-detail {
+    float: left;
+}
+
+.address-wrapper {
     float: left;
     padding: 15px;
 }
@@ -479,6 +488,22 @@ button.closebtn {
 
 .address-last-line {
     float: left;
+}
+
+a.delete-address-link {
+    padding-left: 15px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.delete-address-link [class^="icon-"] {
+    font-size: 18px;
+}
+
+.delete-address-link.disabled {
+    cursor: not-allowed;
+    color: #A0A3A4;
 }
 
 
