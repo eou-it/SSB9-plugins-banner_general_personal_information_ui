@@ -7,14 +7,15 @@ import net.hedtech.banner.general.person.PersonAddressService
 import net.hedtech.banner.general.person.PersonAddressCompositeService
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
-import net.hedtech.banner.general.system.AddressTypeService
+import net.hedtech.banner.general.overall.AddressRolePrivilegesCompositeService
 import net.hedtech.banner.general.system.CountyService
 import net.hedtech.banner.general.system.StateService
 import net.hedtech.banner.general.system.NationService
 import org.codehaus.groovy.grails.web.json.JSONObject
+import org.springframework.security.core.context.SecurityContextHolder
 
 class PersonProfileDetailsController {
-    def addressTypeService
+    def addressRolePrivilegesCompositeService
     def countyService
     def stateService
     def nationService
@@ -104,7 +105,7 @@ class PersonProfileDetailsController {
         def map = PersonProfileControllerUtility.getFetchListParams(params)
 
         try {
-            render addressTypeService.fetchAddressTypeList(map.max, map.offset, map.searchString) as JSON
+            render addressRolePrivilegesCompositeService.fetchUpdateableAddressTypeList(getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -125,7 +126,7 @@ class PersonProfileDetailsController {
                 newAddress.toDate = DateUtility.parseDateString(newAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
 
             // inner entities need to be actual domain objects
-            newAddress.addressType = addressTypeService.fetchByCode(newAddress.addressType.code)
+            newAddress.addressType = addressRolePrivilegesCompositeService.fetchAddressType(getRoles(), newAddress.addressType.code)
             if(newAddress.county?.code)
                 newAddress.county = countyService.fetchCounty(newAddress.county.code)
             if(newAddress.state?.code)
@@ -156,5 +157,12 @@ class PersonProfileDetailsController {
 //                entry.value = DateUtility.parseDateString(entry.value, "yyyy-MM-dd'T'HH:mm:ss'Z'")
             }
         }
+    }
+
+    private def getRoles() {
+        def roles = SecurityContextHolder?.context?.authentication?.principal?.authorities.collect {
+            it.getAssignedSelfServiceRole()
+        }
+        return roles
     }
 }
