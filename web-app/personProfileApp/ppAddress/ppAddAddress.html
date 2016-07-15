@@ -1,9 +1,12 @@
 <h2 class="add-address-title">Add Address</h2>
 <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
 <div class="row pad-dialog-lr">
+    <div class="clearfix hidden-xs"></div>
     <div class="col-sm-6 col-md-6">
-        <label class="input-field-label">Address Type</label><br>
-        <input ng-model="address.addressType.code" class="text-input-field semi-bold form-spacing" type="text" placeholder="Address Type (Code)">
+        <div class="select2-container col-sm-6 col-md-6">
+            <label class="input-field-label">Address Type</label><br>
+            <input select-box for-select='{"placeholder": "Address Type", "action": "PersonProfileDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
+        </div>
     </div>
     <div class="col-sm-6 col-md-6">
         <label class="input-field-label">Valid From Date</label><br>

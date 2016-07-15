@@ -89,6 +89,24 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals 'Haiti', data[0].nation
     }
 
+    //TODO fix tests, need seed data
+    @Test
+    void testGetAddressTypeList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getAddressTypeList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals 10, data.size()
+        assertEquals 'Next-of-Kin', data[0].description
+    }
+
     @Test
     void testAddAddress() {
         loginSSB 'HOSH00018', '111111'
