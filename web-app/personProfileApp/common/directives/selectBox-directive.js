@@ -53,9 +53,11 @@ personProfileAppDirectives.directive('selectBox', function() {
                     }
                 },
                 initSelection: function(element, callback) {
-                    var data = {id: dataModelItem.code, text: getDescriptionFromAddressComponent(dataModelItem)};
+                    if (dataModelItem) {
+                        var data = {id: dataModelItem.code, text: getDescriptionFromAddressComponent(dataModelItem)};
 
-                    callback(data);
+                        callback(data);
+                    }
                 }
 
             }).select2("val", "_"); // Dummy value needed to make initSelection do its thing
