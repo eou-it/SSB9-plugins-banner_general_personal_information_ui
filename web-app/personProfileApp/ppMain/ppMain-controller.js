@@ -47,14 +47,22 @@ personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope
             notificationCenterService.clearNotifications();
         };
 
-        $scope.openAddAddressModal = function() {
+        $scope.openEditAddressModal = function(currentAddress) {
 
             $modal.open({
-                templateUrl: $filter('webAppResourcePath')('personProfileApp/ppAddress/ppAddAddress.html'),
+                templateUrl: $filter('webAppResourcePath')('personProfileApp/ppAddress/ppEditAddress.html'),
                 //windowClass: 'edit-account-modal',
                 keyboard: true,
-                controller: "ppAddAddressController",
-                scope: $scope
+                controller: "ppEditAddressController",
+                scope: $scope,
+                resolve: {
+                    editAddressProperties: function () {
+                        return {
+                            currentAddress: currentAddress
+                        };
+                    }
+                }
+
             });
         };
 

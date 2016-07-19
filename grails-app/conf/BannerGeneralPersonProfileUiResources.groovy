@@ -49,7 +49,7 @@ modules = {
 
         // Controllers
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppMain/ppMain-controller.js']
-        resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppAddress/ppAddAddress-controller.js']
+        resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/ppAddress/ppEditAddress-controller.js']
 
         // Filters
         resource url:[plugin: 'banner-general-person-profile-ui', file: 'personProfileApp/common/filters/i18n-filter.js']

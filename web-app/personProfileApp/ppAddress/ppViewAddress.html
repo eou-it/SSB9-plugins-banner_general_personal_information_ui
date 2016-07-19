@@ -5,50 +5,51 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 <div class="address-wrapper">
     <div class="address-delete-checkbox delete-checkbox-wrapper no-margin">
         <label class="visuallyhidden" id="for-delete{{$index}}">{{'personInfo.label.select.for.delete'|i18n}}</label>
-        <input type="checkbox" ng-model="addressItem.deleteMe" no-dirty-check aria-labelledby="for-delete{{$index}} {{addressItem.addressType}}-address">
+        <input type="checkbox" ng-model="address.deleteMe" no-dirty-check aria-labelledby="for-delete{{$index}} {{address.addressType}}-address">
         <div class="lbl"></div>
     </div>
-    <div class="address-detail" id="{{addressItem.addressType}}-address">
+    <div class="address-detail" id="{{address.addressType.description}}-address">
         <div class="address-type-view">
-            {{addressItem.addressType}}
+            {{address.addressType.description}}
         </div>
         <div class="clearfix">
             <div class="address-date-range-label">
                 {{'personInfo.label.current'|i18n}}:
             </div>
             <div class="address-date-range">
-                {{addressItem.fromDate}}&nbsp;-&nbsp;
+                {{address.fromDate}}&nbsp;-&nbsp;
             </div>
-            <div class="address-date-range" ng-if="addressItem.toDate">
-                {{addressItem.toDate}}
+            <div class="address-date-range" ng-if="address.toDate">
+                {{address.toDate}}
             </div>
-            <div class="address-date-range" ng-if="!addressItem.toDate">
+            <div class="address-date-range" ng-if="!address.toDate">
                 ({{'personInfo.no.end.date'|i18n}})
             </div>
         </div>
-        <div ng-if="addressItem.address.addressLine1">
-            {{addressItem.address.addressLine1}}
+        <div ng-if="address.displayAddress.addressLine1">
+            {{address.displayAddress.addressLine1}}
         </div>
-        <div ng-if="addressItem.address.addressLine2">
-            {{addressItem.address.addressLine2}}
+        <div ng-if="address.displayAddress.addressLine2">
+            {{address.displayAddress.addressLine2}}
         </div>
-        <div ng-if="addressItem.address.addressLine3">
-            {{addressItem.address.addressLine3}}
+        <div ng-if="address.displayAddress.addressLine3">
+            {{address.displayAddress.addressLine3}}
         </div>
-        <div ng-if="addressItem.address.addressLine4">
-            {{addressItem.address.addressLine4}}
+        <div ng-if="address.displayAddress.addressLine4">
+            {{address.displayAddress.addressLine4}}
         </div>
-        <div ng-if="addressItem.address.addressLine5">
-            {{addressItem.address.addressLine5}}
+        <div ng-if="address.displayAddress.addressLine5">
+            {{address.displayAddress.addressLine5}}
         </div>
-        <div ng-if="addressItem.address.addressLine6">
-            {{addressItem.address.addressLine6}}
+        <div ng-if="address.displayAddress.addressLine6">
+            {{address.displayAddress.addressLine6}}
         </div>
-        <div ng-if="addressItem.address.addressLine7">
-            {{addressItem.address.addressLine7}}
+        <div ng-if="address.displayAddress.addressLine7">
+            {{address.displayAddress.addressLine7}}
         </div>
-        <div ng-if="addressItem.address.addressLine8">
-            {{addressItem.address.addressLine8}}
+        <div ng-if="address.displayAddress.addressLine8">
+            {{address.displayAddress.addressLine8}}
         </div>
     </div>
+    <a ng-click="openEditAddressModal(address)">{{'personInfo.label.update'|i18n}}</a>
 </div>

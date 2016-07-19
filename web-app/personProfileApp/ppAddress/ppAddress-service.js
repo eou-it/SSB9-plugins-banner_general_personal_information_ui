@@ -4,6 +4,9 @@ personProfileApp.service('ppAddressService', ['$resource', 'notificationCenterSe
         var createAddress = $resource('../ssb/:controller/:action',
                 {controller: 'PersonProfileDetails', action: 'addAddress'}, {save: {method: 'POST'}}),
 
+            updateAddress = $resource('../ssb/:controller/:action',
+                {controller: 'PersonProfileDetails', action: 'updateAddress'}, {save: {method: 'POST'}}),
+
             getAddresses = $resource('../ssb/:controller/:action',
                 {controller: 'PersonProfileDetails', action: 'getActiveAddressesForCurrentUser'}),
 
@@ -42,6 +45,10 @@ personProfileApp.service('ppAddressService', ['$resource', 'notificationCenterSe
 
         this.saveNewAddress = function (address) {
             return createAddress.save(address);
+        };
+
+        this.updateAddress = function (address) {
+            return updateAddress.save(address);
         };
 
         this.deleteAddresses = function (addresses) {
