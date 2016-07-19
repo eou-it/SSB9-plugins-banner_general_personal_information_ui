@@ -148,10 +148,129 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals false, data.failure
     }
 
+    //TODO: determine if seed data is needed to fix this test
+    @Test
+    void testUpdateAddress() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:"5814",
+            version:"4",
+            addressType:{
+                code:"PR",
+                description:"Permanent"
+            },
+            city:"Chesapeake",
+            county:null,
+            fromDate:"2008-01-14T05:00:00.000Z",
+            houseNumber:"HN 1",
+            nation:null,
+            state:{
+                code:"VA",
+                description:"Virginia"
+            },
+            streetLine1:"435 UPDATED Avenue",
+            streetLine2:null,
+            streetLine3:null,
+            streetLine4:"SL 4",
+            toDate:null,
+            zip:"23320"
+        }""".toString()
+
+        controller.updateAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    //TODO: determine if seed data is needed to fix this test
+    @Test
+    void testUpdateAddressWithMissingId() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            version:"4",
+            addressType:{
+                code:"PR",
+                description:"Permanent"
+            },
+            city:"Chesapeake",
+            county:null,
+            fromDate:"2008-01-14T05:00:00.000Z",
+            houseNumber:"HN 1",
+            nation:null,
+            state:{
+                code:"VA",
+                description:"Virginia"
+            },
+            streetLine1:"435 UPDATED Avenue",
+            streetLine2:null,
+            streetLine3:null,
+            streetLine4:"SL 4",
+            toDate:null,
+            zip:"23320"
+        }""".toString()
+
+        controller.updateAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals true, data.failure
+    }
+
+    //TODO: determine if seed data is needed to fix this test
+    @Test
+    void testUpdateAddressWithMissingVersion() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:"5814",
+            addressType:{
+                code:"PR",
+                description:"Permanent"
+            },
+            city:"Chesapeake",
+            county:null,
+            fromDate:"2008-01-14T05:00:00.000Z",
+            houseNumber:"HN 1",
+            nation:null,
+            state:{
+                code:"VA",
+                description:"Virginia"
+            },
+            streetLine1:"435 UPDATED Avenue",
+            streetLine2:null,
+            streetLine3:null,
+            streetLine4:"SL 4",
+            toDate:null,
+            zip:"23320"
+        }""".toString()
+
+        controller.updateAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals true, data.failure
+    }
+
     @Test
     void testAddInvalidAddress() {
         loginSSB 'HOSH00018', '111111'
 
+        // Invalid streetLine1; should not be null
         controller.request.contentType = "text/json"
         controller.request.json = """{
             addressType:{

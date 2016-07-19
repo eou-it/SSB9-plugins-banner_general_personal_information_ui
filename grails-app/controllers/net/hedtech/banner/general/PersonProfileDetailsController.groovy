@@ -43,14 +43,27 @@ class PersonProfileDetailsController {
             // TODO: if masking turns out to be needed here, search for "maskingRule" in EmployeeProfileController.groovy
             // TODO: in Employee Profile app.
             model.addresses = []
+
             def personAddress
+
             addresses.each { it ->
                 personAddress = [:]
                 personAddress.id = it.id
-                personAddress.addressType = it.addressType?.description
+                personAddress.version = it.version
+                personAddress.addressType = it.addressType
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
-                personAddress.address = PersonAddressUtility.formatDefaultAddress(
+                personAddress.houseNumber = it.houseNumber
+                personAddress.streetLine1 = it.streetLine1
+                personAddress.streetLine2 = it.streetLine2
+                personAddress.streetLine3 = it.streetLine3
+                personAddress.streetLine4 = it.streetLine4
+                personAddress.city = it.city
+                personAddress.county = it.county
+                personAddress.state = it.state
+                personAddress.zip = it.zip
+                personAddress.nation = it.nation
+                personAddress.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber:it.houseNumber,
                          streetLine1:it.streetLine1,
                          streetLine2:it.streetLine2,
@@ -139,6 +152,32 @@ class PersonProfileDetailsController {
             addresses[0] = [:]
             addresses[0].personAddress = newAddress
             personAddressCompositeService.createOrUpdate([createPersonAddressTelephones: addresses])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateAddress() {
+        def updatedAddress = request?.JSON ?: params
+        updatedAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(updatedAddress)
+
+        // Address type is a primary key field and cannot be modified
+        updatedAddress.remove("addressType")
+
+        try {
+            personAddressService.checkAddressFieldsValid(updatedAddress)
+
+            // Convert date Strings to Date objects
+            // TODO: if there are changes to the way dates are handled in addAddress above, similar changes will likely be needed here
+            updatedAddress.fromDate = DateUtility.parseDateString(updatedAddress.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+            if(updatedAddress.toDate)
+                updatedAddress.toDate = DateUtility.parseDateString(updatedAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+
+            personAddressService.update(updatedAddress)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {

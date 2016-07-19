@@ -1,8 +1,23 @@
 personProfileAppDirectives.directive('selectBox', function() {
+
+    // Get description from an address field item, e.g. an item for a state or nation
+    var getDescriptionFromAddressComponent = function(item) {
+        if('webDescription' in item && item.webDescription) {
+            return item.webDescription;
+        }
+        else if('nation' in item && item.nation) {
+            return item.nation;
+        }
+        else {
+            return item.description;
+        }
+    };
+
     return {
         scope: true,
         link: function(scope, elem, attrs) {
             var data = angular.fromJson(attrs.forSelect),
+                dataModelItem = scope.$eval(data.model),
                 maxItems = 10;
 
             elem.select2({
@@ -25,20 +40,9 @@ personProfileAppDirectives.directive('selectBox', function() {
                     results: function(data, page) {
                         var results = [];
                         $.each(data, function(i, item) {
-                            var desc;
-                            if('webDescription' in item && item.webDescription) {
-                                desc = item.webDescription;
-                            }
-                            else if('nation' in item && item.nation) {
-                                desc = item.nation;
-                            }
-                            else {
-                                desc = item.description;
-                            }
-
                             results.push({
                                 id: item.code,
-                                text: desc
+                                text: getDescriptionFromAddressComponent(item)
                             });
                         });
                         var more = (page * 1) < data.length;
@@ -47,13 +51,21 @@ personProfileAppDirectives.directive('selectBox', function() {
                             more: more
                         };
                     }
+                },
+                initSelection: function(element, callback) {
+                    if (dataModelItem) {
+                        var data = {id: dataModelItem.code, text: getDescriptionFromAddressComponent(dataModelItem)};
+
+                        callback(data);
+                    }
                 }
-            });
+
+            }).select2("val", "_"); // Dummy value needed to make initSelection do its thing
 
             elem.on('change', function() {
                 var selectedItem = elem.select2("data");
-                scope.$eval(data.model).code = selectedItem.id;
-                scope.$eval(data.model).description = selectedItem.text;
+                dataModelItem.code = selectedItem.id;
+                dataModelItem.description = selectedItem.text;
                 scope.$apply();
             });
 
