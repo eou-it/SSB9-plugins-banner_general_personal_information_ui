@@ -31,7 +31,7 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
 
     @Test
     void testGetAddressesForCurrentUser(){
-        loginSSB 'MYE000001', '111111'
+        loginSSB 'GDP000005', '111111'
 
         controller.request.contentType = "text/json"
         controller.getActiveAddressesForCurrentUser()
@@ -89,7 +89,6 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals 'Haiti', data[0].nation
     }
 
-    //TODO fix tests, need seed data
     @Test
     void testGetAddressTypeList() {
         loginSSB 'HOSH00018', '111111'
@@ -102,9 +101,8 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        println data
-        assertEquals 10, data.size()
-        assertEquals 'Next-of-Kin', data[0].description
+        assertEquals 7, data.size()
+        assertEquals 'Foreign', data[0].description
     }
 
     @Test
@@ -148,36 +146,38 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals false, data.failure
     }
 
-    //TODO: determine if seed data is needed to fix this test
     @Test
     void testUpdateAddress() {
-        loginSSB 'HOSH00018', '111111'
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
 
         // Updating streetLine1
         controller.request.json = """{
-            id:"5814",
-            version:"4",
+            id:${addresses[0].id},
+            version:${addresses[0].version},
             addressType:{
                 code:"PR",
                 description:"Permanent"
             },
-            city:"Chesapeake",
+            city:"Malvern",
             county:null,
-            fromDate:"2008-01-14T05:00:00.000Z",
+            fromDate:"2009-01-01T05:00:00.000Z",
             houseNumber:"HN 1",
             nation:null,
             state:{
-                code:"VA",
-                description:"Virginia"
+                code:"PA",
+                description:"Pennsylvania"
             },
             streetLine1:"435 UPDATED Avenue",
             streetLine2:null,
             streetLine3:null,
-            streetLine4:"SL 4",
+            streetLine4:null,
             toDate:null,
-            zip:"23320"
+            zip:"19355"
         }""".toString()
 
         controller.updateAddress()
@@ -188,35 +188,37 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         assertEquals false, data.failure
     }
 
-    //TODO: determine if seed data is needed to fix this test
     @Test
     void testUpdateAddressWithMissingId() {
-        loginSSB 'HOSH00018', '111111'
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
 
         // Updating streetLine1
         controller.request.json = """{
-            version:"4",
+            version:${addresses[0].version},
             addressType:{
                 code:"PR",
                 description:"Permanent"
             },
-            city:"Chesapeake",
+            city:"Malvern",
             county:null,
-            fromDate:"2008-01-14T05:00:00.000Z",
+            fromDate:"2009-01-01T05:00:00.000Z",
             houseNumber:"HN 1",
             nation:null,
             state:{
-                code:"VA",
-                description:"Virginia"
+                code:"PA",
+                description:"Pennsylvania"
             },
             streetLine1:"435 UPDATED Avenue",
             streetLine2:null,
             streetLine3:null,
-            streetLine4:"SL 4",
+            streetLine4:null,
             toDate:null,
-            zip:"23320"
+            zip:"19355"
         }""".toString()
 
         controller.updateAddress()
@@ -224,38 +226,41 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
+        println data.message
         assertEquals true, data.failure
     }
 
-    //TODO: determine if seed data is needed to fix this test
     @Test
     void testUpdateAddressWithMissingVersion() {
-        loginSSB 'HOSH00018', '111111'
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
 
         // Updating streetLine1
         controller.request.json = """{
-            id:"5814",
+            id:${addresses[0].id},
             addressType:{
                 code:"PR",
                 description:"Permanent"
             },
-            city:"Chesapeake",
+            city:"Malvern",
             county:null,
-            fromDate:"2008-01-14T05:00:00.000Z",
+            fromDate:"2009-01-01T05:00:00.000Z",
             houseNumber:"HN 1",
             nation:null,
             state:{
-                code:"VA",
-                description:"Virginia"
+                code:"PA",
+                description:"Pennsylvania"
             },
             streetLine1:"435 UPDATED Avenue",
             streetLine2:null,
             streetLine3:null,
-            streetLine4:"SL 4",
+            streetLine4:null,
             toDate:null,
-            zip:"23320"
+            zip:"19355"
         }""".toString()
 
         controller.updateAddress()
@@ -263,6 +268,7 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
+        println data.message
         assertEquals true, data.failure
     }
 
@@ -311,17 +317,21 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
 
     @Test
     void testDeleteAddresses() {
-        loginSSB 'MYE000001', '111111'
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
-        controller.request.json = '''[{
-            id:5814
-        }]'''
+        controller.request.json = """[{
+            id:${addresses[0].id}
+        }]""".toString()
 
         controller.deleteAddresses()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
+        assertTrue data[0]
     }
 
 }
