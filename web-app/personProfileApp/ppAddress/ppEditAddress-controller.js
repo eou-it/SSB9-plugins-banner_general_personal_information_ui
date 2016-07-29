@@ -14,40 +14,27 @@ personProfileAppControllers.controller('ppEditAddressController',['$scope', '$mo
             notificationCenterService.clearNotifications();
         };
 
-        $scope.saveNewAddress = function() {
+        $scope.saveAddress = function() {
             if(ppAddressService.isValidAddress($scope.address)) {
                 // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
 
-                ppAddressService.saveNewAddress($scope.address).$promise.then(function (response) {
+                var handleResponse = function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, "error");
                     }
                     else {
                         $scope.cancelModal();
                     }
-                });
-            }
-            else {
-                ppAddressService.displayMessages();
-            }
-        };
+                };
 
-        $scope.updateAddress = function() {
-            if(ppAddressService.isValidAddress($scope.address)) {
-                // TODO this can probably be removed when date picker implemented
-                $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
-                $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
-
-                ppAddressService.updateAddress($scope.address).$promise.then(function (response) {
-                    if (response.failure) {
-                        notificationCenterService.displayNotification(response.message, "error");
-                    }
-                    else {
-                        $scope.cancelModal();
-                    }
-                });
+                if($scope.isCreateNew) {
+                    ppAddressService.saveNewAddress($scope.address).$promise.then(handleResponse);
+                }
+                else {
+                    ppAddressService.updateAddress($scope.address).$promise.then(handleResponse);
+                }
             }
             else {
                 ppAddressService.displayMessages();

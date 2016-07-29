@@ -21,6 +21,7 @@ class PersonProfileDetailsController {
     def nationService
     def personAddressService
     def personAddressCompositeService
+    def personalInformationCompositeService
 
     private def findPerson() {
         return PersonUtility.getPerson(PersonProfileControllerUtility.getPrincipalPidm())
@@ -134,19 +135,9 @@ class PersonProfileDetailsController {
         try {
             personAddressService.checkAddressFieldsValid(newAddress)
 
-            // convert date Strings to Date objects
-            newAddress.fromDate = DateUtility.parseDateString(newAddress.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-            if(newAddress.toDate)
-                newAddress.toDate = DateUtility.parseDateString(newAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+            convertAddressDates(newAddress)
 
-            // inner entities need to be actual domain objects
-            newAddress.addressType = addressRolePrivilegesCompositeService.fetchAddressType(getRoles(), newAddress.addressType.code)
-            if(newAddress.county?.code)
-                newAddress.county = countyService.fetchCounty(newAddress.county.code)
-            if(newAddress.state?.code)
-                newAddress.state = stateService.fetchState(newAddress.state.code)
-            if(newAddress.nation?.code)
-                newAddress.nation = nationService.fetchNation(newAddress.nation.code)
+            newAddress = personalInformationCompositeService.getAddressValidationObjects(getRoles(), newAddress)
 
             def addresses = []
             addresses[0] = [:]
@@ -171,11 +162,7 @@ class PersonProfileDetailsController {
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
 
-            // Convert date Strings to Date objects
-            // TODO: if there are changes to the way dates are handled in addAddress above, similar changes will likely be needed here
-            updatedAddress.fromDate = DateUtility.parseDateString(updatedAddress.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-            if(updatedAddress.toDate)
-                updatedAddress.toDate = DateUtility.parseDateString(updatedAddress.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+            convertAddressDates(updatedAddress)
 
             personAddressService.update(updatedAddress)
             render([failure: false] as JSON)
@@ -221,5 +208,12 @@ class PersonProfileDetailsController {
             it.getAssignedSelfServiceRole()
         }
         return roles
+    }
+
+    private def convertAddressDates(addressMap){
+        // Convert date Strings to Date objects
+        addressMap.fromDate = DateUtility.parseDateString(addressMap.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+        if(addressMap.toDate)
+            addressMap.toDate = DateUtility.parseDateString(addressMap.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
     }
 }
