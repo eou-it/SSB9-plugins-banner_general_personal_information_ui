@@ -7,7 +7,7 @@ import org.junit.Test
 
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 
-class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
+class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase {
 
     /**
      * The setup method will run before all test case method executions start.
@@ -15,7 +15,7 @@ class PersonProfileDetailsControllerTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new PersonProfileDetailsController()
+        controller = new PersonalInformationDetailsController()
         super.setUp()
     }
 

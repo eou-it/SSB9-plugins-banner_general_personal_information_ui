@@ -4,7 +4,7 @@
     <div class="col-sm-6 col-md-6" ng-if="isCreateNew">
         <div class="select2-container col-sm-6 col-md-6">
             <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
-            <input select-box for-select='{"placeholder": "Address Type", "action": "PersonProfileDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
+            <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
         </div>
     </div>
     <div class="col-sm-6 col-md-6" ng-if="!isCreateNew">
@@ -21,7 +21,7 @@
     </div>
     <div class="select2-container col-sm-6 col-md-6">
         <label class="input-field-label">Nation</label><br>
-        <input select-box for-select='{"placeholder": "Nation", "action": "PersonProfileDetails/getNationList", "model": "address.nation"}' type="hidden" />
+        <input select-box for-select='{"placeholder": "Nation", "action": "PersonalInformationDetails/getNationList", "model": "address.nation"}' type="hidden" />
     </div>
     <div class="clearfix hidden-xs"></div>
     <div class="col-sm-6 col-md-6">
@@ -54,12 +54,12 @@
     </div>
     <div class="select2-container col-sm-6 col-md-6">
         <label class="input-field-label">State</label><br>
-        <input select-box for-select='{"placeholder": "State", "action": "PersonProfileDetails/getStateList", "model": "address.state"}' type="hidden" />
+        <input select-box for-select='{"placeholder": "State", "action": "PersonalInformationDetails/getStateList", "model": "address.state"}' type="hidden" />
     </div>
     <div class="clearfix hidden-xs"></div>
     <div class="select2-container col-sm-6 col-md-6">
         <label class="input-field-label">County</label><br>
-        <input select-box for-select='{"placeholder": "County", "action": "PersonProfileDetails/getCountyList", "model": "address.county"}' type="hidden" />
+        <input select-box for-select='{"placeholder": "County", "action": "PersonalInformationDetails/getCountyList", "model": "address.county"}' type="hidden" />
     </div>
     <div class="clearfix hidden-xs"></div>
 </div>

@@ -14,7 +14,7 @@ import net.hedtech.banner.general.system.NationService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
-class PersonProfileDetailsController {
+class PersonalInformationDetailsController {
     def addressRolePrivilegesCompositeService
     def countyService
     def stateService
@@ -23,12 +23,12 @@ class PersonProfileDetailsController {
     def personAddressCompositeService
 
     private def findPerson() {
-        return PersonUtility.getPerson(PersonProfileControllerUtility.getPrincipalPidm())
+        return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
     def getActiveAddressesForCurrentUser() {
         def model = [:]
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         if (pidm) {
             def map = [pidm: pidm]
@@ -37,7 +37,7 @@ class PersonProfileDetailsController {
             try {
                 addresses = personAddressService.getActiveAddresses(map).list
             } catch (ApplicationException e) {
-                render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+                render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
 
             // TODO: if masking turns out to be needed here, search for "maskingRule" in EmployeeProfileController.groovy
@@ -86,48 +86,48 @@ class PersonProfileDetailsController {
     }
 
     def getCountyList() {
-        def map = PersonProfileControllerUtility.getFetchListParams(params)
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
         try {
             render countyService.fetchCountyList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
     def getStateList() {
-        def map = PersonProfileControllerUtility.getFetchListParams(params)
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
         try {
             render stateService.fetchStateList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
     def getNationList() {
-        def map = PersonProfileControllerUtility.getFetchListParams(params)
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
         try {
             render nationService.fetchNationList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
     def getAddressTypeList() {
-        def map = PersonProfileControllerUtility.getFetchListParams(params)
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
         try {
             render addressRolePrivilegesCompositeService.fetchUpdateableAddressTypeList(getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
     def addAddress() {
         def newAddress = request?.JSON ?: params
-        newAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         fixJSONObjectForCast(newAddress)
 
@@ -155,13 +155,13 @@ class PersonProfileDetailsController {
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
     def updateAddress() {
         def updatedAddress = request?.JSON ?: params
-        updatedAddress.pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         fixJSONObjectForCast(updatedAddress)
 
@@ -181,7 +181,7 @@ class PersonProfileDetailsController {
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
-            render PersonProfileControllerUtility.returnFailureMessage(e) as JSON
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 

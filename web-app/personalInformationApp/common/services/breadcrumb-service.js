@@ -2,7 +2,7 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
-personProfileApp.service( 'breadcrumbService', ['$filter',function ($filter) {
+personalInformationApp.service( 'breadcrumbService', ['$filter',function ($filter) {
     var constantBreadCrumb = [];
     var list = [];
     var appUrl = "";
@@ -13,8 +13,8 @@ personProfileApp.service( 'breadcrumbService', ['$filter',function ($filter) {
                 url: '/'
             },
             {
-                label: 'general.breadcrumb.personProfile',
-                url: '/personProfileMain'
+                label: 'general.breadcrumb.personalInformation',
+                url: '/personalInformationMain'
             }
         ];
         list = [];

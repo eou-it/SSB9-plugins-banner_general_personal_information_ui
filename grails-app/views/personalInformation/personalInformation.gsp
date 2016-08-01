@@ -2,8 +2,8 @@
 Copyright 2015 Ellucian Company L.P. and its affiliates.
 *******************************************************************************--}%
 <!DOCTYPE html>
-<!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="personProfileApp" id="ng-app" class="ie9"> <![endif]-->
-<html xmlns:ng="http://angularjs.org" ng-app="personProfileApp" id="ng-app">
+<!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app" class="ie9"> <![endif]-->
+<html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app">
 <head>
     <script type="text/javascript">
         var superUser=${session['SUPER_USER_INDICATOR'] ?: 'undefined'};
@@ -24,10 +24,10 @@ Copyright 2015 Ellucian Company L.P. and its affiliates.
         <meta charset="${message(code: 'default.character.encoding')}">
 
         <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
-            <r:require modules="personProfileAppRTL"/>
+            <r:require modules="personalInformationAppRTL"/>
         </g:if>
         <g:else>
-            <r:require modules="personProfileAppLTR"/>
+            <r:require modules="personalInformationAppLTR"/>
         </g:else>
 
     </g:applyLayout>

@@ -88,7 +88,7 @@ environments {
 
 log4j = {
     def String loggingFileDir = "target/logs"
-    def String logAppName = "banner_general_person_profile_ui"
+    def String logAppName = "banner_general_personal_information_ui"
     def String loggingFileName = "${loggingFileDir}/${logAppName}.log".toString()
     appenders {
         rollingFile name: 'appLog', file: loggingFileName, maxFileSize: "${10 * 1024 * 1024}", maxBackupIndex: 10, layout: pattern(conversionPattern: '%d{[EEE, dd-MMM-yyyy @ HH:mm:ss.SSS]} [%t] %-5p %c %x - %m%n')

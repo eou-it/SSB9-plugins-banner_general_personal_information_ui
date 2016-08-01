@@ -1,4 +1,4 @@
-personProfileAppDirectives.directive('selectBox', function() {
+personalInformationAppDirectives.directive('selectBox', function() {
 
     // Get description from an address field item, e.g. an item for a state or nation
     var getDescriptionFromAddressComponent = function(item) {

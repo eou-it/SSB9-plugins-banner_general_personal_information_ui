@@ -4,10 +4,10 @@
 
 
 /**
- * A Grails plugin which is the Banner General Person Profile sub-application in the
+ * A Grails plugin which is the Banner General Personal Information sub-application in the
  * consolidated Banner XE application.
  **/
-class BannerGeneralPersonProfileUiGrailsPlugin {
+class BannerGeneralPersonalInformationUiGrailsPlugin {
 
     // Note: the groupId 'should' be used when deploying this plugin via the 'grails maven-deploy --repository=snapshots' command,
     // however it is not being picked up.  Consequently, a pom.xml file is added to the root directory with the correct groupId
@@ -35,9 +35,9 @@ class BannerGeneralPersonProfileUiGrailsPlugin {
     def author = "Ellucian"
     def authorEmail = "actionline@ellucian.com"
     def title = "Banner General Person Profile Plugin"
-    def description = '''This plugin is BannerGeneralPersonProfileUi.'''//.stripMargin()  // TODO Enable this once we adopt Groovy 1.7.3
+    def description = '''This plugin is BannerGeneralPersonalInformationUi.'''//.stripMargin()  // TODO Enable this once we adopt Groovy 1.7.3
 
-    def documentation = "http://sungardhe.com/development/horizon/plugins/banner-general-person-profile-ui"
+    def documentation = "http://sungardhe.com/development/horizon/plugins/banner-general-personal-information-ui"
 
 
     def doWithWebDescriptor = { xml ->

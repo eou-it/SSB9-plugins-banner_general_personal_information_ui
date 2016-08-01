@@ -91,7 +91,7 @@ grails.war.resources = { stagingDir, args ->
 
 grails.war.copyToWebApp = { args ->
     fileset(dir:"web-app") {
-        include(name: "personProfileApp/**")
+        include(name: "personalInformationApp/**")
         include(name: "js/**")
         include(name: "css/**")
         include(name: "images/**")

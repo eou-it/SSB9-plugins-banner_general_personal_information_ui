@@ -1,6 +1,6 @@
-personProfileAppControllers.controller('ppEditAddressController',['$scope', '$modal', '$modalInstance', 'ppAddressService','$rootScope', '$state', '$stateParams',
+personalInformationAppControllers.controller('piEditAddressController',['$scope', '$modal', '$modalInstance', 'piAddressService','$rootScope', '$state', '$stateParams',
     '$filter', '$q', '$timeout', 'notificationCenterService', 'editAddressProperties',
-    function ($scope, $modal, $modalInstance, ppAddressService, $rootScope, $state, $stateParams, $filter, $q, $timeout, notificationCenterService, editAddressProperties){
+    function ($scope, $modal, $modalInstance, piAddressService, $rootScope, $state, $stateParams, $filter, $q, $timeout, notificationCenterService, editAddressProperties){
 
         // CONTROLLER VARIABLES
         // --------------------
@@ -15,12 +15,12 @@ personProfileAppControllers.controller('ppEditAddressController',['$scope', '$mo
         };
 
         $scope.saveNewAddress = function() {
-            if(ppAddressService.isValidAddress($scope.address)) {
+            if(piAddressService.isValidAddress($scope.address)) {
                 // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
 
-                ppAddressService.saveNewAddress($scope.address).$promise.then(function (response) {
+                piAddressService.saveNewAddress($scope.address).$promise.then(function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, "error");
                     }
@@ -30,17 +30,17 @@ personProfileAppControllers.controller('ppEditAddressController',['$scope', '$mo
                 });
             }
             else {
-                ppAddressService.displayMessages();
+                piAddressService.displayMessages();
             }
         };
 
         $scope.updateAddress = function() {
-            if(ppAddressService.isValidAddress($scope.address)) {
+            if(piAddressService.isValidAddress($scope.address)) {
                 // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
 
-                ppAddressService.updateAddress($scope.address).$promise.then(function (response) {
+                piAddressService.updateAddress($scope.address).$promise.then(function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, "error");
                     }
@@ -50,7 +50,7 @@ personProfileAppControllers.controller('ppEditAddressController',['$scope', '$mo
                 });
             }
             else {
-                ppAddressService.displayMessages();
+                piAddressService.displayMessages();
             }
         };
 

@@ -2,7 +2,7 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
-personProfileApp.service('notificationCenterService', ['$filter', function ($filter) {
+personalInformationApp.service('notificationCenterService', ['$filter', function ($filter) {
     var flashNotification = false;
     this.clearNotifications = function() {
         notifications.clearNotifications();

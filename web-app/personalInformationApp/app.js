@@ -1,12 +1,12 @@
 /*******************************************************************************
  Copyright 2015 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
-var personProfileAppControllers = angular.module('personProfileAppControllers', []);
-var personProfileAppDirectives = angular.module('personProfileAppDirectives', []);
+var personalInformationAppControllers = angular.module('personalInformationAppControllers', []);
+var personalInformationAppDirectives = angular.module('personalInformationAppDirectives', []);
 
 
-var personProfileApp = angular.module('personProfileApp', ['ngResource','ui.router','personProfileAppControllers',
-    'personProfileAppDirectives','ui.bootstrap','I18n','numericApp'])
+var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
+    'personalInformationAppDirectives','ui.bootstrap','I18n','numericApp'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {
@@ -42,24 +42,24 @@ var personProfileApp = angular.module('personProfileApp', ['ngResource','ui.rout
     ]
 );
 
-personProfileApp.constant('webAppResourcePathString', '../plugins/banner-general-person-profile-ui-0.1');
+personalInformationApp.constant('webAppResourcePathString', '../plugins/banner-general-personal-information-ui-0.1');
 
-personProfileApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResourcePathString',
+personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResourcePathString',
     function($stateProvider, $urlRouterProvider, webAppResourcePathString){
-        // For any unmatched url, send to /personProfileMain
-        var url = url ? url : 'personProfileMain'; // TODO: change name of this URL to something else?
+        // For any unmatched url, send to /personalInformationMain
+        var url = url ? url : 'personalInformationMain'; // TODO: change name of this URL to something else?
 
         $urlRouterProvider.otherwise(url) ;
 
         /***********************************************************
-         * Defining all the different states of the personProfileApp
+         * Defining all the different states of the personalInformationApp
          * Landing pages
          ***********************************************************/
         $stateProvider
-            .state('personProfileMain', {
-                url: "/personProfileMain",
-                templateUrl: webAppResourcePathString + '/personProfileApp/ppMain/personProfileMain.html',
-                controller: 'ppMainController',
+            .state('personalInformationMain', {
+                url: "/personalInformationMain",
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/personalInformationMain.html',
+                controller: 'piMainController',
                 data: {
                     breadcrumbs: []
                 },
@@ -70,13 +70,13 @@ personProfileApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResource
     }
 ]);
 
-personProfileApp.config(['$locationProvider',
+personalInformationApp.config(['$locationProvider',
     function ($locationProvider) {
         $locationProvider.html5Mode(false);
     }
 ]);
 
-personProfileApp.config(['$httpProvider',
+personalInformationApp.config(['$httpProvider',
     function ($httpProvider) {
         if (!$httpProvider.defaults.headers.get) {
             $httpProvider.defaults.headers.get = {};
@@ -136,6 +136,6 @@ personProfileApp.config(['$httpProvider',
  *
  * For more info, see https://docs.angularjs.org/guide/production
  */
-personProfileApp.config(['$compileProvider', function ($compileProvider) {
+personalInformationApp.config(['$compileProvider', function ($compileProvider) {
     $compileProvider.debugInfoEnabled(false);
 }]);

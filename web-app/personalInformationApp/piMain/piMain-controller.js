@@ -1,10 +1,10 @@
 /*******************************************************************************
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
-personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'ppAddressService',
+personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piAddressService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              ppAddressService) {
+              piAddressService) {
 
 
         /**
@@ -12,7 +12,7 @@ personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope
          */
         this.init = function() {
 
-            ppAddressService.getAddresses().$promise.then(function(response) {
+            piAddressService.getAddresses().$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
@@ -50,10 +50,10 @@ personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope
         $scope.openEditAddressModal = function(currentAddress) {
 
             $modal.open({
-                templateUrl: $filter('webAppResourcePath')('personProfileApp/ppAddress/ppEditAddress.html'),
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piEditAddress.html'),
                 //windowClass: 'edit-account-modal',
                 keyboard: true,
-                controller: "ppEditAddressController",
+                controller: "piEditAddressController",
                 scope: $scope,
                 resolve: {
                     editAddressProperties: function () {
@@ -99,7 +99,7 @@ personProfileAppControllers.controller('ppMainController',['$scope', '$rootScope
 
             $scope.cancelNotification();
 
-            ppAddressService.deleteAddresses(addressesToDelete).$promise.then(function (response) {
+            piAddressService.deleteAddresses(addressesToDelete).$promise.then(function (response) {
                 var notifications = [];
 
                 if (response[0].failure) {

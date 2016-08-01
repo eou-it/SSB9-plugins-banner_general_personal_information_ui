@@ -4,11 +4,11 @@
 
 package net.hedtech.banner.general
 
-class PersonProfileController {
+class PersonalInformationController {
     static defaultAction = 'landingPage'
 
     def landingPage() {
-        render model: [:], view: "personProfile"
+        render model: [:], view: "personalInformation"
     }
 
 }

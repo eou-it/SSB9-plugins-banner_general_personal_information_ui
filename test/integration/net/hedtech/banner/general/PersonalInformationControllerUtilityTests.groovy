@@ -8,7 +8,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
+class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase {
 
     /**
      * The setup method will run before all test case method executions start.
@@ -16,7 +16,7 @@ class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
     @Before
     public void setUp() {
         formContext = ['GUAGMNU']
-        controller = new PersonProfileDetailsController()
+        controller = new PersonalInformationDetailsController()
         super.setUp()
     }
 
@@ -34,21 +34,21 @@ class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
     void testGetPrincipalPidmLoggedIn(){
         loginSSB 'MYE000001', '111111'
 
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         assertNotNull pidm
         assertEquals(36732, pidm)
     }
 
     @Test
     void testGetPrincipalPidmNotLoggedIn(){
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         assertNull pidm
     }
 
     @Test
     void testGetFetchListParams(){
         def parameters = [ searchString: 'Mal', offset: '2', max: '10' ]
-        def map = PersonProfileControllerUtility.getFetchListParams(parameters)
+        def map = PersonalInformationControllerUtility.getFetchListParams(parameters)
 
         assertEquals 10, map.max
         assertEquals 20, map.offset
@@ -59,7 +59,7 @@ class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
     void testReturnFailureMessage(){
         String EXCEPTION_MESSAGE = "sample exception message"
         def e = new ApplicationException('entityClassOrName', EXCEPTION_MESSAGE)
-        def model = PersonProfileControllerUtility.returnFailureMessage(e)
+        def model = PersonalInformationControllerUtility.returnFailureMessage(e)
 
         assertNotNull model
         assertTrue(model.failure)
@@ -72,7 +72,7 @@ class PersonProfileControllerUtilityTests extends BaseIntegrationTestCase {
     void testReturnFailureMessageForSQLException(){
         def sqlEx = new SQLException("SQL exception message: ORA-123456: ")
         def e = new ApplicationException('entityClassOrName', sqlEx)
-        def model = PersonProfileControllerUtility.returnFailureMessage(e)
+        def model = PersonalInformationControllerUtility.returnFailureMessage(e)
 
         assertNotNull model
         assertTrue(model.failure)

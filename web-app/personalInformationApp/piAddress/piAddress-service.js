@@ -1,18 +1,18 @@
-personProfileApp.service('ppAddressService', ['$resource', 'notificationCenterService',
+personalInformationApp.service('piAddressService', ['$resource', 'notificationCenterService',
     function ($resource, notificationCenterService) {
 
         var createAddress = $resource('../ssb/:controller/:action',
-                {controller: 'PersonProfileDetails', action: 'addAddress'}, {save: {method: 'POST'}}),
+                {controller: 'PersonalInformationDetails', action: 'addAddress'}, {save: {method: 'POST'}}),
 
             updateAddress = $resource('../ssb/:controller/:action',
-                {controller: 'PersonProfileDetails', action: 'updateAddress'}, {save: {method: 'POST'}}),
+                {controller: 'PersonalInformationDetails', action: 'updateAddress'}, {save: {method: 'POST'}}),
 
             getAddresses = $resource('../ssb/:controller/:action',
-                {controller: 'PersonProfileDetails', action: 'getActiveAddressesForCurrentUser'}),
+                {controller: 'PersonalInformationDetails', action: 'getActiveAddressesForCurrentUser'}),
 
 
             deleteAddresses = $resource('../ssb/:controller/:action',
-                {controller: 'PersonProfileDetails', action: 'deleteAddresses'}, {delete: {method:'POST', isArray:true}}),
+                {controller: 'PersonalInformationDetails', action: 'deleteAddresses'}, {delete: {method:'POST', isArray:true}}),
 
 
             messages = [];
