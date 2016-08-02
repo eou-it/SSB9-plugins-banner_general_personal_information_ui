@@ -32,11 +32,10 @@ class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPrincipalPidmLoggedIn(){
-        loginSSB 'MYE000001', '111111'
+        loginSSB 'GDP000005', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         assertNotNull pidm
-        assertEquals(36732, pidm)
     }
 
     @Test
