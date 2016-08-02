@@ -150,7 +150,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testUpdateAddress() {
         loginSSB 'GDP000005', '111111'
 
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
@@ -192,7 +192,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testUpdateAddressWithMissingId() {
         loginSSB 'GDP000005', '111111'
 
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
@@ -234,7 +234,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testUpdateAddressWithMissingVersion() {
         loginSSB 'GDP000005', '111111'
 
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
@@ -319,7 +319,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testDeleteAddresses() {
         loginSSB 'GDP000005', '111111'
 
-        def pidm = PersonProfileControllerUtility.getPrincipalPidm()
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
