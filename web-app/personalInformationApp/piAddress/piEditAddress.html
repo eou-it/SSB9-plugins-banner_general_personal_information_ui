@@ -63,13 +63,8 @@
     </div>
     <div class="clearfix hidden-xs"></div>
 </div>
-<div class="dialog-footer-margin modal-footer addAddr" ng-if="isCreateNew">
-    <button class="dialog-btn save-btn"ng-click="saveNewAddress()">
-        <span class="">Save<!--//TODO just keeping this around for reference edit-modal-save-button/--></span>
-    </button>
-</div>
-<div class="dialog-footer-margin modal-footer" ng-if="!isCreateNew">
-    <button class="dialog-btn save-btn"ng-click="updateAddress()">
-        <span class="">Update<!--//TODO just keeping this around for reference edit-modal-save-button/--></span>
+<div class="dialog-footer-margin modal-footer addAddr">
+    <button class="dialog-btn save-btn"ng-click="saveAddress()">
+        <span class="">{{(isCreateNew?'Save':'Update')}}<!--//TODO just keeping this around for reference edit-modal-save-button/--></span>
     </button>
 </div>

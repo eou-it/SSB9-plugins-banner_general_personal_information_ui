@@ -14,40 +14,27 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             notificationCenterService.clearNotifications();
         };
 
-        $scope.saveNewAddress = function() {
+        $scope.saveAddress = function() {
             if(piAddressService.isValidAddress($scope.address)) {
                 // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
 
-                piAddressService.saveNewAddress($scope.address).$promise.then(function (response) {
+                var handleResponse = function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, "error");
                     }
                     else {
                         $scope.cancelModal();
                     }
-                });
-            }
-            else {
-                piAddressService.displayMessages();
-            }
-        };
+                };
 
-        $scope.updateAddress = function() {
-            if(piAddressService.isValidAddress($scope.address)) {
-                // TODO this can probably be removed when date picker implemented
-                $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
-                $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
-
-                piAddressService.updateAddress($scope.address).$promise.then(function (response) {
-                    if (response.failure) {
-                        notificationCenterService.displayNotification(response.message, "error");
-                    }
-                    else {
-                        $scope.cancelModal();
-                    }
-                });
+                if($scope.isCreateNew) {
+                    piAddressService.saveNewAddress($scope.address).$promise.then(handleResponse);
+                }
+                else {
+                    piAddressService.updateAddress($scope.address).$promise.then(handleResponse);
+                }
             }
             else {
                 piAddressService.displayMessages();
