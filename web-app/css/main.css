@@ -181,6 +181,31 @@ input:disabled {
     display: inline;
 }
 
+.pi-modal-title {
+    padding: 1em 1em 0.5em 1em;
+    display: inline-block;
+    margin: 0;
+}
+
+.pi-modal-divider{
+    width: 100%;
+    float: left;
+    height: 1px;
+}
+
+.pi-modal-divider span {
+    border-bottom: 1px solid black;
+    width: 100%;
+    float: left;
+    height: 1px;
+    margin-top: 1.5em;
+    margin-bottom: 5px;
+    /*position: absolute;
+    left: 0;*/
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
 .input-field-label {
     padding: 0.875em 0em;
     margin: 0px;
@@ -834,6 +859,12 @@ table tr td {
 
     .xs-errors-visible {
         display: none;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .modal-dialog {
+        width: 896px;
     }
 }
 
