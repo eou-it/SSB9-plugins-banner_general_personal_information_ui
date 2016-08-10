@@ -182,28 +182,27 @@ input:disabled {
 }
 
 .pi-modal-title {
-    padding: 1em 1em 0.5em 1em;
+    padding: 0.7em 0.7em 0.5em 0.7em;
     display: inline-block;
     margin: 0;
 }
 
+.pi-style .select2-container {
+    width: 100% !important;
+}
+
 .pi-modal-divider{
     width: 100%;
-    float: left;
     height: 1px;
+    padding: 0em 1em;
 }
 
 .pi-modal-divider span {
     border-bottom: 1px solid black;
     width: 100%;
     float: left;
-    height: 1px;
     margin-top: 1.5em;
-    margin-bottom: 5px;
-    /*position: absolute;
-    left: 0;*/
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-bottom: 0.675em;
 }
 
 .input-field-label {
@@ -398,6 +397,13 @@ button.closebtn {
     float: right;
 }
 
+.modal-footer.addAddr {
+    display: table;
+    padding: 1px 0px 0px;
+    border-top: 1px solid black;
+    width: 100%;
+}
+
 .dialog-btn {
     box-sizing: border-box;
     display: table-cell;
@@ -423,11 +429,6 @@ button.closebtn {
 
 .save-btn {
     padding: 0em;
-}
-
-.addAddr .save-btn {
-    width: 100%;
-    padding: 1em;
 }
 
 .save-btn[disabled] {
@@ -846,7 +847,7 @@ table tr td {
     }
 
     .pad-dialog-lr {
-        padding: 0em 1.7em;
+        padding: 0em 1.5em;
     }
 
     .edit-flex-div2 {
@@ -863,7 +864,7 @@ table tr td {
 }
 
 @media screen and (min-width:1024px) {
-    .modal-dialog {
+    .edit-addr-modal .modal-dialog {
         width: 896px;
     }
 }

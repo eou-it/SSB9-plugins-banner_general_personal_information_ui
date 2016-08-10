@@ -2,7 +2,7 @@
 <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
 <div class="row pad-dialog-lr">
     <!--div class="clearfix hidden-xs"></div-->
-    <div class="select2-container col-sm-6 col-md-6 col-lg-4" ng-if="isCreateNew">
+    <div class="pi-style select2-container col-sm-6 col-md-6 col-lg-4" ng-if="isCreateNew">
         <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
     </div>
@@ -20,7 +20,7 @@
         <input ng-model="address.toDate" class="text-input-field semi-bold form-spacing" placeholder="MM/DD/YYYY">
     </div>
     <div class="pi-modal-divider hidden-xs"><span></span></div>
-    <div class="select2-container col-sm-6 col-md-6 col-lg-4">
+    <div class="pi-style select2-container col-sm-6 col-md-6 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "Nation", "action": "PersonalInformationDetails/getNationList", "model": "address.nation"}' type="hidden" />
     </div>
@@ -49,11 +49,11 @@
         <label class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
         <input ng-model="address.city" class="text-input-field semi-bold form-spacing" type="text" id="city">
     </div>
-    <div class="select2-container col-sm-6 col-md-6 col-lg-4">
+    <div class="pi-style select2-container col-sm-6 col-md-6 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.state'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "State", "action": "PersonalInformationDetails/getStateList", "model": "address.state"}' type="hidden" />
     </div>
-    <div class="select2-container col-sm-6 col-md-6 col-lg-4">
+    <div class="pi-style select2-container col-sm-6 col-md-6 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.county'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "County", "action": "PersonalInformationDetails/getCountyList", "model": "address.county"}' type="hidden" />
     </div>
@@ -61,11 +61,10 @@
         <label class="input-field-label" for="zip">{{'personInfo.label.zip'|i18n}}</label><br>
         <input ng-model="address.zip" class="text-input-field semi-bold form-spacing" type="text" id="zip">
     </div>
-    <!--div class="clearfix hidden-xs"></div>
-    <div class="clearfix hidden-xs"></div-->
 </div>
 <div class="dialog-footer-margin modal-footer addAddr">
-    <button class="dialog-btn save-btn"ng-click="saveAddress()">
-        <span class="">{{(isCreateNew?'Save':'Update')}}<!--//TODO just keeping this around for reference edit-modal-save-button/--></span>
+    <button class="dialog-btn" ng-click="cancelModal()">{{'personInfo.label.button.cancel'|i18n}}</button>
+    <button class="dialog-btn save-btn" ng-click="saveAddress()">
+        <span class="mid-dash">{{(isCreateNew?'personInfo.label.button.save':'personInfo.label.button.update')|i18n}}</span>
     </button>
 </div>

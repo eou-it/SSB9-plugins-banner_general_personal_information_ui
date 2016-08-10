@@ -46,7 +46,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             if (editAddressProperties.currentAddress) {
                 // Set up for "update address"
                 $scope.isCreateNew = false;
-                $scope.address = editAddressProperties.currentAddress;
+                $scope.address = angular.copy(editAddressProperties.currentAddress);
             } else {
                 // Create "new address" object
                 $scope.address = {

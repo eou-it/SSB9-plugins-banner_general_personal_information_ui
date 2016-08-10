@@ -51,7 +51,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piEditAddress.html'),
-                //windowClass: 'edit-account-modal',
+                windowClass: 'edit-addr-modal',
                 keyboard: true,
                 controller: "piEditAddressController",
                 scope: $scope,
