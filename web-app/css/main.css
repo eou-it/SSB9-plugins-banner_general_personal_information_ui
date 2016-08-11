@@ -187,9 +187,45 @@ input:disabled {
     margin: 0;
 }
 
-.pi-style .select2-container {
-    width: 100% !important;
+input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
+    font-family: 'BannerIcon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 64%;
+    -moz-osx-font-smoothing: grayscale;
+
+    font-size: 18px;
+    background: none;
+    vertical-align: middle;
+    height: auto;
+    width: auto;
+    padding: 1em;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
 }
+input.hasMultiCalendarPicker.pi-date-input + span.calendar-img::before {
+    content: "\e651";
+}
+
+.input-colors + span {
+    color: #869FB1;
+}
+
+.input-colors + span:hover {
+    color: #206E9F;
+}
+
+.input-colors:focus + span {
+    color: #206E9F;
+}
+
+.input-colors + span:disabled {
+    color: #C2CFD8;
+}
+
 
 .pi-modal-divider{
     width: 100%;
@@ -231,6 +267,19 @@ input:disabled {
     color: #869FB1;
 }
 
+input.hasMultiCalendarPicker.pi-date-input {
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #869FB1;
+    box-shadow: 4px 4px #EDF3F6 inset;
+    width: 100%;
+    height: auto;
+    color: #869FB1;
+    padding: 1em .75em;
+    line-height: 136%;
+}
+
 @media(max-width:568px){
     .xs-fix {
         width: 100%;
@@ -243,21 +292,25 @@ input:disabled {
     }
 }
 
-.text-input-field::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+.text-input-field::-webkit-input-placeholder,
+.pi-date-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #869FB1;
     font-weight: bold;
 }
-.text-input-field:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.text-input-field:-moz-placeholder,
+.pi-date-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color: #869FB1;
    font-weight: bold;
    opacity:  1;
 }
-.text-input-field::-moz-placeholder { /* Mozilla Firefox 19+ */
+.text-input-field::-moz-placeholder,
+.pi-date-input::-moz-placeholder { /* Mozilla Firefox 19+ */
    color: #869FB1;
    font-weight: bold;
    opacity:  1;
 }
-.text-input-field:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.text-input-field:-ms-input-placeholder,
+.pi-date-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #869FB1;
    font-weight: bold;
 }
@@ -356,6 +409,7 @@ input:disabled {
 }
 
 .text-input-field:focus,
+input.hasMultiCalendarPicker.pi-date-input:focus,
 .radio-txt-input:focus {
     border-style: solid;
     border-width: 1px;
