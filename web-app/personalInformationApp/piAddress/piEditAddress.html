@@ -1,7 +1,6 @@
 <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addAddress':'personInfo.title.updateAddress')|i18n}}</h2>
 <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
 <div class="row pad-dialog-lr">
-    <!--div class="clearfix hidden-xs"></div-->
     <div class="select2-container col-sm-6 col-md-6 col-lg-4" ng-if="isCreateNew">
         <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
@@ -13,14 +12,12 @@
     <div class="pi-modal-divider visible-xs"><span></span></div>
     <div class="col-sm-6 col-md-6 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.validFrom'|i18n}}</label><br>
-        <input date-picker ng-model="address.fromDate" class="pi-date-input text-input-field input-colors"
+        <input date-picker ng-model="address.fromDate" on-select="setFromDate" class="pi-date-input text-input-field input-colors"
                placeholder="{{'personInfo.placeholder.date'|i18n}}" id=""/>
-        <!--input ng-model="address.fromDate" class="text-input-field semi-bold form-spacing" placeholder="MM/DD/YYYY"-->
-        <!--span class="icon-calendar"></span-->
     </div>
     <div class="col-sm-6 col-md-6 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.validTo'|i18n}}</label><br>
-        <input date-picker ng-model="address.toDate" class="pi-date-input text-input-field input-colors"
+        <input date-picker ng-model="address.toDate" on-select="setToDate" class="pi-date-input text-input-field input-colors"
                placeholder="{{'personInfo.placeholder.date'|i18n}}" id=""/>
     </div>
     <div class="pi-modal-divider hidden-xs"><span></span></div>

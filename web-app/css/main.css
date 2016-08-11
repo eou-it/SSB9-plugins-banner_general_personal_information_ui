@@ -210,6 +210,10 @@ input.hasMultiCalendarPicker.pi-date-input + span.calendar-img::before {
     content: "\e651";
 }
 
+input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
+    display: none;
+}
+
 .input-colors + span {
     color: #869FB1;
 }
