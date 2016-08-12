@@ -22,10 +22,14 @@ personalInformationApp.service('piAddressService', ['$resource', 'notificationCe
         };
 
         this.getErrorAddressType = function (address) {
+            var msg = 'personInfo.address.error.addressType';
             if (!address.addressType.code) {
-                messages.push({msg: 'personInfo.address.error.addressType', type: 'error'});
+                messages.push({msg: msg, type: 'error'});
 
-                return 'personInfo.address.error.addressType';
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
             }
         };
 

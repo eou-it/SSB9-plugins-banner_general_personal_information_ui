@@ -44,13 +44,8 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             $scope.cityErrMsg = piAddressService.getErrorCity(address);
             $scope.stateCountyNationErrMsg = piAddressService.getErrorStateCountyNation(address);
 
-            if($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
-                $scope.stateCountyNationErrMsg) {
-                return false;
-            }
-            else {
-                return true;
-            }
+            return ($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
+                $scope.stateCountyNationErrMsg);
         };
 
         $scope.saveAddress = function() {
