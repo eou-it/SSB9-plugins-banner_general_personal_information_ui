@@ -5,6 +5,11 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         // CONTROLLER VARIABLES
         // --------------------
         $scope.isCreateNew = true;
+        $scope.addressTypeErrMsg = '';
+        $scope.fromDateErrMsg = '';
+        $scope.streetLine1ErrMsg = '';
+        $scope.cityErrMsg = '';
+        $scope.stateCountyNationErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -14,8 +19,37 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             notificationCenterService.clearNotifications();
         };
 
+        $scope.removeAddressFieldErrors = function() {
+            if(!!$scope.addressTypeErrMsg) {
+                $scope.addressTypeErrMsg = piAddressService.getErrorAddressType($scope.address);
+            }
+            if(!!$scope.fromDateErrMsg) {
+                $scope.fromDateErrMsg = piAddressService.getErrorFromDate($scope.address);
+            }
+            if(!!$scope.streetLine1ErrMsg) {
+                $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1($scope.address);
+            }
+            if(!!$scope.cityErrMsg){
+                $scope.cityErrMsg = piAddressService.getErrorCity($scope.address);
+            }
+            if(!!$scope.stateCountyNationErrMsg) {
+                $scope.stateCountyNationErrMsg = piAddressService.getErrorStateCountyNation($scope.address);
+            }
+        };
+
+        var isValidAddress = function (address) {
+            $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
+            $scope.fromDateErrMsg = piAddressService.getErrorFromDate(address);
+            $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1(address);
+            $scope.cityErrMsg = piAddressService.getErrorCity(address);
+            $scope.stateCountyNationErrMsg = piAddressService.getErrorStateCountyNation(address);
+
+            return ($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
+                $scope.stateCountyNationErrMsg);
+        };
+
         $scope.saveAddress = function() {
-            if(piAddressService.isValidAddress($scope.address)) {
+            if(isValidAddress($scope.address)) {
                 // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
@@ -41,12 +75,20 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             }
         };
 
+        $scope.setFromDate = function(data){
+            $scope.address.fromDate = data;
+        }
+
+        $scope.setToDate = function(data){
+            $scope.address.toDate = data;
+        }
+
         this.init = function() {
 
             if (editAddressProperties.currentAddress) {
                 // Set up for "update address"
                 $scope.isCreateNew = false;
-                $scope.address = editAddressProperties.currentAddress;
+                $scope.address = angular.copy(editAddressProperties.currentAddress);
             } else {
                 // Create "new address" object
                 $scope.address = {

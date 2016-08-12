@@ -21,7 +21,7 @@ personalInformationAppDirectives.directive('selectBox', function() {
                 maxItems = 10;
 
             elem.select2({
-                width: '200px',
+                width: '100%',
                 placeholder: data.placeholder,
                 ajax: {
                     url: data.action,

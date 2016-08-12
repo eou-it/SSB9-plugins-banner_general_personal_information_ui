@@ -181,6 +181,79 @@ input:disabled {
     display: inline;
 }
 
+.pi-modal-title {
+    padding: 0.7em 0.7em 0.5em 0.7em;
+    display: inline-block;
+    margin: 0;
+}
+
+input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
+    font-family: 'BannerIcon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 64%;
+    -moz-osx-font-smoothing: grayscale;
+
+    font-size: 18px;
+    background: none;
+    vertical-align: middle;
+    height: auto;
+    width: auto;
+    padding: 1em;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+}
+input.hasMultiCalendarPicker.pi-date-input + span.calendar-img::before {
+    content: "\e651";
+}
+
+input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
+    display: none;
+}
+
+.input-colors + span {
+    color: #869FB1;
+}
+
+.input-colors + span:hover,
+.input-colors.input-error + span:hover {
+    color: #206E9F;
+}
+
+.input-colors:focus + span {
+    color: #206E9F;
+}
+
+.input-colors + span:disabled {
+    color: #C2CFD8;
+}
+
+.input-colors.input-error + span {
+    color: #CD3B3E;
+}
+
+.input-colors.input-error:focus + span {
+    color: #206E9F;
+}
+
+
+.pi-modal-divider{
+    width: 100%;
+    height: 1px;
+    padding: 0em 1em;
+}
+
+.pi-modal-divider span {
+    border-bottom: 1px solid black;
+    width: 100%;
+    float: left;
+    margin-top: 1.5em;
+    margin-bottom: 0.675em;
+}
+
 .input-field-label {
     padding: 0.875em 0em;
     margin: 0px;
@@ -207,6 +280,19 @@ input:disabled {
     color: #869FB1;
 }
 
+input.hasMultiCalendarPicker.pi-date-input {
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #869FB1;
+    box-shadow: 4px 4px #EDF3F6 inset;
+    width: 100%;
+    height: auto;
+    color: #869FB1;
+    padding: 1em .75em;
+    line-height: 136%;
+}
+
 @media(max-width:568px){
     .xs-fix {
         width: 100%;
@@ -219,49 +305,58 @@ input:disabled {
     }
 }
 
-.text-input-field::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+.text-input-field::-webkit-input-placeholder,
+.pi-date-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #869FB1;
     font-weight: bold;
 }
-.text-input-field:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.text-input-field:-moz-placeholder,
+.pi-date-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color: #869FB1;
    font-weight: bold;
    opacity:  1;
 }
-.text-input-field::-moz-placeholder { /* Mozilla Firefox 19+ */
+.text-input-field::-moz-placeholder,
+.pi-date-input::-moz-placeholder { /* Mozilla Firefox 19+ */
    color: #869FB1;
    font-weight: bold;
    opacity:  1;
 }
-.text-input-field:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.text-input-field:-ms-input-placeholder,
+.pi-date-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #869FB1;
    font-weight: bold;
 }
 
 .dropdown .input-field-error,
 .input-field-error,
-.radio-txt-input.input-field-error {
+.radio-txt-input.input-field-error,
+input.hasMultiCalendarPicker.pi-date-input.input-error {
     background-color: #F6E5E6;
     border:1px solid #CD3B3E;
     box-shadow: 3px 3px #F0D3D3 inset;
     color: #CD3B3E;
 }
 
-.input-field-error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+.input-field-error::-webkit-input-placeholder,
+.pi-date-input.input-error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #CD3B3E;
     font-weight: bold;
 }
-.input-field-error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.input-field-error:-moz-placeholder,
+.pi-date-input.input-error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color: #CD3B3E;
    font-weight: bold;
    opacity:  1;
 }
-.input-field-error::-moz-placeholder { /* Mozilla Firefox 19+ */
+.input-field-error::-moz-placeholder,
+.pi-date-input.input-error::-moz-placeholder { /* Mozilla Firefox 19+ */
    color: #CD3B3E;
    font-weight: bold;
    opacity:  1;
 }
-.input-field-error:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.input-field-error:-ms-input-placeholder,
+.pi-date-input.input-error:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #CD3B3E;
    font-weight: bold;
 }
@@ -269,8 +364,8 @@ input:disabled {
 .input-fail {
     position: absolute;
     float: right;
-    right: 0.75em;
-    bottom: 1.0em;
+    right: 2.25em;
+    top: 4.3em;
     background: #F6E5E6;
 }
 
@@ -332,6 +427,7 @@ input:disabled {
 }
 
 .text-input-field:focus,
+input.hasMultiCalendarPicker.pi-date-input:focus,
 .radio-txt-input:focus {
     border-style: solid;
     border-width: 1px;
@@ -373,6 +469,13 @@ button.closebtn {
     float: right;
 }
 
+.modal-footer.addAddr {
+    display: table;
+    padding: 1px 0px 0px;
+    border-top: 1px solid black;
+    width: 100%;
+}
+
 .dialog-btn {
     box-sizing: border-box;
     display: table-cell;
@@ -398,11 +501,6 @@ button.closebtn {
 
 .save-btn {
     padding: 0em;
-}
-
-.addAddr .save-btn {
-    width: 100%;
-    padding: 1em;
 }
 
 .save-btn[disabled] {
@@ -821,7 +919,7 @@ table tr td {
     }
 
     .pad-dialog-lr {
-        padding: 0em 1.7em;
+        padding: 0em 1.5em;
     }
 
     .edit-flex-div2 {
@@ -834,6 +932,12 @@ table tr td {
 
     .xs-errors-visible {
         display: none;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .edit-addr-modal .modal-dialog {
+        width: 896px;
     }
 }
 
