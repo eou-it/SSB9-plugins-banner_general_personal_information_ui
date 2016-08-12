@@ -21,26 +21,60 @@ personalInformationApp.service('piAddressService', ['$resource', 'notificationCe
             return getAddresses.get();
         };
 
-        this.isValidAddress = function (address) {
-            var result  = true;
-            if(!address.fromDate) {
-                result = false;
-                messages.push({msg: 'personInfo.address.error.fromDate', type: 'error'});
+        this.getErrorAddressType = function (address) {
+            if (!address.addressType.code) {
+                messages.push({msg: 'personInfo.address.error.addressType', type: 'error'});
+
+                return 'personInfo.address.error.addressType';
             }
-            if(!address.streetLine1) {
-                result = false;
-                messages.push({msg: 'personInfo.address.error.streetLine1', type: 'error'});
+        };
+
+        this.getErrorFromDate = function (address) {
+            var msg = 'personInfo.address.error.fromDate';
+            if (!address.fromDate) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
             }
-            if(!address.city) {
-                result = false;
-                messages.push({msg: 'personInfo.address.error.city', type: 'error'});
+            else {
+                notificationCenterService.removeNotification(msg);
             }
-            if((!address.state && !address.nation) || (!address.nation && !address.zip) ||
-                (address.state && !address.zip)){
-                result = false;
-                messages.push({msg: 'personInfo.address.error.stateNationZip', type: 'error'});
+        };
+
+        this.getErrorStreetLine1 = function(address) {
+            var msg = 'personInfo.address.error.streetLine1';
+            if (!address.streetLine1) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
             }
-            return result;
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorCity = function(address) {
+            var msg = 'personInfo.address.error.city';
+            if (!address.city) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorStateCountyNation = function(address) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if((!address.state.code && !address.nation.code) || (address.state.code && !address.zip)){
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
         };
 
         this.saveNewAddress = function (address) {

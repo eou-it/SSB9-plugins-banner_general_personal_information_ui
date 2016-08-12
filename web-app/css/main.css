@@ -218,7 +218,8 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     color: #869FB1;
 }
 
-.input-colors + span:hover {
+.input-colors + span:hover,
+.input-colors.input-error + span:hover {
     color: #206E9F;
 }
 
@@ -228,6 +229,14 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 
 .input-colors + span:disabled {
     color: #C2CFD8;
+}
+
+.input-colors.input-error + span {
+    color: #CD3B3E;
+}
+
+.input-colors.input-error:focus + span {
+    color: #206E9F;
 }
 
 
@@ -321,28 +330,33 @@ input.hasMultiCalendarPicker.pi-date-input {
 
 .dropdown .input-field-error,
 .input-field-error,
-.radio-txt-input.input-field-error {
+.radio-txt-input.input-field-error,
+input.hasMultiCalendarPicker.pi-date-input.input-error {
     background-color: #F6E5E6;
     border:1px solid #CD3B3E;
     box-shadow: 3px 3px #F0D3D3 inset;
     color: #CD3B3E;
 }
 
-.input-field-error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+.input-field-error::-webkit-input-placeholder,
+.pi-date-input.input-error::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #CD3B3E;
     font-weight: bold;
 }
-.input-field-error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.input-field-error:-moz-placeholder,
+.pi-date-input.input-error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color: #CD3B3E;
    font-weight: bold;
    opacity:  1;
 }
-.input-field-error::-moz-placeholder { /* Mozilla Firefox 19+ */
+.input-field-error::-moz-placeholder,
+.pi-date-input.input-error::-moz-placeholder { /* Mozilla Firefox 19+ */
    color: #CD3B3E;
    font-weight: bold;
    opacity:  1;
 }
-.input-field-error:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.input-field-error:-ms-input-placeholder,
+.pi-date-input.input-error:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #CD3B3E;
    font-weight: bold;
 }
@@ -350,8 +364,8 @@ input.hasMultiCalendarPicker.pi-date-input {
 .input-fail {
     position: absolute;
     float: right;
-    right: 0.75em;
-    bottom: 1.0em;
+    right: 2.25em;
+    top: 4.3em;
     background: #F6E5E6;
 }
 
