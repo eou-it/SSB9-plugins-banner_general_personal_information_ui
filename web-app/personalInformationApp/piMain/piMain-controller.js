@@ -7,6 +7,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
               piAddressService) {
 
 
+        var displayNotificationsOnStateLoad = function() {
+            $timeout(function() {
+                _.each($stateParams.onLoadNotifications, function(notification) {
+                    notificationCenterService.addNotification(notification.message, notification.messageType, notification.flashType);
+                });
+            }, 0);
+        };
+
         /**
          * Initialize controller
          */
@@ -29,6 +37,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     return addr.deleteMe;
                 });
             }, true);
+
+            displayNotificationsOnStateLoad();
         };
 
 

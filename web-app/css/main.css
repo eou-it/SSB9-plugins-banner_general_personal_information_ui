@@ -293,18 +293,6 @@ input.hasMultiCalendarPicker.pi-date-input {
     line-height: 136%;
 }
 
-@media(max-width:568px){
-    .xs-fix {
-        width: 100%;
-    }
-}
-
-@media(max-width:767px){
-    .clear-xs-sm {
-        clear: both;
-    }
-}
-
 .text-input-field::-webkit-input-placeholder,
 .pi-date-input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #869FB1;
@@ -877,7 +865,10 @@ table tr td {
 /* Media Query Section */
 /***********************/
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width:991px) {
+    .sm-fix {
+        width: 100%;
+    }
 }
 
 @media(max-width:568px){

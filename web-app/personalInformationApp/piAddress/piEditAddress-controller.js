@@ -50,7 +50,6 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
 
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
-                // TODO this can probably be removed when date picker implemented
                 $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
                 $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
 
@@ -59,7 +58,16 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                         notificationCenterService.displayNotification(response.message, "error");
                     }
                     else {
-                        $scope.cancelModal();
+                        var notifications = [];
+                        notifications.push({message: 'default.save.success.message',
+                            messageType: $scope.notificationSuccessType,
+                            flashType: $scope.flashNotification}
+                        );
+
+                        $state.go('personalInformationMain',
+                            {onLoadNotifications: notifications},
+                            {reload: true, inherit: false, notify: true}
+                        );
                     }
                 };
 
