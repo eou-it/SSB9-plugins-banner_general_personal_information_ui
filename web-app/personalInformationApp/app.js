@@ -66,6 +66,17 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 params: {
                     onLoadNotifications: []
                 }
+            })
+            .state('piPreEditAddresses', {
+                url: "/piPreEditAddresses",
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piAddress/piPreEditAddresses.html',
+                controller: 'piMainController',
+                data: {
+                    breadcrumbs: []
+                },
+                params: {
+                    onLoadNotifications: []
+                }
             });
     }
 ]);
