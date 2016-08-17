@@ -39,6 +39,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse(dataForNullCheck)
         println data
         assertNotNull data
+        assertEquals 2, data.addresses.size()
+        assertEquals 'OT', data.addresses[0].addressType.code
     }
 
     @Test
@@ -165,7 +167,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             },
             city:"Malvern",
             county:null,
-            fromDate:"2009-01-01T05:00:00.000Z",
+            fromDate:"2034-01-01T05:00:00.000Z",
             houseNumber:"HN 1",
             nation:null,
             state:{
@@ -206,7 +208,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             },
             city:"Malvern",
             county:null,
-            fromDate:"2009-01-01T05:00:00.000Z",
+            fromDate:"2034-01-01T05:00:00.000Z",
             houseNumber:"HN 1",
             nation:null,
             state:{
