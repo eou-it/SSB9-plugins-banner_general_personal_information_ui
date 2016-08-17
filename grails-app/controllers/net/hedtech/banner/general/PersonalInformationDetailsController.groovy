@@ -21,6 +21,7 @@ class PersonalInformationDetailsController {
     def nationService
     def personAddressService
     def personAddressCompositeService
+    def personAddressByRoleViewService
     def personalInformationCompositeService
 
     private def findPerson() {
@@ -32,11 +33,10 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         if (pidm) {
-            def map = [pidm: pidm]
             def addresses
 
             try {
-                addresses = personAddressService.getActiveAddresses(map).list
+                addresses = personAddressByRoleViewService.getActiveAddressesByRoles(getRoles(), pidm)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
@@ -51,7 +51,7 @@ class PersonalInformationDetailsController {
                 personAddress = [:]
                 personAddress.id = it.id
                 personAddress.version = it.version
-                personAddress.addressType = it.addressType
+                personAddress.addressType = [code: it.addressType, description: it.addressTypeDescription]
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
                 personAddress.houseNumber = it.houseNumber
@@ -60,10 +60,10 @@ class PersonalInformationDetailsController {
                 personAddress.streetLine3 = it.streetLine3
                 personAddress.streetLine4 = it.streetLine4
                 personAddress.city = it.city
-                personAddress.county = it.county
-                personAddress.state = it.state
+                personAddress.county = [code: it.countyCode, description: it.county]
+                personAddress.state = [code: it.stateCode, description: it.state]
                 personAddress.zip = it.zip
-                personAddress.nation = it.nation
+                personAddress.nation = [code: it.nationCode, nation: it.nation]
                 personAddress.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber:it.houseNumber,
                          streetLine1:it.streetLine1,
@@ -71,10 +71,10 @@ class PersonalInformationDetailsController {
                          streetLine3:it.streetLine3,
                          streetLine4:it.streetLine4,
                          city:it.city,
-                         state:it.state?.description,
+                         state:it.state,
                          zip:it.zip,
-                         county:it.county?.description,
-                         country:it.nation?.nation])
+                         county:it.county,
+                         country:it.nation])
 
                 model.addresses << personAddress
             }

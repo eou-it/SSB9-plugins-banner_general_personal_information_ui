@@ -59,7 +59,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                     }
                     else {
                         var notifications = [];
-                        notifications.push({message: 'default.save.success.message',
+                        notifications.push({message: 'personInfo.save.success.message',
                             messageType: $scope.notificationSuccessType,
                             flashType: $scope.flashNotification}
                         );
