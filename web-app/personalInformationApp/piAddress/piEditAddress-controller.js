@@ -85,11 +85,11 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
 
         $scope.setFromDate = function(data){
             $scope.address.fromDate = data;
-        }
+        };
 
         $scope.setToDate = function(data){
             $scope.address.toDate = data;
-        }
+        };
 
         this.init = function() {
 

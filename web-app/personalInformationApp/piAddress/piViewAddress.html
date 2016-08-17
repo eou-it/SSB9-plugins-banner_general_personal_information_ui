@@ -3,11 +3,6 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 ********************************************************************************-->
 
 <div class="address-wrapper">
-    <div class="address-delete-checkbox delete-checkbox-wrapper no-margin">
-        <label class="visuallyhidden" id="for-delete{{$index}}">{{'personInfo.label.select.for.delete'|i18n}}</label>
-        <input type="checkbox" ng-model="address.deleteMe" no-dirty-check aria-labelledby="for-delete{{$index}} {{address.addressType}}-address">
-        <div class="lbl"></div>
-    </div>
     <div class="address-detail" id="{{address.addressType.description}}-address">
         <div class="address-type-view">
             {{address.addressType.description}}
@@ -52,4 +47,5 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         </div>
     </div>
     <a ng-click="openEditAddressModal(address)">{{'personInfo.label.update'|i18n}}</a>
+    <a ng-click="confirmAddressDelete(address)">{{'personInfo.label.delete'|i18n}}</a>
 </div>
