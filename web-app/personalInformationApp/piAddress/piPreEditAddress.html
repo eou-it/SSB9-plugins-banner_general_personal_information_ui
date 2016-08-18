@@ -9,11 +9,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div class="lbl"></div>
     </div>
     <div class="address-detail" id="{{address.addressType.description}}-address">
-        <div ng-if="address.isFuture">
-            {{'personInfo.label.future'|i18n}}
-        </div>
-        <div ng-if="!address.isFuture">
-            {{'personInfo.label.current'|i18n}}
+        <div>
+            {{(address.isFuture ? 'personInfo.label.future' : 'personInfo.label.current')|i18n}}
         </div>
         <div class="clearfix">
             <div class="address-date-range">
