@@ -4,10 +4,10 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 
 <div class="address-wrapper sm-fix">
     <div class="address-detail" id="{{address.addressType.description}}-address">
-        <div class="address-type-view">
-            {{address.addressType.description}}
+        <div ng-if="address.isFuture">
+            {{'personInfo.label.future'|i18n}}
         </div>
-        <div class="address-date-range-label">
+        <div ng-if="!address.isFuture">
             {{'personInfo.label.current'|i18n}}
         </div>
         <div class="clearfix">

@@ -13,6 +13,33 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.addNotification(notification.message, notification.messageType, notification.flashType);
                 });
             }, 0);
+        },
+
+        /**
+         * Sort addresses by type (e.g. Mailing, Permanent) and whether current or future.
+         * @param addresses
+         * @returns Object containing a "current" array and "future" array.
+         */
+        sortAddresses = function(addresses) {
+            var sorted = {},
+                addrType,
+                timePeriod;
+
+            _.each(addresses, function(addr) {
+                addrType = addr.addressType.description;
+
+                if (!(addrType in sorted)) {
+                    sorted[addrType] = {
+                        current: [],
+                        future: []
+                    };
+                }
+
+                timePeriod = addr.isFuture ? 'future' : 'current';
+                sorted[addrType][timePeriod].push(addr);
+            });
+
+            return sorted;
         };
 
         /**
@@ -24,10 +51,11 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
-                    $scope.addresses = response.addresses;
+                    $scope.addressGroup = sortAddresses(response.addresses);
                 }
             });
 
+            // TODO: BEGIN REMOVE FOR REFACTOR OF DELETE FUNCTIONALITY
             // If any address is flagged for delete (happens via user checking a checkbox, which
             // in turn sets the deleteMe property to true), set selectedForDelete.address to true,
             // enabling the "Delete" button.
@@ -37,6 +65,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     return addr.deleteMe;
                 });
             }, true);
+            // TODO: END REMOVE FOR REFACTOR OF DELETE FUNCTIONALITY
 
             displayNotificationsOnStateLoad();
         };
@@ -44,7 +73,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER VARIABLES
         // --------------------
-        $scope.addresses = null;
+        $scope.addresses = null; // TODO: REMOVE AS PART OF REFACTOR OF DELETE FUNCTIONALITY
+        $scope.addressGroup = null;
 
         $scope.selectedForDelete = {
             address: false
