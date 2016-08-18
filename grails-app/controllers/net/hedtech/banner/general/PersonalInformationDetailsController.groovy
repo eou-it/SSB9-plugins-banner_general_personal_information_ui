@@ -54,6 +54,7 @@ class PersonalInformationDetailsController {
                 personAddress.addressType = [code: it.addressType, description: it.addressTypeDescription]
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
+                personAddress.isFuture = isDateInFuture(it.fromDate)
                 personAddress.houseNumber = it.houseNumber
                 personAddress.streetLine1 = it.streetLine1
                 personAddress.streetLine2 = it.streetLine2
@@ -214,5 +215,10 @@ class PersonalInformationDetailsController {
         addressMap.fromDate = DateUtility.parseDateString(addressMap.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
         if(addressMap.toDate)
             addressMap.toDate = DateUtility.parseDateString(addressMap.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+    }
+
+    private def isDateInFuture(date) {
+        Date today = new Date()
+        return date.after(today)
     }
 }

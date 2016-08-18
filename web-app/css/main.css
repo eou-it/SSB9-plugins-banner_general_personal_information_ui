@@ -534,10 +534,22 @@ button.closebtn {
 /************************/
 /* Person Detail Layout */
 /************************/
+
+.details-section {
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+
 .details-section-heading {
+    float: left;
     font-size: 16px;
     font-weight: bold;
     padding-bottom: 10px;
+}
+
+.details-section-edit {
+    float: right;
 }
 
 .address-delete-checkbox {
@@ -551,7 +563,7 @@ button.closebtn {
 
 .address-wrapper {
     float: left;
-    padding: 15px;
+    padding-bottom: 15px;
 }
 
 .address-type-view {
@@ -560,12 +572,6 @@ button.closebtn {
 
 .address-date-range {
     float: left;
-}
-
-.address-date-range-label {
-    font-weight: bold;
-    float: left;
-    padding-right: 5px;
 }
 
 .address-zip {
@@ -590,6 +596,20 @@ a.delete-address-link {
 .delete-address-link.disabled {
     cursor: not-allowed;
     color: #A0A3A4;
+}
+
+
+/* Icons */
+.details-section-edit-link,
+a:hover.details-section-edit-link,
+a:focus.details-section-edit-link {
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.details-section-edit-link .icon-edit {
+    font-size: 14px;
 }
 
 
