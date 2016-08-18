@@ -61,7 +61,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER VARIABLES
         // --------------------
-        $scope.addresses = null; // TODO: REMOVE AS PART OF REFACTOR OF DELETE FUNCTIONALITY
         $scope.addressGroup = null;
 
 
@@ -106,8 +105,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
                         // Refresh address info
-                        var addressIndex = $scope.addresses.indexOf(address);
-                        $scope.addresses.splice(addressIndex, 1);
+                        var addrType = address.addressType.description;
+                        var timePeriod = address.isFuture ? 'future' : 'current';
+                        var addressIndex = $scope.addressGroup[addrType][timePeriod].indexOf(address);
+                        $scope.addressGroup[addrType][timePeriod].splice(addressIndex, 1);
                     }
                 });
             };
