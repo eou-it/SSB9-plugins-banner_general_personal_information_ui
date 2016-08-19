@@ -11,8 +11,8 @@ personalInformationApp.service('piAddressService', ['$resource', 'notificationCe
                 {controller: 'PersonalInformationDetails', action: 'getActiveAddressesForCurrentUser'}),
 
 
-            deleteAddresses = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'deleteAddresses'}, {delete: {method:'POST', isArray:true}}),
+            deleteAddress = $resource('../ssb/:controller/:action',
+                {controller: 'PersonalInformationDetails', action: 'deleteAddresses'}, {delete: {method:'POST'}}),
 
 
             messages = [];
@@ -89,8 +89,8 @@ personalInformationApp.service('piAddressService', ['$resource', 'notificationCe
             return updateAddress.save(address);
         };
 
-        this.deleteAddresses = function (addresses) {
-            return deleteAddresses.delete(addresses);
+        this.deleteAddress = function (addresses) {
+            return deleteAddress.delete(addresses);
         };
 
         this.displayMessages = function() {

@@ -179,13 +179,12 @@ class PersonalInformationDetailsController {
         try {
             def result = personAddressService.delete(map)
 
-            render result as JSON
+            render([failure: false] as JSON)
 
         } catch (ApplicationException e) {
-            def arrayResult = [];
-            arrayResult[0] = PersonProfileControllerUtility.returnFailureMessage(e)
+            def result = PersonProfileControllerUtility.returnFailureMessage(e)
 
-            render arrayResult as JSON
+            render result as JSON
         }
     }
 

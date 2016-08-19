@@ -333,7 +333,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
-        assertTrue data[0]
+        assertFalse data.failure
     }
 
 }
