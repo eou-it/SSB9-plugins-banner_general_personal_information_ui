@@ -91,12 +91,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // Display address delete confirmation modal
         $scope.confirmAddressDelete = function (address) {
-            // TODO: need this?
-            //if ($scope.editForm.$dirty) {
-            //    showSaveCancelMessage();
-            //    return;
-            //}
-
             var deleteAddress = function () {
                 $scope.cancelNotification();
 
