@@ -6,7 +6,7 @@ var personalInformationAppDirectives = angular.module('personalInformationAppDir
 
 
 var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
-    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp'])
+    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {
@@ -148,5 +148,5 @@ personalInformationApp.config(['$httpProvider',
  * For more info, see https://docs.angularjs.org/guide/production
  */
 personalInformationApp.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.debugInfoEnabled(false);
+    $compileProvider.debugInfoEnabled(true);
 }]);

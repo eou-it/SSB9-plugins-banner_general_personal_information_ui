@@ -34,8 +34,18 @@ modules = {
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/js/bootstrap.js']
     }
 
+    'commonComponents' {
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'js/xe-components/xe-ui-components.js']
+    }
+    'commonComponentsLTR' {
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'css/xe-components/xe-ui-components.css']
+    }
+    'commonComponentsRTL' {
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'css/xe-components/xe-ui-components-rtl.css']
+    }
+
     'personalInformationApp' {
-        dependsOn "angular,glyphicons"
+        dependsOn "angular,glyphicons,commonComponents"
 
         defaultBundle environment == "development" ? false : "personalInformationApp"
 
@@ -63,7 +73,7 @@ modules = {
 
     if (System.properties['BANNERXE_APP_NAME'].equals("PersonalInformation") || System.properties['BANNERXE_APP_NAME'] == null) {
         'personalInformationAppLTR' {
-            dependsOn "bannerWebLTR, personalInformationApp, bootstrapLTR"
+            dependsOn "bannerWebLTR, personalInformationApp, bootstrapLTR, commonComponentsLTR"
 
             // CSS
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main.css'], attrs: [media: 'screen, projection']
@@ -73,7 +83,7 @@ modules = {
         }
 
         'personalInformationAppRTL' {
-            dependsOn "bannerWebRTL, personalInformationApp, bootstrapRTL"
+            dependsOn "bannerWebRTL, personalInformationApp, bootstrapRTL. commonComponentsRTL"
 
             // CSS
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main-rtl.css'], attrs: [media: 'screen, projection']
