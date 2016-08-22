@@ -1,9 +1,9 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div xe-section="tab2Section">
-    <h3>{{'personInfo.title.address'|i18n}}</h3>
-    <div class="clearfix">
+<div>
+    <h3 class="pad-left-right">{{'personInfo.title.address'|i18n}}</h3>
+    <div class="clearfix pad-left-right">
         <div ng-repeat="(addrType, addressTimePeriods) in addressGroup">
             <div class="address-type-view">
                 {{addrType}}
@@ -14,7 +14,9 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-        <a ng-click="openEditAddressModal()">Add an Address</a>
+    </div>
+    <div class="add-addr-footer">
+        <a ng-click="openEditAddressModal()" class="add-item-link pi-style" tabindex="0"><span>Add an Address</span><span class="icon-add-CO"></span></a>
     </div>
 </div>
 

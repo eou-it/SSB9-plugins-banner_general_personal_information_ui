@@ -22,7 +22,6 @@ body {
     overflow-y: auto !important;
     min-height: initial !important;
     font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    padding: 0 15px;
 }
 
 #signOut {
@@ -150,6 +149,10 @@ input:disabled {
     padding-left: 15px;
 }
 
+.pad-left-right {
+    padding: 0px 15px;
+}
+
 .semi-bold {
     font-weight: bold;
 }
@@ -187,14 +190,53 @@ input:disabled {
     margin: 0;
 }
 
+.add-addr-footer {
+    border-top: 1px solid black;
+    min-width: 280px;
+    text-align: center;
+}
+
+.add-addr {
+    padding: 15px;
+    display: block;
+}
+
+a.add-item-link.pi-style {
+    padding: 1em;
+    display: inline-block;
+}
+
+a.add-item-link > span.icon-add-CO {
+    padding-left: 10px;
+}
+
+a.add-item-link {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.add-item-link span {
+    vertical-align: middle;
+}
+
+.add-item-link [class^="icon-"] {
+    font-size: 18px;
+}
+
+.add-item-link.disabled {
+    cursor: not-allowed;
+    color: #A0A3A4;
+}
+
 .nav-tabs {
     display: flex;
-    height: 3.375em;
+    margin-top: 5px;
     border-bottom: 1px solid #B9B9B9;
 }
 
 .nav-tabs > li {
-    border-bottom: 9px solid #B9B9B9;
+    border-bottom: 1px solid #B9B9B9;
 }
 
 .nav-tabs > li > a {
@@ -212,7 +254,10 @@ input:disabled {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:focus,
 .nav-tabs > li.active > a:hover {
-    border: none;
+    background-color: #ffffff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom: 9px solid #206E9F;
     box-sizing: border-box;
     margin: 0px;
@@ -223,14 +268,31 @@ input:disabled {
     border-color: #4F585F;
 }
 
-.nav-tabs > li.active > a h3{
+.nav-tabs > li.active > a h3 {
     font-weight: bold;
 }
 
 .nav h3, .nav h4 {
+    font-size: 20px;
     white-space: nowrap;
     margin: 0px;
-    padding: 1px 15px 10px;
+    padding: 20px 15px 14px;
+}
+
+.pi-link {
+    text-decoration: underline;
+    color: #206E9F;
+    padding: 5px 0px;
+    cursor: pointer;
+}
+
+a.addr-change {
+    clear: left;
+    float: left;
+}
+
+a.addr-delete {
+    float: right;
 }
 
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
