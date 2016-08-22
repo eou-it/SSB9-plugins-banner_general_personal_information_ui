@@ -892,10 +892,6 @@ table tr td {
 }
 
 @media(max-width:568px){
-    .xs-fix {
-        width: 100%;
-    }
-
     .edit-flex-div2 {
         display: inline;
     }
