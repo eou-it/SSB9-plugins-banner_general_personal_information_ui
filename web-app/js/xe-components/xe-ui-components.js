@@ -3087,10 +3087,14 @@ angular.module('dataTableModule', ['utils'])
                         script.src = activeTab.jsLazyLoad;
                         document.head.appendChild(script);
                     };
-                    $transclude(scope, function (clone, scope) {
+                    // Use closure to set tab scope property so transcluded content can use its default scope
+                    var setHasTranscludedContentTrue = function(){
+                        scope.hasTranscludedContent = true;
+                    };
+                    $transclude(function (clone, scope) {
                         var elementTo;
                         if (clone.text().trim().length) {
-                            scope.hasTranscludedContent = true;
+                            setHasTranscludedContentTrue();
                             elementTo = angular.element(ele[0].querySelector('[content]'));
                             elementTo.append(clone);
                         }
