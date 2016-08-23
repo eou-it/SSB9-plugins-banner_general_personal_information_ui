@@ -29,3 +29,16 @@ personalInformationAppDirectives.directive('personPreEditAddressList', ['$filter
         templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piPreEditAddressList.html')
     };
 }]);
+
+personalInformationAppDirectives.directive('setStartingTab', [function () {
+    return {
+        restrict: 'A',
+        link: {
+            pre: function(scope, ele, attr) {
+                if(attr.setStartingTab === scope.startingTab){
+                    attr.active = true;
+                }
+            }
+        }
+    };
+}]);

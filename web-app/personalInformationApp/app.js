@@ -75,7 +75,8 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                     breadcrumbs: []
                 },
                 params: {
-                    onLoadNotifications: []
+                    onLoadNotifications: [],
+                    startingTab: ''
                 }
             });
     }
@@ -148,5 +149,5 @@ personalInformationApp.config(['$httpProvider',
  * For more info, see https://docs.angularjs.org/guide/production
  */
 personalInformationApp.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.debugInfoEnabled(true);
+    $compileProvider.debugInfoEnabled(false);
 }]);
