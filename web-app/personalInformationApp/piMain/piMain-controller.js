@@ -70,6 +70,22 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER FUNCTIONS
         // --------------------
+        /**
+         * Get all addresses for specified address type (e.g. Mailing, Permanent).
+         * Addresses will be in order of time period, so "Current" will be contiguous, then "Future," etc.
+         * @param addrType
+         * @returns {Array}
+         */
+        $scope.getOrderedAddressesForType = function(addrType) {
+            var ordered = [];
+
+            _.each($scope.addressGroup[addrType], function(addresses) {
+                ordered = ordered.concat(addresses);
+            });
+
+            return ordered;
+        };
+
         $scope.cancelNotification = function () {
             notificationCenterService.clearNotifications();
         };

@@ -16,9 +16,9 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div class="address-type-view">
             {{addrType}}
         </div>
-        <div ng-repeat="(period, addresses) in addressTimePeriods">
-            <div ng-repeat="address in addresses">
-                <person-view-address></person-view-address>
+        <div class="row">
+            <div ng-repeat="address in getOrderedAddressesForType(addrType)" class="col-sm-12 col-md-6 col-lg-6">
+                <person-view-address address="address"></person-view-address>
             </div>
         </div>
     </div>
