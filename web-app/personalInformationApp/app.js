@@ -6,7 +6,7 @@ var personalInformationAppDirectives = angular.module('personalInformationAppDir
 
 
 var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
-    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp'])
+    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {
@@ -67,15 +67,16 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                     onLoadNotifications: []
                 }
             })
-            .state('piPreEditAddressView', {
-                url: "/piPreEditAddressView",
-                templateUrl: webAppResourcePathString + '/personalInformationApp/piAddress/piPreEditAddressView.html',
+            .state('piPreEditMobileView', {
+                url: "/piPreEditMobileView",
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piPreEditMobileView.html',
                 controller: 'piMainController',
                 data: {
                     breadcrumbs: []
                 },
                 params: {
-                    onLoadNotifications: []
+                    onLoadNotifications: [],
+                    startingTab: ''
                 }
             });
     }

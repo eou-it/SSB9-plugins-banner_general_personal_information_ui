@@ -1,22 +1,21 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-
-<div class="clearfix">
-    <div class="details-section-heading">
-        {{'personInfo.title.address'|i18n}}
-    </div>
-</div>
-
-<div class="clearfix">
-    <div ng-repeat="(addrType, addressTimePeriods) in addressGroup">
-        <div class="address-type-view">
-            {{addrType}}
-        </div>
-        <div ng-repeat="(period, addresses) in addressTimePeriods">
-            <div ng-repeat="address in addresses">
-                <person-pre-edit-address></person-pre-edit-address>
+<div>
+    <div class="clearfix pad-left-right">
+        <div ng-repeat="(addrType, addressTimePeriods) in addressGroup">
+            <div class="address-type-view">
+                {{addrType}}
+            </div>
+            <div ng-repeat="(period, addresses) in addressTimePeriods">
+                <div ng-repeat="address in addresses">
+                    <person-pre-edit-address></person-pre-edit-address>
+                </div>
             </div>
         </div>
     </div>
+    <div class="add-addr-footer">
+        <a ng-click="openEditAddressModal()" class="add-item-link pi-style" tabindex="0"><span>{{'personInfo.title.addAddress'|i18n}}</span><span class="icon-add-CO"></span></a>
+    </div>
 </div>
+

@@ -55,6 +55,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            if($stateParams.startingTab) {
+                $scope.startingTab = $stateParams.startingTab;
+            }
+
             displayNotificationsOnStateLoad();
         };
 
