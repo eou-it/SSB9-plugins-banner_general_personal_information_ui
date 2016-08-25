@@ -183,6 +183,18 @@ input:disabled {
     border: 0;
 }
 
+.desktop-visible {
+    visibility: hidden;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+
 .add-address-title {
     display: inline;
 }
@@ -202,6 +214,10 @@ input:disabled {
     font-size: 14px;
 }
 
+.xe-tab-container .pre-edit-addr-list {
+    padding: 0px 15px;
+}
+
 .add-addr-footer {
     border-top: 1px solid black;
     min-width: 280px;
@@ -211,6 +227,9 @@ input:disabled {
 .add-addr {
     padding: 15px;
     display: block;
+}
+.details-section-edit > a.add-item-link.pi-style {
+    padding: 0px;
 }
 
 a.add-item-link.pi-style {
@@ -1017,6 +1036,27 @@ table tr td {
 @media screen and (min-width:1024px) {
     .edit-addr-modal .modal-dialog {
         width: 896px;
+    }
+
+    .mobile-visible {
+        visibility: hidden;
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+
+    .desktop-visible {
+        visibility: visible;
+        position: relative;
+        overflow: auto;
+        height: auto;
+        width: auto;
+        margin: 0px;
     }
 }
 

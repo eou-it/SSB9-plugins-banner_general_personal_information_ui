@@ -66,6 +66,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // CONTROLLER VARIABLES
         // --------------------
         $scope.addressGroup = null;
+        $scope.editMode = {
+            phoneNumber: false,
+            address: false
+        };
 
 
         // CONTROLLER FUNCTIONS
@@ -140,6 +144,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             notificationCenterService.displayNotification('personInfo.confirm.address.delete.text', 'warning', false, prompts);
         };
+
+        $scope.setAddressEditMode = function() {
+            $scope.editMode.address = true;
+        }
 
 
         // INITIALIZE
