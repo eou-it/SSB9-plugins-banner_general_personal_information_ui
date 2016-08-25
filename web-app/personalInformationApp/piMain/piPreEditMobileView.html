@@ -10,6 +10,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <xe-tab-panel heading="{{'personInfo.title.addresses'|i18n}}" set-starting-tab="address">
         <h4 class="pre-edit-title pad-left-right">{{'personInfo.title.address'|i18n}}</h4>
         <person-pre-edit-address-list></person-pre-edit-address-list>
+        <div class="add-addr-footer">
+            <a ng-click="openEditAddressModal()" class="add-item-link pi-style" tabindex="0">
+                <span>{{'personInfo.title.addAddress'|i18n}}</span><span class="icon-add-CO"></span>
+            </a>
+        </div>
     </xe-tab-panel>
     <xe-tab-panel heading="Additional Details" set-starting-tab="addtionalDetail">
         <div>
