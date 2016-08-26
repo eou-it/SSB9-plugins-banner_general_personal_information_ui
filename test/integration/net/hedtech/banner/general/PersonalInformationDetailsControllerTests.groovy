@@ -336,4 +336,18 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertFalse data.failure
     }
 
+    @Test
+    void testFetchEmails(){
+        loginSSB 'GDP000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.fetchEmails()
+
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertEquals 1, data.size()
+        assertEquals 'ansbates@telstra.com', data[0].emailAddress
+    }
+
 }

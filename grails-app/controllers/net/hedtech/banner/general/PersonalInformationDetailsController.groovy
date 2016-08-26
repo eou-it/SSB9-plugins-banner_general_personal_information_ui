@@ -22,6 +22,7 @@ class PersonalInformationDetailsController {
     def personAddressService
     def personAddressCompositeService
     def personAddressByRoleViewService
+    def personEmailService
     def personalInformationCompositeService
 
     private def findPerson() {
@@ -185,6 +186,14 @@ class PersonalInformationDetailsController {
             def result = PersonProfileControllerUtility.returnFailureMessage(e)
 
             render result as JSON
+        }
+    }
+
+    def fetchEmails() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        if (pidm) {
+            render personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm) as JSON
         }
     }
 
