@@ -350,4 +350,78 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals 'ansbates@telstra.com', data[0].emailAddress
     }
 
+    @Test
+    void testAddEmail() {
+        loginSSB 'GDP000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            emailAddress:'myemail@somesite.org',
+            preferredIndicator: false,
+            commentData:null,
+            emailType:{
+                code:'PERS',
+                description:'Personal Email'
+            }
+        }""".toString()
+
+        controller.addEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals false, data.failure
+    }
+
+    @Test
+    void testAddDupeEmail() {
+        loginSSB 'GDP000001', '111111'
+
+        // this email record should already exist
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:false,
+            commentData:'hello world',
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.addEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals true, data.failure
+    }
+
+    @Test
+    void testAdd2ndPreferredEmail() {
+        loginSSB 'GDP000001', '111111'
+
+        // this user should already have a preferred email selected
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:true,
+            commentData:'hello world',
+            emailType:{
+                code:'PWEB',
+                description:'Personal Web Page'
+            }
+        }""".toString()
+
+        controller.addEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals true, data.failure
+    }
+
 }

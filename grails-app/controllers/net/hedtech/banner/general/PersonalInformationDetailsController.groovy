@@ -22,7 +22,9 @@ class PersonalInformationDetailsController {
     def personAddressService
     def personAddressCompositeService
     def personAddressByRoleViewService
+    def emailTypeService
     def personEmailService
+    def personEmailCompositeService
     def personalInformationCompositeService
 
     private def findPerson() {
@@ -194,6 +196,26 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             render personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm) as JSON
+        }
+    }
+
+    def addEmail() {
+        def newEmail = request?.JSON ?: params
+        newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(newEmail)
+
+        try {
+            newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
+
+            def emails = []
+            emails[0] = [:]
+            emails[0] = newEmail
+            personEmailCompositeService.createOrUpdate([personEmails: emails])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
