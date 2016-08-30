@@ -351,6 +351,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetEmailTypeList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 1, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getEmailTypeList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'Family E-Mail', data[0].description
+    }
+
+    @Test
     void testAddEmail() {
         loginSSB 'GDP000001', '111111'
 

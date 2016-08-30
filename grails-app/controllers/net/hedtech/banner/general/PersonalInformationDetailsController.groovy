@@ -199,6 +199,16 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getEmailTypeList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render emailTypeService.fetchEmailTypeList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def addEmail() {
         def newEmail = request?.JSON ?: params
         newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
