@@ -71,7 +71,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 2, data.size()
+        assertEquals 3, data.size()
         assertEquals 'Provence of Quebec', data[0].description
     }
 
@@ -88,7 +88,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'Haiti', data[0].nation
+        assertEquals 'Greece', data[0].nation
     }
 
     @Test
