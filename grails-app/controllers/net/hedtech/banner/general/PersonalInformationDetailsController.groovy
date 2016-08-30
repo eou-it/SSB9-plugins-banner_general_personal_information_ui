@@ -6,6 +6,7 @@ import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.PersonAddressService
 import net.hedtech.banner.general.person.PersonAddressCompositeService
 import net.hedtech.banner.general.person.PersonAddressUtility
+import net.hedtech.banner.general.person.PersonTelephoneService
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.general.overall.AddressRolePrivilegesCompositeService
 import net.hedtech.banner.general.system.CountyService
@@ -25,6 +26,7 @@ class PersonalInformationDetailsController {
     def emailTypeService
     def personEmailService
     def personEmailCompositeService
+    def personTelephoneService
     def personalInformationCompositeService
 
     private def findPerson() {
@@ -215,6 +217,14 @@ class PersonalInformationDetailsController {
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def fetchTelephoneNumbers() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        if (pidm) {
+            render PersonTelephoneService.fetchActiveTelephonesByPidm(pidm) as JSON
         }
     }
 
