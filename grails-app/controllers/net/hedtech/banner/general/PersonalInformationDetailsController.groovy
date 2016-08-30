@@ -209,7 +209,6 @@ class PersonalInformationDetailsController {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
 
             def emails = []
-            emails[0] = [:]
             emails[0] = newEmail
             personEmailCompositeService.createOrUpdate([personEmails: emails])
             render([failure: false] as JSON)
