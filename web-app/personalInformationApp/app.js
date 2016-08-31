@@ -69,7 +69,7 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
             })
             .state('piPreEditMobileView', {
                 url: "/piPreEditMobileView",
-                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piPreEditMobileView.html',
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piMobileView.html',
                 controller: 'piMainController',
                 data: {
                     breadcrumbs: []

@@ -191,7 +191,7 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def fetchEmails() {
+    def getEmails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         if (pidm) {
