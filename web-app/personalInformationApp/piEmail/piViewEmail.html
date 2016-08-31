@@ -1,0 +1,20 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="pad-left-right">
+    <div class="row">
+        <div ng-repeat="email in emails" class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
+            <div class="address-detail" id="{{$index}}-email">
+                <div>
+                    {{email.emailType.description}}
+                </div>
+                <div>
+                    {{email.emailAddress}}
+                </div>
+                <div>
+                    pref: {{email.preferredIndicator}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

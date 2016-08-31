@@ -148,6 +148,10 @@ input:disabled {
     padding: 0px;
 }
 
+.pad-top {
+    padding-top: 15px;
+}
+
 .pad-left {
     padding-left: 15px;
 }

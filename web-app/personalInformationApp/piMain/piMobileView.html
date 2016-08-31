@@ -2,9 +2,14 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <xe-tab-nav>
-    <xe-tab-panel heading="Emails" set-starting-tab="email">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+    <xe-tab-panel heading="{{'personInfo.title.emails'|i18n}}" set-starting-tab="email">
+        <div class="pad-top">
+            <ng-include src="'personalInformationApp/piEmail/piViewEmail.html'|webAppResourcePath"></ng-include>
+        </div>
+        <div class="add-addr-footer">
+            <a ng-click="openEditAddressModal()" class="add-item-link pi-style" tabindex="0">
+                <span>{{'personInfo.title.addAddress'|i18n}}</span><span class="icon-add-CO"></span>
+            </a>
         </div>
     </xe-tab-panel>
     <xe-tab-panel heading="Phone Numbers" set-starting-tab="phoneNumber">

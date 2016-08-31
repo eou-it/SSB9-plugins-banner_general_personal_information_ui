@@ -56,6 +56,7 @@ modules = {
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/breadcrumb-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/notificationcenter-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-service.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEmail-service.js']
 
         // Controllers
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piMain/piMain-controller.js']

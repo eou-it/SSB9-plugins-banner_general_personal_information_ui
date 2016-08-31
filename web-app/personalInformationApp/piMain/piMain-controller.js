@@ -2,9 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piAddressService',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piAddressService', 'piEmailService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piAddressService) {
+              piAddressService, piEmailService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -55,6 +55,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piEmailService.getEmails().$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.emails = response.emails;
+                }
+            });
+
             if($stateParams.startingTab) {
                 $scope.startingTab = $stateParams.startingTab;
             }
@@ -66,7 +74,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // CONTROLLER VARIABLES
         // --------------------
         $scope.addressGroup = null;
-        $scope.editMode = {
+        $scope.editMode = { //TODO remove this during refactor
             phoneNumber: false,
             address: false
         };
@@ -145,9 +153,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.displayNotification('personInfo.confirm.address.delete.text', 'warning', false, prompts);
         };
 
+        //TODO remove this during refactor
         $scope.setAddressEditMode = function() {
             $scope.editMode.address = true;
-        }
+        };
 
 
         // INITIALIZE

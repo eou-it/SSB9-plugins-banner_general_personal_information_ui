@@ -193,9 +193,13 @@ class PersonalInformationDetailsController {
 
     def getEmails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def model = [:]
 
         if (pidm) {
-            render personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm) as JSON
+            model.emails = personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm)
+            JSON.use("deep") {
+                render model as JSON
+            }
         }
     }
 
