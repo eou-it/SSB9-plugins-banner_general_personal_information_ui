@@ -71,7 +71,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 2, data.size()
+        assertEquals 3, data.size()
         assertEquals 'Provence of Quebec', data[0].description
     }
 
@@ -88,7 +88,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'Haiti', data[0].nation
+        assertEquals 'Greece', data[0].nation
     }
 
     @Test
@@ -348,6 +348,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertEquals 1, data.size()
         assertEquals 'ansbates@telstra.com', data[0].emailAddress
+    }
+
+    @Test
+    void testGetEmailTypeList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 1, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getEmailTypeList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'Family E-Mail', data[0].description
     }
 
     @Test
