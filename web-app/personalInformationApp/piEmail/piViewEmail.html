@@ -5,15 +5,23 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <div class="row">
         <div ng-repeat="email in emails" class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
             <div class="address-detail" id="{{$index}}-email">
-                <div>
-                    {{email.emailType.description}}
+                <div class="semi-bold">
+                    {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferredEmail'|i18n)+')' : '')}}
                 </div>
                 <div>
                     {{email.emailAddress}}
                 </div>
-                <div>
-                    pref: {{email.preferredIndicator}}
+                <div class="pi-comment">
+                    {{email.commentData}}
                 </div>
+            </div>
+            <div class="button-block">
+                <a ng-click="" class="pi-edit-item-link pi-icon-link" tabindex="0">
+                    <span class="icon-edit-CO"></span>
+                </a>
+                <a ng-click="" class="pi-icon-link" tabindex="0">
+                    <span class="icon-add-CO"></span><!-- TODO: update this with trash svg icon -->
+                </a>
             </div>
         </div>
     </div>

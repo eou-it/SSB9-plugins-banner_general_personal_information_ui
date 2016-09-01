@@ -1,5 +1,5 @@
-personalInformationApp.service('piAddressService', ['$resource', 'notificationCenterService',
-    function ($resource, notificationCenterService) {
+personalInformationApp.service('piAddressService', ['notificationCenterService',
+    function (notificationCenterService) {
 
         var messages = [];
 
