@@ -2,9 +2,8 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piAddressService', 'piEmailService',
-    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piAddressService, piEmailService) {
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService',
+    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService, piCrudService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -47,7 +46,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          */
         this.init = function() {
 
-            piAddressService.getAddresses().$promise.then(function(response) {
+            piCrudService.get('Addresses').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
@@ -55,7 +54,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
-            piEmailService.getEmails().$promise.then(function(response) {
+            piCrudService.get('Emails').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
@@ -74,6 +73,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // CONTROLLER VARIABLES
         // --------------------
         $scope.addressGroup = null;
+        $scope.emails = null;
         $scope.editMode = { //TODO remove this during refactor
             phoneNumber: false,
             address: false
@@ -126,7 +126,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             var deleteAddress = function () {
                 $scope.cancelNotification();
 
-                piAddressService.deleteAddress(address).$promise.then(function (response) {
+                piCrudService.delete('Address', address).$promise.then(function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {

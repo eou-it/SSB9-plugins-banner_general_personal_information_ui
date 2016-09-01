@@ -31,7 +31,7 @@ class PersonalInformationDetailsController {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
-    def getActiveAddressesForCurrentUser() {
+    def getAddresses() {
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -176,7 +176,7 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def deleteAddresses() {
+    def deleteAddress() {
         def map = request?.JSON ?: params
 
         try {
