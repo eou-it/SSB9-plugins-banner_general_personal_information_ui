@@ -15,17 +15,3 @@ personalInformationAppDirectives.directive('personViewAddressList', ['$filter', 
         templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piViewAddressList.html')
     };
 }]);
-
-personalInformationAppDirectives.directive('personPreEditAddress', ['$filter', function ($filter) {
-    return{
-        restrict: 'E',
-        templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piPreEditAddress.html')
-    };
-}]);
-
-personalInformationAppDirectives.directive('personPreEditAddressList', ['$filter', function ($filter) {
-    return{
-        restrict: 'E',
-        templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piPreEditAddressList.html')
-    };
-}]);

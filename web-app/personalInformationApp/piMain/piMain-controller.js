@@ -74,10 +74,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // --------------------
         $scope.addressGroup = null;
         $scope.emails = null;
-        $scope.editMode = { //TODO remove this during refactor
-            phoneNumber: false,
-            address: false
-        };
 
 
         // CONTROLLER FUNCTIONS
@@ -151,11 +147,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             ];
 
             notificationCenterService.displayNotification('personInfo.confirm.address.delete.text', 'warning', false, prompts);
-        };
-
-        //TODO remove this during refactor
-        $scope.setAddressEditMode = function() {
-            $scope.editMode.address = true;
         };
 
 

@@ -1,25 +1,7 @@
 personalInformationApp.service('piAddressService', ['$resource', 'notificationCenterService',
     function ($resource, notificationCenterService) {
 
-        var createAddress = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'addAddress'}, {save: {method: 'POST'}}),
-
-            updateAddress = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'updateAddress'}, {save: {method: 'POST'}}),
-
-            getAddresses = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'getActiveAddressesForCurrentUser'}),
-
-
-            deleteAddress = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'deleteAddresses'}, {delete: {method:'POST'}}),
-
-
-            messages = [];
-
-        this.getAddresses = function () {
-            return getAddresses.get();
-        };
+        var messages = [];
 
         this.getErrorAddressType = function (address) {
             var msg = 'personInfo.address.error.addressType';
@@ -79,18 +61,6 @@ personalInformationApp.service('piAddressService', ['$resource', 'notificationCe
             else {
                 notificationCenterService.removeNotification(msg);
             }
-        };
-
-        this.saveNewAddress = function (address) {
-            return createAddress.save(address);
-        };
-
-        this.updateAddress = function (address) {
-            return updateAddress.save(address);
-        };
-
-        this.deleteAddress = function (addresses) {
-            return deleteAddress.delete(addresses);
         };
 
         this.displayMessages = function() {
