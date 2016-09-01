@@ -275,16 +275,20 @@ a.pi-icon-link:focus {
     padding: 15px;
     display: block;
 }
-.details-section-edit > a.add-item-link.pi-style {
+.details-section-edit > a.add-item-link {
     padding: 0px;
 }
 
-a.add-item-link.pi-style {
+.details-section-edit > a.add-item-link > span.icon-add-CO {
+    padding-left: 10px;
+}
+
+.pi-footer > a.add-item-link {
     padding: 1em;
     display: inline-block;
 }
 
-a.add-item-link > span.icon-add-CO {
+.pi-footer > a.add-item-link > span.icon-add-CO {
     padding-right: 10px;
 }
 
