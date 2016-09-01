@@ -2,9 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piAddressService',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piPhoneService', 'piAddressService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piAddressService) {
+              piPhoneService, piAddressService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -47,6 +47,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          */
         this.init = function() {
 
+            piPhoneService.getPhoneNumbers().$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.phones = response;
+                }
+            });
+
             piAddressService.getAddresses().$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -66,6 +74,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // CONTROLLER VARIABLES
         // --------------------
         $scope.addressGroup = null;
+        $scope.phones = null;
         $scope.editMode = {
             phoneNumber: false,
             address: false

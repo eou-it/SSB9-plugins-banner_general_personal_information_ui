@@ -55,6 +55,7 @@ modules = {
         // Services
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/breadcrumb-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/notificationcenter-service.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piPhone-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-service.js']
 
         // Controllers
@@ -67,6 +68,7 @@ modules = {
 
         // Directives
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/directives/selectBox-directive.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piPhone-directive.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-directive.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/directives/personalInfo-directive.js']
 

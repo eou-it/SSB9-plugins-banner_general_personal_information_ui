@@ -220,11 +220,20 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def fetchTelephoneNumbers() {
+    def getTelephoneNumbers() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def telephones
 
         if (pidm) {
-            render PersonTelephoneService.fetchActiveTelephonesByPidm(pidm) as JSON
+            try {
+                telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm)
+            } catch (ApplicationException e) {
+                render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            }
+
+            JSON.use("deep") {
+                render telephones as JSON
+            }
         }
     }
 
