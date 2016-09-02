@@ -440,4 +440,21 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals true, data.failure
     }
 
+    @Test
+    void testGetTelephoneNumbers(){
+        loginSSB 'HOS00001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.getTelephoneNumbers()
+
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+
+        //TODO: uncomment when "No address exists..." issue is resolved.  This test code is not tested.
+//        def phones = data.telephones
+//        assertEquals 1, phones.size()
+//        assertEquals '610 4925555', phones[0].displayPhoneNumber
+    }
+
 }
