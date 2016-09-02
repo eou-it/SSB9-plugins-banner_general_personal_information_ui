@@ -5,7 +5,7 @@ personalInformationApp.service('piPhoneService', ['$resource', 'notificationCent
                 {controller: 'PersonalInformationDetails', action: 'getTelephoneNumbers'});
 
         this.getPhoneNumbers = function () {
-            return getPhoneNumbers.query();
+            return getPhoneNumbers.get();
         };
     }
 ]);

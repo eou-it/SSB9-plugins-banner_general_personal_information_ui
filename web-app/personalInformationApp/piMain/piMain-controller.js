@@ -2,9 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piPhoneService', 'piAddressService',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService', 'piPhoneService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piPhoneService, piAddressService) {
+              piCrudService, piPhoneService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -47,19 +47,27 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          */
         this.init = function() {
 
-            piPhoneService.getPhoneNumbers().$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.phones = response;
-                }
-            });
-
-            piAddressService.getAddresses().$promise.then(function(response) {
+            piCrudService.get('Addresses').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.addressGroup = sortAddresses(response.addresses);
+                }
+            });
+
+            piCrudService.get('TelephoneNumbers').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.phones = response.telephones;
+                }
+            });
+
+            piCrudService.get('Emails').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.emails = response.emails;
                 }
             });
 
@@ -74,11 +82,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // CONTROLLER VARIABLES
         // --------------------
         $scope.addressGroup = null;
+        $scope.emails = null;
         $scope.phones = null;
-        $scope.editMode = {
-            phoneNumber: false,
-            address: false
-        };
 
 
         // CONTROLLER FUNCTIONS
@@ -127,7 +132,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             var deleteAddress = function () {
                 $scope.cancelNotification();
 
-                piAddressService.deleteAddress(address).$promise.then(function (response) {
+                piCrudService.delete('Address', address).$promise.then(function (response) {
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
@@ -153,10 +158,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             notificationCenterService.displayNotification('personInfo.confirm.address.delete.text', 'warning', false, prompts);
         };
-
-        $scope.setAddressEditMode = function() {
-            $scope.editMode.address = true;
-        }
 
 
         // INITIALIZE

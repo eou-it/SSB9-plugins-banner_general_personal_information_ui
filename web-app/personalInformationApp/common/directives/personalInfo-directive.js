@@ -14,3 +14,14 @@ personalInformationAppDirectives.directive('setStartingTab', [function () {
         }
     };
 }]);
+
+personalInformationAppDirectives.directive('piMobileFooterButton', ['$filter', function ($filter) {
+    return {
+        restrict: 'E',
+        scope: {
+            clickFunction: '='
+        },
+        transclude: true,
+        templateUrl: $filter('webAppResourcePath')('personalInformationApp/piMain/piMobileFooterButton.html')
+    };
+}]);

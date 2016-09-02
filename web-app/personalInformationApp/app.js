@@ -64,17 +64,6 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                     breadcrumbs: []
                 },
                 params: {
-                    onLoadNotifications: []
-                }
-            })
-            .state('piPreEditMobileView', {
-                url: "/piPreEditMobileView",
-                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piPreEditMobileView.html',
-                controller: 'piMainController',
-                data: {
-                    breadcrumbs: []
-                },
-                params: {
                     onLoadNotifications: [],
                     startingTab: ''
                 }

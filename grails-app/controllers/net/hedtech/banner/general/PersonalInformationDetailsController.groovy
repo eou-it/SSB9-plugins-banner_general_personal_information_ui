@@ -33,7 +33,7 @@ class PersonalInformationDetailsController {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
-    def getActiveAddressesForCurrentUser() {
+    def getAddresses() {
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -178,7 +178,7 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def deleteAddresses() {
+    def deleteAddress() {
         def map = request?.JSON ?: params
 
         try {
@@ -193,11 +193,25 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def fetchEmails() {
+    def getEmails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def model = [:]
 
         if (pidm) {
-            render personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm) as JSON
+            model.emails = personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm)
+            JSON.use("deep") {
+                render model as JSON
+            }
+        }
+    }
+
+    def getEmailTypeList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render emailTypeService.fetchEmailTypeList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
@@ -222,17 +236,17 @@ class PersonalInformationDetailsController {
 
     def getTelephoneNumbers() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def telephones
+        def model = [:]
 
         if (pidm) {
             try {
-                telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm)
+                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
 
             JSON.use("deep") {
-                render telephones as JSON
+                render model as JSON
             }
         }
     }
