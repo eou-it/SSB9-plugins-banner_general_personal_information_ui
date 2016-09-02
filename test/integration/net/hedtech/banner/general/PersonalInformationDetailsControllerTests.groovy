@@ -34,7 +34,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000005', '111111'
 
         controller.request.contentType = "text/json"
-        controller.getActiveAddressesForCurrentUser()
+        controller.getAddresses()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse(dataForNullCheck)
         println data
@@ -318,7 +318,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
-    void testDeleteAddresses() {
+    void testDeleteAddress() {
         loginSSB 'GDP000005', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
@@ -329,7 +329,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             id:${addresses[0].id}
         }]""".toString()
 
-        controller.deleteAddresses()
+        controller.deleteAddress()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
@@ -337,17 +337,17 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
-    void testFetchEmails(){
+    void testGetEmails(){
         loginSSB 'GDP000001', '111111'
 
         controller.request.contentType = "text/json"
-        controller.fetchEmails()
+        controller.getEmails()
 
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
-        assertEquals 1, data.size()
-        assertEquals 'ansbates@telstra.com', data[0].emailAddress
+        assertEquals 1, data.emails.size()
+        assertEquals 'ansbates@telstra.com', data.emails[0].emailAddress
     }
 
     @Test

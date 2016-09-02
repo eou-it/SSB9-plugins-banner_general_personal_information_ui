@@ -1,6 +1,6 @@
-personalInformationAppControllers.controller('piEditAddressController',['$scope', '$modal', '$modalInstance', 'piAddressService','$rootScope', '$state', '$stateParams',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'editAddressProperties',
-    function ($scope, $modal, $modalInstance, piAddressService, $rootScope, $state, $stateParams, $filter, $q, $timeout, notificationCenterService, editAddressProperties){
+personalInformationAppControllers.controller('piEditAddressController',['$scope', '$modalInstance', 'piAddressService','$rootScope', '$state',
+    '$filter', 'notificationCenterService', 'piCrudService', 'editAddressProperties',
+    function ($scope, $modalInstance, piAddressService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editAddressProperties){
 
         // CONTROLLER VARIABLES
         // --------------------
@@ -65,17 +65,17 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                         );
 
                         $state.go('personalInformationMain',
-                            {onLoadNotifications: notifications},
+                            {onLoadNotifications: notifications, startingTab: 'address'},
                             {reload: true, inherit: false, notify: true}
                         );
                     }
                 };
 
                 if($scope.isCreateNew) {
-                    piAddressService.saveNewAddress($scope.address).$promise.then(handleResponse);
+                    piCrudService.create('Address', $scope.address).$promise.then(handleResponse);
                 }
                 else {
-                    piAddressService.updateAddress($scope.address).$promise.then(handleResponse);
+                    piCrudService.update('Address', $scope.address).$promise.then(handleResponse);
                 }
             }
             else {

@@ -31,7 +31,7 @@ class PersonalInformationDetailsController {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
-    def getActiveAddressesForCurrentUser() {
+    def getAddresses() {
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -176,7 +176,7 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def deleteAddresses() {
+    def deleteAddress() {
         def map = request?.JSON ?: params
 
         try {
@@ -191,11 +191,15 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def fetchEmails() {
+    def getEmails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def model = [:]
 
         if (pidm) {
-            render personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm) as JSON
+            model.emails = personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm)
+            JSON.use("deep") {
+                render model as JSON
+            }
         }
     }
 

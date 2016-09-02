@@ -1,11 +1,11 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="pad-left-right">
-    <div class="details-section">
-        <!--Placeholder-->
+<div>
+    <div class="mobile-visible">
+        <ng-include src="'personalInformationApp/piMain/piMobileView.html'|webAppResourcePath"></ng-include>
     </div>
-    <div class="details-section">
-        <person-view-address-list></person-view-address-list>
+    <div class="desktop-visible">
+        <ng-include src="'personalInformationApp/piMain/piDesktopView.html'|webAppResourcePath"></ng-include>
     </div>
 </div>
