@@ -2,8 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService',
-    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService, piCrudService) {
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService', 'piPhoneService',
+    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
+              piCrudService, piPhoneService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -54,6 +55,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('TelephoneNumbers').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.phones = response.telephones;
+                }
+            });
+
             piCrudService.get('Emails').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -74,6 +83,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // --------------------
         $scope.addressGroup = null;
         $scope.emails = null;
+        $scope.phones = null;
 
 
         // CONTROLLER FUNCTIONS
