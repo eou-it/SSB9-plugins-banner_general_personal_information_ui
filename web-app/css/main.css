@@ -265,7 +265,7 @@ a.pi-icon-link:focus {
     padding: 0px 15px;
 }
 
-.add-addr-footer {
+.add-item-footer {
     border-top: 1px solid black;
     min-width: 280px;
     text-align: center;
@@ -741,6 +741,31 @@ a.delete-address-link {
     color: #A0A3A4;
 }
 
+.phone-list {
+    padding: 15px 15px 0 15px;
+}
+
+.phone-type-view {
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+.phone-number-view {
+    padding-bottom: 4px;
+}
+
+.phone-number-wrapper {
+    padding-bottom: 15px;
+}
+
+a.edit-phone-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button.delete-phone-btn {
+    outline: none;
+}
 
 /* Icons */
 .details-section-edit-link,
@@ -753,6 +778,24 @@ a:focus.details-section-edit-link {
 
 .details-section-edit-link .icon-edit {
     font-size: 14px;
+}
+
+a.edit-phone-link {
+    font-size: 24px;
+    padding: 9px 9px 0 0;
+    float: left;
+}
+
+button.delete-phone-btn {
+    color: #428bca;
+    opacity: 1;
+    font-size: 24px;
+    font-family: open-sans-semi-bold;
+    background: url('../images/Trash_4.svg') 50% 50% no-repeat;
+    padding: .9em;
+    display: block;
+    border: none;
+    float: left;
 }
 
 
