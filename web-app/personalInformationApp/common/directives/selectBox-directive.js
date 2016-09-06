@@ -52,6 +52,12 @@ personalInformationAppDirectives.directive('selectBox', function() {
                         };
                     }
                 },
+                formatSelection: function(item) {
+                    dataModelItem.code = item.id;
+                    dataModelItem.description = item.text;
+
+                    return item.text;
+                },
                 initSelection: function(element, callback) {
                     if (dataModelItem) {
                         var data = {id: dataModelItem.code, text: getDescriptionFromAddressComponent(dataModelItem)};
@@ -59,19 +65,7 @@ personalInformationAppDirectives.directive('selectBox', function() {
                         callback(data);
                     }
                 }
-
             }).select2("val", "_"); // Dummy value needed to make initSelection do its thing
-
-            elem.on('change', function() {
-                var selectedItem = elem.select2("data");
-                dataModelItem.code = selectedItem.id;
-                dataModelItem.description = selectedItem.text;
-                scope.$apply();
-            });
-
-            scope.$on('$destroy', function () {
-                elem.unbind('change');
-            });
         }
     };
 });
