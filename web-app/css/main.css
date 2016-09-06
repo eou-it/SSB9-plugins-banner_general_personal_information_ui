@@ -865,6 +865,14 @@ li.listing .radio-txt-input {
     margin-top: 7px;
 }
 
+input[type="checkbox"].main-nav-check {
+    margin-top: 0.875em;
+}
+
+input[type="checkbox"].main-nav-check + .lbl {
+    padding-top: 0.875em;
+}
+
 /*  Check box  */
 /*Custom Radio and check boxes*/
 input[type=checkbox],input[type=radio] {

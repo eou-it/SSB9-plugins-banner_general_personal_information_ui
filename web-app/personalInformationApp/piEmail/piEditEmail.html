@@ -21,20 +21,19 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label ng-class="(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-label field-error' : 'input-field-label')"
-               class="input-field-label" for="zip">Comments</label><br>
-        <input ng-model="email.commentData" ng-blur="zipFocused=false; removeAddressFieldErrors()" ng-focus="zipFocused=true"
+               class="input-field-label" for="email-cmnt">Comments</label><br>
+        <textarea ng-model="email.commentData" ng-blur="zipFocused=false; removeAddressFieldErrors()" ng-focus="zipFocused=true"
                ng-class="[(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" id="zip">
+               class="text-input-field semi-bold form-spacing" rows="2" maxlength="60" id="email-cmnt"></textarea>
         <span ng-if="!!stateCountyNationErrMsg && !zipFocused" class="icon input-fail">
             <span class="icon-error ellucian-font"></span>
         </span>
         <p class="input-field-label mobile-errors" ng-class="[(!!stateCountyNationErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
     </div>
-    <div class="col-xs-12">
-        <label class="visuallyhidden" for="email-preferred">{{'personalInfo.label.markPreferred'|i18n}}</label>
+    <div class="col-xs-12 float-l">
         <input ng-model="email.preferredIndicator" class="main-nav-check" id="email-preferred" type="checkbox" aria-describedby="email-preferred-txt"/>
-        <p class="lbl" id="email-preferred-txt">{{'personalInfo.label.markPreferred'|i18n}}</p>
+        <p class="lbl" id="email-preferred-txt"><label for="email-preferred">{{'personalInfo.label.markPreferred'|i18n}}</label></p>
     </div>
 </div>
 <div class="dialog-footer-margin modal-footer addAddr">
