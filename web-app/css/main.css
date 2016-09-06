@@ -586,6 +586,11 @@ input.hasMultiCalendarPicker.pi-date-input:focus,
     border-radius: 0px;
 }
 
+p.response-err {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .pad-dialog-lr.row {
     margin: 0px;
 }
