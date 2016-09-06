@@ -2,17 +2,17 @@
 <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
 <div class="row pad-dialog-lr">
     <div class="select2-container sm-fix col-sm-12 col-md-6 col-lg-6">
-        <label class="input-field-label">Email Type</label><br>
+        <label class="input-field-label">{{'personInfo.label.emailType'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}' type="hidden" />
         <p class="input-field-label mobile-errors" ng-class="[(!!stateCountyNationErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label ng-class="(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-label field-error' : 'input-field-label')"
-               class="input-field-label" for="zip">Email Address</label><br>
+               class="input-field-label" for="zip">{{'personInfo.label.emailAddress'|i18n}}</label><br>
         <input ng-model="email.emailAddress" ng-blur="zipFocused=false; removeAddressFieldErrors()" ng-focus="zipFocused=true"
                ng-class="[(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" id="zip">
+               class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}" id="zip">
         <span ng-if="!!stateCountyNationErrMsg && !zipFocused" class="icon input-fail">
             <span class="icon-error ellucian-font"></span>
         </span>
@@ -21,10 +21,10 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <label ng-class="(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-label field-error' : 'input-field-label')"
-               class="input-field-label" for="email-cmnt">Comments</label><br>
+               class="input-field-label" for="email-cmnt">{{'personInfo.label.comments'|i18n}}</label><br>
         <textarea ng-model="email.commentData" ng-blur="zipFocused=false; removeAddressFieldErrors()" ng-focus="zipFocused=true"
                ng-class="[(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" rows="2" maxlength="60" id="email-cmnt"></textarea>
+               class="text-input-field semi-bold form-spacing" rows="2" maxlength="60" placeholder="{{'personInfo.placeholder.enterComment'|i18n}}" id="email-cmnt"></textarea>
         <span ng-if="!!stateCountyNationErrMsg && !zipFocused" class="icon input-fail">
             <span class="icon-error ellucian-font"></span>
         </span>
@@ -36,9 +36,11 @@
         <p class="lbl" id="email-preferred-txt"><label for="email-preferred">{{'personalInfo.label.markPreferred'|i18n}}</label></p>
     </div>
 </div>
-<div class="dialog-footer-margin modal-footer addAddr">
-    <button ng-click="cancelModal()" class="dialog-btn">{{'personInfo.label.button.cancel'|i18n}}</button>
-    <button ng-click="saveEmail()" class="dialog-btn save-btn">
-        <span class="mid-dash">{{(isCreateNew?'personInfo.label.button.save':'personInfo.label.button.update')|i18n}}</span>
+<div class="dialog-footer-margin pi-modal-footer">
+    <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+        {{'personInfo.label.button.cancel'|i18n}}
+    </button>
+    <button ng-click="saveEmail()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn save-btn">
+        {{(isCreateNew?'personInfo.label.button.add':'personInfo.label.button.update')|i18n}}
     </button>
 </div>
