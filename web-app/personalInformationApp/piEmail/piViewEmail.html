@@ -3,24 +3,27 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="pad-left-right">
     <div class="row">
-        <div ng-repeat="email in emails" class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
-            <div class="address-detail" id="{{$index}}-email">
-                <div class="semi-bold">
-                    {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferredEmail'|i18n)+')' : '')}}
+        <div ng-repeat="email in emails">
+            <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
+                <div class="address-detail" id="{{$index}}-email">
+                    <div class="semi-bold">
+                        {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferredEmail'|i18n)+')' : '')}}
+                    </div>
+                    <div>
+                        {{email.emailAddress}}
+                    </div>
+                    <div class="pi-comment">
+                        {{email.commentData}}
+                    </div>
                 </div>
-                <div>
-                    {{email.emailAddress}}
-                </div>
-                <div class="pi-comment">
-                    {{email.commentData}}
+                <div class="button-block">
+                    <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link" tabindex="0">
+                        <span class="icon-edit-CO"></span>
+                    </a>
+                    <button class="delete-phone-btn" ng-click="TODO()" title="Delete email address"></button>
                 </div>
             </div>
-            <div class="button-block">
-                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link" tabindex="0">
-                    <span class="icon-edit-CO"></span>
-                </a>
-                <button class="delete-phone-btn" ng-click="TODO()" title="Delete email address"></button>
-            </div>
+            <div ng-if="$index%2 === 1" class="clearfix hidden-xs"></div>
         </div>
     </div>
 </div>
