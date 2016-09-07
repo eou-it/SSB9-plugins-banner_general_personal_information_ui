@@ -6,7 +6,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div class="pad-top">
             <ng-include src="'personalInformationApp/piEmail/piViewEmail.html'|webAppResourcePath"></ng-include>
         </div>
-        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.title.addEmail'|i18n}}</pi-mobile-footer-button>
+        <pi-mobile-footer-button click-function="openEditEmailModal">{{'personInfo.title.addEmail'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
     <xe-tab-panel heading="{{'personInfo.title.phoneNumber'|i18n}}" set-starting-tab="phoneNumber">

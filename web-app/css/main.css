@@ -206,17 +206,18 @@ input:disabled {
 .button-block {
     float: left;
     clear: left;
-    padding-top: 7px;
 }
 
 .pi-edit-item-link {
     margin-right: 0.5em;
+    float: left;
+    padding-top: 0.35em;
 }
 
 a.pi-icon-link,
 a.pi-icon-link:hover,
 a.pi-icon-link:focus {
-    font-size: 20px;
+    font-size: 24px;
     color: #206E9F;
     text-decoration: none;
     cursor: pointer;
@@ -251,6 +252,17 @@ a.pi-icon-link:focus {
     display: inline;
 }
 
+.modal-flex-cont {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-unflex {
+    display: block;
+}
+
 .pi-modal-title {
     padding: 0.7em 0.7em 0.5em 0.7em;
     display: inline-block;
@@ -272,10 +284,6 @@ a.pi-icon-link:focus {
     text-align: center;
 }
 
-.add-addr {
-    padding: 15px;
-    display: block;
-}
 .details-section-edit > a.add-item-link {
     padding: 0px;
 }
@@ -348,6 +356,7 @@ input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
     right: 15px;
     cursor: pointer;
 }
+
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img::before {
     content: "\e651";
 }
@@ -574,13 +583,33 @@ input.hasMultiCalendarPicker.pi-date-input:focus,
     padding: 1em 1em 0.5em;
 }
 
-.dialog-footer-margin {
-    margin-top: 1.5em;
+.edit-email-modal.modal {
+    margin-top: 50px;
+    overflow-x: hidden
 }
 
-.modal-footer.addAddr {
-    padding: 0px;
-    border-top: 1px solid black;
+.edit-email-modal .modal-dialog {
+    padding: 0;
+    height: 100%;
+}
+
+.edit-email-modal .modal-content {
+    height: 100%;
+    border-radius: 0px;
+    overflow-y: auto;
+}
+
+p.response-err {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.pad-dialog-lr.row {
+    margin: 0px;
+}
+
+.dialog-footer-margin {
+    margin-top: 1.5em;
 }
 
 .dialog-hdr2 {
@@ -601,23 +630,25 @@ button.closebtn {
     float: right;
 }
 
-.modal-footer.addAddr {
+.modal-footer-container {
+    height: 100%;
+}
+
+.pi-modal-footer {
     display: table;
     padding: 1px 0px 0px;
-    border-top: 1px solid black;
     width: 100%;
+    align-self: flex-end;
 }
 
 .dialog-btn {
     box-sizing: border-box;
     display: table-cell;
-    width: 50%;
     text-align: center;
     vertical-align: middle;
     font-size: 18px;
     overflow: auto;
     border-style: none;
-    border-radius: 6px;
     background: white;
     color: #206E9F;
     line-height: normal;
@@ -631,8 +662,28 @@ button.closebtn {
     line-height: 20px;
 }
 
+.one-btn-layout {
+    width: 100%;
+}
+
+.two-btn-layout {
+    width: 50%;
+}
+
+.cancel-btn {
+    border-top: 1px solid #869FB1;
+}
+
+.cancel-btn.one-btn-layout {
+    width: 0px;
+    display: none;
+}
+
 .save-btn {
-    padding: 0em;
+    border-top: 1px solid #206E9F;
+    background: #206E9F;
+    color: white;
+    box-shadow: 0px -4px #0C5482 inset;
 }
 
 .save-btn[disabled] {
@@ -756,11 +807,6 @@ a.delete-address-link {
     padding-bottom: 15px;
 }
 
-a.edit-phone-link {
-    text-decoration: none;
-    cursor: pointer;
-}
-
 button.delete-phone-btn {
     outline: none;
 }
@@ -780,12 +826,6 @@ a:focus.details-section-edit-link {
 
 .details-section-edit-link .icon-edit {
     font-size: 14px;
-}
-
-a.edit-phone-link {
-    font-size: 24px;
-    padding: 9px 9px 0 0;
-    float: left;
 }
 
 button.delete-phone-btn {
@@ -910,6 +950,14 @@ li.listing .radio-txt-input {
     margin-top: 7px;
 }
 
+input[type="checkbox"].main-nav-check {
+    margin-top: 0.875em;
+}
+
+input[type="checkbox"].main-nav-check + .lbl {
+    padding-top: 0.875em;
+}
+
 /*  Check box  */
 /*Custom Radio and check boxes*/
 input[type=checkbox],input[type=radio] {
@@ -1009,7 +1057,7 @@ span.radio-list.no-padding {
 }
 
 .pad-dialog-lr {
-    padding: 0em 2em;
+    padding: 0em 0.75em;
 }
 
 

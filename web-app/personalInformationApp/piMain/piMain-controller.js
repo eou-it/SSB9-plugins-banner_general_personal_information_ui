@@ -127,6 +127,24 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         };
 
+        $scope.openEditEmailModal = function(currentEmail) {
+
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piEmail/piEditEmail.html'),
+                windowClass: 'edit-email-modal',
+                keyboard: true,
+                controller: "piEditEmailController",
+                scope: $scope,
+                resolve: {
+                    editEmailProperties: function () {
+                        return {
+                            currentEmail: currentEmail
+                        };
+                    }
+                }
+            });
+        };
+
         // Display address delete confirmation modal
         $scope.confirmAddressDelete = function (address) {
             var deleteAddress = function () {
