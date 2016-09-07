@@ -2,14 +2,19 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 ********************************************************************************-->
 <div class="phone-number-wrapper">
-    <div class="phone-type-view">
-        {{phone.telephoneType.description}}
+    <div class="clearfix">
+        <div class="phone-type-view">
+            {{phone.telephoneType.description}}
+        </div>
+        <div ng-if="phone.unlistIndicator==='Y'" class="phone-type-view unlisted">
+            ({{'personInfo.label.unlisted'|i18n}})
+        </div>
     </div>
     <div class="phone-number-view">
         {{phone.displayPhoneNumber}}
     </div>
     <div class="clearfix">
-        <a class="pi-edit-item-link pi-icon-link" ng-click="TODO()" enter-key="TODO()" title="Edit phone number"><span class="icon-edit-CO"></span></a>
-        <button class="delete-phone-btn" ng-click="TODO()" title="Delete phone number"></button>
+        <a class="pi-edit-item-link pi-icon-link" ng-click="TODO()" enter-key="TODO()" title="{{'personInfo.label.editPhone'|i18n}}"><span class="icon-edit-CO"></span></a>
+        <button class="delete-phone-btn" ng-click="TODO()" title="{{'personInfo.label.deletePhone'|i18n}}"></button>
     </div>
 </div>

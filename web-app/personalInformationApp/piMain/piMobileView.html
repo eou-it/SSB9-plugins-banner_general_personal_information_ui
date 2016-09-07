@@ -9,14 +9,14 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <pi-mobile-footer-button click-function="openEditEmailModal">{{'personInfo.title.addEmail'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
-    <xe-tab-panel heading="{{'personInfo.title.phones'|i18n}}" set-starting-tab="phoneNumber">
+    <xe-tab-panel heading="{{'personInfo.title.phoneNumber'|i18n}}" set-starting-tab="phoneNumber">
         <person-phone-list></person-phone-list>
-        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.title.addPhone'|i18n}}</pi-mobile-footer-button>
+        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addPhone'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
     <xe-tab-panel heading="{{'personInfo.title.addresses'|i18n}}" set-starting-tab="address">
         <person-address-list></person-address-list>
-        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.title.addAddress'|i18n}}</pi-mobile-footer-button>
+        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addAddress'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
     <xe-tab-panel heading="Additional Details" set-starting-tab="addtionalDetail">
