@@ -1,12 +1,23 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="pad-left-right">
+<div class="pi-desktop-contents">
     <div class="details-section">
         <!--Placeholder-->
     </div>
     <div class="details-section">
-        The emails will go here
+        <div class="clearfix">
+            <div class="details-section-heading">
+                {{'personInfo.title.email'|i18n}}
+                <div class="pi-title-divider"><span></span></div>
+            </div>
+            <div class="details-section-edit">
+                <a ng-click="openEditEmailModal()" class="add-item-link" tabindex="0">
+                    <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
+                </a>
+            </div>
+        </div>
+        <ng-include src="'personalInformationApp/piEmail/piViewEmail.html'|webAppResourcePath"></ng-include>
     </div>
     <div class="details-section">
         <div class="clearfix">
