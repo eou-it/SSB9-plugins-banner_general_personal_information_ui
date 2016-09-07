@@ -332,6 +332,10 @@ a.add-item-link {
     cursor: pointer;
 }
 
+.email-link {
+    padding: 0px;
+}
+
 a.addr-change {
     clear: left;
     float: left;
@@ -1167,6 +1171,14 @@ table tr td {
 
     .clear-xs-sm {
         clear: both;
+    }
+
+    .email-link,
+    a.email-link:hover,
+    a.email-link:active,
+    a.email-link:focus {
+        color: #333;
+        text-decoration: none;
     }
 }
 

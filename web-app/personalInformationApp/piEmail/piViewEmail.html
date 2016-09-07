@@ -7,10 +7,10 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
                 <div class="address-detail" id="{{$index}}-email">
                     <div class="semi-bold">
-                        {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferredEmail'|i18n)+')' : '')}}
+                        {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferred'|i18n)+')' : '')}}
                     </div>
                     <div>
-                        {{email.emailAddress}}
+                        <a class="email-link pi-link" href="mailto:{{email.emailAddress}}">{{email.emailAddress}}</a>
                     </div>
                     <div class="pi-comment">
                         {{email.commentData}}
