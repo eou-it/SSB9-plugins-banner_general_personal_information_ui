@@ -199,6 +199,11 @@ input:disabled {
     border: 0;
 }
 
+.pi-desktop-contents {
+    padding: 0px 15px;
+    background: #EFF4F8
+}
+
 .pi-comment {
    color: #7E858B;
 }
@@ -326,6 +331,10 @@ a.add-item-link {
     color: #206E9F;
     padding: 5px 0px;
     cursor: pointer;
+}
+
+.email-link {
+    padding: 0px;
 }
 
 a.addr-change {
@@ -731,20 +740,36 @@ button.closebtn {
 /************************/
 
 .details-section {
-    padding: 15px 0;
-    border-bottom: 1px solid #ddd;
+    margin: 15px 0;
+    padding-top: 15px;
+    border-bottom: 4px solid #ddd;
     overflow: hidden;
+    background: white;
 }
 
 .details-section-heading {
     float: left;
     font-size: 16px;
     font-weight: bold;
-    padding-bottom: 10px;
+    padding-left: 15px;
+}
+
+.pi-title-divider{
+    width: 50px;
+    height: 1px;
+}
+
+.pi-title-divider span {
+    border-bottom: 1px solid #BEC5CB;
+    width: 100%;
+    float: left;
+    margin-top: 1.0em;
+    margin-bottom: 0.675em;
 }
 
 .details-section-edit {
     float: right;
+    padding-right: 15px;
 }
 
 .address-delete-checkbox {
@@ -1148,6 +1173,14 @@ table tr td {
 
     .clear-xs-sm {
         clear: both;
+    }
+
+    .email-link,
+    a.email-link:hover,
+    a.email-link:active,
+    a.email-link:focus {
+        color: #333;
+        text-decoration: none;
     }
 }
 
