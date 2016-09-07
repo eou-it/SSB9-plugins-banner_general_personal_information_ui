@@ -240,7 +240,7 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm)
+                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, true)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
