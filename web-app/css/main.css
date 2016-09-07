@@ -148,10 +148,6 @@ input:disabled {
     padding: 0px;
 }
 
-.pad-top {
-    padding-top: 15px;
-}
-
 .pad-left {
     padding-left: 15px;
 }
@@ -279,7 +275,8 @@ a.pi-icon-link:focus {
 }
 
 .xe-tab-container .addr-list,
-.xe-tab-container .phone-list {
+.xe-tab-container .phone-list,
+.xe-tab-container .email-list {
     padding: 15px 15px 0;
 }
 
@@ -741,7 +738,7 @@ button.closebtn {
 
 .details-section {
     margin: 15px 0;
-    padding-top: 15px;
+    padding: 15px 15px 0px 15px;
     border-bottom: 4px solid #ddd;
     overflow: hidden;
     background: white;
@@ -751,7 +748,6 @@ button.closebtn {
     float: left;
     font-size: 16px;
     font-weight: bold;
-    padding-left: 15px;
 }
 
 .pi-title-divider{
@@ -769,7 +765,6 @@ button.closebtn {
 
 .details-section-edit {
     float: right;
-    padding-right: 15px;
 }
 
 .address-delete-checkbox {
