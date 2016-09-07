@@ -11,11 +11,24 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <div class="details-section">
         <div class="clearfix">
             <div class="details-section-heading">
+                {{'personInfo.title.phoneNumber'|i18n}}
+            </div>
+            <div class="details-section-edit">
+                <a ng-click="openEditAddressModal()" class="add-item-link" tabindex="0">
+                    <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
+                </a>
+            </div>
+        </div>
+        <person-phone-list></person-phone-list>
+    </div>
+    <div class="details-section">
+        <div class="clearfix">
+            <div class="details-section-heading">
                 {{'personInfo.title.address'|i18n}}
             </div>
             <div class="details-section-edit">
                 <a ng-click="openEditAddressModal()" class="add-item-link" tabindex="0">
-                    <span>{{'personInfo.title.addAddress'|i18n}}</span><span class="icon-add-CO"></span>
+                    <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                 </a>
             </div>
         </div>

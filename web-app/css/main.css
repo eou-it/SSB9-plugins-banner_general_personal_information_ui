@@ -261,8 +261,9 @@ a.pi-icon-link:focus {
     font-size: 14px;
 }
 
-.xe-tab-container .addr-list {
-    padding: 0px 15px;
+.xe-tab-container .addr-list,
+.xe-tab-container .phone-list {
+    padding: 15px 15px 0;
 }
 
 .add-item-footer {
@@ -741,13 +742,10 @@ a.delete-address-link {
     color: #A0A3A4;
 }
 
-.phone-list {
-    padding: 15px 15px 0 15px;
-}
-
 .phone-type-view {
     font-weight: bold;
     padding-bottom: 4px;
+    float: left;
 }
 
 .phone-number-view {
@@ -765,6 +763,10 @@ a.edit-phone-link {
 
 button.delete-phone-btn {
     outline: none;
+}
+
+.unlisted {
+    padding: 0 5px;
 }
 
 /* Icons */
