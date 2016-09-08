@@ -8,12 +8,12 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
     <xe-tab-panel heading="{{'personInfo.title.phoneNumber'|i18n}}" set-starting-tab="phoneNumber">
-        <person-phone-list></person-phone-list>
+        <ng-include src="'personalInformationApp/piPhone/piPhoneList.html'|webAppResourcePath"></ng-include>
         <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addPhone'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
     <xe-tab-panel heading="{{'personInfo.title.addresses'|i18n}}" set-starting-tab="address">
-        <person-address-list></person-address-list>
+        <ng-include src="'personalInformationApp/piAddress/piAddressList.html'|webAppResourcePath"></ng-include>
         <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addAddress'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>

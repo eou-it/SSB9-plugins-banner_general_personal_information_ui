@@ -8,7 +8,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="row">
             <div ng-repeat="address in getOrderedAddressesForType(addrType)" class="col-sm-12 col-md-6 col-lg-6">
-                <person-address></person-address>
+                <ng-include src="'personalInformationApp/piAddress/piAddress.html'|webAppResourcePath"></ng-include>
             </div>
         </div>
     </div>
