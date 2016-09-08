@@ -1204,6 +1204,25 @@ table tr td {
     .xs-errors-visible {
         display: none;
     }
+
+    .edit-email-modal .modal-dialog {
+        height: auto;
+    }
+
+    .edit-email-modal.modal.in .modal-dialog {
+        -webkit-transform: translate(0, 18%);
+        -ms-transform: translate(0, 18%);
+        transform: translate(0, 18%);
+    }
+
+    .edit-email-modal .modal-content {
+        height: auto;
+        border-radius: 6px;
+    }
+
+    .pi-modal-title {
+        padding: 0.7em 0.7em 0.5em 1.1em;
+    }
 }
 
 @media screen and (min-width:1024px) {
