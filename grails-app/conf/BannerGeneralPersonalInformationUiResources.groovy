@@ -71,9 +71,8 @@ modules = {
 
         // Directives
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/directives/selectBox-directive.js']
-        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piPhone-directive.js']
-        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-directive.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/directives/personalInfo-directive.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEmail-directive.js']
 
     }
 

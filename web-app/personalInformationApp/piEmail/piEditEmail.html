@@ -1,3 +1,6 @@
+<!--******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
 <div class="modal-flex-cont">
     <div class="modal-unflex">
         <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmail':'personInfo.title.editEmail')|i18n}}</h2>
@@ -5,13 +8,14 @@
         <div class="row pad-dialog-lr">
             <div class="select2-container sm-fix col-sm-12 col-md-6 col-lg-6">
                 <label class="input-field-label">{{'personInfo.label.emailType'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}' type="hidden" />
+                <input email-type-select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}'
+                       type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!emailTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{emailTypeErrMsg|i18n}}</p>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
-                       class="input-field-label" for="zip">{{'personInfo.label.emailAddress'|i18n}}</label><br>
+                       class="input-field-label" for="zip">{{(email.emailType.urlIndicator ? 'personInfo.label.Url' : 'personInfo.label.emailAddress')|i18n}}</label><br>
                 <input ng-model="email.emailAddress" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
                        ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
                        class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}" id="zip">
