@@ -1,3 +1,7 @@
+/*******************************************************************************
+ Copyright 2016 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
+
 personalInformationAppDirectives.directive('emailTypeSelectBox', function() {
     return {
         scope: true,
