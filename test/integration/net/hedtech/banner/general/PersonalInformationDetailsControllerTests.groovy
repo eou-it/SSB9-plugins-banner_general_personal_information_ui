@@ -458,4 +458,20 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 //        assertEquals '610 4925555', phones[0].displayPhoneNumber
     }
 
+    @Test
+    void testGetTelephoneTypeList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getTelephoneTypeList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'AMCAS Phone type', data[0].description
+    }
+
 }
