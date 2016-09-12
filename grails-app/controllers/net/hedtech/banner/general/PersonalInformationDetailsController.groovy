@@ -226,6 +226,7 @@ class PersonalInformationDetailsController {
 
             def emails = []
             emails[0] = newEmail
+            personEmailService.updatePreferredEmail(newEmail)
             personEmailCompositeService.createOrUpdate([personEmails: emails])
             render([failure: false] as JSON)
         }
@@ -245,6 +246,7 @@ class PersonalInformationDetailsController {
 
             def emails = []
             emails[0] = personEmailService.castEmailForUpdate(updatedEmail)
+            personEmailService.updatePreferredEmail(updatedEmail)
             personEmailCompositeService.createOrUpdate([personEmails: emails])
             render([failure: false] as JSON)
         }

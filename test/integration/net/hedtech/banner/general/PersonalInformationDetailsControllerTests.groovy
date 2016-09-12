@@ -437,7 +437,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data
-        assertEquals true, data.failure
+        assertEquals false, data.failure
     }
 
     @Test
