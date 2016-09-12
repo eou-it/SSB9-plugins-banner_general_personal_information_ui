@@ -608,6 +608,7 @@ input.hasMultiCalendarPicker.pi-date-input:focus,
 p.response-err {
     padding-left: 15px;
     padding-right: 15px;
+    float: left;
 }
 
 .pad-dialog-lr.row {
