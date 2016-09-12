@@ -12,6 +12,7 @@ import net.hedtech.banner.general.overall.AddressRolePrivilegesCompositeService
 import net.hedtech.banner.general.system.CountyService
 import net.hedtech.banner.general.system.StateService
 import net.hedtech.banner.general.system.NationService
+import net.hedtech.banner.general.system.TelephoneTypeService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -24,6 +25,7 @@ class PersonalInformationDetailsController {
     def personAddressCompositeService
     def personAddressByRoleViewService
     def emailTypeService
+    def telephoneTypeService
     def personEmailService
     def personEmailCompositeService
     def personTelephoneService
@@ -248,6 +250,16 @@ class PersonalInformationDetailsController {
             JSON.use("deep") {
                 render model as JSON
             }
+        }
+    }
+
+    def getTelephoneTypeList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render telephoneTypeService.fetchUpdateableTelephoneTypeList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
 
