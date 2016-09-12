@@ -52,7 +52,7 @@ personalInformationAppDirectives.directive('emailTypeSelectBox', function() {
                 },
                 initSelection: function(element, callback) {
                     if (dataModelItem) {
-                        var data = {id: dataModelItem.code, text: dataModelItem.description};
+                        var data = {id: dataModelItem.code, text: dataModelItem.description, urlIndicator: dataModelItem.urlIndicator};
 
                         callback(data);
                     }
