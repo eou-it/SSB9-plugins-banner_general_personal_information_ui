@@ -257,6 +257,24 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def deleteEmail() {
+        def deletedEmail = request?.JSON ?: params
+        deletedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        try {
+            deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
+
+            personEmailService.inactivateEmail(deletedEmail)
+
+            render([failure: false] as JSON)
+
+        } catch (ApplicationException e) {
+            def result = PersonProfileControllerUtility.returnFailureMessage(e)
+
+            render result as JSON
+        }
+    }
+
     def getTelephoneNumbers() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def model = [:]

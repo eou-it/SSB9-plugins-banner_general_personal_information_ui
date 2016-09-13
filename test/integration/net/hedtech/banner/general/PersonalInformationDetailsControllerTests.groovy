@@ -472,6 +472,34 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testDeleteEmail() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id:${email.id},
+            version:${email.version},
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:false,
+            commentData:null,
+            displayWebIndicator:true,
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.deleteAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertFalse data.failure
+    }
+
+    @Test
     void testGetTelephoneNumbers(){
         loginSSB 'HOS00001', '111111'
 
