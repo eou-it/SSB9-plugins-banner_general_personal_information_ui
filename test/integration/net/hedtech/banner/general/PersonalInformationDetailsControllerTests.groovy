@@ -492,7 +492,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             }
         }""".toString()
 
-        controller.deleteAddress()
+        controller.deleteEmail()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
