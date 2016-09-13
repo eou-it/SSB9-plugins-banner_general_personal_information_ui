@@ -262,7 +262,7 @@ class PersonalInformationDetailsController {
         deletedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
+            deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(deletedEmail.emailType.code)
 
             personEmailService.inactivateEmail(deletedEmail)
 
