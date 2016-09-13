@@ -437,7 +437,38 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data
-        assertEquals true, data.failure
+        assertEquals false, data.failure
+    }
+
+    @Test
+    void testUpdateEmail() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
+
+        // update comment field
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id:${email.id},
+            version:${email.version},
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:false,
+            commentData:'welcome, world',
+            displayWebIndicator:true,
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.updateEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals false, data.failure
     }
 
     @Test

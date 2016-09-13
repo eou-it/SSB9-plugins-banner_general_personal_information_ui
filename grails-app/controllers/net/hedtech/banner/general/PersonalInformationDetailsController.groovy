@@ -200,7 +200,7 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         if (pidm) {
-            model.emails = personEmailService.fetchByPidmAndActiveAndWebDisplayable(pidm)
+            model.emails = personEmailService.getDisplayableEmails(pidm)
             JSON.use("deep") {
                 render model as JSON
             }
@@ -228,6 +228,27 @@ class PersonalInformationDetailsController {
 
             def emails = []
             emails[0] = newEmail
+            personEmailService.updatePreferredEmail(newEmail)
+            personEmailCompositeService.createOrUpdate([personEmails: emails])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateEmail() {
+        def updatedEmail = request?.JSON ?: params
+        updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(updatedEmail)
+
+        try {
+            updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
+
+            def emails = []
+            emails[0] = personEmailService.castEmailForUpdate(updatedEmail)
+            personEmailService.updatePreferredEmail(updatedEmail)
             personEmailCompositeService.createOrUpdate([personEmails: emails])
             render([failure: false] as JSON)
         }
