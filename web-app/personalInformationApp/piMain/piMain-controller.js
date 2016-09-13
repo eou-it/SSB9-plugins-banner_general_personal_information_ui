@@ -177,6 +177,34 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.displayNotification('personInfo.confirm.address.delete.text', 'warning', false, prompts);
         };
 
+        $scope.confirmEmailDelete = function (email) {
+            var deleteEmail = function () {
+                $scope.cancelNotification();
+
+                piCrudService.delete('Email', email).$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        // Refresh email info
+                        $scope.emails.splice($scope.emails.indexOf(email), 1);
+                    }
+                });
+            };
+
+            var prompts = [
+                {
+                    label: $filter('i18n')('personInfo.button.prompt.cancel'),
+                    action: $scope.cancelNotification
+                },
+                {
+                    label: $filter('i18n')('personInfo.button.delete'),
+                    action: deleteEmail
+                }
+            ];
+
+            notificationCenterService.displayNotification('personInfo.confirm.email.delete.text', 'warning', false, prompts);
+        };
+
 
         // INITIALIZE
         // ----------
