@@ -20,7 +20,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link" tabindex="0">
                         <span class="icon-edit-CO"></span>
                     </a>
-                    <button class="delete-phone-btn" ng-click="TODO()" title="Delete email address"></button>
+                    <button ng-click="confirmEmailDelete(email)" class="delete-phone-btn"
+                            title="{{'personInfo.button.title.deleteEmail'|i18n}}}"></button>
                 </div>
             </div>
             <div ng-if="$index%2 === 1" class="clearfix hidden-xs"></div>
