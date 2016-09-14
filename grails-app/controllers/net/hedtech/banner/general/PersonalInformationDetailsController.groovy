@@ -331,6 +331,8 @@ class PersonalInformationDetailsController {
     }
 
     private def isDateInFuture(date) {
+        if (!date) {return false}
+
         Date today = new Date()
         return date.after(today)
     }
