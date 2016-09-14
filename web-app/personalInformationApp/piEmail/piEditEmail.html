@@ -25,7 +25,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p class="input-field-label mobile-errors" ng-class="[(!!emailAddressErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{emailAddressErrMsg|i18n}}</p>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-6 col-lg-6 clear-both">
                 <label class="input-field-label" for="email-cmnt">{{'personInfo.label.comments'|i18n}}</label><br>
                 <textarea ng-model="email.commentData" class="text-input-field semi-bold form-spacing" rows="2" maxlength="60"
                           placeholder="{{'personInfo.placeholder.enterComment'|i18n}}" id="email-cmnt"></textarea>
