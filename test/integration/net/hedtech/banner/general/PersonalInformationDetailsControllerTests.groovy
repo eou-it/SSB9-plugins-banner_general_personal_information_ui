@@ -325,9 +325,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
 
         controller.request.contentType = "text/json"
-        controller.request.json = """[{
-            id:${addresses[0].id}
-        }]""".toString()
+        controller.request.json = """{
+            id:${addresses[0].id},
+            version:${addresses[0].version}
+        }""".toString()
 
         controller.deleteAddress()
         def dataForNullCheck = controller.response.contentAsString

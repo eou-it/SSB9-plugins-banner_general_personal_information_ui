@@ -183,13 +183,20 @@ class PersonalInformationDetailsController {
     def deleteAddress() {
         def map = request?.JSON ?: params
 
+        // We don't actually delete; we inactivate
+        def addressToDelete = [
+                id: map.id,
+                version: map.version,
+                statusIndicator: 'I'
+        ]
+
         try {
-            def result = personAddressService.delete(map)
+            personAddressService.update(addressToDelete)
 
             render([failure: false] as JSON)
 
         } catch (ApplicationException e) {
-            def result = PersonProfileControllerUtility.returnFailureMessage(e)
+            def result = PersonalInformationControllerUtility.returnFailureMessage(e)
 
             render result as JSON
         }
@@ -269,7 +276,7 @@ class PersonalInformationDetailsController {
             render([failure: false] as JSON)
 
         } catch (ApplicationException e) {
-            def result = PersonProfileControllerUtility.returnFailureMessage(e)
+            def result = PersonalInformationControllerUtility.returnFailureMessage(e)
 
             render result as JSON
         }
