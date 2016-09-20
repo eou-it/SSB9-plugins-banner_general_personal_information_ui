@@ -55,6 +55,16 @@ class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetMaskingRule() {
+        def maskingRule = PersonalInformationControllerUtility.getMaskingRule("BWGKOADR_ALL")
+        assertNotNull maskingRule
+        assertFalse maskingRule.displayHouseNumber
+        assertFalse maskingRule.displayStreetLine4
+        assertFalse maskingRule.displayCountryCode
+        assertTrue maskingRule.displayInternationalAccess
+    }
+
+    @Test
     void testReturnFailureMessage(){
         String EXCEPTION_MESSAGE = "sample exception message"
         def e = new ApplicationException('entityClassOrName', EXCEPTION_MESSAGE)
