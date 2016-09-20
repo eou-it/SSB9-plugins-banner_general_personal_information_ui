@@ -35,6 +35,18 @@ class PersonalInformationDetailsController {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
+    def getMaskingRules() {
+        def maskingRules = [:]
+
+        try {
+            maskingRules.address = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+
+        render maskingRules as JSON
+    }
+
     def getAddresses() {
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()

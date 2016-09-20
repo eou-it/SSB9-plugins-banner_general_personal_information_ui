@@ -249,6 +249,10 @@ a.pi-icon-link:focus {
     visibility: hidden;
 }
 
+.select2-container {
+    margin-bottom: 1px;
+}
+
 .add-address-title {
     display: inline;
 }

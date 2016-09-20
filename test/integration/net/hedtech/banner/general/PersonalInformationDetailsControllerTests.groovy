@@ -30,7 +30,23 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
 
     @Test
-    void testGetAddressesForCurrentUser(){
+    void testGetMaskingRules() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.getMaskingRules()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse(dataForNullCheck)
+        println data
+        assertNotNull data
+        assertFalse data.address.displayHouseNumber
+        assertFalse data.address.displayStreetLine4
+        assertFalse data.address.displayCountryCode
+        assertTrue data.address.displayInternationalAccess
+    }
+
+    @Test
+    void testGetAddressesForCurrentUser() {
         loginSSB 'GDP000005', '111111'
 
         controller.request.contentType = "text/json"
@@ -501,7 +517,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
-    void testGetTelephoneNumbers(){
+    void testGetTelephoneNumbers() {
         loginSSB 'HOS00001', '111111'
 
         controller.request.contentType = "text/json"

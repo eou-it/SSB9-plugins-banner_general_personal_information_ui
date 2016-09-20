@@ -47,6 +47,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          */
         this.init = function() {
 
+            piCrudService.get('MaskingRules').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.maskingRules = response;
+                }
+            });
+
             piCrudService.get('Addresses').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -81,6 +89,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER VARIABLES
         // --------------------
+        $scope.maskingRules = null;
         $scope.addressGroup = null;
         $scope.emails = null;
         $scope.phones = null;
