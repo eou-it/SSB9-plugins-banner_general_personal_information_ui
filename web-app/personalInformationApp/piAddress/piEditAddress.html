@@ -20,6 +20,8 @@
                class="pi-date-input input-colors" placeholder="{{'personInfo.placeholder.date'|i18n}}" id=""/>
         <p class="input-field-label mobile-errors" ng-class="[(!!fromDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{fromDateErrMsg|i18n}}</p>
+        <p class="input-field-label mobile-errors" ng-class="[(!!dateRangeErrMsg ? 'field-error error-font-size' : 'no-display')]"
+           role="alert" aria-live="assertive">{{dateRangeErrMsg}}</p>
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.validTo'|i18n}}</label><br>
@@ -95,6 +97,8 @@
         <p class="input-field-label mobile-errors" ng-class="[(!!stateCountyNationErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
     </div>
+    <p class="input-field-label mobile-errors response-err" ng-class="[(!!addressErrMsg ? 'field-error error-font-size' : 'no-display')]"
+       role="alert" aria-live="assertive">{{addressErrMsg}}</p>
 </div>
 <div class="dialog-footer-margin modal-footer addAddr">
     <button class="dialog-btn" ng-click="cancelModal()">{{'personInfo.label.button.cancel'|i18n}}</button>

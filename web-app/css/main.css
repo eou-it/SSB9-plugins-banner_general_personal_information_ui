@@ -617,6 +617,7 @@ p.response-err {
     padding-left: 15px;
     padding-right: 15px;
     float: left;
+    clear: left;
 }
 
 .pad-dialog-lr.row {
