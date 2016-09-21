@@ -35,21 +35,34 @@ class PersonalInformationDetailsController {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
     }
 
+    def getMaskingRules() {
+        def maskingRules = [:]
+
+        try {
+            maskingRules.address = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+
+        render maskingRules as JSON
+    }
+
     def getAddresses() {
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         if (pidm) {
             def addresses
+            def maskingRule
 
             try {
+                maskingRule = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+
                 addresses = personAddressByRoleViewService.getActiveAddressesByRoles(getRoles(), pidm)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
 
-            // TODO: if masking turns out to be needed here, search for "maskingRule" in EmployeeProfileController.groovy
-            // TODO: in Employee Profile app.
             model.addresses = []
 
             def personAddress
@@ -82,7 +95,9 @@ class PersonalInformationDetailsController {
                          state:it.state,
                          zip:it.zip,
                          county:it.county,
-                         country:it.nation])
+                         country:it.nation,
+                         displayHouseNumber:maskingRule.displayHouseNumber,
+                         displayStreetLine4:maskingRule.displayStreetLine4])
 
                 model.addresses << personAddress
             }

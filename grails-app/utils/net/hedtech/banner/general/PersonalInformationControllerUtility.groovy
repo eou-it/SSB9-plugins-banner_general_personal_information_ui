@@ -1,6 +1,7 @@
 package net.hedtech.banner.general
 
 import net.hedtech.banner.exceptions.ApplicationException
+import net.hedtech.banner.general.overall.DisplayMaskingColumnRuleView
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.security.core.context.SecurityContextHolder
@@ -28,6 +29,31 @@ class PersonalInformationControllerUtility {
         ]
 
         map
+    }
+
+    /**
+     * Returns a map of masking rules for the given block name.
+     * @param blockName a valid block name such as 'BWGKOADR_ALL'
+     * @return map of masking rules
+     */
+    public static getMaskingRule(String blockName) {
+        def maskingRule = [:]
+        def maskingColumnRules = DisplayMaskingColumnRuleView.fetchSSBMaskByBlockName([blockName: blockName])
+
+        maskingColumnRules.each { it ->
+            if (it.columnName == '%_SURNAME_PREFIX')
+                maskingRule.displaySurnamePrefix = (it.displayIndicator == "Y")
+            else if (it.columnName == '%_HOUSE_NUMBER')
+                maskingRule.displayHouseNumber = (it.displayIndicator == "Y")
+            else if (it.columnName == '%_INTL_ACCESS')
+                maskingRule.displayInternationalAccess = (it.displayIndicator == "Y")
+            else if (it.columnName == '%_STREET_LINE4')
+                maskingRule.displayStreetLine4 = (it.displayIndicator == "Y")
+            else if (it.columnName == '%_CTRY_CODE_PHONE')
+                maskingRule.displayCountryCode = (it.displayIndicator == "Y")
+        }
+
+        return maskingRule
     }
 
     public static  returnFailureMessage(ApplicationException e) {
