@@ -168,6 +168,10 @@ input:disabled {
     display: none !important;
 }
 
+.clear-left {
+    clear: left;
+}
+
 .clear-both {
     clear: both;
 }

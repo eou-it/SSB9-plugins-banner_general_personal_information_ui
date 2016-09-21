@@ -1,15 +1,14 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="clearfix addr-list">
-    <div ng-repeat="(addrType, addressTimePeriods) in addressGroup">
+<div class="clearfix addr-list row">
+    <div ng-repeat="(addrType, addressTimePeriods) in addressGroup" ng-class="{'clear-left': ($index%3===0)}"
+         class="col-sm-12 col-md-4 col-lg-4">
         <div class="address-type-view">
             {{addrType}}
         </div>
-        <div class="row">
-            <div ng-repeat="address in getOrderedAddressesForType(addrType)" class="col-sm-12 col-md-6 col-lg-6">
-                <ng-include src="'personalInformationApp/piAddress/piAddress.html'|webAppResourcePath"></ng-include>
-            </div>
+        <div ng-repeat="address in getOrderedAddressesForType(addrType)" class="clear-both">
+            <ng-include src="'personalInformationApp/piAddress/piAddress.html'|webAppResourcePath"></ng-include>
         </div>
     </div>
 </div>
