@@ -550,4 +550,39 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals 'AMCAS Phone type', data[0].description
     }
 
+    @Test
+    void testAddEmergencyContact() {
+        loginSSB 'GDP000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            priority: 1,
+            lastName: 'Smith',
+            firstName: 'Veronica',
+            middleInitial: 'V',
+            streetLine1: '123 Any Street',
+            city: 'Anytown',
+            zip: '77777',
+            phoneArea: '610',
+            phoneNumber: '555',
+            phoneExtension: '1234',
+            state:{
+                code:'KY',
+                description:'Kentucky'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.addEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals false, data.failure
+    }
+
 }
