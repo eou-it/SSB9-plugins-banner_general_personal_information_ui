@@ -597,17 +597,17 @@ input.hasMultiCalendarPicker.pi-date-input:focus,
     padding: 1em 1em 0.5em;
 }
 
-.edit-email-modal.modal {
+.pi-modal.modal {
     margin-top: 50px;
     overflow-x: hidden
 }
 
-.edit-email-modal .modal-dialog {
+.pi-modal .modal-dialog {
     padding: 0;
     height: 100%;
 }
 
-.edit-email-modal .modal-content {
+.pi-modal .modal-content {
     height: 100%;
     border-radius: 0px;
     overflow-y: auto;
@@ -1215,17 +1215,23 @@ table tr td {
         display: none;
     }
 
-    .edit-email-modal .modal-dialog {
+    .pi-modal .modal-dialog {
         height: auto;
     }
 
-    .edit-email-modal.modal.in .modal-dialog {
+    .pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 18%);
         -ms-transform: translate(0, 18%);
         transform: translate(0, 18%);
     }
 
-    .edit-email-modal .modal-content {
+    .edit-addr.pi-modal.modal.in .modal-dialog {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+
+    .pi-modal .modal-content {
         height: auto;
         border-radius: 6px;
     }
@@ -1236,7 +1242,7 @@ table tr td {
 }
 
 @media screen and (min-width:1024px) {
-    .edit-addr-modal .modal-dialog {
+    .edit-addr .modal-dialog {
         width: 896px;
     }
 
