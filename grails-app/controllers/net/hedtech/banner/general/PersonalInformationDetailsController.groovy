@@ -22,6 +22,7 @@ class PersonalInformationDetailsController {
     def personEmailCompositeService
     def personTelephoneService
     def personalInformationCompositeService
+    def relationshipService
     def personEmergencyContactService
 
     private def findPerson() {
@@ -312,6 +313,16 @@ class PersonalInformationDetailsController {
 
         try {
             render telephoneTypeService.fetchUpdateableTelephoneTypeList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getRelationshipList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render relationshipService.fetchRelationshipList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
