@@ -3,16 +3,8 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
-import net.hedtech.banner.general.person.PersonAddressService
-import net.hedtech.banner.general.person.PersonAddressCompositeService
 import net.hedtech.banner.general.person.PersonAddressUtility
-import net.hedtech.banner.general.person.PersonTelephoneService
 import net.hedtech.banner.general.person.PersonUtility
-import net.hedtech.banner.general.overall.AddressRolePrivilegesCompositeService
-import net.hedtech.banner.general.system.CountyService
-import net.hedtech.banner.general.system.StateService
-import net.hedtech.banner.general.system.NationService
-import net.hedtech.banner.general.system.TelephoneTypeService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -30,6 +22,7 @@ class PersonalInformationDetailsController {
     def personEmailCompositeService
     def personTelephoneService
     def personalInformationCompositeService
+    def personEmergencyContactService
 
     private def findPerson() {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
@@ -160,7 +153,7 @@ class PersonalInformationDetailsController {
 
             convertAddressDates(newAddress)
 
-            newAddress = personalInformationCompositeService.getAddressValidationObjects(getRoles(), newAddress)
+            newAddress = personalInformationCompositeService.getPersonValidationObjects(getRoles(), newAddress)
 
             def addresses = []
             addresses[0] = [:]
@@ -320,6 +313,23 @@ class PersonalInformationDetailsController {
         try {
             render telephoneTypeService.fetchUpdateableTelephoneTypeList(map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def addEmergencyContact() {
+        def newContact = request?.JSON ?: params
+        newContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(newContact)
+
+        try {
+            newContact = personalInformationCompositeService.getPersonValidationObjects(getRoles(), newContact)
+
+            personEmergencyContactService.createOrUpdate(newContact)
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
