@@ -263,6 +263,9 @@ a.pi-icon-link:focus {
 
 .modal-flex-cont {
     height: 100%;
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -ms-flex-pack: justify;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -654,7 +657,6 @@ button.closebtn {
     display: table;
     padding: 1px 0px 0px;
     width: 100%;
-    align-self: flex-end;
 }
 
 .dialog-btn {
