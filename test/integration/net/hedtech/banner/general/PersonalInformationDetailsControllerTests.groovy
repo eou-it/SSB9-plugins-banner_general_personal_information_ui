@@ -551,6 +551,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetRelationshipList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getRelationshipList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 10, data.size()
+        assertEquals 'Brother', data[1].description
+    }
+
+    @Test
     void testAddEmergencyContact() {
         loginSSB 'GDP000001', '111111'
 
