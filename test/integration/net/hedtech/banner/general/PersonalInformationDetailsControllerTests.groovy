@@ -547,7 +547,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'AMCAS Phone type', data[0].description
+        assertEquals 'Administrative', data[0].description
     }
 
     @Test
