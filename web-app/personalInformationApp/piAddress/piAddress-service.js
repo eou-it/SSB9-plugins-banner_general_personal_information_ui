@@ -28,32 +28,27 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
         };
 
         this.getErrorDateRange = function (address, addressList) {
-            var msg = 'personInfo.address.error.dateRange';
             if (address.fromDate) {
-                var MAX_DATE = 8640000000000000;
-                var fromDate = new Date(Date.parse(address.fromDate));
-                var toDate = address.toDate ? new Date(Date.parse(address.toDate)) : new Date(MAX_DATE) ;
-                var flatList = _.flatten(addressList);
+                var msg = 'personInfo.address.error.dateRange',
+                    MAX_DATE = 8640000000000000,
+                    fromDate = new Date(Date.parse(address.fromDate)),
+                    toDate = address.toDate ? new Date(Date.parse(address.toDate)) : new Date(MAX_DATE),
+                    flatList = _.flatten(addressList);
 
                 var overlappedAddress = _.find(flatList,
-                    function(listItem){
+                    function(listItem) {
                         var isRangeError = false;
                         if(address.id !== listItem.id) {
-                            var listFromDate = new Date(Date.parse(listItem.fromDate));
-                            var listToDate = listItem.toDate ? new Date(Date.parse(listItem.toDate)) : new Date(MAX_DATE);
+                            var listFromDate = new Date(Date.parse(listItem.fromDate)),
+                                listToDate = listItem.toDate ? new Date(Date.parse(listItem.toDate)) : new Date(MAX_DATE);
 
-                            if (fromDate < listToDate) {
-                                isRangeError = toDate >= listFromDate;
-                            }
-                            else {
-                                isRangeError = fromDate === listToDate;
-                            }
+                            isRangeError = (fromDate < listToDate) ? toDate >= listFromDate : fromDate === listToDate;
                         }
                         return isRangeError;
                     }
                 );
 
-                if(overlappedAddress){
+                if(overlappedAddress) {
                     var data = [];
                     data[0] = overlappedAddress.fromDate;
                     data[1] = overlappedAddress.toDate ?
