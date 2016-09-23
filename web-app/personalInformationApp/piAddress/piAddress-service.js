@@ -1,5 +1,5 @@
-personalInformationApp.service('piAddressService', ['notificationCenterService',
-    function (notificationCenterService) {
+personalInformationApp.service('piAddressService', ['notificationCenterService', '$filter',
+    function (notificationCenterService, $filter) {
 
         var messages = [];
 
@@ -24,6 +24,43 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
             }
             else {
                 notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorDateRange = function (address, addressList) {
+            if (address.fromDate) {
+                var msg = 'personInfo.address.error.dateRange',
+                    MAX_DATE = 8640000000000000,
+                    fromDate = new Date(Date.parse(address.fromDate)),
+                    toDate = address.toDate ? new Date(Date.parse(address.toDate)) : new Date(MAX_DATE),
+                    flatList = _.flatten(addressList);
+
+                var overlappedAddress = _.find(flatList,
+                    function(listItem) {
+                        var isRangeError = false;
+                        if(address.id !== listItem.id) {
+                            var listFromDate = new Date(Date.parse(listItem.fromDate)),
+                                listToDate = listItem.toDate ? new Date(Date.parse(listItem.toDate)) : new Date(MAX_DATE);
+
+                            isRangeError = (fromDate < listToDate) ? toDate >= listFromDate : fromDate === listToDate;
+                        }
+                        return isRangeError;
+                    }
+                );
+
+                if(overlappedAddress) {
+                    var data = [];
+                    data[0] = overlappedAddress.fromDate;
+                    data[1] = overlappedAddress.toDate ?
+                        overlappedAddress.toDate : '('+ $filter('i18n')('personInfo.no.end.date') +')';
+                    msg = $filter('i18n')(msg, data);
+                    messages.push({msg: msg, type: 'error'});
+
+                    return msg;
+                }
+                else {
+                    notificationCenterService.removeNotification(msg);
+                }
             }
         };
 
