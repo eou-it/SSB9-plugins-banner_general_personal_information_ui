@@ -567,12 +567,26 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetEmergencyContactsForCurrentUser() {
+        loginSSB 'GDP000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.getEmergencyContacts()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse(dataForNullCheck)
+        println data
+        assertNotNull data
+        assertEquals 1, data.emergencyContacts.size()
+        assertEquals 'P', data.emergencyContacts[0].relationship.code
+    }
+
+    @Test
     void testAddEmergencyContact() {
         loginSSB 'GDP000001', '111111'
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
-            priority: 1,
+            priority: 2,
             lastName: 'Smith',
             firstName: 'Veronica',
             middleInitial: 'V',
