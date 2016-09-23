@@ -121,7 +121,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAddress/piEditAddress.html'),
-                windowClass: 'edit-addr-modal',
+                windowClass: 'edit-addr pi-modal',
                 keyboard: true,
                 controller: "piEditAddressController",
                 scope: $scope,
@@ -140,7 +140,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piEmail/piEditEmail.html'),
-                windowClass: 'edit-email-modal',
+                windowClass: 'pi-modal',
                 keyboard: true,
                 controller: "piEditEmailController",
                 scope: $scope,

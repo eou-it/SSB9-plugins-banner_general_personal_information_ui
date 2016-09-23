@@ -7,9 +7,11 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         $scope.isCreateNew = true;
         $scope.addressTypeErrMsg = '';
         $scope.fromDateErrMsg = '';
+        $scope.dateRangeErrMsg = '';
         $scope.streetLine1ErrMsg = '';
         $scope.cityErrMsg = '';
         $scope.stateCountyNationErrMsg = '';
+        $scope.addressErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -26,6 +28,10 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             if(!!$scope.fromDateErrMsg) {
                 $scope.fromDateErrMsg = piAddressService.getErrorFromDate($scope.address);
             }
+            if(!!$scope.dateRangeErrMsg) {
+                $scope.dateRangeErrMsg = piAddressService.getErrorDateRange($scope.address,
+                    $scope.addressGroup[$scope.address.addressType.description]);
+            }
             if(!!$scope.streetLine1ErrMsg) {
                 $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1($scope.address);
             }
@@ -40,24 +46,30 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         var isValidAddress = function (address) {
             $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
             $scope.fromDateErrMsg = piAddressService.getErrorFromDate(address);
+            $scope.dateRangeErrMsg = piAddressService.getErrorDateRange(address,
+                $scope.addressGroup[$scope.address.addressType.description]);
             $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1(address);
             $scope.cityErrMsg = piAddressService.getErrorCity(address);
             $scope.stateCountyNationErrMsg = piAddressService.getErrorStateCountyNation(address);
 
-            return !($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
+            return !($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.dateRangeErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
                 $scope.stateCountyNationErrMsg);
         };
 
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
-                $scope.address.fromDate = new Date(Date.parse($scope.address.fromDate));
-                $scope.address.toDate = new Date(Date.parse($scope.address.toDate));
+                var addressToSave = angular.copy($scope.address);
+                addressToSave.fromDate = new Date(Date.parse($scope.address.fromDate));
+                addressToSave.toDate = new Date(Date.parse($scope.address.toDate));
 
                 var handleResponse = function (response) {
                     if (response.failure) {
+                        $scope.addressErrMsg = response.message;
                         notificationCenterService.displayNotification(response.message, "error");
                     }
                     else {
+                        notificationCenterService.clearNotifications();
+
                         var notifications = [];
                         notifications.push({message: 'personInfo.save.success.message',
                             messageType: $scope.notificationSuccessType,
@@ -72,10 +84,10 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                 };
 
                 if($scope.isCreateNew) {
-                    piCrudService.create('Address', $scope.address).$promise.then(handleResponse);
+                    piCrudService.create('Address', addressToSave).$promise.then(handleResponse);
                 }
                 else {
-                    piCrudService.update('Address', $scope.address).$promise.then(handleResponse);
+                    piCrudService.update('Address', addressToSave).$promise.then(handleResponse);
                 }
             }
             else {
