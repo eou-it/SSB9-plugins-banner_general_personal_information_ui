@@ -17,12 +17,12 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addAddress'|i18n}}</pi-mobile-footer-button>
         <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
-    <xe-tab-panel heading="Additional Details" set-starting-tab="addtionalDetail">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </div>
+    <xe-tab-panel heading="{{'personInfo.title.emergencyContact'|i18n}}" set-starting-tab="emergencyContact">
+        <ng-include src="'personalInformationApp/piEmergencyContact/piEmergencyContactList.html'|webAppResourcePath"></ng-include>
+        <pi-mobile-footer-button click-function="openEditEmergencyContactModal">{{'personInfo.label.addEmergencyContact'|i18n}}</pi-mobile-footer-button>
+        <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
     </xe-tab-panel>
-    <xe-tab-panel heading="heading4">
+    <xe-tab-panel heading="Additional Details" set-starting-tab="addtionalDetail">
         <div>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit
         </div>
