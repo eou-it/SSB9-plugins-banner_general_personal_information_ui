@@ -493,7 +493,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000001', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
+        def email = controller.getEmails(pidm)[0]
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
