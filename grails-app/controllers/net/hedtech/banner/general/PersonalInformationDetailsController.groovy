@@ -33,7 +33,7 @@ class PersonalInformationDetailsController {
         def maskingRules = [:]
 
         try {
-            maskingRules.address = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+            maskingRules = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -50,7 +50,7 @@ class PersonalInformationDetailsController {
             def maskingRule
 
             try {
-                maskingRule = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+                maskingRule = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
 
                 addresses = personAddressByRoleViewService.getActiveAddressesByRoles(getRoles(), pidm)
             } catch (ApplicationException e) {
@@ -337,7 +337,7 @@ class PersonalInformationDetailsController {
             def maskingRule
 
             try {
-                maskingRule = PersonalInformationControllerUtility.getMaskingRule('BWGKOGAD_ALL')
+                maskingRule = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
 
                 contacts = personEmergencyContactService.getEmergencyContactsByPidm(pidm)
             } catch (ApplicationException e) {
