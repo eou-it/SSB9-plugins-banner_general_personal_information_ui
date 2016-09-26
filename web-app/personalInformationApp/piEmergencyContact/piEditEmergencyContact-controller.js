@@ -25,25 +25,13 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             if(!!$scope.lastNameErrMsg) {
                 $scope.lastNameErrMsg = piEmergencyContactService.getErrorLastName($scope.emergencyContact);
             }
-            if(!!$scope.streetLine1ErrMsg) {
-                $scope.streetLine1ErrMsg = piEmergencyContactService.getErrorStreetLine1($scope.emergencyContact);
-            }
-            if(!!$scope.cityErrMsg){
-                $scope.cityErrMsg = piEmergencyContactService.getErrorCity($scope.emergencyContact);
-            }
-            if(!!$scope.stateCountyNationErrMsg) {
-                $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorStateCountyNation($scope.emergencyContact);
-            }
         };
 
         var isValidContact = function (contact) {
             $scope.firstNameErrMsg = piEmergencyContactService.getErrorFirstName(contact);
             $scope.lastNameErrMsg = piEmergencyContactService.getErrorLastName(contact);
-            $scope.streetLine1ErrMsg = piEmergencyContactService.getErrorStreetLine1(contact);
-            $scope.cityErrMsg = piEmergencyContactService.getErrorCity(contact);
-            $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorStateCountyNation(contact);
 
-            return !($scope.firstNameErrMsg || $scope.lastNameErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg || $scope.stateCountyNationErrMsg);
+            return !($scope.firstNameErrMsg || $scope.lastNameErrMsg);
         };
 
         $scope.saveEmergencyContact = function() {
