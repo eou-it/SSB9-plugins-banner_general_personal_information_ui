@@ -38,7 +38,7 @@
                    role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
             </div>
             <div class="clearfix hidden-xs"></div>
-            <div ng-if="maskingRules.address.displayHouseNumber" class="col-sm-12 col-md-4 col-lg-4">
+            <div ng-if="maskingRules.displayHouseNumber" class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="houseNumber">{{'personInfo.label.houseNumber'|i18n}}</label><br>
                 <input ng-model="address.houseNumber" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterHouseNumber'|i18n}}" id="houseNumber">
             </div>
@@ -62,7 +62,7 @@
                 <label class="input-field-label" for="addrLine3">{{'personInfo.label.addressLine3'|i18n}}</label><br>
                 <input ng-model="address.streetLine3" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine3'|i18n}}" id="addrLine3">
             </div>
-            <div ng-if="maskingRules.address.displayStreetLine4" class="col-sm-12 col-md-4 col-lg-4">
+            <div ng-if="maskingRules.displayStreetLine4" class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="addrLine4">{{'personInfo.label.addressLine4'|i18n}}</label><br>
                 <input ng-model="address.streetLine4" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine4'|i18n}}" id="addrLine4">
             </div>
