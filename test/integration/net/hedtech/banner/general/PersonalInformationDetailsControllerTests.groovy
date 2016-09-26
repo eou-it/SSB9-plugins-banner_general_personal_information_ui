@@ -39,10 +39,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse(dataForNullCheck)
         println data
         assertNotNull data
-        assertFalse data.address.displayHouseNumber
-        assertFalse data.address.displayStreetLine4
-        assertFalse data.address.displayCountryCode
-        assertTrue data.address.displayInternationalAccess
+        assertFalse data.displayHouseNumber
+        assertTrue data.displayStreetLine4
+        assertFalse data.displayCountryCode
+        assertTrue data.displayInternationalAccess
     }
 
     @Test
