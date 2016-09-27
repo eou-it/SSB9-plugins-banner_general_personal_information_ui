@@ -154,7 +154,7 @@ class PersonalInformationDetailsController {
 
             convertAddressDates(newAddress)
 
-            newAddress = personalInformationCompositeService.getPersonValidationObjects(getRoles(), newAddress)
+            newAddress = personalInformationCompositeService.getPersonValidationObjects(newAddress, getRoles())
 
             def addresses = []
             addresses[0] = [:]
@@ -367,9 +367,9 @@ class PersonalInformationDetailsController {
                 emerContact.streetLine3 = it.streetLine3
                 emerContact.streetLine4 = it.streetLine4
                 emerContact.city = it.city
-                emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : null
+                emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : [:]
                 emerContact.zip = it.zip
-                emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : null
+                emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : [:]
                 emerContact.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber: it.houseNumber,
                          streetLine1: it.streetLine1,
@@ -400,9 +400,27 @@ class PersonalInformationDetailsController {
         fixJSONObjectForCast(newContact)
 
         try {
-            newContact = personalInformationCompositeService.getPersonValidationObjects(getRoles(), newContact)
+            personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
+            newContact = personalInformationCompositeService.getPersonValidationObjects(newContact)
 
             personEmergencyContactService.createOrUpdate(newContact)
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateEmergencyContact() {
+        def updatedContact = request?.JSON ?: params
+        updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(updatedContact)
+
+        try {
+            personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
+
+            personEmergencyContactService.update(updatedContact)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
