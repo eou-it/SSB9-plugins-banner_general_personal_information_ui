@@ -615,4 +615,125 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals false, data.failure
     }
 
+    @Test
+    void testUpdateEmergencyContact() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:${contacts[0].id},
+            version:${contacts[0].version},
+            priority: 1,
+            lastName: 'Andersen',
+            firstName: 'Ronald',
+            streetLine1: '3391 Nuzum Court - UPDATED',
+            city: 'Malvern',
+            zip: '19355',
+            phoneArea: '215',
+            phoneNumber: '6336094',
+            state:{
+                code:'PA',
+                description:'Pennsylvania'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.updateEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    @Test
+    void testUpdateEmergencyContactWithMissingId() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            version:${contacts[0].version},
+            priority: 2,
+            lastName: 'Smith',
+            firstName: 'Veronica',
+            middleInitial: 'V',
+            streetLine1: '123 Any Street - UPDATED',
+            city: 'Anytown',
+            zip: '77777',
+            phoneArea: '610',
+            phoneNumber: '555',
+            phoneExtension: '1234',
+            state:{
+                code:'KY',
+                description:'Kentucky'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.updateEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data.message
+        assertEquals true, data.failure
+    }
+
+    @Test
+    void testUpdateEmergencyContactWithMissingVersion() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:${contacts[0].id},
+            priority: 2,
+            lastName: 'Smith',
+            firstName: 'Veronica',
+            middleInitial: 'V',
+            streetLine1: '123 Any Street - UPDATED',
+            city: 'Anytown',
+            zip: '77777',
+            phoneArea: '610',
+            phoneNumber: '555',
+            phoneExtension: '1234',
+            state:{
+                code:'KY',
+                description:'Kentucky'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.updateEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data.message
+        assertEquals true, data.failure
+    }
+
 }

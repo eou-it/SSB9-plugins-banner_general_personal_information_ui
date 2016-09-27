@@ -79,6 +79,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('EmergencyContacts').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.emergencyContacts = response.emergencyContacts;
+                }
+            });
+
             if($stateParams.startingTab) {
                 $scope.startingTab = $stateParams.startingTab;
             }
@@ -93,6 +101,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.addressGroup = null;
         $scope.emails = null;
         $scope.phones = null;
+        $scope.emergencyContacts = [];
 
 
         // CONTROLLER FUNCTIONS
@@ -148,6 +157,26 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     editEmailProperties: function () {
                         return {
                             currentEmail: currentEmail
+                        };
+                    }
+                }
+            });
+        };
+
+        $scope.openEditEmergencyContactModal = function(currentEmergencyContact) {
+            var numContacts = $scope.emergencyContacts.length;
+
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piEmergencyContact/piEditEmergencyContact.html'),
+                windowClass: 'edit-emergency-contact-modal',
+                keyboard: true,
+                controller: "piEditEmergencyContactController",
+                scope: $scope,
+                resolve: {
+                    editEmergencyContactProperties: function () {
+                        return {
+                            currentEmergencyContact: currentEmergencyContact,
+                            highestPriority: currentEmergencyContact ? numContacts : numContacts + 1
                         };
                     }
                 }

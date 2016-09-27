@@ -133,9 +133,9 @@ input:disabled {
 }
 
 
-/********************************/
-/* Add/Edit Account Page Styles */
-/********************************/
+/*****************************/
+/* Add/Edit Item Page Styles */
+/*****************************/
 .float-l {
     float: left;
 }
@@ -276,7 +276,8 @@ a.pi-icon-link:focus {
 }
 
 .pi-modal-title {
-    padding: 0.7em 0.7em 0.5em 0.7em;
+    font-size: 21px;
+    padding: 1.4em 0.7em 0.5em 0.7em;
     display: inline-block;
     margin: 0;
 }
@@ -287,7 +288,8 @@ a.pi-icon-link:focus {
 
 .xe-tab-container .addr-list,
 .xe-tab-container .phone-list,
-.xe-tab-container .email-list {
+.xe-tab-container .email-list,
+.xe-tab-container .emergency-contact-list {
     padding: 15px 15px 0;
 }
 
@@ -784,11 +786,13 @@ button.closebtn {
     padding-right: 8px;
 }
 
-.address-detail {
+.address-detail,
+.emergency-contact-detail {
     float: left;
 }
 
-.address-wrapper {
+.address-wrapper,
+.emergency-contact-wrapper {
     float: left;
     padding-bottom: 15px;
 }
@@ -839,12 +843,12 @@ a.delete-address-link {
     padding-bottom: 15px;
 }
 
-button.delete-phone-btn {
-    outline: none;
-}
-
 .unlisted {
     padding: 0 5px;
+}
+
+span.priority-dot {
+    margin-right: 5px;
 }
 
 /* Icons */
@@ -860,7 +864,7 @@ a:focus.details-section-edit-link {
     font-size: 14px;
 }
 
-button.delete-phone-btn {
+button.delete-btn {
     color: #428bca;
     opacity: 1;
     font-size: 24px;
@@ -869,6 +873,7 @@ button.delete-phone-btn {
     padding: .9em;
     display: block;
     border: none;
+    outline: none;
     float: left;
 }
 

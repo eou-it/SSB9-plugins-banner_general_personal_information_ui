@@ -1,0 +1,45 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+********************************************************************************-->
+<div class="emergency-contact-wrapper sm-fix">
+    <div class="emergency-contact-detail" id="emergency-contact-{{contact.priority}}">
+        <div>
+            {{contact.priority}}<span class="priority-dot">.</span>{{contact.firstName}} {{contact.middleInitial}} {{contact.lastName}}
+        </div>
+        <div>
+            {{contact.relationship.description}}
+        </div>
+        <div>
+            {{'personInfo.label.phone'|i18n}} {{contact.countryPhone}} {{contact.phoneArea}} {{contact.phoneNumber}} {{contact.phoneExtension}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine1">
+            {{contact.displayAddress.addressLine1}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine2">
+            {{contact.displayAddress.addressLine2}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine3">
+            {{contact.displayAddress.addressLine3}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine4">
+            {{contact.displayAddress.addressLine4}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine5">
+            {{contact.displayAddress.addressLine5}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine6">
+            {{contact.displayAddress.addressLine6}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine7">
+            {{contact.displayAddress.addressLine7}}
+        </div>
+        <div ng-if="contact.displayAddress.addressLine8">
+            {{contact.displayAddress.addressLine8}}
+        </div>
+        <div class="clearfix">
+            <a class="pi-edit-item-link pi-icon-link" ng-click="openEditEmergencyContactModal(contact)" enter-key="openEditEmergencyContactModal(contact)"
+               title="{{'personInfo.label.editEmergencyContact'|i18n}}"><span class="icon-edit-CO"></span></a>
+            <button class="delete-btn" ng-click="TODO()" title="{{'personInfo.label.deleteEmergencyContact'|i18n}}"></button>
+        </div>
+    </div>
+</div>

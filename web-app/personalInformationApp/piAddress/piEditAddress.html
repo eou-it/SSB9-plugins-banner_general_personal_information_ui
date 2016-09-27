@@ -33,21 +33,21 @@
             <div class="pi-modal-divider hidden-xs hidden-sm"><span></span></div>
             <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "Nation", "action": "PersonalInformationDetails/getNationList", "model": "address.nation"}' type="hidden" />
+                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCountry"|i18n}}", "action": "PersonalInformationDetails/getNationList", "model": "address.nation"}' type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!stateCountyNationErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
             </div>
             <div class="clearfix hidden-xs"></div>
             <div ng-if="maskingRules.displayHouseNumber" class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="houseNumber">{{'personInfo.label.houseNumber'|i18n}}</label><br>
-                <input ng-model="address.houseNumber" class="text-input-field semi-bold form-spacing" type="text" id="houseNumber">
+                <input ng-model="address.houseNumber" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterHouseNumber'|i18n}}" id="houseNumber">
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label ng-class="(!!streetLine1ErrMsg && !streetLine1Focused ? 'input-field-label field-error' : 'input-field-label')"
                        class="input-field-label" for="addrLine1">{{'personInfo.label.addressLine1'|i18n}}</label><br>
                 <input ng-model="address.streetLine1" ng-blur="streetLine1Focused=false; removeAddressFieldErrors()" ng-focus="streetLine1Focused=true"
                        ng-class="[(!!streetLine1ErrMsg && !streetLine1Focused ? 'input-field-error' : null)]"
-                       class="text-input-field semi-bold form-spacing" type="text" id="addrLine1">
+                       class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine1'|i18n}}" id="addrLine1">
                 <span ng-if="!!streetLine1ErrMsg && !streetLine1Focused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>
@@ -56,21 +56,21 @@
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="addrLine2">{{'personInfo.label.addressLine2'|i18n}}</label><br>
-                <input ng-model="address.streetLine2" class="text-input-field semi-bold form-spacing" type="text" id="addrLine2">
+                <input ng-model="address.streetLine2" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine2'|i18n}}" id="addrLine2">
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="addrLine3">{{'personInfo.label.addressLine3'|i18n}}</label><br>
-                <input ng-model="address.streetLine3" class="text-input-field semi-bold form-spacing" type="text" id="addrLine3">
+                <input ng-model="address.streetLine3" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine3'|i18n}}" id="addrLine3">
             </div>
             <div ng-if="maskingRules.displayStreetLine4" class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="addrLine4">{{'personInfo.label.addressLine4'|i18n}}</label><br>
-                <input ng-model="address.streetLine4" class="text-input-field semi-bold form-spacing" type="text" id="addrLine4">
+                <input ng-model="address.streetLine4" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine4'|i18n}}" id="addrLine4">
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label ng-class="(!!cityErrMsg && !cityFocused ? 'input-field-label field-error' : 'input-field-label')"
                        class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
                 <input ng-model="address.city" ng-blur="cityFocused=false; removeAddressFieldErrors()" ng-focus="cityFocused=true"
-                       ng-class="[(!!cityErrMsg && !cityFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing" type="text" id="city">
+                       ng-class="[(!!cityErrMsg && !cityFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterCity'|i18n}}" id="city">
                 <span ng-if="!!cityErrMsg && !cityFocused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>
@@ -79,20 +79,20 @@
             </div>
             <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.state'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "State", "action": "PersonalInformationDetails/getStateList", "model": "address.state"}' type="hidden" />
+                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectState"|i18n}}", "action": "PersonalInformationDetails/getStateList", "model": "address.state"}' type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!stateCountyNationErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{stateCountyNationErrMsg|i18n}}</p>
             </div>
             <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.county'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "County", "action": "PersonalInformationDetails/getCountyList", "model": "address.county"}' type="hidden" />
+                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCounty"|i18n}}", "action": "PersonalInformationDetails/getCountyList", "model": "address.county"}' type="hidden" />
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label ng-class="(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-label field-error' : 'input-field-label')"
                        class="input-field-label" for="zip">{{'personInfo.label.zip'|i18n}}</label><br>
                 <input ng-model="address.zip" ng-blur="zipFocused=false; removeAddressFieldErrors()" ng-focus="zipFocused=true"
                        ng-class="[(!!stateCountyNationErrMsg && !zipFocused ? 'input-field-error' : null)]"
-                       class="text-input-field semi-bold form-spacing" type="text" id="zip">
+                       class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterZipCode'|i18n}}" id="zip">
                 <span ng-if="!!stateCountyNationErrMsg && !zipFocused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>

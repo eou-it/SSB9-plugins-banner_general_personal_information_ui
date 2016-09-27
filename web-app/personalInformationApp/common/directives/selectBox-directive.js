@@ -69,3 +69,39 @@ personalInformationAppDirectives.directive('selectBox', function() {
         }
     };
 });
+
+personalInformationAppDirectives.directive('emergencyContactPrioritySelectBox', function() {
+
+    return {
+        scope: {
+            highestPriority: '@',
+            currentContact: '='
+        },
+        link: function(scope, elem, attrs) {
+            elem.select2({
+                width: '100%',
+                minimumResultsForSearch: -1, // Hide search box
+                query: function(query) {
+                    var i = 0,
+                        data = {results: []};
+
+                    for (var i = 1; i <= scope.highestPriority; i++) {
+                        data.results.push({id: i, text: '' + i});
+                    }
+
+                    query.callback(data);
+                },
+                formatSelection: function(item) {
+                    scope.currentContact.priority = item.id;
+
+                    return item.text;
+                },
+                initSelection: function(element, callback) {
+                    var data = {id: scope.currentContact.priority, text: '' + scope.currentContact.priority};
+
+                    callback(data);
+                }
+            });
+        }
+    };
+});
