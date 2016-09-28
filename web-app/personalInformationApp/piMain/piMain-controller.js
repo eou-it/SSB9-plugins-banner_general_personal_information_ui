@@ -197,6 +197,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         var timePeriod = address.isFuture ? 'future' : 'current';
                         var addressIndex = $scope.addressGroup[addrType][timePeriod].indexOf(address);
                         $scope.addressGroup[addrType][timePeriod].splice(addressIndex, 1);
+                        if($scope.addressGroup[addrType].future.length === 0 &&
+                            $scope.addressGroup[addrType].current.length === 0) {
+                            delete $scope.addressGroup[addrType];
+                        }
                     }
                 });
             };
