@@ -243,6 +243,34 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.displayNotification('personInfo.confirm.email.delete.text', 'warning', false, prompts);
         };
 
+        $scope.confirmEmergencyContactDelete = function (contact) {
+            var deleteEmergencyContact = function () {
+                $scope.cancelNotification();
+
+                piCrudService.delete('EmergencyContact', contact).$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        // Refresh contact info
+                        $scope.emergencyContacts.splice($scope.emergencyContacts.indexOf(contact), 1);
+                    }
+                });
+            };
+
+            var prompts = [
+                {
+                    label: $filter('i18n')('personInfo.button.prompt.cancel'),
+                    action: $scope.cancelNotification
+                },
+                {
+                    label: $filter('i18n')('personInfo.button.delete'),
+                    action: deleteEmergencyContact
+                }
+            ];
+
+            notificationCenterService.displayNotification('personInfo.confirm.emergencyContact.delete.text', 'warning', false, prompts);
+        };
+
 
         // INITIALIZE
         // ----------

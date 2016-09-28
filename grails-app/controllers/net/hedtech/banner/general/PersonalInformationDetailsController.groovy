@@ -428,6 +428,20 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def deleteEmergencyContact() {
+        def deletedContact = request?.JSON ?: params
+        deletedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        try {
+            personEmergencyContactService.delete(deletedContact)
+            //TODO compress remaining priorities after delete
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     private def fixJSONObjectForCast(JSONObject json) {
         json.each {entry ->
             // Make JSONObject.NULL a real Java null
