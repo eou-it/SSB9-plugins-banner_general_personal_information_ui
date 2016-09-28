@@ -493,7 +493,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000001', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def email = controller.getEmails(pidm)[0]
+        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
@@ -734,6 +734,44 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         println data.message
         assertEquals true, data.failure
+    }
+
+    @Test
+    void testDeleteEmergencyContact() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+            id:${contacts[0].id},
+            version:${contacts[0].version},
+            priority: 1,
+            lastName: 'Andersen',
+            firstName: 'Ronald',
+            streetLine1: '3391 Nuzum Court',
+            city: 'Malvern',
+            zip: '19355',
+            phoneArea: '215',
+            phoneNumber: '6336094',
+            state:{
+                code:'PA',
+                description:'Pennsylvania'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.deleteEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
     }
 
 }
