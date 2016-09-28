@@ -347,15 +347,6 @@ a.add-item-link {
     padding: 0px;
 }
 
-a.addr-change {
-    clear: left;
-    float: left;
-}
-
-a.addr-delete {
-    float: right;
-}
-
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
     font-family: 'BannerIcon';
     font-style: normal;

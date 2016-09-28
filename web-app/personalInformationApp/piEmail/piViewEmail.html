@@ -17,11 +17,12 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div class="button-block">
-                    <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link" tabindex="0">
+                    <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                       title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                         <span class="icon-edit-CO"></span>
                     </a>
                     <button ng-click="confirmEmailDelete(email)" class="delete-btn"
-                            title="{{'personInfo.button.title.deleteEmail'|i18n}}}"></button>
+                            title="{{'personInfo.button.title.deleteEmail'|i18n}}"></button>
                 </div>
             </div>
             <div ng-if="$index%2 === 1" class="clearfix hidden-xs"></div>
