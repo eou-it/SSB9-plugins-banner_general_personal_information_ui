@@ -1245,6 +1245,10 @@ table tr td {
     .pi-modal-title {
         padding: 0.7em 0.7em 0.5em 1.1em;
     }
+
+    .clear-row .col-md-4:nth-child(3n+1) {
+        clear: left;
+    }
 }
 
 @media screen and (min-width:1024px) {
