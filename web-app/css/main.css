@@ -1231,7 +1231,8 @@ table tr td {
         transform: translate(0, 18%);
     }
 
-    .edit-addr.pi-modal.modal.in .modal-dialog {
+    .edit-addr.pi-modal.modal.in .modal-dialog,
+    .edit-emer-contact.pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1252,7 +1253,8 @@ table tr td {
 }
 
 @media screen and (min-width:1024px) {
-    .edit-addr .modal-dialog {
+    .edit-addr .modal-dialog,
+    .edit-emer-contact .modal-dialog {
         width: 896px;
     }
 
