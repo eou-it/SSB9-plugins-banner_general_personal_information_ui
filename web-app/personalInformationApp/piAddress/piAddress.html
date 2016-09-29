@@ -41,9 +41,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div ng-if="address.displayAddress.addressLine8">
             {{address.displayAddress.addressLine8}}
         </div>
-        <div>
-            <a ng-click="openEditAddressModal(address)" class="pi-link addr-change">{{'personInfo.label.update'|i18n}}</a>
-            <a ng-click="confirmAddressDelete(address)" class="pi-link addr-delete">{{'personInfo.label.delete'|i18n}}</a>
+        <div class="button-block">
+            <a ng-click="openEditAddressModal(address)" class="pi-edit-item-link pi-icon-link"
+               title="{{'personInfo.button.title.editAddress'|i18n}}" tabindex="0">
+                <span class="icon-edit-CO"></span>
+            </a>
+            <button ng-click="confirmAddressDelete(address)" class="delete-btn"
+                    title="{{'personInfo.button.title.deleteAddress'|i18n}}"></button>
         </div>
     </div>
 </div>
