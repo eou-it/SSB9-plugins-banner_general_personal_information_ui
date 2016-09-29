@@ -168,7 +168,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piEmergencyContact/piEditEmergencyContact.html'),
-                windowClass: 'edit-emergency-contact-modal',
+                windowClass: 'edit-emer-contact pi-modal',
                 keyboard: true,
                 controller: "piEditEmergencyContactController",
                 scope: $scope,

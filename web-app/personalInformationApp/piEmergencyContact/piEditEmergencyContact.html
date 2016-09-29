@@ -4,10 +4,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmergencyContact':'personInfo.title.editEmergencyContact')|i18n}}</h2>
 <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
 <div class="row pad-dialog-lr">
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4"">
+    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.order'|i18n}}</label><br>
         <input emergency-contact-priority-select-box highest-priority="{{highestPriority}}" current-contact="emergencyContact" type="hidden" />
     </div>
+    <div class="clearfix hidden-xs"></div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
         <input ng-model="emergencyContact.firstName" ng-blur="firstNameFocused=false; removeContactFieldErrors()" ng-focus="firstNameFocused=true"
@@ -34,10 +35,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <p class="input-field-label mobile-errors" ng-class="[(!!lastNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{lastNameErrMsg|i18n}}</p>
     </div>
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4" ng-if="isCreateNew">
+    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.relationship'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectRelationship"|i18n}}", "action": "PersonalInformationDetails/getRelationshipList", "model": "emergencyContact.relationship"}' type="hidden" />
     </div>
+    <div class="clearfix hidden-xs"></div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label" for="phoneArea">Phone Area</label><br>
         <input ng-model="emergencyContact.phoneArea" class="text-input-field semi-bold form-spacing" type="text" id="phoneArea" value="610">
@@ -50,7 +52,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <label class="input-field-label" for="phoneExtension">Phone Extension</label><br>
         <input ng-model="emergencyContact.phoneExtension" class="text-input-field semi-bold form-spacing" type="text" id="phoneExtension" value="123">
     </div>
-    <div class="pi-modal-divider visible-xs visible-sm"><span></span></div>
+    <div class="pi-modal-divider hidden-xs"><span></span></div>
     <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCountry"|i18n}}", "action": "PersonalInformationDetails/getNationList", "model": "emergencyContact.nation"}' type="hidden" />
@@ -86,6 +88,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <label class="input-field-label" for="addrLine4">{{'personInfo.label.addressLine4'|i18n}}</label><br>
         <input ng-model="emergencyContact.streetLine4" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine4'|i18n}}" id="addrLine4">
     </div>
+    <div class="clearfix hidden-xs"></div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label ng-class="(!!cityErrMsg && !cityFocused ? 'input-field-label field-error' : 'input-field-label')"
                class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
