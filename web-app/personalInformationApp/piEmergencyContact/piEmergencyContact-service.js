@@ -29,7 +29,7 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
 
         this.getErrorStreetLine1 = function(contact) {
             var msg = 'personInfo.address.error.streetLine1';
-            if (!contact.streetLine1) {
+            if ((contact.city || contact.zip || contact.state.code || contact.nation.code) && !contact.streetLine1) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
@@ -41,7 +41,7 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
 
         this.getErrorCity = function(contact) {
             var msg = 'personInfo.address.error.city';
-            if (!contact.city) {
+            if ((contact.streetLine1 || contact.state.code || contact.zip || contact.nation.code) && !contact.city) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
@@ -51,9 +51,11 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
             }
         };
 
-        this.getErrorStateCountyNation = function(contact) {
-            var msg = 'personInfo.address.error.stateNationZip';
-            if((!contact.state.code && !contact.nation.code) || (contact.state.code && !contact.zip)){
+        this.getErrorZipStateNation = function(contact) {
+            var msg = 'personInfo.address.error.stateNationZip',
+                isValidZipStateNation = (contact.state.code && contact.zip) || (contact.nation.code && !contact.state.code);
+
+            if(((contact.city || contact.state || contact.zip) && !isValidZipStateNation)) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;

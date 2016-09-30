@@ -36,7 +36,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                 $scope.cityErrMsg = piEmergencyContactService.getErrorCity($scope.emergencyContact);
             }
             if(!!$scope.stateCountyNationErrMsg) {
-                $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorStateCountyNation($scope.emergencyContact);
+                $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorZipStateNation($scope.emergencyContact);
             }
         };
 
@@ -45,7 +45,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             $scope.lastNameErrMsg = piEmergencyContactService.getErrorLastName(contact);
             $scope.streetLine1ErrMsg = piEmergencyContactService.getErrorStreetLine1(contact);
             $scope.cityErrMsg = piEmergencyContactService.getErrorCity(contact);
-            $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorStateCountyNation(contact);
+            $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorZipStateNation(contact);
 
             return !($scope.firstNameErrMsg || $scope.lastNameErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
                      $scope.stateCountyNationErrMsg);
@@ -56,7 +56,6 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                 var handleResponse = function (response) {
                     if (response.failure) {
                         $scope.addressErrMsg = response.message;
-                        $scope.cancelModal();
                         notificationCenterService.displayNotification(response.message, "error");
                     } else {
                         var notifications = [];
