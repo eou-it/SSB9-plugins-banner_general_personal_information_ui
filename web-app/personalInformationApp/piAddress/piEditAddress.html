@@ -3,7 +3,8 @@
         <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addAddress':'personInfo.title.updateAddress')|i18n}}</h2>
         <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
         <div class="row pad-dialog-lr">
-            <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4" ng-if="isCreateNew">
+            <div class="clearfix hidden-xs"></div>
+            <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 disp-inherit" ng-if="isCreateNew">
                 <label class="input-field-label">{{'personInfo.label.address.type.insert'|i18n}}</label><br>
                 <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType"}' type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!addressTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
@@ -13,7 +14,6 @@
                 <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
                 {{address.addressType.description}}
             </div>
-            <div class="pi-modal-divider visible-xs visible-sm"><span></span></div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label ng-class="(!!fromDateErrMsg && !validFromFocused ? 'input-field-label field-error' : 'input-field-label')"
                        class="input-field-label">{{'personInfo.label.validFrom'|i18n}}</label><br>
