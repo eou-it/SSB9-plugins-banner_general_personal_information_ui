@@ -6,7 +6,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmail':'personInfo.title.editEmail')|i18n}}</h2>
         <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
         <div class="row pad-dialog-lr">
-            <div class="select2-container sm-fix col-sm-12 col-md-6 col-lg-6">
+            <div class="clearfix hidden-xs"></div>
+            <div class="select2-container disp-inherit sm-fix col-sm-12 col-md-6 col-lg-6">
                 <label class="input-field-label">{{'personInfo.label.emailType'|i18n}}</label><br>
                 <input email-type-select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}'
                        type="hidden" />

@@ -6,6 +6,10 @@ body {
     font-size: 14px;
 }
 
+h2 {
+    font-size: 24px;
+}
+
 .break-word {
     word-wrap: break-word;
 }
@@ -187,6 +191,10 @@ input:disabled {
     border: 0;
 }
 
+.disp-inherit {
+    display: inherit;
+}
+
 .desktop-visible {
     visibility: hidden;
     position: absolute;
@@ -276,9 +284,14 @@ a.pi-icon-link:focus {
 }
 
 .pi-modal-title {
-    padding: 1.4em 0.7em 0.5em 0.7em;
+    padding: 1.25em 0.875em 0.1em 1em;
     display: inline-block;
     margin: 0;
+}
+
+.edit-emer-contact .pi-modal-title {
+    padding-right: 0em;
+    width: 75%;
 }
 
 .xe-tab-container {
@@ -403,15 +416,15 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 .pi-modal-divider{
     width: 100%;
     height: 1px;
-    padding: 0em 1em;
 }
 
 .pi-modal-divider span {
-    border-bottom: 1px solid black;
-    width: 100%;
+    border-bottom: 1px solid #BEC5CB;
+    width: 895px;
     float: left;
-    margin-top: 1.5em;
-    margin-bottom: 0.675em;
+    margin-top: 1em;
+    margin-bottom: 1px;
+    margin-left: -1.5em;
 }
 
 .input-field-label {
@@ -1234,7 +1247,7 @@ table tr td {
     }
 
     .pi-modal-title {
-        padding: 0.7em 0.7em 0.5em 1.1em;
+        padding: 0.875em 0.875em 0.1em 1.375em;
     }
 
     .clear-row .col-md-4:nth-child(3n+1) {
