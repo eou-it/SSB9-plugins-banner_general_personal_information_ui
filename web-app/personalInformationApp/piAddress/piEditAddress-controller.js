@@ -8,6 +8,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         $scope.addressTypeErrMsg = '';
         $scope.fromDateErrMsg = '';
         $scope.dateRangeErrMsg = '';
+        $scope.toDateErrMsg = '';
         $scope.streetLine1ErrMsg = '';
         $scope.cityErrMsg = '';
         $scope.stateCountyNationErrMsg = '';
@@ -28,6 +29,9 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             if(!!$scope.fromDateErrMsg) {
                 $scope.fromDateErrMsg = piAddressService.getErrorFromDate($scope.address);
             }
+            if(!!$scope.toDateErrMsg) {
+                $scope.toDateErrMsg = piAddressService.getErrorDateFormat($scope.address.toDate);
+            }
             if(!!$scope.dateRangeErrMsg) {
                 $scope.dateRangeErrMsg = piAddressService.getErrorDateRange($scope.address,
                     $scope.addressGroup[$scope.address.addressType.description]);
@@ -46,14 +50,15 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         var isValidAddress = function (address) {
             $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
             $scope.fromDateErrMsg = piAddressService.getErrorFromDate(address);
+            $scope.toDateErrMsg = piAddressService.getErrorDateFormat(address.toDate);
             $scope.dateRangeErrMsg = piAddressService.getErrorDateRange(address,
                 $scope.addressGroup[$scope.address.addressType.description]);
             $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1(address);
             $scope.cityErrMsg = piAddressService.getErrorCity(address);
             $scope.stateCountyNationErrMsg = piAddressService.getErrorStateCountyNation(address);
 
-            return !($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.dateRangeErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
-                $scope.stateCountyNationErrMsg);
+            return !($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.toDateErrMsg || $scope.dateRangeErrMsg ||
+                $scope.streetLine1ErrMsg || $scope.cityErrMsg || $scope.stateCountyNationErrMsg);
         };
 
         $scope.saveAddress = function() {
