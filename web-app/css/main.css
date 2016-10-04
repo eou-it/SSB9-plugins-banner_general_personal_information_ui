@@ -1253,6 +1253,10 @@ table tr td {
     .clear-row .col-md-4:nth-child(3n+1) {
         clear: left;
     }
+
+    .edit-addr .col-md-4:nth-child(3n+2) {
+        clear: left;
+    }
 }
 
 @media screen and (min-width:1024px) {
