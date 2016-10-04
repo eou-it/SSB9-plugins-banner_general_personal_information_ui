@@ -29,6 +29,8 @@
                 <label class="input-field-label">{{'personInfo.label.validTo'|i18n}}</label><br>
                 <input date-picker ng-model="address.toDate" on-select="setToDate" class="pi-date-input text-input-field input-colors"
                        placeholder="{{'personInfo.placeholder.date'|i18n}}" id=""/>
+                <p class="input-field-label mobile-errors" ng-class="[(!!toDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{toDateErrMsg|i18n}}</p>
             </div>
             <div class="pi-modal-divider hidden-xs hidden-sm"><span></span></div>
             <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">

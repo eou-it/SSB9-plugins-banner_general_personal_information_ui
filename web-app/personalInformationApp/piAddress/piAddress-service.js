@@ -25,16 +25,42 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
             else {
                 notificationCenterService.removeNotification(msg);
             }
+
+            return this.getErrorDateFormat(address.fromDate);
+        };
+
+        this.getErrorDateFormat = function (date) {
+            if(date){
+                var msg = 'personInfo.address.error.dateFormat';
+                if (isNaN(Date.parse(date))) {
+                    messages.push({msg: msg, type: 'error'});
+
+                    return msg;
+                }
+                else {
+                    notificationCenterService.removeNotification(msg);
+                }
+            }
         };
 
         this.getErrorDateRange = function (address, addressList) {
             if (address.fromDate) {
-                var msg = 'personInfo.address.error.dateRange',
+                var msg = 'personInfo.address.error.dateOrder',
                     MAX_DATE = 8640000000000000,
                     fromDate = new Date(Date.parse(address.fromDate)),
                     toDate = address.toDate ? new Date(Date.parse(address.toDate)) : new Date(MAX_DATE),
                     flatList = _.flatten(addressList);
 
+                if(fromDate > toDate){
+                    messages.push({msg: msg, type: 'error'});
+
+                    return $filter('i18n')(msg);
+                }
+                else {
+                    notificationCenterService.removeNotification(msg);
+                }
+
+                msg = 'personInfo.address.error.dateRange';
                 var overlappedAddress = _.find(flatList,
                     function(listItem) {
                         var isRangeError = false;

@@ -173,13 +173,13 @@ class PersonalInformationDetailsController {
 
         fixJSONObjectForCast(updatedAddress)
 
-        // Address type is a primary key field and cannot be modified
-        updatedAddress.remove("addressType")
-
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
 
+            updatedAddress = personalInformationCompositeService.getPersonValidationObjects(updatedAddress, getRoles())
+
             convertAddressDates(updatedAddress)
+            personAddressCompositeService.checkDatesForUpdate(updatedAddress)
 
             personAddressService.update(updatedAddress)
             render([failure: false] as JSON)
