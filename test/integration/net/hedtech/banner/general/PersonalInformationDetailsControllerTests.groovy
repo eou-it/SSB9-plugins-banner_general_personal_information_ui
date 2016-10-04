@@ -169,14 +169,21 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000005', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
+        def addresses = controller.personAddressByRoleViewService.getActiveAddressesByRoles(controller.getRoles(), pidm)
+        int index
+        if(addresses[0].addressType == 'PR') {
+            index = 0
+        }
+        else{
+            index = 1
+        }
 
         controller.request.contentType = "text/json"
 
         // Updating streetLine1
         controller.request.json = """{
-            id:${addresses[0].id},
-            version:${addresses[0].version},
+            id:${addresses[index].id},
+            version:${addresses[index].version},
             addressType:{
                 code:"PR",
                 description:"Permanent"
@@ -203,49 +210,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
+        println data
+        println addresses
         assertEquals false, data.failure
-    }
-
-    @Test
-    void testUpdateAddressWithMissingId() {
-        loginSSB 'GDP000005', '111111'
-
-        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
-
-        controller.request.contentType = "text/json"
-
-        // Updating streetLine1
-        controller.request.json = """{
-            version:${addresses[0].version},
-            addressType:{
-                code:"PR",
-                description:"Permanent"
-            },
-            city:"Malvern",
-            county:null,
-            fromDate:"2034-01-01T05:00:00.000Z",
-            houseNumber:"HN 1",
-            nation:null,
-            state:{
-                code:"PA",
-                description:"Pennsylvania"
-            },
-            streetLine1:"435 UPDATED Avenue",
-            streetLine2:null,
-            streetLine3:null,
-            streetLine4:null,
-            toDate:null,
-            zip:"19355"
-        }""".toString()
-
-        controller.updateAddress()
-        def dataForNullCheck = controller.response.contentAsString
-        def data = JSON.parse( dataForNullCheck )
-
-        assertNotNull data
-        println data.message
-        assertEquals true, data.failure
     }
 
     @Test
