@@ -1,4 +1,4 @@
-personalInformationAppDirectives.directive('selectBox', function() {
+personalInformationAppDirectives.directive('selectBox',['$filter', function($filter) {
 
     // Get description from an address field item, e.g. an item for a state or nation
     var getDescriptionFromAddressComponent = function(item) {
@@ -11,14 +11,16 @@ personalInformationAppDirectives.directive('selectBox', function() {
         else {
             return item.description;
         }
-    };
+    },
+    notApplicableText = $filter('i18n')('personInfo.label.notApplicable');
 
     return {
         scope: true,
         link: function(scope, elem, attrs) {
             var data = angular.fromJson(attrs.forSelect),
                 dataModelItem = scope.$eval(data.model),
-                maxItems = 10;
+                maxItems = 10,
+                showNA = data.showNA;
 
             elem.select2({
                 width: '100%',
@@ -38,7 +40,13 @@ personalInformationAppDirectives.directive('selectBox', function() {
                     cache: true,
                     allowClear: true,
                     results: function(data, page) {
-                        var results = [];
+                        var results;
+                        if(showNA && page === 1) {
+                            results = [{id: 'not/app', text: notApplicableText}];
+                        }
+                        else {
+                            results = [];
+                        }
                         $.each(data, function(i, item) {
                             results.push({
                                 id: item.code,
@@ -53,8 +61,14 @@ personalInformationAppDirectives.directive('selectBox', function() {
                     }
                 },
                 formatSelection: function(item) {
-                    dataModelItem.code = item.id;
-                    dataModelItem.description = item.text;
+                    if(showNA && item.id === 'not/app') {
+                        dataModelItem.code = '';
+                        dataModelItem.description = '';
+                    }
+                    else {
+                        dataModelItem.code = item.id;
+                        dataModelItem.description = item.text;
+                    }
 
                     return item.text;
                 },
@@ -68,7 +82,7 @@ personalInformationAppDirectives.directive('selectBox', function() {
             }).select2("val", "_"); // Dummy value needed to make initSelection do its thing
         }
     };
-});
+}]);
 
 personalInformationAppDirectives.directive('emergencyContactPrioritySelectBox', function() {
 
