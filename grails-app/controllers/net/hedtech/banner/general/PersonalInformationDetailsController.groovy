@@ -352,7 +352,7 @@ class PersonalInformationDetailsController {
                 emerContact = [:]
                 emerContact.id = it.id
                 emerContact.version = it.version
-                emerContact.relationship = it.relationship
+                emerContact.relationship = it.relationship ? [code: it.relationship.code, description: it.relationship.description] : [:]
                 emerContact.phoneArea = it.phoneArea
                 emerContact.phoneNumber = it.phoneNumber
                 emerContact.phoneExtension = it.phoneExtension
