@@ -2,7 +2,7 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 ********************************************************************************-->
 <div class="address-wrapper sm-fix col-sm-12 col-md-12 col-lg-12">
-    <div class="address-detail" id="{{address.addressType.description}}-address">
+    <div class="address-detail">
         <div>
             {{(address.isFuture ? 'personInfo.label.future' : 'personInfo.label.current')|i18n}}
         </div>
@@ -42,9 +42,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             {{address.displayAddress.addressLine8}}
         </div>
         <div class="button-block">
-            <a ng-click="openEditAddressModal(address)" class="pi-edit-item-link pi-icon-link"
-               title="{{'personInfo.button.title.editAddress'|i18n}}" tabindex="0">
+            <a ng-click="openEditAddressModal(address)" enter-key="openEditAddressModal(address)" class="pi-edit-item-link pi-icon-link"
+               title="{{'personInfo.button.title.editAddress'|i18n}}" aria-label="{{'personInfo.button.title.editAddress'|i18n}}"
+               tabindex="0">
                 <span class="icon-edit-CO"></span>
+                <span class="visuallyhidden">{{'personInfo.button.title.editAddress'|i18n}}</span>
             </a>
             <button ng-click="confirmAddressDelete(address)" class="delete-btn"
                     title="{{'personInfo.button.title.deleteAddress'|i18n}}"></button>
