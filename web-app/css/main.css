@@ -763,8 +763,12 @@ button.closebtn {
 
 .details-section-heading {
     float: left;
+}
+
+.details-section-heading > h2 {
     font-size: 16px;
     font-weight: bold;
+    margin: 0;
 }
 
 .pi-title-divider{
