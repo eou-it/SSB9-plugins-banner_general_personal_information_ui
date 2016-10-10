@@ -19,7 +19,7 @@
                        class="input-field-label">{{'personInfo.label.validFrom'|i18n}}</label><br>
                 <input date-picker ng-model="address.fromDate" on-select="setFromDate" ng-blur="validFromFocused=false; removeAddressFieldErrors()"
                        ng-focus="validFromFocused=true" ng-class="[((fromDateErrMsg || dateRangeErrMsg) && !validFromFocused ? 'input-error' : null)]"
-                       class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id=""/>
+                       class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate"/>
                 <p class="input-field-label mobile-errors" ng-class="[(!!fromDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{fromDateErrMsg|i18n}}</p>
                 <p class="input-field-label mobile-errors" ng-class="[(!!dateRangeErrMsg ? 'field-error error-font-size' : 'no-display')]"
