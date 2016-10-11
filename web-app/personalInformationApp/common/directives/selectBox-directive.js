@@ -40,13 +40,7 @@ personalInformationAppDirectives.directive('selectBox',['$filter', function($fil
                     cache: true,
                     allowClear: true,
                     results: function(data, page) {
-                        var results;
-                        if(showNA && page === 1) {
-                            results = [{id: 'not/app', text: notApplicableText}];
-                        }
-                        else {
-                            results = [];
-                        }
+                        var results = (showNA && page === 1) ? [{id: 'not/app', text: notApplicableText}] : [];
                         $.each(data, function(i, item) {
                             results.push({
                                 id: item.code,

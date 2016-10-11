@@ -1,7 +1,20 @@
 personalInformationApp.service('piAddressService', ['notificationCenterService', '$filter',
     function (notificationCenterService, $filter) {
 
-        var messages = [];
+        var messages = [],
+            calendar = $.calendars.instance();
+
+        this.stringToDate = function (date) {
+            var dateFmt = $filter('i18n')('default.date.format').toLowerCase(),
+                result;
+            try {
+                result = calendar.parseDate(dateFmt, date).toJSDate();
+                return result;
+            }
+            catch (exception) {
+                return null;
+            }
+        };
 
         this.getErrorAddressType = function (address) {
             var msg = 'personInfo.address.error.addressType';
@@ -32,7 +45,7 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
         this.getErrorDateFormat = function (date) {
             if(date){
                 var msg = 'personInfo.address.error.dateFormat';
-                if (isNaN(Date.parse(date))) {
+                if (!this.stringToDate(date)) {
                     messages.push({msg: msg, type: 'error'});
 
                     return msg;
@@ -47,11 +60,11 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
             if (address.fromDate) {
                 var msg = 'personInfo.address.error.dateOrder',
                     MAX_DATE = 8640000000000000,
-                    fromDate = new Date(Date.parse(address.fromDate)),
-                    toDate = address.toDate ? new Date(Date.parse(address.toDate)) : new Date(MAX_DATE),
+                    fromDate = this.stringToDate(address.fromDate),
+                    toDate = address.toDate ? this.stringToDate(address.toDate) : new Date(MAX_DATE),
                     flatList = _.flatten(addressList);
 
-                if(fromDate > toDate){
+               if(fromDate > toDate){
                     messages.push({msg: msg, type: 'error'});
 
                     return $filter('i18n')(msg);
@@ -65,13 +78,14 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
                     function(listItem) {
                         var isRangeError = false;
                         if(address.id !== listItem.id) {
-                            var listFromDate = new Date(Date.parse(listItem.fromDate)),
-                                listToDate = listItem.toDate ? new Date(Date.parse(listItem.toDate)) : new Date(MAX_DATE);
+                            var listFromDate = this.stringToDate(listItem.fromDate),
+                                listToDate = listItem.toDate ? this.stringToDate(listItem.toDate) : new Date(MAX_DATE);
 
                             isRangeError = (fromDate < listToDate) ? toDate >= listFromDate : fromDate === listToDate;
                         }
                         return isRangeError;
-                    }
+                    },
+                    this
                 );
 
                 if(overlappedAddress) {

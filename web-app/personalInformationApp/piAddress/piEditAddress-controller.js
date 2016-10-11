@@ -5,6 +5,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         // CONTROLLER VARIABLES
         // --------------------
         $scope.isCreateNew = true;
+        $scope.datePlaceholder = $filter('i18n')('default.date.format').toUpperCase();
         $scope.addressTypeErrMsg = '';
         $scope.fromDateErrMsg = '';
         $scope.dateRangeErrMsg = '';
@@ -64,8 +65,8 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
                 var addressToSave = angular.copy($scope.address);
-                addressToSave.fromDate = new Date(Date.parse($scope.address.fromDate));
-                addressToSave.toDate = new Date(Date.parse($scope.address.toDate));
+                addressToSave.fromDate = piAddressService.stringToDate($scope.address.fromDate);
+                addressToSave.toDate = piAddressService.stringToDate($scope.address.toDate);
 
                 var handleResponse = function (response) {
                     if (response.failure) {
