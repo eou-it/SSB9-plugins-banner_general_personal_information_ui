@@ -1254,11 +1254,9 @@ table tr td {
         padding: 0.875em 0.875em 0.1em 1.375em;
     }
 
-    .clear-row .col-md-4:nth-child(3n+1) {
-        clear: left;
-    }
-
-    .edit-addr .col-md-4:nth-child(3n+2) {
+    .clear-row .col-md-4:nth-child(3n+1),
+    .edit-addr .col-md-4:nth-child(3n+2),
+    .addr-list > div:nth-child(3n+1) {
         clear: left;
     }
 }

@@ -79,6 +79,7 @@ class PersonalInformationDetailsController {
                 personAddress.state = [code: it.stateCode, description: it.state]
                 personAddress.zip = it.zip
                 personAddress.nation = [code: it.nationCode, nation: it.nation]
+                personAddress.isUpdateable = (it.priviledgeIndicator == 'U')
                 personAddress.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber:it.houseNumber,
                          streetLine1:it.streetLine1,
