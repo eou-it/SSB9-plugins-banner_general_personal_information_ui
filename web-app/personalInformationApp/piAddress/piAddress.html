@@ -41,7 +41,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div ng-if="address.displayAddress.addressLine8">
             {{address.displayAddress.addressLine8}}
         </div>
-        <div class="button-block">
+        <div ng-if="address.isUpdateable" class="button-block">
             <a ng-click="openEditAddressModal(address)" enter-key="openEditAddressModal(address)" class="pi-edit-item-link pi-icon-link"
                title="{{'personInfo.button.title.editAddress'|i18n}}" aria-label="{{'personInfo.button.title.editAddress'|i18n}}"
                tabindex="0">
