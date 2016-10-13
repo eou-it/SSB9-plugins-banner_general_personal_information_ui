@@ -1,0 +1,24 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="overview-name-line">
+    Johnson,
+</div>
+<div class="overview-name-line">
+    Paul
+</div>
+<div class="overview-line">
+    ID Number: BBB123
+</div>
+<div class="pi-overview-divider"><span></span></div>
+<div class="clearfix overview-divider-spacer"></div>
+<div ng-if="preferredEmail.emailAddress" class="overview-line">
+    <a class="pi-overview-link" href="mailto:{{preferredEmail.emailAddress}}"><span class="icon-email-CO pi-icon"></span><span class="email-link pi-link">{{preferredEmail.emailAddress}}</span></a>
+</div>
+<div class="overview-line">
+    <span class="icon-location-CO pi-icon"></span>{{addressForOverview}}
+</div>
+<div class="overview-line">
+    <!--<span class="icon-add-CO pi-icon"></span>{{phoneForOverview}}-->
+    <div class="phone-icon"></div>{{phoneForOverview}}
+</div>
