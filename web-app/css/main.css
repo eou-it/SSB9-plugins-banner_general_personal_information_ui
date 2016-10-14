@@ -355,6 +355,12 @@ a.add-item-link {
     cursor: pointer;
 }
 
+a.pi-overview-link,
+a.pi-overview-link:hover,
+a.pi-overview-link:focus {
+    text-decoration: none;
+}
+
 .email-link {
     padding: 0px;
 }
@@ -753,12 +759,32 @@ button.closebtn {
 /* Person Detail Layout */
 /************************/
 
+.overview-line {
+    margin-top: 15px;
+}
+
+.overview-name-line {
+    font-size: 1.5em;
+}
+
+.details-wrapper {
+    overflow: hidden;
+}
+
 .details-section {
     margin: 15px 0;
     padding: 15px 15px 0px 15px;
     border-bottom: 4px solid #ddd;
     overflow: hidden;
     background: white;
+}
+
+.details-section.overview {
+    float: left;
+    width: 310px;
+    padding-bottom: 15px;
+    margin-right: 15px;
+    text-align: center;
 }
 
 .details-section-heading {
@@ -771,17 +797,35 @@ button.closebtn {
     margin: 0;
 }
 
-.pi-title-divider{
+.pi-title-divider,
+.pi-overview-divider {
     width: 50px;
     height: 1px;
 }
 
-.pi-title-divider span {
+.pi-overview-divider {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pi-title-divider span,
+.pi-overview-divider span {
     border-bottom: 1px solid #BEC5CB;
     width: 100%;
     float: left;
-    margin-top: 1.0em;
     margin-bottom: 0.675em;
+}
+
+.pi-title-divider span {
+    margin-top: 1.0em;
+}
+
+.pi-overview-divider span {
+    margin-top: 1.5em;
+}
+
+.overview-divider-spacer {
+    height: 25px;
 }
 
 .details-section-edit {
@@ -882,6 +926,22 @@ button.delete-btn {
     border: none;
     outline: none;
     float: left;
+}
+
+.phone-icon {
+    width: 24px;
+    height: 24px;
+    background: url('../images/Phone_4.svg') 50% 50% no-repeat;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pi-icon {
+    font-size: 24px;
+    text-decoration: none;
+    margin-right: 8px;
+    vertical-align: middle;
 }
 
 

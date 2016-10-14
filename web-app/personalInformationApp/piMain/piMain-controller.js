@@ -40,6 +40,69 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
 
             return sorted;
+        },
+
+        // TODO: need different algorithm for this?
+        formatAddressForSingleLine = function(addr) {
+            if (!addr) return '';
+
+            var addrLines = [],
+                key;
+
+            for (key in addr.displayAddress) {
+                if (addr.displayAddress.hasOwnProperty(key) && !_.isEmpty(addr.displayAddress[key])) {
+                    addrLines.push(addr.displayAddress[key]);
+                }
+            }
+
+            return addrLines.join(', ');
+        },
+
+        // TODO: need different algorithm for finding address??
+        getAddressForOverview = function(addrGroup) {
+            var key,
+                addresses;
+
+            if (addrGroup) {
+                for (key in addrGroup) {
+                    if (addrGroup.hasOwnProperty(key) && addrGroup[key].hasOwnProperty('current')) {
+                        addresses = addrGroup[key]['current'];
+
+                        if (!_.isEmpty(addresses)) {
+                            return addresses[0];
+                        }
+                    }
+                }
+            }
+
+            return null;
+        },
+
+        getPreferredEmail = function(emailList) {
+            var preferred = null;
+
+            if (!_.isEmpty(emailList)) {
+                preferred = _.find(emailList, function(email) {
+                    return email.preferredIndicator;
+                });
+
+                if (!preferred) {
+                    preferred = emailList[0];
+                }
+            }
+
+            return preferred;
+        },
+
+        // TODO: need different algorithm for this?
+        getPhoneNumberForOverview = function(phoneList) {
+            var phone = null;
+
+            if (!_.isEmpty(phoneList)) {
+                phone = phoneList[0];
+            }
+
+            return phone;
         };
 
         /**
@@ -60,14 +123,19 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.addressGroup = sortAddresses(response.addresses);
+                    $scope.addressForOverview = formatAddressForSingleLine(getAddressForOverview($scope.addressGroup));
                 }
             });
 
             piCrudService.get('TelephoneNumbers').$promise.then(function(response) {
+                var phone;
+
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.phones = response.telephones;
+                    phone = getPhoneNumberForOverview($scope.phones);
+                    $scope.phoneForOverview = phone ? phone.displayPhoneNumber : '';
                 }
             });
 
@@ -76,6 +144,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.emails = response.emails;
+                    $scope.preferredEmail = getPreferredEmail($scope.emails);
                 }
             });
 
@@ -99,8 +168,11 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         // --------------------
         $scope.maskingRules = null;
         $scope.addressGroup = null;
+        $scope.addressForOverview;
         $scope.emails = null;
+        $scope.preferredEmail;
         $scope.phones = null;
+        $scope.phoneForOverview;
         $scope.emergencyContacts = [];
 
 
