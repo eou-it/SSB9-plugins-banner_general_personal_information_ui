@@ -78,17 +78,20 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return null;
         },
 
-        getPreferredEmail = function(emailList) {
+        sortAndGetPreferredEmail = function(emailList) {
             var preferred = null;
 
             if (!_.isEmpty(emailList)) {
-                preferred = _.find(emailList, function(email) {
-                    return email.preferredIndicator;
+                emailList.sort(function(a, b) {
+                    if(a.preferredIndicator) {
+                        return -1;
+                    }
+                    if(b.preferredIndicator) {
+                        return 1;
+                    }
+                    return 0;
                 });
-
-                if (!preferred) {
-                    preferred = emailList[0];
-                }
+                preferred = emailList[0];
             }
 
             return preferred;
@@ -144,7 +147,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.emails = response.emails;
-                    $scope.preferredEmail = getPreferredEmail($scope.emails);
+                    $scope.preferredEmail = sortAndGetPreferredEmail($scope.emails);
                 }
             });
 
@@ -301,6 +304,9 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     } else {
                         // Refresh email info
                         $scope.emails.splice($scope.emails.indexOf(email), 1);
+                        if (email.id === $scope.preferredEmail.id) {
+                            $scope.preferredEmail = sortAndGetPreferredEmail($scope.emails);
+                        }
                     }
                 });
             };
