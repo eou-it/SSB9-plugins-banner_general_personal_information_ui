@@ -78,20 +78,16 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return null;
         },
 
-        getPreferredEmail = function(emailList) {
-            var preferred = null;
-
-            if (!_.isEmpty(emailList)) {
-                preferred = _.find(emailList, function(email) {
-                    return email.preferredIndicator;
-                });
-
-                if (!preferred) {
-                    preferred = emailList[0];
+        putPreferredEmailFirst = function() {
+            $scope.emails.sort(function(a, b){
+                if(a.preferredIndicator){
+                    return -1;
                 }
-            }
-
-            return preferred;
+                if(b.preferredIndicator){
+                    return 1;
+                }
+                return 0;
+            });
         },
 
         // TODO: need different algorithm for this?
@@ -144,7 +140,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.emails = response.emails;
-                    $scope.preferredEmail = getPreferredEmail($scope.emails);
+                    putPreferredEmailFirst();
+                    $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
                 }
             });
 
@@ -301,6 +298,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     } else {
                         // Refresh email info
                         $scope.emails.splice($scope.emails.indexOf(email), 1);
+                        if (email.id === $scope.preferredEmail.id) {
+                            putPreferredEmailFirst();
+                            $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
+                        }
                     }
                 });
             };
