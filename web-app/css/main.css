@@ -1315,7 +1315,8 @@ table tr td {
     }
 
     .clear-row .col-md-4:nth-child(3n+1),
-    .edit-addr .col-md-4:nth-child(3n+2),
+    .edit-addr .maybe-clear:nth-child(3n+1),
+    .edit-emer-contact .maybe-clear:nth-child(3n),
     .addr-list > div:nth-child(3n+1) {
         clear: left;
     }
