@@ -55,7 +55,7 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
             var msg = 'personInfo.address.error.stateNationZip',
                 isValidZipStateNation = (contact.state.code && contact.zip) || (contact.nation.code && !contact.state.code);
 
-            if(((contact.city || contact.state || contact.zip) && !isValidZipStateNation)) {
+            if(((contact.city || contact.state.code || contact.zip) && !isValidZipStateNation)) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
