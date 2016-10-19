@@ -426,7 +426,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 
 .pi-modal-divider span {
     border-bottom: 1px solid #BEC5CB;
-    width: 895px;
+    width: 894px;
     float: left;
     margin-top: 1em;
     margin-bottom: 1px;
@@ -1315,7 +1315,8 @@ table tr td {
     }
 
     .clear-row .col-md-4:nth-child(3n+1),
-    .edit-addr .col-md-4:nth-child(3n+2),
+    .edit-addr .maybe-clear:nth-child(3n+1),
+    .edit-emer-contact .maybe-clear:nth-child(3n),
     .addr-list > div:nth-child(3n+1) {
         clear: left;
     }

@@ -51,11 +51,33 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
             }
         };
 
-        this.getErrorZipStateNation = function(contact) {
-            var msg = 'personInfo.address.error.stateNationZip',
-                isValidZipStateNation = (contact.state.code && contact.zip) || (contact.nation.code && !contact.state.code);
+        this.getErrorState = function(contact) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if(!contact.nation.code && contact.zip && !contact.state.code) {
+                messages.push({msg: msg, type: 'error'});
 
-            if(((contact.city || contact.state || contact.zip) && !isValidZipStateNation)) {
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorZip = function(contact) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if(contact.state.code && !contact.zip) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorNation = function(contact) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if(contact.city && (!contact.nation.code && !contact.state.code && !contact.zip)) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;

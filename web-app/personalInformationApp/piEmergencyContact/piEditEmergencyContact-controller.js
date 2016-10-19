@@ -11,7 +11,9 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
         $scope.lastNameErrMsg = '';
         $scope.streetLine1ErrMsg = '';
         $scope.cityErrMsg = '';
-        $scope.stateCountyNationErrMsg = '';
+        $scope.stateErrMsg = '';
+        $scope.zipErrMsg = '';
+        $scope.nationErrMsg = '';
         $scope.addressErrMsg = '';
 
 
@@ -35,8 +37,14 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             if(!!$scope.cityErrMsg){
                 $scope.cityErrMsg = piEmergencyContactService.getErrorCity($scope.emergencyContact);
             }
-            if(!!$scope.stateCountyNationErrMsg) {
-                $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorZipStateNation($scope.emergencyContact);
+            if(!!$scope.stateErrMsg) {
+                $scope.stateErrMsg = piEmergencyContactService.getErrorState($scope.emergencyContact);
+            }
+            if(!!$scope.zipErrMsg) {
+                $scope.zipErrMsg = piEmergencyContactService.getErrorZip($scope.emergencyContact);
+            }
+            if(!!$scope.nationErrMsg) {
+                $scope.nationErrMsg = piEmergencyContactService.getErrorNation($scope.emergencyContact);
             }
         };
 
@@ -45,10 +53,12 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             $scope.lastNameErrMsg = piEmergencyContactService.getErrorLastName(contact);
             $scope.streetLine1ErrMsg = piEmergencyContactService.getErrorStreetLine1(contact);
             $scope.cityErrMsg = piEmergencyContactService.getErrorCity(contact);
-            $scope.stateCountyNationErrMsg = piEmergencyContactService.getErrorZipStateNation(contact);
+            $scope.stateErrMsg = piEmergencyContactService.getErrorState(contact);
+            $scope.zipErrMsg = piEmergencyContactService.getErrorZip(contact);
+            $scope.nationErrMsg = piEmergencyContactService.getErrorNation(contact);
 
             return !($scope.firstNameErrMsg || $scope.lastNameErrMsg || $scope.streetLine1ErrMsg || $scope.cityErrMsg ||
-                     $scope.stateCountyNationErrMsg);
+                    $scope.stateErrMsg || $scope.zipErrMsg || $scope.nationErrMsg);
         };
 
         $scope.saveEmergencyContact = function() {
