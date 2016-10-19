@@ -5,6 +5,7 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.utility.PreferredNameService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -24,6 +25,8 @@ class PersonalInformationDetailsController {
     def personalInformationCompositeService
     def relationshipService
     def personEmergencyContactService
+    def preferredNameService
+
 
     private def findPerson() {
         return PersonUtility.getPerson(PersonalInformationControllerUtility.getPrincipalPidm())
@@ -437,6 +440,21 @@ class PersonalInformationDetailsController {
             personEmergencyContactService.delete(deletedContact)
             //TODO compress remaining priorities after delete
             render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getPreferredName() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def usage = preferredNameService.getUsage(params.pageName, params.sectionName)
+        def model = [:]
+
+        model.preferredName = preferredNameService.getPreferredName([pidm: pidm, usage: usage])
+
+        try {
+            render model as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON

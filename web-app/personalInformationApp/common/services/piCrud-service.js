@@ -1,9 +1,9 @@
 personalInformationApp.service('piCrudService', ['$resource',
     function ($resource) {
 
-        this.get = function (entityName) {
+        this.get = function (entityName, params) {
             return $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'get'+entityName}).get();
+                {controller: 'PersonalInformationDetails', action: 'get'+entityName}).get(params);
         };
 
         this.create = function (entityName, entity) {

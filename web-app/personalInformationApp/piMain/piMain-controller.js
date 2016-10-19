@@ -105,6 +105,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          * Initialize controller
          */
         this.init = function() {
+            var preferredNameParams = {pageName: 'PersonalInformation', sectionName: 'Overview'};
 
             piCrudService.get('MaskingRules').$promise.then(function(response) {
                 if(response.failure) {
@@ -153,6 +154,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('PreferredName', preferredNameParams).$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.preferredName = response.preferredName;
+                }
+            });
+
             if($stateParams.startingTab) {
                 $scope.startingTab = $stateParams.startingTab;
             }
@@ -171,6 +180,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.phones = null;
         $scope.phoneForOverview;
         $scope.emergencyContacts = [];
+        $scope.preferredName;
 
 
         // CONTROLLER FUNCTIONS
