@@ -90,7 +90,7 @@ modules = {
         }
 
         'personalInformationAppRTL' {
-            dependsOn "bannerWebRTL, personalInformationApp, bootstrapRTL. commonComponentsRTL"
+            dependsOn "bannerWebRTL, personalInformationApp, bootstrapRTL, commonComponentsRTL"
 
             // CSS
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main-rtl.css'], attrs: [media: 'screen, projection']
