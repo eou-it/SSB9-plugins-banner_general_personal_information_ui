@@ -128,9 +128,33 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
             }
         };
 
-        this.getErrorStateCountyNation = function(address) {
+        this.getErrorState = function(address) {
             var msg = 'personInfo.address.error.stateNationZip';
-            if((!address.state.code && !address.nation.code) || (address.state.code && !address.zip)){
+            if(!address.nation.code && address.zip && !address.state.code) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorZip = function(address) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if(address.state.code && !address.zip) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getErrorNation = function(address) {
+            var msg = 'personInfo.address.error.stateNationZip';
+            if(!address.nation.code && !address.state.code && !address.zip) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
