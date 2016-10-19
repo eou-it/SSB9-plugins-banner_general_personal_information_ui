@@ -64,9 +64,9 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                 $scope.addressGroup[$scope.address.addressType.description]);
             $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1(address);
             $scope.cityErrMsg = piAddressService.getErrorCity(address);
-            $scope.stateErrMsg = piAddressService.getErrorState($scope.address);
-            $scope.zipErrMsg = piAddressService.getErrorZip($scope.address);
-            $scope.nationErrMsg = piAddressService.getErrorNation($scope.address);
+            $scope.stateErrMsg = piAddressService.getErrorState(address);
+            $scope.zipErrMsg = piAddressService.getErrorZip(address);
+            $scope.nationErrMsg = piAddressService.getErrorNation(address);
 
             return !($scope.addressTypeErrMsg || $scope.fromDateErrMsg || $scope.toDateErrMsg || $scope.dateRangeErrMsg ||
                 $scope.streetLine1ErrMsg || $scope.cityErrMsg || $scope.stateErrMsg || $scope.zipErrMsg || $scope.nationErrMsg);
