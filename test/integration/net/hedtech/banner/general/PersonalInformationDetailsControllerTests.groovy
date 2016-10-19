@@ -741,4 +741,19 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals false, data.failure
     }
 
+    @Test
+    void testGetPersonalDetails() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = []
+
+        controller.params.putAll(params)
+        controller.getPersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals '2Curr2ProgSameStudyPath EBRUSER1', data.preferredName
+    }
+
 }
