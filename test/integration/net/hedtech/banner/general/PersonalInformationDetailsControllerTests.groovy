@@ -745,15 +745,24 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testGetPreferredName() {
         loginSSB 'HOSH00018', '111111'
 
-        def params = []
-
-        controller.params.putAll(params)
         controller.getPreferredName()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
         assertEquals '2Curr2ProgSameStudyPath EBRUSER1', data.preferredName
+    }
+
+    @Test
+    void testGetBannerId() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.getBannerId()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 'HOSH00018', data.bannerId
     }
 
 }

@@ -461,6 +461,20 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getBannerId() {
+        def person = findPerson()
+        def model = [:]
+
+        model.bannerId = person?.bannerId
+
+        try {
+            render model as JSON
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     private def fixJSONObjectForCast(JSONObject json) {
         json.each {entry ->
             // Make JSONObject.NULL a real Java null

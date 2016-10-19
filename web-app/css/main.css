@@ -898,7 +898,8 @@ a.delete-address-link {
     padding: 0 5px;
 }
 
-span.priority-dot {
+span.priority-dot,
+span.id-label {
     margin-right: 5px;
 }
 
