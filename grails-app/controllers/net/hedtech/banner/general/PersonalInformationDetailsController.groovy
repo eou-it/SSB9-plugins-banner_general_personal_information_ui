@@ -446,16 +446,12 @@ class PersonalInformationDetailsController {
         }
     }
 
-    def getPersonalDetails() {
+    def getPreferredName() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def usage = preferredNameService.getUsage(params.pageName, params.sectionName)
-
         def model = [:]
 
-        // Preferred name
         model.preferredName = preferredNameService.getPreferredName([pidm: pidm, usage: usage])
-
-        // TODO: get other Personal Detail items, such as preferred first name, date of birth, marital status, etc.
 
         try {
             render model as JSON

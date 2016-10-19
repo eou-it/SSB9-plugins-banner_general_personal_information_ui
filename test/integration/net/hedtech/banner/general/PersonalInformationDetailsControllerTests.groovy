@@ -742,13 +742,13 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
-    void testGetPersonalDetails() {
+    void testGetPreferredName() {
         loginSSB 'HOSH00018', '111111'
 
         def params = []
 
         controller.params.putAll(params)
-        controller.getPersonalDetails()
+        controller.getPreferredName()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
 
