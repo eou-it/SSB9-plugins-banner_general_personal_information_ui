@@ -1,6 +1,7 @@
 personalInformationAppControllers.controller('piEditEmergencyContactController',['$scope', '$modalInstance', 'piEmergencyContactService','$rootScope', '$state',
-    '$filter', 'notificationCenterService', 'piCrudService', 'editEmergencyContactProperties',
-    function ($scope, $modalInstance, piEmergencyContactService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editEmergencyContactProperties){
+    '$filter', 'notificationCenterService', 'piCrudService', 'editEmergencyContactProperties', 'personalInformationService',
+    function ($scope, $modalInstance, piEmergencyContactService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editEmergencyContactProperties,
+              personalInformationService){
 
         // CONTROLLER VARIABLES
         // --------------------
@@ -74,7 +75,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                             flashType: $scope.flashNotification}
                         );
 
-                        $state.go('personalInformationMain',
+                        $state.go(personalInformationService.getFullProfileState(),
                             {onLoadNotifications: notifications, startingTab: 'emergencyContact'},
                             {reload: true, inherit: false, notify: true}
                         );
