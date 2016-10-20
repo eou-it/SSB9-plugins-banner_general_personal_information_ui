@@ -53,6 +53,7 @@ modules = {
         resource url: [plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/app.js']
 
         // Services
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/personalInformation-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/breadcrumb-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/notificationcenter-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/piCrud-service.js']

@@ -69,7 +69,7 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 }
             })
             .state('piFullViewMobile', {
-                url: "/personalInformationMain/fullProfile",
+                url: "/personalInformationMobileFullProfile",
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piMobileFullView.html',
                 controller: 'piMainController',
                 data: {

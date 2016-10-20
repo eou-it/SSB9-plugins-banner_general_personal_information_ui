@@ -1,6 +1,7 @@
 personalInformationAppControllers.controller('piEditEmailController',['$scope', '$modalInstance', 'piEmailService','$rootScope', '$state',
-    '$filter', 'notificationCenterService', 'piCrudService', 'editEmailProperties',
-    function ($scope, $modalInstance, piEmailService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editEmailProperties){
+    '$filter', 'notificationCenterService', 'piCrudService', 'editEmailProperties', 'personalInformationService',
+    function ($scope, $modalInstance, piEmailService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editEmailProperties,
+              personalInformationService){
 
         // CONTROLLER VARIABLES
         // --------------------
@@ -51,7 +52,7 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
                             }
                         );
 
-                        $state.go('personalInformationMain',
+                        $state.go(personalInformationService.getFullProfileState(),
                             {onLoadNotifications: notifications, startingTab: 'email'},
                             {reload: true, inherit: false, notify: true}
                         );

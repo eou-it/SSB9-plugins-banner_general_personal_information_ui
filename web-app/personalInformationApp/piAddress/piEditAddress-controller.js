@@ -1,6 +1,7 @@
 personalInformationAppControllers.controller('piEditAddressController',['$scope', '$modalInstance', 'piAddressService','$rootScope', '$state',
-    '$filter', 'notificationCenterService', 'piCrudService', 'editAddressProperties',
-    function ($scope, $modalInstance, piAddressService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editAddressProperties){
+    '$filter', 'notificationCenterService', 'piCrudService', 'editAddressProperties', 'personalInformationService',
+    function ($scope, $modalInstance, piAddressService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editAddressProperties,
+              personalInformationService){
 
         // CONTROLLER VARIABLES
         // --------------------
@@ -92,7 +93,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                             flashType: $scope.flashNotification}
                         );
 
-                        $state.go('personalInformationMain',
+                        $state.go(personalInformationService.getFullProfileState(),
                             {onLoadNotifications: notifications, startingTab: 'address'},
                             {reload: true, inherit: false, notify: true}
                         );
