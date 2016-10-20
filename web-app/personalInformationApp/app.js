@@ -47,7 +47,7 @@ personalInformationApp.constant('webAppResourcePathString', '../plugins/banner-g
 personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResourcePathString',
     function($stateProvider, $urlRouterProvider, webAppResourcePathString){
         // For any unmatched url, send to /personalInformationMain
-        var url = url ? url : 'personalInformationMain'; // TODO: change name of this URL to something else?
+        var url = url ? url : 'personalInformationMain';
 
         $urlRouterProvider.otherwise(url) ;
 
@@ -59,6 +59,18 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
             .state('personalInformationMain', {
                 url: "/personalInformationMain",
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/personalInformationMain.html',
+                controller: 'piMainController',
+                data: {
+                    breadcrumbs: []
+                },
+                params: {
+                    onLoadNotifications: [],
+                    startingTab: ''
+                }
+            })
+            .state('piFullViewMobile', {
+                url: "/personalInformationMain/fullProfile",
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piMobileFullView.html',
                 controller: 'piMainController',
                 data: {
                     breadcrumbs: []
