@@ -9,9 +9,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-/**
- *
- */
+
 class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
     def personalInformationConfigService
