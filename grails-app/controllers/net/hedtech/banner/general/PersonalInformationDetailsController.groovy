@@ -26,6 +26,7 @@ class PersonalInformationDetailsController {
     def relationshipService
     def personEmergencyContactService
     def preferredNameService
+    def personalInformationConfigService
 
 
     private def findPerson() {
@@ -468,6 +469,18 @@ class PersonalInformationDetailsController {
         model.bannerId = person?.bannerId
 
         try {
+            render model as JSON
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getPiConfig() {
+        def model = [:]
+
+        try {
+            model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromWebTailor('UPDATE_PREFERRED_EMAIL', 'Y') == 'Y'
             render model as JSON
         }
         catch (ApplicationException e) {
