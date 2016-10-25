@@ -765,4 +765,16 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals 'HOSH00018', data.bannerId
     }
 
+    @Test
+    void testGetPiConfig() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.getPiConfig()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals true, data.isPreferredEmailUpdateable
+    }
+
 }
