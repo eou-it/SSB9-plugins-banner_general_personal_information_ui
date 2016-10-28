@@ -39,3 +39,13 @@ personalInformationAppDirectives.directive('enterKey', function() {
         });
     };
 });
+
+personalInformationAppDirectives.directive('notificationBox',['$filter', function ($filter) {
+    return{
+        restrict: 'E',
+        templateUrl: $filter('webAppResourcePath')('personalInformationApp/piMain/piNotificationBox.html'),
+        scope: {
+            notificationText: '@'
+        }
+    };
+}]);
