@@ -1,6 +1,7 @@
 personalInformationApp.service('piEmailService', ['notificationCenterService',
     function (notificationCenterService) {
-        var messages = [];
+        var messages = [],
+            invalidCharRegEx = /[ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]/i;
 
         this.getErrorEmailType = function (email) {
             var msg = 'personInfo.email.error.emailType';
@@ -17,6 +18,20 @@ personalInformationApp.service('piEmailService', ['notificationCenterService',
         this.getErrorEmailAddress = function (email) {
             var msg = 'personInfo.email.error.emailAddress';
             if (!email.emailAddress) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+
+            return this.getErrorEmailAddressFormat(email);
+        };
+
+        this.getErrorEmailAddressFormat = function (email) {
+            var msg = 'personInfo.email.error.emailAddressFormat';
+            if (invalidCharRegEx.test(email.emailAddress)) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
