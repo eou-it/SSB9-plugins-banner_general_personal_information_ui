@@ -213,7 +213,8 @@ input:disabled {
 }
 
 .pi-comment {
-   color: #7E858B;
+    color: #7E858B;
+    word-wrap: break-word;
 }
 
 .button-block {
@@ -381,6 +382,7 @@ a.pi-overview-link:focus {
 
 .email-link {
     padding: 0px;
+    word-wrap: break-word;
 }
 
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
@@ -858,6 +860,11 @@ button.closebtn {
 .address-detail,
 .emergency-contact-detail {
     float: left;
+}
+
+.email-detail {
+    float: left;
+    width: 100%;
 }
 
 .address-wrapper,

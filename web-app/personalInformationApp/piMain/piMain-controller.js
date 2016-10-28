@@ -2,9 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService', 'piPhoneService',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piCrudService, piPhoneService) {
+              piCrudService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -79,11 +79,21 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         },
 
         putPreferredEmailFirst = function() {
-            $scope.emails.sort(function(a, b){
-                if(a.preferredIndicator){
+            //preferred emails come before unpreferred, then sort the unpreferred alphabetically
+            $scope.emails.sort(function(a, b) {
+                var aTypeDesc = a.emailType.description,
+                    bTypeDesc = b.emailType.description;
+
+                if(a.preferredIndicator) {
                     return -1;
                 }
-                if(b.preferredIndicator){
+                if(b.preferredIndicator) {
+                    return 1;
+                }
+                if (aTypeDesc < bTypeDesc) {
+                    return -1;
+                }
+                if(aTypeDesc > bTypeDesc) {
                     return 1;
                 }
                 return 0;
