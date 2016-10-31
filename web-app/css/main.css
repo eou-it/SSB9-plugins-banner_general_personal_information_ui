@@ -212,6 +212,40 @@ input:disabled {
     background: #EFF4F8
 }
 
+.dd-notification-box {
+    display: table;
+    margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dd-notification-row {
+    display: table-row;
+}
+
+.dd-notification-cell {
+    display: table-cell;
+}
+
+.dd-notification-content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fffeea;
+}
+
+.notification-icon {
+    font-size: 20px;
+    padding-right: 15px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.notification-text {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .pi-comment {
     color: #7E858B;
     word-wrap: break-word;
