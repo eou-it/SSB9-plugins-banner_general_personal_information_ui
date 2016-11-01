@@ -766,6 +766,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetMaritalStatusList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getMaritalStatusList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue 10 > data.size()
+        assertTrue data.description.contains('Divorced')
+    }
+
+    @Test
     void testGetPiConfig() {
         loginSSB 'HOSH00018', '111111'
 
