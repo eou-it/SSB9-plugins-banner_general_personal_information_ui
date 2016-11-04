@@ -26,6 +26,8 @@ class PersonalInformationDetailsController {
     def personEmergencyContactService
     def preferredNameService
     def personalInformationConfigService
+    def maritalStatusService
+    def personBasicPersonBaseService
 
 
     private def findPerson() {
@@ -471,6 +473,27 @@ class PersonalInformationDetailsController {
 
         try {
             render model as JSON
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getMaritalStatusList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render maritalStatusService.fetchMaritalStatusList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getPersonalDetails() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        try {
+            render personBasicPersonBaseService.getPersonalDetails(pidm) as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
