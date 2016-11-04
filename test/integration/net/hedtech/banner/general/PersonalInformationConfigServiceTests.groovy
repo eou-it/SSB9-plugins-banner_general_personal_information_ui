@@ -27,29 +27,6 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
 
     @Test
-    void testHasAccessToWebTailorMenu() {
-        def pidm = PersonUtility.getPerson("GDP000005").pidm
-
-        assertTrue personalInformationConfigService.hasAccessToWebTailorMenu('bwgkogad.P_SelectAtypView', ['EMPLOYEE', 'STUDENT'], pidm)
-    }
-
-    @Test
-    void testHasAccessToWebTailorMenuNoAccess() {
-        def pidm = PersonUtility.getPerson("GDP000005").pidm
-
-        //only faculty have access
-        assertFalse personalInformationConfigService.hasAccessToWebTailorMenu('bwlkoids.P_AdvEnterID', ['EMPLOYEE'], pidm)
-    }
-
-    @Test
-    void testHasAccessToWebTailorMenuError() {
-        def pidm = '\'cats\''
-
-        //pidm should be a number
-        assertNull personalInformationConfigService.hasAccessToWebTailorMenu('bwgkogad.P_SelectAtypView', ['EMPLOYEE'], pidm)
-    }
-
-    @Test
     void testGetParamFromWebTailor() {
         def val = personalInformationConfigService.getParamFromWebTailor('SYSTEM_NAME', 'dummy_default_value')
 
@@ -64,12 +41,39 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testGetPersonalInfoSectionConfig() {
-        def pidm = PersonUtility.getPerson("GDP000005").pidm
+    void testSetPersonalInfoConfigInSession() {
+        controller = new PersonalInformationDetailsController()
+        assertNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
 
-        def piConfig = personalInformationConfigService.getPersonalInfoSectionConfig(['EMPLOYEE', 'STUDENT'], pidm)
+        personalInformationConfigService.setPersonalInfoConfigInSession(controller.session, [:])
 
-        assertTrue piConfig.address.isVisible
-        assertTrue piConfig.address.isUpdateable
+        assertNotNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+    }
+
+    @Test
+    void testGetPersonalInfoConfigInSession() {
+        controller = new PersonalInformationDetailsController()
+        assertNull personalInformationConfigService.getPersonalInfoConfigFromSession(controller.session)
+
+        controller.session.setAttribute(PersonalInformationConfigService.PI_CONFIG, [:])
+
+        assertNotNull personalInformationConfigService.getPersonalInfoConfigFromSession(controller.session)
+    }
+
+    @Test
+    void testGetAddressDisplayPriorities() {
+        controller = new PersonalInformationDetailsController()
+        assertNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        def addrPriorities = personalInformationConfigService.getAddressDisplayPriorities(controller.session)
+
+        assertNotNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        // Note that in seed data there are two GTVSDAX records for address priorities.  They both have an
+        // internal code (GTVSDAX_INTERNAL_CODE) of PINFOADDRESS and internal code group (GTVSDAX_INTERNAL_CODE_GROUP)
+        // of ADDRESS, which are the two fields used to query address priority, and one has a sequence number of 1 and
+        // the other 2.  We only see the "2" one here because they're stored in the piConfig object in a hashmap, so
+        // only the latest one stored (2) remains after the piConfig object is created.
+        assertEquals(2, addrPriorities.UPDATE_ME)
     }
 }

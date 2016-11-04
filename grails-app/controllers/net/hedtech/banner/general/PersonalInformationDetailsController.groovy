@@ -5,7 +5,6 @@ import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
-import net.hedtech.banner.general.utility.PreferredNameService
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -65,6 +64,7 @@ class PersonalInformationDetailsController {
 
             model.addresses = []
 
+            def addressDisplayPriorities = personalInformationConfigService.getAddressDisplayPriorities(session)
             def personAddress
 
             addresses.each { it ->
@@ -72,6 +72,7 @@ class PersonalInformationDetailsController {
                 personAddress.id = it.id
                 personAddress.version = it.version
                 personAddress.addressType = [code: it.addressType, description: it.addressTypeDescription]
+                personAddress.displayPriority = addressDisplayPriorities[personAddress.addressType.code]
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
                 personAddress.isFuture = isDateInFuture(it.fromDate)
