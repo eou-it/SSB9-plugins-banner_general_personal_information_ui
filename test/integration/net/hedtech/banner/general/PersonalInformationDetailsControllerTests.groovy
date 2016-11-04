@@ -1,6 +1,7 @@
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import org.codehaus.groovy.grails.web.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -779,6 +780,21 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertTrue 10 > data.size()
         assertTrue data.description.contains('Divorced')
+    }
+
+    @Test
+    void testGetPersonalDetails() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.getPersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals '03/31/1961', data.birthDate
+        assertEquals 'F', data.gender
+        assertEquals JSONObject.NULL, data.preferenceFirstName
+        assertEquals 'M', data.maritalStatus.code
     }
 
     @Test
