@@ -4,45 +4,16 @@
 package net.hedtech.banner.general
 
 import groovy.sql.Sql
+import net.hedtech.banner.general.system.SdaCrosswalkConversion
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED )
 class PersonalInformationConfigService {
 
+    static final PI_CONFIG = 'piConfig'
+
     def sessionFactory
-
-    // TODO: example values primarily for testing, may need to be changed based on BXEGS-297
-    static final def ADDRESS_VIEW = 'bwgkogad.P_SelectAtypView'
-    static final def ADDRESS_UPDATE = 'bwgkogad.P_SelectAtypUpdate'
-
-    def hasAccessToWebTailorMenu(menuName, roles, pidm) {
-        Sql sql = new Sql(sessionFactory.getCurrentSession().connection())
-        String rolesString = '\''+ roles.join('\',\'') +'\''
-        menuName = "'%${menuName}%'"
-        def sqlQuery = "select DISTINCT twgrmenu_url_text "+
-          "from twgrmenu a "+
-         "where twgrmenu_enabled = 'Y' "+
-           "and (twgrmenu_name in "+
-                    "(select twgrwmrl_name from twgrwmrl, twgrrole where twgrrole_pidm = ${pidm} "+
-                        "and twgrrole_role = twgrwmrl_role and twgrwmrl_name = a.twgrmenu_name) "+
-                "or twgrmenu_name in "+
-                    "(select twgrwmrl_name from twgrwmrl, govrole where govrole_pidm = ${pidm} "+
-                        "and twgrwmrl_role in  (${rolesString}))) "+
-           "and twgrmenu_name like ${menuName}"
-        def result
-
-        try {
-            // A non-empty result means the user can view the menu
-            result = sql.firstRow(sqlQuery) as boolean
-        } catch (e) {
-            log.error("Error retrieving value for Web Tailor menu \"" + menuName + "\".", e)
-        } finally {
-            sql?.close()
-
-            return result
-        }
-    }
 
     def getParamFromWebTailor (webParam, defaultVal) {
         Sql sql = new Sql(sessionFactory.getCurrentSession().connection())
@@ -66,14 +37,36 @@ class PersonalInformationConfigService {
         }
     }
 
-    def getPersonalInfoSectionConfig(roles, pidm) {
-        def model = [:]
-
-        model.address = [
-                isVisible: hasAccessToWebTailorMenu(ADDRESS_VIEW, roles, pidm),
-                isUpdateable: hasAccessToWebTailorMenu(ADDRESS_UPDATE, roles, pidm)
-        ]
-
-        return model
+    def setPersonalInfoConfigInSession(session, config) {
+        session.setAttribute(PI_CONFIG, config)
     }
+
+    def getPersonalInfoConfigFromSession(session) {
+        session.getAttribute(PI_CONFIG)
+    }
+
+    def getAddressDisplayPriorities(session) {
+        def piConfig = getPersonalInfoConfigFromSession(session)
+
+        if (piConfig) {
+            if (piConfig.addressDisplayPriorities) {
+                return piConfig.addressDisplayPriorities
+            }
+        } else {
+            piConfig = [:]
+        }
+
+        def priorities = [:]
+        def addrList = SdaCrosswalkConversion.fetchAllByInternalAndInternalGroup( 'PINFOADDR', 'ADDRESS' )
+
+        addrList.each {it ->
+            priorities[it.external] = it.internalSequenceNumber
+        }
+
+        piConfig.addressDisplayPriorities = priorities
+        setPersonalInfoConfigInSession(session, piConfig)
+
+        priorities
+    }
+
 }

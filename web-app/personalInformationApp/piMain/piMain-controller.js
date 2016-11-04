@@ -58,24 +58,37 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return addrLines.join(', ');
         },
 
-        // TODO: need different algorithm for finding address??
         getAddressForOverview = function(addrGroup) {
             var key,
-                addresses;
+                address = null,
+                addresses,
+
+                // Return true if addr1 is higher priority than addr2
+                isHigherPriority = function(addr1, addr2) {
+                    var priority1 = addr1 && addr1.displayPriority,
+                        priority2 = addr2 && addr2.displayPriority;
+
+                    return !priority1 ? false : !priority2 ? true : priority1 < priority2;
+                };
 
             if (addrGroup) {
+                // Iterate through each ADDRESS TYPE
                 for (key in addrGroup) {
+                    // Only consider CURRENT addresses
                     if (addrGroup.hasOwnProperty(key) && addrGroup[key].hasOwnProperty('current')) {
+                        // Find the HIGHEST PRIORITY address or, if we don't have one yet, start with the first one
                         addresses = addrGroup[key]['current'];
 
                         if (!_.isEmpty(addresses)) {
-                            return addresses[0];
+                            if (address === null || isHigherPriority(addresses[0], address)) {
+                                address = addresses[0];
+                            }
                         }
                     }
                 }
             }
 
-            return null;
+            return address;
         },
 
         putPreferredEmailFirst = function() {
