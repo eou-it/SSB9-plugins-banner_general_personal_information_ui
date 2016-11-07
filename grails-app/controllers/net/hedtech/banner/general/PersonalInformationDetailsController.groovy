@@ -500,6 +500,22 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def updatePersonalDetails() {
+        def updatedPerson = request?.JSON ?: params
+        updatedPerson.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(updatedPerson)
+
+        try {
+            personBasicPersonBaseService.update(updatedPerson)
+
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getPiConfig() {
         def model = [:]
 
