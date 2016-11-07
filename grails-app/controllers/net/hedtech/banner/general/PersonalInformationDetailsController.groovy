@@ -305,7 +305,7 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, true)
+                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, session, true)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }

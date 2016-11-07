@@ -45,28 +45,36 @@ class PersonalInformationConfigService {
         session.getAttribute(PI_CONFIG)
     }
 
-    def getAddressDisplayPriorities(session) {
+    def getDisplayPriorities(session, prioritiesConfigName, internalCode, internalGroup) {
         def piConfig = getPersonalInfoConfigFromSession(session)
 
         if (piConfig) {
-            if (piConfig.addressDisplayPriorities) {
-                return piConfig.addressDisplayPriorities
+            if (piConfig[prioritiesConfigName]) {
+                return piConfig[prioritiesConfigName]
             }
         } else {
             piConfig = [:]
         }
 
         def priorities = [:]
-        def addrList = SdaCrosswalkConversion.fetchAllByInternalAndInternalGroup( 'PINFOADDR', 'ADDRESS' )
+        def itemList = SdaCrosswalkConversion.fetchAllByInternalAndInternalGroup(internalCode, internalGroup)
 
-        addrList.each {it ->
+        itemList.each {it ->
             priorities[it.external] = it.internalSequenceNumber
         }
 
-        piConfig.addressDisplayPriorities = priorities
+        piConfig[prioritiesConfigName] = priorities
         setPersonalInfoConfigInSession(session, piConfig)
 
         priorities
+    }
+
+    def getAddressDisplayPriorities(session) {
+        getDisplayPriorities(session, 'addressDisplayPriorities', 'PINFOADDR', 'ADDRESS')
+    }
+
+    def getTelephoneDisplayPriorities(session) {
+        getDisplayPriorities(session, 'telephoneDisplayPriorities', 'PINFOPHON', 'TELEPHONE')
     }
 
 }
