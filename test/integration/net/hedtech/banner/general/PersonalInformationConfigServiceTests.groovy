@@ -61,11 +61,11 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testGetAddressDisplayPriorities() {
+    void testGetDisplayPriorities() {
         controller = new PersonalInformationDetailsController()
         assertNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
 
-        def addrPriorities = personalInformationConfigService.getAddressDisplayPriorities(controller.session)
+        def addrPriorities = personalInformationConfigService.getDisplayPriorities(controller.session, 'addressDisplayPriorities', 'PINFOADDR', 'ADDRESS')
 
         assertNotNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
 
@@ -75,5 +75,39 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         // the other 2.  We only see the "2" one here because they're stored in the piConfig object in a hashmap, so
         // only the latest one stored (2) remains after the piConfig object is created.
         assertEquals(2, addrPriorities.UPDATE_ME)
+    }
+
+    @Test
+    void testGetAddressDisplayPriorities() {
+        controller = new PersonalInformationDetailsController()
+        assertNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        def addrPriorities = personalInformationConfigService.getAddressDisplayPriorities(controller.session)
+
+        assertNotNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        // Note that in seed data there are two GTVSDAX records for address priorities.  They both have an
+        // internal code (GTVSDAX_INTERNAL_CODE) of PINFOADDR and internal code group (GTVSDAX_INTERNAL_CODE_GROUP)
+        // of ADDRESS, which are the two fields used to query address priority, and one has a sequence number of 1 and
+        // the other 2.  We only see the "2" one here because they're stored in the piConfig object in a hashmap, so
+        // only the latest one stored (2) remains after the piConfig object is created.
+        assertEquals(2, addrPriorities.UPDATE_ME)
+    }
+
+    @Test
+    void testGetTelephoneDisplayPriorities() {
+        controller = new PersonalInformationDetailsController()
+        assertNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        def telephonePriorities = personalInformationConfigService.getTelephoneDisplayPriorities(controller.session)
+
+        assertNotNull controller.session.getAttribute(PersonalInformationConfigService.PI_CONFIG)
+
+        // Note that in seed data there are two GTVSDAX records for telephone priorities.  They both have an
+        // internal code (GTVSDAX_INTERNAL_CODE) of PINFOPHON and internal code group (GTVSDAX_INTERNAL_CODE_GROUP)
+        // of TELEPHONE, which are the two fields used to query telephone priority, and one has a sequence number of 1 and
+        // the other 2.  We only see the "2" one here because they're stored in the piConfig object in a hashmap, so
+        // only the latest one stored (2) remains after the piConfig object is created.
+        assertEquals(2, telephonePriorities.UPDATE_ME)
     }
 }

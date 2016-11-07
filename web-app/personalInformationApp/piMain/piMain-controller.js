@@ -58,18 +58,18 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return addrLines.join(', ');
         },
 
+        // Return true if addr1 is higher priority than addr2
+        isHigherPriority = function(item1, item2) {
+            var priority1 = item1 && item1.displayPriority,
+                priority2 = item2 && item2.displayPriority;
+
+            return !priority1 ? false : !priority2 ? true : priority1 < priority2;
+        },
+
         getAddressForOverview = function(addrGroup) {
             var key,
                 address = null,
-                addresses,
-
-                // Return true if addr1 is higher priority than addr2
-                isHigherPriority = function(addr1, addr2) {
-                    var priority1 = addr1 && addr1.displayPriority,
-                        priority2 = addr2 && addr2.displayPriority;
-
-                    return !priority1 ? false : !priority2 ? true : priority1 < priority2;
-                };
+                addresses;
 
             if (addrGroup) {
                 // Iterate through each ADDRESS TYPE
@@ -113,12 +113,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         },
 
-        // TODO: need different algorithm for this?
         getPhoneNumberForOverview = function(phoneList) {
             var phone = null;
 
             if (!_.isEmpty(phoneList)) {
-                phone = phoneList[0];
+                _.each(phoneList, function(ph) {
+                    if (phone === null || isHigherPriority(ph, phone)) {
+                        phone = ph;
+                    }
+                });
             }
 
             return phone;
