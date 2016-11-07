@@ -798,6 +798,34 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testUpdatePersonalDetails() {
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def details = controller.personBasicPersonBaseService.getPersonalDetails(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating preferred first name and marital status
+        controller.request.json = """{
+            id:${details.id},
+            version: ${details.version},
+            preferenceFirstName: 'NickName',
+            maritalStatus:{
+                code:'S',
+                description:'Single'
+            }
+        }""".toString()
+
+        controller.updatePersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    @Test
     void testGetPiConfig() {
         loginSSB 'HOSH00018', '111111'
 
