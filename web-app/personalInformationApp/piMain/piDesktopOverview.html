@@ -1,11 +1,8 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div><!-- ng-if="employeeProfile.displayPhoto" class="col-md-6 col-sm-12 col-xs-6"-->
-    <img class="profile-image img-responsive"
-         ng-src="/BannerGeneralSsb/ssb/PersonalInformationPicture/picture?bannerId={{bannerId}}"
-         alt="Profile Picture">
-</div>
+
+<ng-include src="'personalInformationApp/piMain/piOverviewPicture.html'|webAppResourcePath"></ng-include>
 <div class="overview-name">
     {{preferredName}}
 </div>

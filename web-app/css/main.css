@@ -821,6 +821,15 @@ button.closebtn {
     font-size: 1.5em;
 }
 
+.pi-profile-image {
+    vertical-align: middle;
+}
+
+.pi-profile-image > svg {
+    width: 128px;
+    margin-bottom: -15px;
+}
+
 .details-wrapper {
     overflow: hidden;
 }
