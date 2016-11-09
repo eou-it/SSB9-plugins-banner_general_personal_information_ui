@@ -20,7 +20,7 @@ class PersonalInformationDetailsController {
     def telephoneTypeService
     def personEmailService
     def personEmailCompositeService
-    def personTelephoneService
+    def personalInformationDataService
     def personalInformationCompositeService
     def relationshipService
     def personEmergencyContactService
@@ -305,7 +305,7 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, session, true)
+                model.telephones = personalInformationDataService.getTelephones(pidm, session)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
