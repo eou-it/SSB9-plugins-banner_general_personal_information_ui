@@ -486,7 +486,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetTelephoneNumbers() {
-        loginSSB 'HOS00001', '111111'
+        loginSSB 'GDP000005', '111111'
 
         controller.request.contentType = "text/json"
         controller.getTelephoneNumbers()
@@ -495,11 +495,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
 
-        //TODO: uncomment when "No address exists..." issue is resolved.  This test code is not tested.
-        //TODO: Be sure seed data contains an unlisted phone, as those should be returned as well.
-//        def phones = data.telephones
-//        assertEquals 2, phones.size()
-//        assertEquals '610 4925555', phones[0].displayPhoneNumber
+        def phones = data.telephones
+        assertEquals 1, phones.size()
+        assertEquals '215 2083094', phones[0].displayPhoneNumber
     }
 
     @Test
