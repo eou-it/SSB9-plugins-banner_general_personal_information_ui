@@ -20,7 +20,7 @@ class PersonalInformationDetailsController {
     def telephoneTypeService
     def personEmailService
     def personEmailCompositeService
-    def personalInformationDataService
+    def personTelephoneService
     def personalInformationCompositeService
     def relationshipService
     def personEmergencyContactService
@@ -64,7 +64,9 @@ class PersonalInformationDetailsController {
 
             model.addresses = []
 
-            def addressDisplayPriorities = personalInformationConfigService.getAddressDisplayPriorities(session)
+            // Define configuration to fetch phone sequence from GTVSDAX
+            def sequenceConfig = [gtvsdaxInternalCode: 'PINFOADDR', gtvsdaxInternalCodeGroup: 'ADDRESS']
+            def addressDisplaySequence = PersonUtility.getDisplaySequence('addressDisplaySequence', sequenceConfig)
             def personAddress
 
             addresses.each { it ->
@@ -72,7 +74,7 @@ class PersonalInformationDetailsController {
                 personAddress.id = it.id
                 personAddress.version = it.version
                 personAddress.addressType = [code: it.addressType, description: it.addressTypeDescription]
-                personAddress.displayPriority = addressDisplayPriorities[personAddress.addressType.code]
+                personAddress.displayPriority = addressDisplaySequence[personAddress.addressType.code]
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
                 personAddress.isFuture = isDateInFuture(it.fromDate)
@@ -305,7 +307,10 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                model.telephones = personalInformationDataService.getTelephones(pidm, session)
+                // Define configuration to fetch phone sequence from GTVSDAX
+                def sequenceConfig = [gtvsdaxInternalCode: 'PINFOPHON', gtvsdaxInternalCodeGroup: 'TELEPHONE']
+
+                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
