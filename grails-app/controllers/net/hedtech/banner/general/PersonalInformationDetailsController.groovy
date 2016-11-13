@@ -331,6 +331,22 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def addTelephoneNumber() {
+        def newPhoneNumber = request?.JSON ?: params
+        newPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(newPhoneNumber)
+
+        try {
+            newPhoneNumber.telephoneType = telephoneTypeService.fetchByCode(newPhoneNumber.telephoneType.code)
+
+            personTelephoneService.create(newPhoneNumber)
+            render([failure: false] as JSON)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getRelationshipList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
