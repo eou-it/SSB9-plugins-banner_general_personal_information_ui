@@ -1,11 +1,25 @@
-personalInformationApp.service('piPhoneService', ['$resource', 'notificationCenterService',
-    function ($resource, notificationCenterService) {
+personalInformationApp.service('piPhoneService', ['notificationCenterService',
+    function (notificationCenterService) {
+        var messages = [];
 
-        var getPhoneNumbers = $resource('../ssb/:controller/:action',
-                {controller: 'PersonalInformationDetails', action: 'getTelephoneNumbers'});
+        this.getErrorPhoneType = function (phone) {
+            var msg = 'personInfo.phone.error.phoneType';
+            if (!phone.telephoneType.code) {
+                messages.push({msg: msg, type: 'error'});
 
-        this.getPhoneNumbers = function () {
-            return getPhoneNumbers.get();
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.displayMessages = function() {
+            _.each(messages, function(message) {
+                notificationCenterService.addNotification(message.msg, message.type);
+            });
+
+            messages = [];
         };
     }
 ]);
