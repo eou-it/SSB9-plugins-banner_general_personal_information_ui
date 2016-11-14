@@ -16,11 +16,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6">
                 <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
-                       class="input-field-label" for="zip">{{(email.emailType.urlIndicator ? 'personInfo.label.Url' : 'personInfo.label.emailAddress')|i18n}}</label><br>
+                       class="input-field-label" for="emailAddr">{{(email.emailType.urlIndicator ? 'personInfo.label.Url' : 'personInfo.label.emailAddress')|i18n}}</label><br>
                 <input ng-model="email.emailAddress" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
                        ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
                        class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
-                       maxlength="128" id="zip">
+                       maxlength="128" id="emailAddr">
                 <span ng-if="!!emailAddressErrMsg && !emailAddrFocused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>
