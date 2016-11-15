@@ -309,7 +309,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piPhone/piEditPhone.html'),
-                windowClass: 'pi-modal',
+                windowClass: 'edit-phone pi-modal',
                 keyboard: true,
                 controller: "piEditPhoneController",
                 scope: $scope,

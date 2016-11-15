@@ -23,13 +23,13 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                 $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType($scope.phone);
             }
             if(!!$scope.phoneNumberErrMsg) {
-                //$scope.phoneNumberErrMsg = piPhoneService.getErrorEmailAddress($scope.phone);
+                $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber($scope.phone);
             }
         };
 
         var isValidTelephoneNumber = function () {
             $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType($scope.phone);
-            //$scope.phoneNumberErrMsg = piPhoneService.getErrorEmailAddress($scope.phone);
+            $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber($scope.phone);
 
             return !($scope.phoneTypeErrMsg || $scope.phoneNumberErrMsg);
         };
@@ -38,6 +38,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
             if (isValidTelephoneNumber()) {
                 var phoneToSave = angular.copy($scope.phone);
                 phoneToSave.unlistIndicator = phoneToSave.unlistIndicator ? 'Y' : null;
+                piPhoneService.trimPhoneNumber(phoneToSave);
 
                 var handleResponse = function (response) {
                     if (response.failure) {
@@ -56,7 +57,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                         );
 
                         $state.go(personalInformationService.getFullProfileState(),
-                            {onLoadNotifications: notifications, startingTab: 'phone'},
+                            {onLoadNotifications: notifications, startingTab: 'phoneNumber'},
                             {reload: true, inherit: false, notify: true}
                         );
                     }
