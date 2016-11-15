@@ -305,6 +305,24 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         };
 
+        $scope.openEditPhoneModal = function(currentPhone) {
+
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piPhone/piEditPhone.html'),
+                windowClass: 'edit-phone pi-modal',
+                keyboard: true,
+                controller: "piEditPhoneController",
+                scope: $scope,
+                resolve: {
+                    editPhoneProperties: function () {
+                        return {
+                            currentPhone: currentPhone
+                        };
+                    }
+                }
+            });
+        };
+
         // Display address delete confirmation modal
         $scope.confirmAddressDelete = function (address) {
             var deleteAddress = function () {

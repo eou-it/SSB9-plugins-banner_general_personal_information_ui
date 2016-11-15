@@ -517,6 +517,32 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testAddTelephoneNumber() {
+        loginSSB 'GDP000001', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            telephoneType: {
+              code: "PAGE",
+              description: "Pager",
+            },
+            internationalAccess: null,
+            countryPhone: null,
+            phoneArea: "215",
+            phoneNumber: "2083094",
+            phoneExtension: null,
+            unlistIndicator: null,
+        }""".toString()
+
+        controller.addTelephoneNumber()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    @Test
     void testGetRelationshipList() {
         loginSSB 'HOSH00018', '111111'
 

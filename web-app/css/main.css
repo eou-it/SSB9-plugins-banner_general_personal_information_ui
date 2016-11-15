@@ -592,56 +592,14 @@ input.hasMultiCalendarPicker.pi-date-input.input-error {
     background: #F6E5E6;
 }
 
+.input-fail.pi-phone-num-err {
+    top: inherit;
+    bottom: 5.25em;
+    right: 3em;
+}
+
 .icon .icon-error {
     font-size: 16px;
-}
-
-.amt-input-fail {
-    position: absolute;
-    float: right;
-    left: 13.65em;
-    top: 8.88em;
-    background: #F6E5E6;
-}
-
-.existing-accts-old .amt-input-fail {
-    position: relative;
-    top: 0.15em;
-    right: 2.25em;
-    left: auto;
-    float: none;
-}
-
-.desktop-listing .amt-input-fail {
-    position: absolute;
-    float: right;
-    left: 13.1em;
-    top: 6.35em;
-    background: #F6E5E6;
-}
-
-.pct-input-fail {
-    position: absolute;
-    float: right;
-    left: 13.65em;
-    top: 11.2em;
-    background: #F6E5E6;
-}
-
-.existing-accts-old .pct-input-fail {
-    position: relative;
-    top: 0.15em;
-    right: 3.35em;
-    left: auto;
-    float: none;
-}
-
-.desktop-listing .pct-input-fail {
-    position: absolute;
-    float: right;
-    left: 13.1em;
-    top: 9em;
-    background: #F6E5E6;
 }
 
 .icon-error.ellucian-font,
@@ -969,6 +927,31 @@ a.delete-address-link {
 span.priority-dot,
 span.id-label {
     margin-right: 5px;
+}
+
+.pi-phone-num-lbl {
+    padding-bottom: 0px;
+}
+
+.pi-phone-ctry {
+    margin-top: 0.875em;
+    width: 20%;
+    display: inline-block;
+}
+
+.pi-phone-area {
+    margin-top: 0.875em;
+    width: 20%;
+}
+
+.pi-phone-num {
+    margin-top: 0.875em;
+    width: 35%
+}
+
+.pi-phone-extn {
+    margin-top: 0.875em;
+    width: 23%;
 }
 
 /* Icons */
@@ -1311,6 +1294,34 @@ table tr td {
     .xs-errors-visible {
         display: none;
     }
+
+    .pi-phone-ctry {
+        width: 40%;
+        display: block;
+    }
+
+    .pi-phone-area {
+        width: 40%;
+    }
+
+    .pi-phone-num {
+        width: 55%
+    }
+
+    .pi-phone-extn {
+        width: 30%;
+    }
+}
+
+@media(min-width:569px) {
+    .input-fail.pi-phone-num-err {
+        top: 4.3em;
+        right: 20.5em;
+    }
+
+    .cntry-code-visible.input-fail.pi-phone-num-err {
+        right: 12em;
+    }
 }
 
 @media screen and (max-width:767px) {
@@ -1372,6 +1383,10 @@ table tr td {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
+    }
+
+    .edit-phone.pi-modal .modal-dialog {
+        width: 650px;
     }
 
     .pi-modal .modal-content {

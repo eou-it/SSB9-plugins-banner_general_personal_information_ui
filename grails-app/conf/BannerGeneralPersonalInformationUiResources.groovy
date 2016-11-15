@@ -67,6 +67,7 @@ modules = {
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piEditAddress-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEditEmail-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmergencyContact/piEditEmergencyContact-controller.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piEditPhone-controller.js']
 
         // Filters
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/filters/i18n-filter.js']
