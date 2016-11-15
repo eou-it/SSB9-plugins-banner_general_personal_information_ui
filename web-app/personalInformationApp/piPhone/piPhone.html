@@ -5,9 +5,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <div class="clearfix">
         <div class="phone-type-view">
             {{phone.telephoneType.description}}
-        </div>
-        <div ng-if="phone.unlistIndicator==='Y'" class="phone-type-view unlisted">
-            ({{'personInfo.label.unlisted'|i18n}})
+            {{(phone.primaryIndicator==='Y' ? ' ('+('personInfo.label.primary'|i18n)+')' : null)}}
+            {{(phone.unlistIndicator==='Y' ? ' ('+('personInfo.label.unlisted'|i18n)+')' : null)}}
         </div>
     </div>
     <div class="phone-number-view">
