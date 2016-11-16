@@ -81,6 +81,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                 // Set up for "update phone"
                 $scope.isCreateNew = false;
                 $scope.phone = angular.copy(editPhoneProperties.currentPhone);
+                $scope.phone.unlistIndicator = $scope.phone.unlistIndicator === 'Y';
             } else {
                 // Create "new phone" object
                 $scope.phone = {
