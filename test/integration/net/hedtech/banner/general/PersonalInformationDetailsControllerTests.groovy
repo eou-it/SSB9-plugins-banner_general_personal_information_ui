@@ -543,6 +543,38 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testUpdateTelephoneNumber() {
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def phone = controller.personTelephoneService.fetchActiveTelephonesByPidm(pidm)[0]
+
+        //update phoneNumber
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id: ${phone.id},
+            version: ${phone.version},
+            telephoneType: {
+              code: "PR",
+              description: "Permanent",
+            },
+            internationalAccess: null,
+            countryPhone: null,
+            phoneArea: "215",
+            phoneNumber: "8675309",
+            phoneExtension: null,
+            unlistIndicator: null,
+        }""".toString()
+
+        controller.updateTelephoneNumber()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals false, data.failure
+    }
+
+    @Test
     void testGetRelationshipList() {
         loginSSB 'HOSH00018', '111111'
 
