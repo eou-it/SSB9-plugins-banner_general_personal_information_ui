@@ -356,7 +356,7 @@ class PersonalInformationDetailsController {
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchByCode(updatedPhoneNumber.telephoneType.code)
 
-            personTelephoneService.update(updatedPhoneNumber)
+            personTelephoneService.inactivateAndCreate(updatedPhoneNumber)
             render([failure: false] as JSON)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
