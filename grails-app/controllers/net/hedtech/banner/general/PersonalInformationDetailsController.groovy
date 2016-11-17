@@ -416,7 +416,7 @@ class PersonalInformationDetailsController {
             personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
             newContact = personalInformationCompositeService.getPersonValidationObjects(newContact)
 
-            personEmergencyContactService.createOrUpdate(newContact)
+            personEmergencyContactService.createOrUpdateEmergencyContactWithPriorityShuffle(newContact)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
@@ -432,8 +432,9 @@ class PersonalInformationDetailsController {
 
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
+            updatedContact = personalInformationCompositeService.getPersonValidationObjects(updatedContact)
 
-            personEmergencyContactService.update(updatedContact)
+            personEmergencyContactService.createOrUpdateEmergencyContactWithPriorityShuffle(updatedContact)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
