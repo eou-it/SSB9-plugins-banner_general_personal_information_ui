@@ -74,6 +74,10 @@ personalInformationAppDirectives.directive('selectBox',['$filter', function($fil
                     }
                 }
             }).select2("val", "_"); // Dummy value needed to make initSelection do its thing
+
+            if(data.disableOnUpdate && !scope.isCreateNew) {
+                elem.select2("enable", false);
+            }
         }
     };
 }]);

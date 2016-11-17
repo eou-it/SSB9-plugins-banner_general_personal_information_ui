@@ -1,0 +1,66 @@
+<!--******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-flex-cont">
+    <div class="modal-unflex">
+        <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addPhone':'personInfo.title.editPhone')|i18n}}</h2>
+        <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+        <div class="row pad-dialog-lr">
+            <div class="clearfix hidden-xs"></div>
+            <div class="select2-container disp-inherit sm-fix col-sm-12">
+                <label class="input-field-label">{{'personInfo.label.phoneType'|i18n}}</label><br>
+                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.phoneType"|i18n}}", "action": "PersonalInformationDetails/getTelephoneTypeList", "model": "phone.telephoneType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
+                <p class="input-field-label mobile-errors" ng-class="[(!!phoneTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{phoneTypeErrMsg|i18n}}</p>
+            </div>
+            <div class="col-sm-12">
+                <label ng-class="(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-label field-error' : 'input-field-label')"
+                       class="input-field-label pi-phone-num-lbl" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
+                <div ng-if="maskingRules.displayCountryCode" class="pi-phone-ctry">
+                    <input ng-model="phone.countryPhone" class="text-input-field semi-bold form-spacing" type="text"
+                       placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="4">
+                </div>
+                <input ng-model="phone.phoneArea" class="text-input-field semi-bold form-spacing pi-phone-area" type="text"
+                       placeholder="{{'personInfo.placeholder.areaCode'|i18n}}" maxlength="6">
+                <input ng-model="phone.phoneNumber" ng-blur="phoneNumFocused=false; removePhoneFieldErrors()" ng-focus="phoneNumFocused=true"
+                       ng-class="[(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-error' : null)]"
+                       class="text-input-field semi-bold form-spacing pi-phone-num" type="text"
+                       placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
+                <span ng-if="!!phoneNumberErrMsg && !phoneNumFocused" ng-class="[(maskingRules.displayCountryCode ? 'cntry-code-visible' : null)]"
+                      class="icon input-fail pi-phone-num-err">
+                    <span class="icon-error ellucian-font"></span>
+                </span>
+                <input ng-model="phone.phoneExtension" class="text-input-field semi-bold form-spacing pi-phone-extn" type="text"
+                       placeholder="{{'personInfo.placeholder.extension'|i18n}}" maxlength="10">
+                <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg && !maskingRules.displayInternationalAccess ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{phoneNumberErrMsg|i18n}}</p>
+            </div>
+            <div ng-if="maskingRules.displayInternationalAccess" class="col-sm-12">
+                <label ng-class="(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-label field-error' : 'input-field-label')"
+                       class="input-field-label" for="intlAccess">{{('personInfo.label.intlAccess')|i18n}}</label><br>
+                <input ng-model="phone.internationalAccess" ng-blur="intlAccessFocused=false; removePhoneFieldErrors()" ng-focus="intlAccessFocused=true"
+                       ng-class="[(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing" type="text"
+                       placeholder="{{'personInfo.placeholder.intlAccess'|i18n}}" maxlength="16" id="intlAccess">
+                <span ng-if="!!phoneNumberErrMsg && !intlAccessFocused" class="icon input-fail">
+                    <span class="icon-error ellucian-font"></span>
+                </span>
+                <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{'personInfo.phone.error.intlPhoneNumber'|i18n}}</p>
+            </div>
+            <div class="col-sm-12">
+                <input ng-model="phone.unlistIndicator" class="main-nav-check" id="phone-unlisted" type="checkbox" aria-describedby="phone-unlisted-txt"/>
+                <p class="lbl" id="phone-unlisted-txt"><label for="phone-unlisted">{{'personInfo.label.unlistedIndicator'|i18n}}</label></p>
+            </div>
+            <p class="input-field-label mobile-errors response-err" ng-class="[(!!phoneErrMsg ? 'field-error error-font-size' : 'no-display')]"
+               role="alert" aria-live="assertive">{{phoneErrMsg}}</p>
+        </div>
+    </div>
+    <div class="dialog-footer-margin pi-modal-footer">
+        <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+            {{'personInfo.label.button.cancel'|i18n}}
+        </button>
+        <button ng-click="savePhone()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn save-btn">
+            {{(isCreateNew?'personInfo.label.button.add':'personInfo.label.button.update')|i18n}}
+        </button>
+    </div>
+</div>
