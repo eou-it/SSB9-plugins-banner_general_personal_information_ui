@@ -338,7 +338,7 @@ class PersonalInformationDetailsController {
         fixJSONObjectForCast(newPhoneNumber)
 
         try {
-            newPhoneNumber.telephoneType = telephoneTypeService.fetchByCode(newPhoneNumber.telephoneType.code)
+            newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
 
             personTelephoneService.create(newPhoneNumber)
             render([failure: false] as JSON)
@@ -354,7 +354,7 @@ class PersonalInformationDetailsController {
         fixJSONObjectForCast(updatedPhoneNumber)
 
         try {
-            updatedPhoneNumber.telephoneType = telephoneTypeService.fetchByCode(updatedPhoneNumber.telephoneType.code)
+            updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
 
             personTelephoneService.inactivateAndCreate(updatedPhoneNumber)
             render([failure: false] as JSON)
