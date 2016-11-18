@@ -363,6 +363,22 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def deleteTelephoneNumber() {
+        def deletedPhoneNumber = request?.JSON ?: params
+        deletedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        fixJSONObjectForCast(deletedPhoneNumber)
+
+        try {
+            deletedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(deletedPhoneNumber.telephoneType.code)
+
+            personTelephoneService.inactivatePhone(deletedPhoneNumber)
+            render([failure: false] as JSON)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getRelationshipList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
 
