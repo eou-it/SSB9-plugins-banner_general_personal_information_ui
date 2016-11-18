@@ -419,6 +419,40 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.displayNotification('personInfo.confirm.emergencyContact.delete.text', 'warning', false, prompts);
         };
 
+        $scope.confirmPhoneDelete = function (phone) {
+            var deletePhone = function () {
+                $scope.cancelNotification();
+
+                piCrudService.delete('TelephoneNumber', phone).$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        // Refresh phone info
+                        var overviewPhone = getPhoneNumberForOverview($scope.phones);
+                        $scope.phones.splice($scope.phones.indexOf(phone), 1);
+                        if(phone.id === overviewPhone.id) {
+                            overviewPhone = getPhoneNumberForOverview($scope.phones);
+                            $scope.phoneForOverview = overviewPhone ? overviewPhone.displayPhoneNumber : '';
+                        }
+                    }
+                });
+            };
+
+            var prompts = [
+                {
+                    label: $filter('i18n')('personInfo.button.prompt.cancel'),
+                    action: $scope.cancelNotification
+                },
+                {
+                    label: $filter('i18n')('personInfo.button.delete'),
+                    action: deletePhone
+                }
+            ];
+
+            notificationCenterService.displayNotification('personInfo.confirm.phone.delete.text', 'warning', false, prompts);
+        };
+
+
 
         // INITIALIZE
         // ----------
