@@ -574,7 +574,7 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromWebTailor('UPDATE_PREFERRED_EMAIL', 'Y') == 'Y'
+            model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
             render model as JSON
         }
         catch (ApplicationException e) {
