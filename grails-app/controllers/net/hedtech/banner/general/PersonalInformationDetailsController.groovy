@@ -235,9 +235,10 @@ class PersonalInformationDetailsController {
 
     def getEmailTypeList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render emailTypeService.fetchEmailTypeList(map.max, map.offset, map.searchString) as JSON
+            render personalInformationCompositeService.fetchUpdateableEmailTypeList(pidm, getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -251,6 +252,7 @@ class PersonalInformationDetailsController {
 
         try {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(newEmail.emailType, newEmail.pidm, getRoles())
 
             def emails = []
             emails[0] = newEmail
@@ -271,6 +273,7 @@ class PersonalInformationDetailsController {
 
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(updatedEmail.emailType, updatedEmail.pidm, getRoles())
 
             def emails = []
             emails[0] = personEmailService.castEmailForUpdate(updatedEmail)
@@ -289,6 +292,7 @@ class PersonalInformationDetailsController {
 
         try {
             deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(deletedEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(deletedEmail.emailType, deletedEmail.pidm, getRoles())
 
             personEmailService.inactivateEmail(deletedEmail)
 
