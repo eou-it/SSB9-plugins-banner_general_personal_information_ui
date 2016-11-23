@@ -323,9 +323,10 @@ class PersonalInformationDetailsController {
 
     def getTelephoneTypeList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render telephoneTypeService.fetchUpdateableTelephoneTypeList(map.max, map.offset, map.searchString) as JSON
+            render personalInformationCompositeService.fetchUpdateableTelephoneTypeList(pidm, getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -339,6 +340,7 @@ class PersonalInformationDetailsController {
 
         try {
             newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(newPhoneNumber.telephoneType, newPhoneNumber.pidm, getRoles())
 
             personTelephoneService.create(newPhoneNumber)
             render([failure: false] as JSON)
@@ -355,6 +357,7 @@ class PersonalInformationDetailsController {
 
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(updatedPhoneNumber.telephoneType, updatedPhoneNumber.pidm, getRoles())
 
             personTelephoneService.inactivateAndCreate(updatedPhoneNumber)
             render([failure: false] as JSON)
@@ -371,6 +374,7 @@ class PersonalInformationDetailsController {
 
         try {
             deletedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(deletedPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(deletedPhoneNumber.telephoneType, deletedPhoneNumber.pidm, getRoles())
 
             personTelephoneService.inactivatePhone(deletedPhoneNumber)
             render([failure: false] as JSON)
