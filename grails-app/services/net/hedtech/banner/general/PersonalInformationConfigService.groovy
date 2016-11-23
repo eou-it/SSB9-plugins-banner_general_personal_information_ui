@@ -4,34 +4,57 @@
 package net.hedtech.banner.general
 
 import groovy.sql.Sql
+import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.system.SdaCrosswalkConversion
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED )
 class PersonalInformationConfigService {
 
+    static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
+
     def sessionFactory
 
-    def getParamFromWebTailor (webParam, defaultVal) {
-        Sql sql = new Sql(sessionFactory.getCurrentSession().connection())
-        def val
+    def getParamFromSession(param, defaultVal) {
+        def personConfigInSession = PersonUtility.getPersonConfigFromSession()
+        def personalInfoConfig
 
-        try {
-            sql.call("{? = call twbkwbis.f_fetchwtparam (?)}", [Sql.VARCHAR, webParam]) { result -> val = result }
-        } catch (e) {
-            log.error("Error retrieving value for Web Tailor parameter \"" + webParam + "\". " +
-                    "Will attempt to use default value of \"" + defaultVal + "\".", e)
-        } finally {
-            sql?.close()
-
-            if (!val) {
-                log.error("No value found for Web Tailor parameter key \"" + webParam + "\". " +
-                        "This should be configured in Web Tailor. Using default value of \"" + defaultVal + "\".")
-                val = defaultVal
+        if (personConfigInSession) {
+            if (!personConfigInSession.containsKey(PERSONAL_INFO_CONFIG_CACHE_NAME)) {
+                createPersonalInfoConfig(personConfigInSession)
             }
-
-            return val;
+        } else {
+            personConfigInSession = [:]
+            createPersonalInfoConfig(personConfigInSession)
+            PersonUtility.setPersonConfigInSession(personConfigInSession)
         }
+
+        personalInfoConfig = personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME]
+
+        def paramVal = personalInfoConfig[param]
+
+        if (!paramVal) {
+            log.error("No value found for external code \"" + param + "\". " +
+                    "This should be configured in GTVSDAX. Using default value of \"" + defaultVal + "\".")
+
+            paramVal = defaultVal
+        }
+
+        return paramVal
+    }
+
+    def createPersonalInfoConfig(personConfigInSession) {
+        def configFromGtvsdax = SdaCrosswalkConversion.fetchAllByInternalGroup('PERSONAL_INFORMATION')
+        def config = [:]
+
+        configFromGtvsdax.each {it ->
+            config[it.internal] = it.external
+        }
+
+        personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME] = config
+
+        personConfigInSession
     }
 
 }

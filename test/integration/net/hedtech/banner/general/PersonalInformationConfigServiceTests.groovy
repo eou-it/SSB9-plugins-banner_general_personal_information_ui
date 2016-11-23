@@ -3,6 +3,7 @@
  *******************************************************************************/
 package net.hedtech.banner.general
 
+import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
@@ -26,15 +27,35 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
 
     @Test
-    void testGetParamFromWebTailor() {
-        def val = personalInformationConfigService.getParamFromWebTailor('SYSTEM_NAME', 'dummy_default_value')
+    void testGetParamFromSessionWithNoPreexistingConfig() {
+        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
 
-        assertEquals "Banner", val
+        assertEquals "Y", val
     }
 
     @Test
-    void testGetParamFromWebTailorBadKeyAndDefaultValue() {
-        def val = personalInformationConfigService.getParamFromWebTailor('I_DONT_EXIST', 'dummy_default_value')
+    void testGetParamFromSessionWithPreexistingConfig() {
+        def personConfigInSession = [(personalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['UPD_P_EMAL': 'Y']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
+
+        assertEquals "Y", val
+    }
+
+    @Test
+    void testGetParamFromSessionWithPreexistingSessionConfigButNoPersonalInfoConfig() {
+        def personConfigInSession = [dummy: [dummy: 'Y']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
+
+        assertEquals "Y", val
+    }
+
+    @Test
+    void testGetParamFromSessionBadKeyAndDefaultValue() {
+        def val = personalInformationConfigService.getParamFromSession('I_DONT_EXIST', 'dummy_default_value')
 
         assertEquals "dummy_default_value", val
     }
