@@ -235,9 +235,10 @@ class PersonalInformationDetailsController {
 
     def getEmailTypeList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render emailTypeService.fetchEmailTypeList(map.max, map.offset, map.searchString) as JSON
+            render personalInformationCompositeService.fetchUpdateableEmailTypeList(pidm, getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -251,6 +252,7 @@ class PersonalInformationDetailsController {
 
         try {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(newEmail.emailType, newEmail.pidm, getRoles())
 
             def emails = []
             emails[0] = newEmail
@@ -271,6 +273,7 @@ class PersonalInformationDetailsController {
 
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(updatedEmail.emailType, updatedEmail.pidm, getRoles())
 
             def emails = []
             emails[0] = personEmailService.castEmailForUpdate(updatedEmail)
@@ -289,6 +292,7 @@ class PersonalInformationDetailsController {
 
         try {
             deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(deletedEmail.emailType.code)
+            personalInformationCompositeService.validateEmailTypeRule(deletedEmail.emailType, deletedEmail.pidm, getRoles())
 
             personEmailService.inactivateEmail(deletedEmail)
 
@@ -323,9 +327,10 @@ class PersonalInformationDetailsController {
 
     def getTelephoneTypeList() {
         def map = PersonalInformationControllerUtility.getFetchListParams(params)
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render telephoneTypeService.fetchUpdateableTelephoneTypeList(map.max, map.offset, map.searchString) as JSON
+            render personalInformationCompositeService.fetchUpdateableTelephoneTypeList(pidm, getRoles(), map.max, map.offset, map.searchString) as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
@@ -339,6 +344,7 @@ class PersonalInformationDetailsController {
 
         try {
             newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(newPhoneNumber.telephoneType, newPhoneNumber.pidm, getRoles())
 
             personTelephoneService.create(newPhoneNumber)
             render([failure: false] as JSON)
@@ -355,6 +361,7 @@ class PersonalInformationDetailsController {
 
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(updatedPhoneNumber.telephoneType, updatedPhoneNumber.pidm, getRoles())
 
             personTelephoneService.inactivateAndCreate(updatedPhoneNumber)
             render([failure: false] as JSON)
@@ -371,6 +378,7 @@ class PersonalInformationDetailsController {
 
         try {
             deletedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(deletedPhoneNumber.telephoneType.code)
+            personalInformationCompositeService.validateTelephoneTypeRule(deletedPhoneNumber.telephoneType, deletedPhoneNumber.pidm, getRoles())
 
             personTelephoneService.inactivatePhone(deletedPhoneNumber)
             render([failure: false] as JSON)
