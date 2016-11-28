@@ -145,7 +145,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
-                    $scope.isPreferredEmailUpdateable = response.isPreferredEmailUpdateable;
+                    $scope.piConfig = response;
                 }
             });
 

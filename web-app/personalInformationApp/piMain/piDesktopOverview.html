@@ -2,7 +2,7 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 
-<ng-include src="'personalInformationApp/piMain/piOverviewPicture.html'|webAppResourcePath"></ng-include>
+<ng-include ng-if="piConfig.isProfilePicDisplayable" src="'personalInformationApp/piMain/piOverviewPicture.html'|webAppResourcePath"></ng-include>
 <div class="overview-name">
     {{preferredName}}
 </div>

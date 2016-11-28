@@ -583,6 +583,7 @@ class PersonalInformationDetailsController {
 
         try {
             model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
+            model.isProfilePicDisplayable = personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
             render model as JSON
         }
         catch (ApplicationException e) {
