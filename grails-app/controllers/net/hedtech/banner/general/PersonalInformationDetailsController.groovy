@@ -154,6 +154,13 @@ class PersonalInformationDetailsController {
     }
 
     def addAddress() {
+        try {
+            checkAddressUpdateIsPermittedPerConfiguration()
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -178,6 +185,13 @@ class PersonalInformationDetailsController {
     }
 
     def updateAddress() {
+        try {
+            checkAddressUpdateIsPermittedPerConfiguration()
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedAddress = request?.JSON ?: params
         updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -200,6 +214,13 @@ class PersonalInformationDetailsController {
     }
 
     def deleteAddress() {
+        try {
+            checkAddressUpdateIsPermittedPerConfiguration()
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def map = request?.JSON ?: params
 
         // We don't actually delete; we inactivate
@@ -575,6 +596,7 @@ class PersonalInformationDetailsController {
 
         try {
             model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
+            model.addressSectionMode = personalInformationConfigService.getParamFromSession('ADDR_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
             render model as JSON
         }
         catch (ApplicationException e) {
@@ -615,5 +637,18 @@ class PersonalInformationDetailsController {
 
         Date today = new Date()
         return date.after(today)
+    }
+
+    private def checkAddressUpdateIsPermittedPerConfiguration() {
+        // Make sure this operation is permitted based on configuration.
+        // (If the configuration is not set to allow updates, that functionality should not be available
+        // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
+        def ADDR_MODE = 'ADDR_MODE'
+        def addressSectionMode = personalInformationConfigService.getParamFromSession(ADDR_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
+
+        if (addressSectionMode != personalInformationConfigService.SECTION_UPDATEABLE) {
+            log.error("Unauthorized attempt to update address was prevented. Configured value for parameter ${ADDR_MODE}: ${addressSectionMode}")
+            throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
+        }
     }
 }

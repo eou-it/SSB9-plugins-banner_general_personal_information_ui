@@ -32,7 +32,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <textarea ng-model="email.commentData" class="text-input-field semi-bold form-spacing" rows="2" maxlength="60"
                           placeholder="{{'personInfo.placeholder.enterComment'|i18n}}" id="email-cmnt"></textarea>
             </div>
-            <div ng-if="isPreferredEmailUpdateable" class="col-xs-12 float-l">
+            <div ng-if="piConfig.isPreferredEmailUpdateable" class="col-xs-12 float-l">
                 <input ng-model="email.preferredIndicator" class="main-nav-check" id="email-preferred" type="checkbox" aria-describedby="email-preferred-txt"/>
                 <p class="lbl" id="email-preferred-txt"><label for="email-preferred">{{'personInfo.label.markPreferred'|i18n}}</label></p>
             </div>

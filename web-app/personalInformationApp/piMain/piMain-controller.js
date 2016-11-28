@@ -145,7 +145,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
-                    $scope.isPreferredEmailUpdateable = response.isPreferredEmailUpdateable;
+                    $scope.piConfig = response;
+                    $scope.sectionsToDisplay = $scope.getSectionsToDisplayForMobile(); // Depends on piConfig
                 }
             });
 
@@ -212,6 +213,12 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         };
 
 
+        // CONTROLLER CONSTANTS
+        // --------------------
+        $scope.SECTION_HIDDEN = '0';
+        $scope.SECTION_UPDATEABLE = '2';
+
+
         // CONTROLLER VARIABLES
         // --------------------
         $scope.maskingRules = null;
@@ -224,6 +231,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.emergencyContacts = [];
         $scope.preferredName;
         $scope.bannerId;
+        $scope.piConfig;
+        $scope.sectionsToDisplay = [];
 
 
         // CONTROLLER FUNCTIONS
@@ -451,6 +460,65 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             notificationCenterService.displayNotification('personInfo.confirm.phone.delete.text', 'warning', false, prompts);
         };
+
+        $scope.getSectionsToDisplayForMobile = function() {
+            var emailSectionMode =            $scope.piConfig.emailSectionMode,
+                telephoneSectionMode =        $scope.piConfig.telephoneSectionMode,
+                addressSectionMode =          $scope.piConfig.addressSectionMode,
+                emergencyContactSectionMode = $scope.piConfig.emergencyContactSectionMode,
+                sections = [];
+
+            if (emailSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push(                {
+                        heading: 'personInfo.title.email',
+                        startingTab: 'email',
+                        template: 'personalInformationApp/piEmail/piViewEmail.html',
+                        clickFunction: $scope.openEditEmailModal,
+                        footerButtonLabel: 'personInfo.title.addEmail',
+                        isUpdateable: !emailSectionMode || emailSectionMode === $scope.SECTION_UPDATEABLE
+                    }
+                );
+            }
+
+            if (telephoneSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push(                {
+                        heading: 'personInfo.title.phoneNumber',
+                        startingTab: 'phoneNumber',
+                        template: 'personalInformationApp/piPhone/piPhoneList.html',
+                        clickFunction: $scope.openEditPhoneModal,
+                        footerButtonLabel: 'personInfo.label.addPhone',
+                        isUpdateable: !telephoneSectionMode || telephoneSectionMode === $scope.SECTION_UPDATEABLE
+                    }
+                );
+            }
+
+            if (addressSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push(                {
+                        heading: 'personInfo.title.addresses',
+                        startingTab: 'address',
+                        template: 'personalInformationApp/piAddress/piAddressList.html',
+                        clickFunction: $scope.openEditAddressModal,
+                        footerButtonLabel: 'personInfo.label.addAddress',
+                        isUpdateable: !addressSectionMode || addressSectionMode === $scope.SECTION_UPDATEABLE
+                    }
+                );
+            }
+
+            if (emergencyContactSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push(                {
+                        heading: 'personInfo.title.emergencyContact',
+                        startingTab: 'emergencyContact',
+                        template: 'personalInformationApp/piEmergencyContact/piEmergencyContactList.html',
+                        clickFunction: $scope.openEditEmergencyContactModal,
+                        footerButtonLabel: 'personInfo.label.addEmergencyContact',
+                        isUpdateable: !emergencyContactSectionMode || emergencyContactSectionMode === $scope.SECTION_UPDATEABLE
+                    }
+                );
+            }
+
+            return sections;
+        };
+
 
 
 
