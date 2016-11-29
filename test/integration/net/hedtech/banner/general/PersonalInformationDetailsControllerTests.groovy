@@ -171,7 +171,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'HOSH00018', '111111'
 
         // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         controller.request.contentType = "text/json"
@@ -267,7 +267,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000005', '111111'
 
         // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
@@ -427,7 +427,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000005', '111111'
 
         // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
@@ -497,7 +497,35 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testAddEmailWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to email
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            emailAddress:'myemail@somesite.org',
+            preferredIndicator: false,
+            commentData:null,
+            emailType:{
+                code:'PERS',
+                description:'Personal Email'
+            }
+        }""".toString()
+
+        controller.addEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertTrue data.failure
     }
 
     @Test
@@ -578,7 +606,42 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateEmailWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to email
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
+
+        // update comment field
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id:${email.id},
+            version:${email.version},
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:false,
+            commentData:'welcome, world',
+            displayWebIndicator:true,
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.updateEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertTrue data.failure
     }
 
     @Test
@@ -607,6 +670,38 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
         assertFalse data.failure
+    }
+
+    @Test
+    void testDeleteEmailWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to email
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id:${email.id},
+            version:${email.version},
+            emailAddress:'ansbates@telstra.com',
+            preferredIndicator:false,
+            commentData:null,
+            displayWebIndicator:true,
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.deleteEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -664,7 +759,37 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testAddTelephoneNumberWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            telephoneType: {
+              code: "PAGE",
+              description: "Pager",
+            },
+            internationalAccess: null,
+            countryPhone: null,
+            phoneArea: "215",
+            phoneNumber: "2083094",
+            phoneExtension: null,
+            unlistIndicator: null,
+        }""".toString()
+
+        controller.addTelephoneNumber()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -696,7 +821,43 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateTelephoneNumberWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def phone = controller.personTelephoneService.fetchActiveTelephonesByPidm(pidm)[0]
+
+        //update phoneNumber
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id: ${phone.id},
+            version: ${phone.version},
+            telephoneType: {
+              code: "PR",
+              description: "Permanent",
+            },
+            internationalAccess: null,
+            countryPhone: null,
+            phoneArea: "215",
+            phoneNumber: "8675309",
+            phoneExtension: null,
+            unlistIndicator: null,
+        }""".toString()
+
+        controller.updateTelephoneNumber()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -727,7 +888,42 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testDeleteTelephoneNumberWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def phone = controller.personTelephoneService.fetchActiveTelephonesByPidm(pidm)[0]
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id: ${phone.id},
+            version: ${phone.version},
+            telephoneType: {
+              code: "PR",
+              description: "Permanent",
+            },
+            internationalAccess: null,
+            countryPhone: null,
+            phoneArea: "215",
+            phoneNumber: "2083094",
+            phoneExtension: null,
+            unlistIndicator: null,
+        }""".toString()
+
+        controller.deleteTelephoneNumber()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test

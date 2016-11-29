@@ -155,7 +155,7 @@ class PersonalInformationDetailsController {
 
     def addAddress() {
         try {
-            checkAddressUpdateIsPermittedPerConfiguration()
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -186,7 +186,7 @@ class PersonalInformationDetailsController {
 
     def updateAddress() {
         try {
-            checkAddressUpdateIsPermittedPerConfiguration()
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -215,7 +215,7 @@ class PersonalInformationDetailsController {
 
     def deleteAddress() {
         try {
-            checkAddressUpdateIsPermittedPerConfiguration()
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -266,6 +266,13 @@ class PersonalInformationDetailsController {
     }
 
     def addEmail() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def newEmail = request?.JSON ?: params
         newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -287,6 +294,13 @@ class PersonalInformationDetailsController {
     }
 
     def updateEmail() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedEmail = request?.JSON ?: params
         updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -308,6 +322,13 @@ class PersonalInformationDetailsController {
     }
 
     def deleteEmail() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def deletedEmail = request?.JSON ?: params
         deletedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -358,6 +379,13 @@ class PersonalInformationDetailsController {
     }
 
     def addTelephoneNumber() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def newPhoneNumber = request?.JSON ?: params
         newPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -375,6 +403,13 @@ class PersonalInformationDetailsController {
     }
 
     def updateTelephoneNumber() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedPhoneNumber = request?.JSON ?: params
         updatedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -392,6 +427,13 @@ class PersonalInformationDetailsController {
     }
 
     def deleteTelephoneNumber() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def deletedPhoneNumber = request?.JSON ?: params
         deletedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -604,8 +646,11 @@ class PersonalInformationDetailsController {
 
         try {
             model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
-            model.isProfilePicDisplayable = personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
-            model.addressSectionMode = personalInformationConfigService.getParamFromSession('ADDR_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
+            model.isProfilePicDisplayable =    personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
+            model.emailSectionMode =           personalInformationConfigService.getParamFromSession('EMAIL_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode =       personalInformationConfigService.getParamFromSession('PHONE_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode =         personalInformationConfigService.getParamFromSession('ADDR_MODE',  personalInformationConfigService.SECTION_UPDATEABLE)
+
             render model as JSON
         }
         catch (ApplicationException e) {
@@ -648,15 +693,14 @@ class PersonalInformationDetailsController {
         return date.after(today)
     }
 
-    private def checkAddressUpdateIsPermittedPerConfiguration() {
+    private def checkUpdateIsPermittedPerConfiguration(param) {
         // Make sure this operation is permitted based on configuration.
         // (If the configuration is not set to allow updates, that functionality should not be available
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
-        def ADDR_MODE = 'ADDR_MODE'
-        def addressSectionMode = personalInformationConfigService.getParamFromSession(ADDR_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
+        def mode = personalInformationConfigService.getParamFromSession(param, personalInformationConfigService.SECTION_UPDATEABLE)
 
-        if (addressSectionMode != personalInformationConfigService.SECTION_UPDATEABLE) {
-            log.error("Unauthorized attempt to update address was prevented. Configured value for parameter ${ADDR_MODE}: ${addressSectionMode}")
+        if (mode != personalInformationConfigService.SECTION_UPDATEABLE) {
+            log.error("Unauthorized attempt to update Personal Information data was prevented. Configured value for parameter ${param}: ${mode}")
             throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
         }
     }
