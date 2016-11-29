@@ -12,7 +12,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <div class="phone-number-view">
         {{phone.displayPhoneNumber}}
     </div>
-    <div class="clearfix">
+    <div ng-if="piConfig.telephoneSectionMode === SECTION_UPDATEABLE" class="clearfix">
         <a class="pi-edit-item-link pi-icon-link" ng-click="openEditPhoneModal(phone)" enter-key="openEditPhoneModal(phone)"
            title="{{'personInfo.label.editPhone'|i18n}}"><span class="icon-edit-CO"></span></a>
         <button class="delete-btn" ng-click="confirmPhoneDelete(phone)" title="{{'personInfo.label.deletePhone'|i18n}}"></button>

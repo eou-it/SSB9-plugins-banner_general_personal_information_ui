@@ -14,6 +14,10 @@ class PersonalInformationConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
 
+    static final String EMAIL_MODE = 'EMAIL_MODE'
+    static final String PHONE_MODE = 'PHONE_MODE'
+    static final String ADDR_MODE = 'ADDR_MODE'
+
     static final Integer SECTION_HIDDEN = '0'
     static final Integer SECTION_READONLY = '1'
     static final Integer SECTION_UPDATEABLE = '2'
