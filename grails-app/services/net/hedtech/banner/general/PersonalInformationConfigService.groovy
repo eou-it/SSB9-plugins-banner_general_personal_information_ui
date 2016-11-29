@@ -14,9 +14,28 @@ class PersonalInformationConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
 
+    static final Integer SECTION_HIDDEN = '0'
+    static final Integer SECTION_READONLY = '1'
+    static final Integer SECTION_UPDATEABLE = '2'
+
     def sessionFactory
 
     def getParamFromSession(param, defaultVal) {
+        def personalInfoConfig = getPersonalInfoConfigFromSession()
+
+        def paramVal = personalInfoConfig[param]
+
+        if (!paramVal) {
+            log.error("No value found for external code \"" + param + "\". " +
+                    "This should be configured in GTVSDAX. Using default value of \"" + defaultVal + "\".")
+
+            paramVal = defaultVal
+        }
+
+        paramVal
+    }
+
+    def getPersonalInfoConfigFromSession() {
         def personConfigInSession = PersonUtility.getPersonConfigFromSession()
         def personalInfoConfig
 
@@ -30,18 +49,7 @@ class PersonalInformationConfigService {
             PersonUtility.setPersonConfigInSession(personConfigInSession)
         }
 
-        personalInfoConfig = personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME]
-
-        def paramVal = personalInfoConfig[param]
-
-        if (!paramVal) {
-            log.error("No value found for external code \"" + param + "\". " +
-                    "This should be configured in GTVSDAX. Using default value of \"" + defaultVal + "\".")
-
-            paramVal = defaultVal
-        }
-
-        return paramVal
+        personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME]
     }
 
     def createPersonalInfoConfig(personConfigInSession) {

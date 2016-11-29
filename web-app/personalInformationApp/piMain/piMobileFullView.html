@@ -2,39 +2,11 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <xe-tab-nav>
-    <xe-tab-panel heading="{{'personInfo.title.email'|i18n}}" set-starting-tab="email">
-        <ng-include src="'personalInformationApp/piEmail/piViewEmail.html'|webAppResourcePath"></ng-include>
-        <pi-mobile-footer-button click-function="openEditEmailModal">{{'personInfo.title.addEmail'|i18n}}</pi-mobile-footer-button>
-        <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
-    </xe-tab-panel>
-    <xe-tab-panel heading="{{'personInfo.title.phoneNumber'|i18n}}" set-starting-tab="phoneNumber">
-        <ng-include src="'personalInformationApp/piPhone/piPhoneList.html'|webAppResourcePath"></ng-include>
-        <pi-mobile-footer-button click-function="openEditPhoneModal">{{'personInfo.label.addPhone'|i18n}}</pi-mobile-footer-button>
-        <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
-    </xe-tab-panel>
-    <xe-tab-panel heading="{{'personInfo.title.addresses'|i18n}}" set-starting-tab="address">
-        <ng-include src="'personalInformationApp/piAddress/piAddressList.html'|webAppResourcePath"></ng-include>
-        <pi-mobile-footer-button click-function="openEditAddressModal">{{'personInfo.label.addAddress'|i18n}}</pi-mobile-footer-button>
-        <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
-    </xe-tab-panel>
-    <xe-tab-panel heading="{{'personInfo.title.emergencyContact'|i18n}}" set-starting-tab="emergencyContact">
-        <ng-include src="'personalInformationApp/piEmergencyContact/piEmergencyContactList.html'|webAppResourcePath"></ng-include>
-        <pi-mobile-footer-button click-function="openEditEmergencyContactModal">{{'personInfo.label.addEmergencyContact'|i18n}}</pi-mobile-footer-button>
-        <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
-    </xe-tab-panel>
-    <xe-tab-panel heading="Additional Details" set-starting-tab="addtionalDetail">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </div>
-    </xe-tab-panel>
-    <xe-tab-panel heading="heading5">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </div>
-    </xe-tab-panel>
-    <xe-tab-panel heading="heading6">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-        </div>
-    </xe-tab-panel>
+    <div ng-repeat="sectionDetails in sectionsToDisplay">
+        <xe-tab-panel heading="{{sectionDetails.heading|i18n}}" set-starting-tab="{{sectionDetails.startingTab}}">
+            <ng-include src="sectionDetails.template|webAppResourcePath"></ng-include>
+            <pi-mobile-footer-button click-function="sectionDetails.clickFunction" ng-if="sectionDetails.isUpdateable">{{sectionDetails.footerButtonLabel|i18n}}</pi-mobile-footer-button>
+            <span style="visibility: hidden">x<!-- TODO: errors occur when there is no non-interpreted elements in the xe-tab-panel --></span>
+        </xe-tab-panel>
+    </div>
 </xe-tab-nav>

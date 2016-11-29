@@ -59,4 +59,11 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
         assertEquals "dummy_default_value", val
     }
+
+    @Test
+    void testGetPersonalInfoConfigFromSession() {
+        def config = personalInformationConfigService.getPersonalInfoConfigFromSession()
+
+        assertEquals "Y", config.UPD_P_EMAL
+    }
 }

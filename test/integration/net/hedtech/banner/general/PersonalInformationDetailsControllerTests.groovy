@@ -1,6 +1,7 @@
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import net.hedtech.banner.general.person.PersonUtility
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.junit.After
 import org.junit.Before
@@ -162,7 +163,52 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testAddAddressWithConfigSetToNotUpdateable() {
+        loginSSB 'HOSH00018', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            addressType:{
+                code:"MA",
+                description:"Mailing"
+            },
+            city:"SomeCity",
+            county:{
+                code:"261",
+                description:"Kittitas County"
+            },
+            fromDate:"2016-07-07T01:11:00.000Z",
+            houseNumber:null,
+            nation:{
+                code:"157",
+                description:"United States of America"
+            },
+            state:{
+                code:"CM",
+                description:"Northern Mariana Islands"
+            },
+            streetLine1:"123 Fake Street",
+            streetLine2:"Apt 333",
+            streetLine3:null,
+            streetLine4:null,
+            toDate:null,
+            zip:"101112"
+        }""".toString()
+
+        controller.addAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -213,7 +259,62 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         println data
         println addresses
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateAddressWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressByRoleViewService.getActiveAddressesByRoles(controller.getRoles(), pidm)
+        int index
+        if(addresses[0].addressType == 'PR') {
+            index = 0
+        }
+        else{
+            index = 1
+        }
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:${addresses[index].id},
+            version:${addresses[index].version},
+            addressType:{
+                code:"PR",
+                description:"Permanent"
+            },
+            city:"Malvern",
+            county:null,
+            fromDate:"2034-01-01T05:00:00.000Z",
+            houseNumber:"HN 1",
+            nation:null,
+            state:{
+                code:"PA",
+                description:"Pennsylvania"
+            },
+            streetLine1:"435 UPDATED Avenue",
+            streetLine2:null,
+            streetLine3:null,
+            streetLine4:null,
+            toDate:null,
+            zip:"19355"
+        }""".toString()
+
+        controller.updateAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        println addresses
+        assertTrue data.failure
     }
 
     @Test
@@ -255,7 +356,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data.message
-        assertEquals true, data.failure
+        assertTrue data.failure
     }
 
     @Test
@@ -298,7 +399,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data.message
-        assertEquals true, data.failure
+        assertTrue data.failure
     }
 
     @Test
@@ -319,6 +420,30 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
         assertFalse data.failure
+    }
+
+    @Test
+    void testDeleteAddressWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['ADDR_MODE': '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            id:${addresses[0].id},
+            version:${addresses[0].version}
+        }""".toString()
+
+        controller.deleteAddress()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
