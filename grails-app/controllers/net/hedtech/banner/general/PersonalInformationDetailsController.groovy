@@ -526,6 +526,13 @@ class PersonalInformationDetailsController {
     }
 
     def addEmergencyContact() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def newContact = request?.JSON ?: params
         newContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -544,6 +551,13 @@ class PersonalInformationDetailsController {
     }
 
     def updateEmergencyContact() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedContact = request?.JSON ?: params
         updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -562,6 +576,13 @@ class PersonalInformationDetailsController {
     }
 
     def deleteEmergencyContact() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def deletedContact = request?.JSON ?: params
         deletedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -645,11 +666,12 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            model.isPreferredEmailUpdateable = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
-            model.isProfilePicDisplayable =    personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
-            model.emailSectionMode =           personalInformationConfigService.getParamFromSession('EMAIL_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode =       personalInformationConfigService.getParamFromSession('PHONE_MODE', personalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode =         personalInformationConfigService.getParamFromSession('ADDR_MODE',  personalInformationConfigService.SECTION_UPDATEABLE)
+            model.isPreferredEmailUpdateable =  personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
+            model.isProfilePicDisplayable =     personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
+            model.emailSectionMode =            personalInformationConfigService.getParamFromSession(personalInformationConfigService.EMAIL_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode =        personalInformationConfigService.getParamFromSession(personalInformationConfigService.PHONE_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode =          personalInformationConfigService.getParamFromSession(personalInformationConfigService.ADDR_MODE,  personalInformationConfigService.SECTION_UPDATEABLE)
+            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(personalInformationConfigService.EMER_MODE,  personalInformationConfigService.SECTION_UPDATEABLE)
 
             render model as JSON
         }

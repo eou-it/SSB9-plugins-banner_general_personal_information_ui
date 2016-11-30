@@ -51,13 +51,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             </div>
             <ng-include src="'personalInformationApp/piAddress/piAddressList.html'|webAppResourcePath"></ng-include>
         </div>
-        <div class="details-section">
+        <div ng-if="piConfig.emergencyContactSectionMode !== SECTION_HIDDEN" class="details-section">
             <div class="clearfix">
                 <div class="details-section-heading">
                     <h2>{{'personInfo.title.emergencyContact'|i18n}}</h2>
                     <div class="pi-title-divider"><span></span></div>
                 </div>
-                <div class="details-section-edit">
+                <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
                     <a ng-click="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>

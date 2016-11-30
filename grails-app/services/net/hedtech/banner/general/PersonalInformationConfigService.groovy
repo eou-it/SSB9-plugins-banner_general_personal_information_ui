@@ -17,10 +17,11 @@ class PersonalInformationConfigService {
     static final String EMAIL_MODE = 'EMAIL_MODE'
     static final String PHONE_MODE = 'PHONE_MODE'
     static final String ADDR_MODE = 'ADDR_MODE'
+    static final String EMER_MODE = 'EMER_MODE'
 
-    static final Integer SECTION_HIDDEN = '0'
-    static final Integer SECTION_READONLY = '1'
-    static final Integer SECTION_UPDATEABLE = '2'
+    static final String SECTION_HIDDEN = '0'
+    static final String SECTION_READONLY = '1'
+    static final String SECTION_UPDATEABLE = '2'
 
     def sessionFactory
 

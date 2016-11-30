@@ -36,7 +36,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div ng-if="contact.displayAddress.addressLine8">
             {{contact.displayAddress.addressLine8}}
         </div>
-        <div class="clearfix">
+        <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="clearfix">
             <a class="pi-edit-item-link pi-icon-link" ng-click="openEditEmergencyContactModal(contact)" enter-key="openEditEmergencyContactModal(contact)"
                title="{{'personInfo.label.editEmergencyContact'|i18n}}"><span class="icon-edit-CO"></span></a>
             <button ng-click="confirmEmergencyContactDelete(contact)" class="delete-btn"
