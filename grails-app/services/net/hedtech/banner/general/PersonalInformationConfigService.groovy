@@ -17,6 +17,7 @@ class PersonalInformationConfigService {
     static final String EMAIL_MODE = 'EMAIL_MODE'
     static final String PHONE_MODE = 'PHONE_MODE'
     static final String ADDR_MODE = 'ADDR_MODE'
+    static final String EMER_MODE = 'EMER_MODE'
 
     static final Integer SECTION_HIDDEN = '0'
     static final Integer SECTION_READONLY = '1'

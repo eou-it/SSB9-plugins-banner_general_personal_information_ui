@@ -988,7 +988,46 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         println data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testAddEmergencyContactWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            priority: 2,
+            lastName: 'Smith',
+            firstName: 'Veronica',
+            middleInitial: 'V',
+            streetLine1: '123 Any Street',
+            city: 'Anytown',
+            zip: '77777',
+            phoneArea: '610',
+            phoneNumber: '555',
+            phoneExtension: '1234',
+            state:{
+                code:'KY',
+                description:'Kentucky'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.addEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertTrue data.failure
     }
 
     @Test
@@ -1027,7 +1066,50 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateEmergencyContactWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """{
+            id:${contacts[0].id},
+            version:${contacts[0].version},
+            priority: 1,
+            lastName: 'Andersen',
+            firstName: 'Ronald',
+            streetLine1: '3391 Nuzum Court - UPDATED',
+            city: 'Malvern',
+            zip: '19355',
+            phoneArea: '215',
+            phoneNumber: '6336094',
+            state:{
+                code:'PA',
+                description:'Pennsylvania'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.updateEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -1065,7 +1147,49 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testDeleteEmergencyContactWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to phone number
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+            id:${contacts[0].id},
+            version:${contacts[0].version},
+            priority: 1,
+            lastName: 'Andersen',
+            firstName: 'Ronald',
+            streetLine1: '3391 Nuzum Court',
+            city: 'Malvern',
+            zip: '19355',
+            phoneArea: '215',
+            phoneNumber: '6336094',
+            state:{
+                code:'PA',
+                description:'Pennsylvania'
+            },
+            relationship:{
+                code:'P',
+                description:'Spouse'
+            }
+        }""".toString()
+
+        controller.deleteEmergencyContact()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
