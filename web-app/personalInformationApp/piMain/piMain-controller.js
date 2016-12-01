@@ -409,7 +409,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
                         // Refresh contact info
-                        $scope.emergencyContacts.splice($scope.emergencyContacts.indexOf(contact), 1);
+                        $scope.emergencyContacts = response.emergencyContacts;
                     }
                 });
             };
