@@ -1147,7 +1147,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertFalse data.failure
+        assertNotNull data.emergencyContacts
+        assertEquals 0, data.emergencyContacts.size()
+
     }
 
     @Test
