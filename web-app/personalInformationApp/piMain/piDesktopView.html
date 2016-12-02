@@ -16,7 +16,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.emailSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditEmailModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditEmailModal()" enter-key="openEditEmailModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>
                 </div>
@@ -30,7 +30,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.telephoneSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditPhoneModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditPhoneModal()" enter-key="openEditPhoneModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>
                 </div>
@@ -44,7 +44,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.addressSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditAddressModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditAddressModal()" enter-key="openEditAddressModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>
                 </div>
@@ -58,7 +58,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditEmergencyContactModal()" enter-key="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>
                 </div>
