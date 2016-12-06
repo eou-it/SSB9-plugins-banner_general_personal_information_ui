@@ -18,7 +18,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     </div>
                 </div>
                 <div ng-if="piConfig.emailSectionMode === SECTION_UPDATEABLE && (piConfig.isPreferredEmailUpdateable || !email.preferredIndicator)" class="button-block">
-                    <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                    <a ng-click="openEditEmailModal(email)" enter-key="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
                        title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                         <span class="icon-edit-CO"></span>
                     </a>

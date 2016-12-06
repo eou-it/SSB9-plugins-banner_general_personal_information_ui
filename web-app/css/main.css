@@ -775,6 +775,10 @@ button.closebtn {
     margin-top: 15px;
 }
 
+.overview-line.email {
+    word-break: break-all;
+}
+
 .overview-name {
     font-size: 1.5em;
 }
@@ -866,6 +870,7 @@ button.closebtn {
 .email-detail {
     float: left;
     width: 100%;
+    word-break: break-all;
 }
 
 .address-wrapper,
