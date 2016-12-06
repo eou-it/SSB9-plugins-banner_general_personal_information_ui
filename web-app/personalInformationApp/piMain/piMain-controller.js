@@ -516,6 +516,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 );
             }
 
+            sections.push(                {
+                    heading: 'personInfo.title.additionalDetails',
+                    startingTab: 'additionalDetails',
+                    template: 'personalInformationApp/piAdditionalDetails/piViewAdditionalDetails.html',
+                    // TODO: update with proper config code when available
+                    isUpdateable: true
+                }
+            );
+
             return sections;
         };
 

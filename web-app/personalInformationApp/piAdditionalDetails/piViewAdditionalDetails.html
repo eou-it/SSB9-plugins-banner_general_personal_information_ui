@@ -1,0 +1,61 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="email-list">
+    <div class="row">
+        <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-4">
+            <div class="email-detail" id="">
+                <div class="semi-bold">
+                    {{'personInfo.label.ethnicityAndRace'|i18n}}
+                </div>
+                <div>
+                    <div>Non Hispanic</div>
+                    <div>Asian, Vietnamese</div>
+                </div>
+            </div>
+            <!-- TODO: update with proper config code when available -->
+            <div ng-if="true || piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
+                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                   title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
+                    <span class="icon-edit-CO"></span>
+                </a>
+            </div>
+        </div>
+        <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-4">
+            <div class="email-detail" id="">
+                <div class="semi-bold">
+                    {{'personInfo.label.veteranClassification'|i18n}}
+                </div>
+                <div>
+                    <div>Protected Veteran</div>
+                    <div>Disabled Veteran</div>
+                    <div>July 4, 2015</div>
+                </div>
+            </div>
+            <!-- TODO: update with proper config code when available -->
+            <div ng-if="true || piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
+                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                   title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
+                    <span class="icon-edit-CO"></span>
+                </a>
+            </div>
+        </div>
+        <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-4">
+            <div class="email-detail" id="">
+                <div class="semi-bold">
+                    {{'personInfo.label.disabilityClassification'|i18n}}
+                </div>
+                <div>
+                    Yes
+                </div>
+            </div>
+            <!-- TODO: update with proper config code when available -->
+            <div ng-if="true || piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
+                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                   title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
+                    <span class="icon-edit-CO"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

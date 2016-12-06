@@ -65,5 +65,14 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             </div>
             <ng-include src="'personalInformationApp/piEmergencyContact/piEmergencyContactList.html'|webAppResourcePath"></ng-include>
         </div>
+        <div ng-if="piConfig.additionalDetailsSectionMode !== SECTION_HIDDEN" class="details-section">
+            <div class="clearfix">
+                <div class="details-section-heading">
+                    <h2>{{'personInfo.title.additionalDetails'|i18n}}</h2>
+                    <div class="pi-title-divider"><span></span></div>
+                </div>
+            </div>
+            <ng-include src="'personalInformationApp/piAdditionalDetails/piViewAdditionalDetails.html'|webAppResourcePath"></ng-include>
+        </div>
     </div>
 </div>
