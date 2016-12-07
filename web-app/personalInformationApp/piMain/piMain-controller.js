@@ -197,6 +197,24 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('PersonalDetails').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
+                                            (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
+                }
+            });
+
+            piCrudService.get('Races').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.races = response.races;
+                    $scope.racesDisplay = $scope.races.map(function(currentItem){return currentItem.description;}).join(', ');
+                }
+            });
+
             piCrudService.get('BannerId').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -231,6 +249,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.emergencyContacts = [];
         $scope.preferredName;
         $scope.bannerId;
+        $scope.races = null;
+        $scope.racesDisplay = '';
         $scope.piConfig;
         $scope.sectionsToDisplay = [];
 

@@ -623,10 +623,12 @@ class PersonalInformationDetailsController {
     }
 
     def getRaces() {
+        def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render personRaceCompositeService.getRacesByPidm(pidm) as JSON
+            model.races = personRaceCompositeService.getRacesByPidm(pidm)
+            render model as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON

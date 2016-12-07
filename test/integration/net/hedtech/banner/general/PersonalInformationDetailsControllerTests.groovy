@@ -1247,6 +1247,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals 'F', data.gender
         assertEquals JSONObject.NULL, data.preferenceFirstName
         assertEquals 'M', data.maritalStatus.code
+        assertEquals '1', data.ethnic
     }
 
     @Test
@@ -1286,8 +1287,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 'ASI', data[0].race
-        assertEquals 'Asian', data[0].description
+        assertEquals 'ASI', data.races[0].race
+        assertEquals 'Asian', data.races[0].description
     }
 
     @Test

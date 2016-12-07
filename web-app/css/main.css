@@ -863,7 +863,8 @@ button.closebtn {
 }
 
 .address-detail,
-.emergency-contact-detail {
+.emergency-contact-detail,
+.addtl-details-detail {
     float: left;
 }
 
