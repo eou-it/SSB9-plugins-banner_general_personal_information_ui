@@ -28,6 +28,7 @@ class PersonalInformationDetailsController {
     def personalInformationConfigService
     def maritalStatusService
     def personBasicPersonBaseService
+    def personRaceCompositeService
 
 
     private def findPerson() {
@@ -615,6 +616,17 @@ class PersonalInformationDetailsController {
             personBasicPersonBaseService.update(updatedPerson)
 
             render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getRaces() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        try {
+            render personRaceCompositeService.getRacesByPidm(pidm) as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON

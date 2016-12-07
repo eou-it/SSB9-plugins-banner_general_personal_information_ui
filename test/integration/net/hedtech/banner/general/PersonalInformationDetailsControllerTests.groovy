@@ -1278,6 +1278,19 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetRaces() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.getRaces()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 'ASI', data[0].race
+        assertEquals 'Asian', data[0].description
+    }
+
+    @Test
     void testGetPiConfig() {
         loginSSB 'HOSH00018', '111111'
 
