@@ -488,6 +488,18 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 emergencyContactSectionMode = $scope.piConfig.emergencyContactSectionMode,
                 sections = [];
 
+            sections.push(                {
+                    heading: 'personInfo.title.personalDetails',
+                    startingTab: 'personalDetails',
+                    template: 'personalInformationApp/piPersonalDetails/piViewPersonalDetails.html',
+                    clickFunction: $scope.openEdit,
+                    footerButtonLabel: 'personInfo.label.edit',
+                    // TODO: update with proper config code when available
+                    isUpdateable: true,
+                    isEdit: true
+                }
+            );
+
             if (emailSectionMode !== $scope.SECTION_HIDDEN) {
                 sections.push(                {
                         heading: 'personInfo.title.email',

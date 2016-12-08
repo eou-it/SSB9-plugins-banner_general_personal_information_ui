@@ -19,7 +19,8 @@ personalInformationAppDirectives.directive('piMobileFooterButton', ['$filter', f
     return {
         restrict: 'E',
         scope: {
-            clickFunction: '='
+            clickFunction: '=',
+            isEdit: '='
         },
         transclude: true,
         templateUrl: $filter('webAppResourcePath')('personalInformationApp/piMain/piMobileFooterButton.html')
