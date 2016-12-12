@@ -232,7 +232,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.preferredName;
         $scope.bannerId;
         $scope.piConfig;
-        $scope.sectionsToDisplay = [];
+        $scope.sectionsToDisplay;
 
 
         // CONTROLLER FUNCTIONS
