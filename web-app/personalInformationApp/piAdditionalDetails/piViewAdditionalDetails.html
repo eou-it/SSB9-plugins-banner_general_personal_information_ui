@@ -11,9 +11,10 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <div>
                     <div>{{ethnicity|i18n}}</div>
                     <div>{{racesDisplay}}</div>
+                    <notification-box ng-if="races.length === 0 && ethnicity === null" notification-text="{{'personInfo.label.noRaceOrEthnicity'|i18n}}"></notification-box>
                 </div>
             </div>
-            <!-- TODO: update with proper config code when available -->
+            <!-- TODO: update with proper config code when available  ng-click="openEditEmailModal(email)" -->
             <div ng-if="true || piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
                 <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">

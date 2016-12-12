@@ -249,7 +249,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.emergencyContacts = [];
         $scope.preferredName;
         $scope.bannerId;
-        $scope.races = null;
+        $scope.races = [];
         $scope.racesDisplay = '';
         $scope.piConfig;
         $scope.sectionsToDisplay = [];

@@ -219,6 +219,11 @@ input:disabled {
     margin-right: auto;
 }
 
+.addtl-details-detail .dd-notification-box {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 .dd-notification-row {
     display: table-row;
 }
