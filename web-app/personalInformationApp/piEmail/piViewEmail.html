@@ -1,11 +1,11 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="email-list">
+<div class="view-list">
     <notification-box ng-if="emails.length === 0" notification-text="{{'personInfo.label.noEmails'|i18n}}"></notification-box>
     <div class="row">
         <div ng-repeat="email in emails">
-            <div class="address-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
+            <div class="item-wrapper sm-fix col-sm-12 col-md-6 col-lg-6">
                 <div class="email-detail" id="{{$index}}-email">
                     <div class="semi-bold">
                         {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferred'|i18n)+')' : '')}}

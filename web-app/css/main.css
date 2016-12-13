@@ -358,7 +358,7 @@ a.pi-icon-link:focus {
 
 .xe-tab-container .addr-list,
 .xe-tab-container .phone-list,
-.xe-tab-container .email-list,
+.xe-tab-container .view-list,
 .xe-tab-container .emergency-contact-list {
     padding: 15px 15px 0;
 }
@@ -881,7 +881,7 @@ button.closebtn {
     word-break: break-all;
 }
 
-.address-wrapper,
+.item-wrapper,
 .emergency-contact-wrapper {
     float: left;
     padding-bottom: 15px;
