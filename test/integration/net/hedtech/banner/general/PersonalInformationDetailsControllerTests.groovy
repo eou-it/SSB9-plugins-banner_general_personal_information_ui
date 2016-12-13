@@ -1247,6 +1247,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals 'F', data.gender
         assertEquals JSONObject.NULL, data.preferenceFirstName
         assertEquals 'M', data.maritalStatus.code
+        assertEquals '1', data.ethnic
     }
 
     @Test
@@ -1275,6 +1276,19 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals false, data.failure
+    }
+
+    @Test
+    void testGetRaces() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.getRaces()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 'ASI', data.races[0].race
+        assertEquals 'Asian', data.races[0].description
     }
 
     @Test

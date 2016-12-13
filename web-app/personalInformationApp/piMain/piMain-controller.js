@@ -197,6 +197,24 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('PersonalDetails').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
+                                            (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
+                }
+            });
+
+            piCrudService.get('Races').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.races = response.races;
+                    $scope.racesDisplay = $scope.races.map(function(currentItem){return currentItem.description;}).join(', ');
+                }
+            });
+
             piCrudService.get('BannerId').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -231,6 +249,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.emergencyContacts = [];
         $scope.preferredName;
         $scope.bannerId;
+        $scope.races = [];
+        $scope.racesDisplay = '';
         $scope.piConfig;
         $scope.sectionsToDisplay;
 
@@ -467,6 +487,18 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 addressSectionMode =          $scope.piConfig.addressSectionMode,
                 emergencyContactSectionMode = $scope.piConfig.emergencyContactSectionMode,
                 sections = [];
+
+            sections.push(                {
+                    heading: 'personInfo.title.personalDetails',
+                    startingTab: 'personalDetails',
+                    template: 'personalInformationApp/piPersonalDetails/piViewPersonalDetails.html',
+                    clickFunction: $scope.openEdit,
+                    footerButtonLabel: 'personInfo.label.edit',
+                    // TODO: update with proper config code when available
+                    isUpdateable: true,
+                    isEdit: true
+                }
+            );
 
             if (emailSectionMode !== $scope.SECTION_HIDDEN) {
                 sections.push(                {

@@ -1,7 +1,7 @@
 <div class="pi-footer-container">
     <div class="pi-footer add-item-footer">
         <a ng-click="clickFunction()" enter-key="clickFunction()" class="add-item-link pi-style" tabindex="0">
-            <span class="icon-add-CO"></span><span><ng-transclude></ng-transclude></span>
+            <span ng-class="(isEdit ? 'icon-edit-CO' : 'icon-add-CO')"></span><span><ng-transclude></ng-transclude></span>
         </a>
     </div>
 </div>
