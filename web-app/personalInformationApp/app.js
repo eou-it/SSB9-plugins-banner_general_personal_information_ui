@@ -77,7 +77,7 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 },
                 params: {
                     onLoadNotifications: [],
-                    startingTab: 'email'
+                    startingTab: 'personalDetails'
                 }
             });
     }
