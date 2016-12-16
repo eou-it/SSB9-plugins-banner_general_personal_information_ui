@@ -1258,7 +1258,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals '03/31/1961', data.birthDate
-        assertEquals 'F', data.gender
+        assertEquals 'F', data.sex
         assertEquals JSONObject.NULL, data.preferenceFirstName
         assertEquals 'M', data.maritalStatus.code
         assertEquals '1', data.ethnic
