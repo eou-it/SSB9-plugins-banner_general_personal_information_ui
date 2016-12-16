@@ -57,6 +57,7 @@ modules = {
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/breadcrumb-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/notificationcenter-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/services/piCrud-service.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPersonalDetails/piPersonalDetails-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piPhone-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEmail-service.js']
@@ -64,6 +65,7 @@ modules = {
 
         // Controllers
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piMain/piMain-controller.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPersonalDetails/piEditPersonalDetails-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piEditAddress-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEditEmail-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmergencyContact/piEditEmergencyContact-controller.js']
