@@ -212,6 +212,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     $scope.personalDetails = response;
                     $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
                                             (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
+                    $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
+                                            (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
                 }
             });
 
