@@ -9,7 +9,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.firstName'|i18n}}
                 </div>
                 <div>
-                    <div>{{'Bean'}}</div>
+                    <div>{{(!userName.firstName ? '-' : userName.firstName)}}</div>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.middleName'|i18n}}
                 </div>
                 <div>
-                    <div>{{'Paul'}}</div>
+                    <div>{{(!userName.middleName ? '-' : userName.middleName)}}</div>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.lastName'|i18n}}
                 </div>
                 <div>
-                    <div>{{'Johnson'}}</div>
+                    <div>{{(!userName.lastName ? '-' : userName.lastName)}}</div>
                 </div>
             </div>
         </div>
