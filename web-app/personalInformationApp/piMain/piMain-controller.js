@@ -197,6 +197,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            piCrudService.get('UserName').$promise.then(function(response) {
+                if(response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $scope.userName = response;
+                }
+            });
+
             piCrudService.get('PersonalDetails').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -249,6 +257,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.phoneForOverview;
         $scope.emergencyContacts = [];
         $scope.preferredName;
+        $scope.userName = null;
         $scope.bannerId;
         $scope.races = [];
         $scope.racesDisplay = '';
