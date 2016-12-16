@@ -1,20 +1,7 @@
-personalInformationApp.service('piAddressService', ['notificationCenterService', '$filter',
-    function (notificationCenterService, $filter) {
+personalInformationApp.service('piAddressService', ['notificationCenterService', '$filter', 'personalInformationService',
+    function (notificationCenterService, $filter, personalInformationService) {
 
-        var messages = [],
-            calendar = $.calendars.instance();
-
-        this.stringToDate = function (date) {
-            var dateFmt = $filter('i18n')('default.date.format').toLowerCase(),
-                result;
-            try {
-                result = calendar.parseDate(dateFmt, date).toJSDate();
-                return result;
-            }
-            catch (exception) {
-                return null;
-            }
-        };
+        var messages = [];
 
         this.getErrorAddressType = function (address) {
             var msg = 'personInfo.address.error.addressType';
@@ -45,7 +32,7 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
         this.getErrorDateFormat = function (date) {
             if(date){
                 var msg = 'personInfo.address.error.dateFormat';
-                if (!this.stringToDate(date)) {
+                if (!personalInformationService.stringToDate(date)) {
                     messages.push({msg: msg, type: 'error'});
 
                     return msg;
@@ -60,8 +47,8 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
             if (address.fromDate) {
                 var msg = 'personInfo.address.error.dateOrder',
                     MAX_DATE = 8640000000000000,
-                    fromDate = this.stringToDate(address.fromDate),
-                    toDate = address.toDate ? this.stringToDate(address.toDate) : new Date(MAX_DATE),
+                    fromDate = personalInformationService.stringToDate(address.fromDate),
+                    toDate = address.toDate ? personalInformationService.stringToDate(address.toDate) : new Date(MAX_DATE),
                     flatList = _.flatten(addressList);
 
                if(fromDate > toDate){
@@ -78,8 +65,8 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
                     function(listItem) {
                         var isRangeError = false;
                         if(address.id !== listItem.id) {
-                            var listFromDate = this.stringToDate(listItem.fromDate),
-                                listToDate = listItem.toDate ? this.stringToDate(listItem.toDate) : new Date(MAX_DATE);
+                            var listFromDate = personalInformationService.stringToDate(listItem.fromDate),
+                                listToDate = listItem.toDate ? personalInformationService.stringToDate(listItem.toDate) : new Date(MAX_DATE);
 
                             isRangeError = (fromDate < listToDate) ? toDate >= listFromDate : fromDate === listToDate;
                         }

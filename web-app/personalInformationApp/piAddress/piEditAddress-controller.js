@@ -76,8 +76,8 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
                 var addressToSave = angular.copy($scope.address);
-                addressToSave.fromDate = piAddressService.stringToDate($scope.address.fromDate);
-                addressToSave.toDate = piAddressService.stringToDate($scope.address.toDate);
+                addressToSave.fromDate = personalInformationService.stringToDate($scope.address.fromDate);
+                addressToSave.toDate = personalInformationService.stringToDate($scope.address.toDate);
 
                 var handleResponse = function (response) {
                     if (response.failure) {

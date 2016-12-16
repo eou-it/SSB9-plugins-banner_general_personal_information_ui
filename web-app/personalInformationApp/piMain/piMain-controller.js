@@ -2,9 +2,9 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService',
+    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService', 'personalInformationService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
-              piCrudService) {
+              piCrudService, personalInformationService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -201,6 +201,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
+                    $scope.personalDetails = response;
                     $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
                                             (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
                 }
@@ -251,6 +252,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.bannerId;
         $scope.races = [];
         $scope.racesDisplay = '';
+        $scope.personalDetails = null;
         $scope.piConfig;
         $scope.sectionsToDisplay;
 
@@ -276,6 +278,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.cancelNotification = function () {
             notificationCenterService.clearNotifications();
         };
+
+        $scope.stringToDate = personalInformationService.stringToDate;
 
         $scope.openEditAddressModal = function(currentAddress) {
 
