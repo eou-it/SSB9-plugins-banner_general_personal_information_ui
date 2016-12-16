@@ -26,7 +26,7 @@ class PersonalInformationDetailsController {
     def personEmergencyContactService
     def preferredNameService
     def personalInformationConfigService
-    def personalInformationService
+    def personIdentificationNameCurrentService
     def maritalStatusService
     def personBasicPersonBaseService
     def personRaceCompositeService
@@ -577,7 +577,7 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            def userName = personalInformationService.getCurrentName(pidm)
+            def userName = personIdentificationNameCurrentService.getCurrentNameByPidm(pidm)
 
             model.firstName = userName.firstName
             model.middleName = userName.middleName
