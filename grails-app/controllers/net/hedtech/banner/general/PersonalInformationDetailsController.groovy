@@ -26,6 +26,7 @@ class PersonalInformationDetailsController {
     def personEmergencyContactService
     def preferredNameService
     def personalInformationConfigService
+    def personalInformationService
     def maritalStatusService
     def personBasicPersonBaseService
     def personRaceCompositeService
@@ -564,6 +565,24 @@ class PersonalInformationDetailsController {
         model.preferredName = preferredNameService.getPreferredName([pidm: pidm, usage: usage])
 
         try {
+            render model as JSON
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getUserName() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def model = [:]
+
+        try {
+            def userName = personalInformationService.getCurrentName(pidm)
+
+            model.firstName = userName.firstName
+            model.middleName = userName.middleName
+            model.lastName = userName.lastName
+
             render model as JSON
         }
         catch (ApplicationException e) {

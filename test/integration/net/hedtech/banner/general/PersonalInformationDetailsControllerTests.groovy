@@ -1207,6 +1207,20 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetUserName() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.getUserName()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals '2Curr2ProgSameStudyPath', data.firstName
+        assertEquals JSONObject.NULL, data.middleName
+        assertEquals 'EBRUSER1', data.lastName
+    }
+
+    @Test
     void testGetBannerId() {
         loginSSB 'HOSH00018', '111111'
 
