@@ -298,15 +298,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 windowClass: 'edit-emer-contact pi-modal',
                 keyboard: true,
                 controller: "piEditPersonalDetailsController",
-                scope: $scope,
-                //resolve: {
-                //    editEmergencyContactProperties: function () {
-                //        return {
-                //            currentEmergencyContact: currentEmergencyContact,
-                //            highestPriority: currentEmergencyContact ? numContacts : numContacts + 1
-                //        };
-                //    }
-                //}
+                scope: $scope
             });
         };
 
@@ -525,7 +517,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     heading: 'personInfo.title.personalDetails',
                     startingTab: 'personalDetails',
                     template: 'personalInformationApp/piPersonalDetails/piViewPersonalDetails.html',
-                    clickFunction: $scope.openEdit,
+                    clickFunction: $scope.openEditPersonalDetailsModal,
                     footerButtonLabel: 'personInfo.label.edit',
                     // TODO: update with proper config code when available
                     isUpdateable: true,
