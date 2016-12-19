@@ -292,6 +292,24 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         $scope.stringToDate = personalInformationService.stringToDate;
 
+        $scope.openEditPersonalDetailsModal = function() {
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piPersonalDetails/piEditPersonalDetails.html'),
+                windowClass: 'edit-emer-contact pi-modal',
+                keyboard: true,
+                controller: "piEditPersonalDetailsController",
+                scope: $scope,
+                //resolve: {
+                //    editEmergencyContactProperties: function () {
+                //        return {
+                //            currentEmergencyContact: currentEmergencyContact,
+                //            highestPriority: currentEmergencyContact ? numContacts : numContacts + 1
+                //        };
+                //    }
+                //}
+            });
+        };
+
         $scope.openEditAddressModal = function(currentAddress) {
 
             $modal.open({
