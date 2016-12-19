@@ -37,13 +37,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <div class="clearfix hidden-xs"></div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label" for="preferredFirstName">{{'personInfo.label.preferredFirstName'|i18n}}</label><br>
-        <input ng-model="preferredFirstName" ng-blur="preferredFirstNameFocused=false; removeContactFieldErrors()" ng-focus="preferredFirstNameFocused=true"
-               ng-class="[(!!preferredFirstNameErrMsg && !preferredFirstNameFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterPreferredFirstName'|i18n}}"
-               maxlength="60" id="preferredFirstName">
-        <span ng-if="!!preferredFirstNameErrMsg && !preferredFirstNameFocused" class="icon input-fail">
-            <span class="icon-error ellucian-font"></span>
-        </span>
+        <input ng-model="personalDetails.preferenceFirstName" class="text-input-field semi-bold form-spacing" type="text"
+               placeholder="{{'personInfo.placeholder.enterPreferredFirstName'|i18n}}" maxlength="60" id="preferredFirstName">
         <p class="input-field-label mobile-errors" ng-class="[(!!preferredFirstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{preferredFirstNameErrMsg|i18n}}</p>
     </div>
@@ -55,6 +50,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
         <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderIdentificationList", "model": "FIX_ME_genderIdentification", "showNA": true}' type="hidden" />
     </div>
+    <p class="input-field-label mobile-errors response-err" ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]"
+       role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
 </div>
 <div class="dialog-footer-margin pi-modal-footer">
     <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
