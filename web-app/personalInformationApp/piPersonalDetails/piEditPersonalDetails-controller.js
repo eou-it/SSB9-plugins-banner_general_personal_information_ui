@@ -37,7 +37,8 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             personalDetailsForUpdate = {
                 id: $scope.personalDetails.id,
                 version: $scope.personalDetails.version,
-                preferenceFirstName: $scope.personalDetails.preferenceFirstName
+                preferenceFirstName: $scope.personalDetails.preferenceFirstName,
+                maritalStatus: $scope.personalDetails.maritalStatus
             };
 
             piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);
