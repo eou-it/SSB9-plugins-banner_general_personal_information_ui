@@ -5,6 +5,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
 
         // CONTROLLER VARIABLES
         // --------------------
+        $scope.personalDetailsErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -15,7 +16,31 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
         };
 
         $scope.savePersonalDetails = function() {
-            // TODO: stub
+            var handleResponse = function (response) {
+                if (response.failure) {
+                    $scope.personalDetailsErrMsg = response.message;
+                    notificationCenterService.displayNotification(response.message, "error");
+                } else {
+                    var notifications = [];
+                    notifications.push({message: 'personInfo.save.success.message',
+                        messageType: $scope.notificationSuccessType,
+                        flashType: $scope.flashNotification}
+                    );
+
+                    $state.go(personalInformationService.getFullProfileState(),
+                        {onLoadNotifications: notifications, startingTab: 'personalDetails'},
+                        {reload: true, inherit: false, notify: true}
+                    );
+                }
+            },
+
+            personalDetailsForUpdate = {
+                id: $scope.personalDetails.id,
+                version: $scope.personalDetails.version,
+                preferenceFirstName: $scope.personalDetails.preferenceFirstName
+            };
+
+            piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);
         };
 
         this.init = function() {
