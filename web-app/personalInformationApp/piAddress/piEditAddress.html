@@ -5,7 +5,7 @@
         <div class="row pad-dialog-lr">
             <div class="clearfix hidden-xs"></div>
             <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 disp-inherit">
-                <label class="input-field-label">{{'personInfo.label.address.type.insert'|i18n}}</label><br>
+                <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
                 <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!addressTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{addressTypeErrMsg|i18n}}</p>
