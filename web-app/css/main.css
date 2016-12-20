@@ -1357,6 +1357,7 @@ table tr td {
 
 @media screen and (min-width:768px) {
     .col-md-6 {
+        float: left;
         width: 50%;
     }
 
@@ -1417,8 +1418,7 @@ table tr td {
 
     .clear-row .col-md-4:nth-child(3n+1),
     .edit-addr .maybe-clear:nth-child(3n+1),
-    .edit-emer-contact .maybe-clear:nth-child(3n),
-    .addr-list > div:nth-child(3n+1) {
+    .edit-emer-contact .maybe-clear:nth-child(3n) {
         clear: left;
     }
 }
@@ -1454,14 +1454,18 @@ table tr td {
         margin: 0px;
     }
 
-    .view-list div.item-wrapper:nth-child(3n+1) {
+    .view-list div.item-wrapper:nth-child(3n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(3n+1),
+    .addr-list > div:nth-child(3n+1) {
         clear: left;
     }
 }
 
 /*Tablet device*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    .view-list div.item-wrapper:nth-child(2n+1) {
+    .view-list div.item-wrapper:nth-child(2n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(2n+1),
+    .addr-list > div:nth-child(2n+1) {
         clear: left;
     }
 }
