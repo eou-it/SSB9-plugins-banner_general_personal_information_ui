@@ -1,63 +1,72 @@
 <!--******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<h2 class="pi-modal-title">{{'personInfo.title.editPersonalDetails'|i18n}}</h2>
-<button class="close closebtn" ng-click="cancelModal()" title="close"></button>
-<div class="row pad-dialog-lr">
-    <div class="clearfix hidden-xs"></div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
-        <input ng-model="userName.firstName" class="text-input-field semi-bold form-spacing" type="text" id="firstName"
-            aria-disabled="true" disabled>
+<div hide-popover>
+    <h2 class="pi-modal-title">{{'personInfo.title.editPersonalDetails'|i18n}}</h2>
+    <button pi-pop-over popover-msg="personInfo.label.nonUpdateablePersonalDetails" popover-position="bottom" slide-left="{{!isDesktopView}}"
+            class="popover-button icon-info-CO" aria-label="{{'personInfo.label.nonUpdateablePersonalDetails'|i18n}}"></button>
+    <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+    <div class="row pad-dialog-lr">
+        <div class="clearfix hidden-xs"></div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
+            <input ng-model="userName.firstName" class="text-input-field semi-bold form-spacing" type="text" id="firstName"
+                aria-disabled="true" disabled>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="middleName">{{'personInfo.label.middleName'|i18n}}</label><br>
+            <input ng-model="userName.middleName" class="text-input-field semi-bold form-spacing" type="text" id="middleName"
+                aria-disabled="true" disabled>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="lastName">{{'personInfo.label.lastName'|i18n}}</label><br>
+            <input ng-model="userName.lastName" class="text-input-field semi-bold form-spacing" type="text" id="lastName"
+                aria-disabled="true" disabled>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="dateOfBirth">{{'personInfo.label.dateOfBirth'|i18n}}</label><br>
+            <input class="text-input-field semi-bold form-spacing" type="text"
+                value="{{stringToDate(personalDetails.birthDate)|date:'longDate'}}" id="dateOfBirth" aria-disabled="true" disabled>
+        </div>
+        <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
+            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}' type="hidden" />
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="legalSex">{{'personInfo.label.legalSex'|i18n}}</label><br>
+            <input class="text-input-field semi-bold form-spacing" type="text"
+                value="{{sexDescription|i18n}}" id="legalSex" aria-disabled="true" disabled>
+        </div>
+        <div class="clearfix hidden-xs"></div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label" for="preferredFirstName">{{'personInfo.label.preferredFirstName'|i18n}}</label><br>
+            <input ng-model="personalDetails.preferenceFirstName" class="text-input-field semi-bold form-spacing" type="text"
+                   placeholder="{{'personInfo.placeholder.enterPreferredFirstName'|i18n}}" maxlength="60" id="preferredFirstName">
+            <p class="input-field-label mobile-errors" ng-class="[(!!preferredFirstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
+               role="alert" aria-live="assertive">{{preferredFirstNameErrMsg|i18n}}</p>
+        </div>
+        <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
+            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPersonalPronounList", "model": "FIX_ME_personalPronoun", "showNA": true}' type="hidden" />
+        </div>
+        <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+            <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
+            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderIdentificationList", "model": "FIX_ME_genderIdentification", "showNA": true}' type="hidden" />
+        </div>
+        <p class="input-field-label mobile-errors response-err" ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]"
+           role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
     </div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="middleName">{{'personInfo.label.middleName'|i18n}}</label><br>
-        <input ng-model="userName.middleName" class="text-input-field semi-bold form-spacing" type="text" id="middleName"
-            aria-disabled="true" disabled>
+    <div class="dialog-footer-margin pi-modal-footer">
+        <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
+            {{'personInfo.label.button.cancel'|i18n}}
+        </button>
+        <button ng-click="savePersonalDetails()" ng-class="['two-btn-layout']" class="dialog-btn save-btn">
+            {{'personInfo.label.button.update'|i18n}}
+        </button>
     </div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="lastName">{{'personInfo.label.lastName'|i18n}}</label><br>
-        <input ng-model="userName.lastName" class="text-input-field semi-bold form-spacing" type="text" id="lastName"
-            aria-disabled="true" disabled>
-    </div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="dateOfBirth">{{'personInfo.label.dateOfBirth'|i18n}}</label><br>
-        <input class="text-input-field semi-bold form-spacing" type="text"
-            value="{{stringToDate(personalDetails.birthDate)|date:'longDate'}}" id="dateOfBirth" aria-disabled="true" disabled>
-    </div>
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
-        <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}' type="hidden" />
-    </div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="legalSex">{{'personInfo.label.legalSex'|i18n}}</label><br>
-        <input class="text-input-field semi-bold form-spacing" type="text"
-            value="{{sexDescription|i18n}}" id="legalSex" aria-disabled="true" disabled>
-    </div>
-    <div class="clearfix hidden-xs"></div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="preferredFirstName">{{'personInfo.label.preferredFirstName'|i18n}}</label><br>
-        <input ng-model="personalDetails.preferenceFirstName" class="text-input-field semi-bold form-spacing" type="text"
-               placeholder="{{'personInfo.placeholder.enterPreferredFirstName'|i18n}}" maxlength="60" id="preferredFirstName">
-        <p class="input-field-label mobile-errors" ng-class="[(!!preferredFirstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
-           role="alert" aria-live="assertive">{{preferredFirstNameErrMsg|i18n}}</p>
-    </div>
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
-        <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPersonalPronounList", "model": "FIX_ME_personalPronoun", "showNA": true}' type="hidden" />
-    </div>
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
-        <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderIdentificationList", "model": "FIX_ME_genderIdentification", "showNA": true}' type="hidden" />
-    </div>
-    <p class="input-field-label mobile-errors response-err" ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]"
-       role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
 </div>
-<div class="dialog-footer-margin pi-modal-footer">
-    <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
-        {{'personInfo.label.button.cancel'|i18n}}
-    </button>
-    <button ng-click="savePersonalDetails()" ng-class="['two-btn-layout']" class="dialog-btn save-btn">
-        {{'personInfo.label.button.update'|i18n}}
-    </button>
+<!-- Audible message div made visible when audible message is to be read by screen reader. Designed to be used with tooltips/popovers that may
+     not work correctly with readers. -->
+<div ng-class="{'audible-message': true, 'audible-message-hidden': !playAudibleMessage, 'audible-message-visible': playAudibleMessage}" role="alert" aria-live="assertive">
+    {{playAudibleMessage}}
 </div>

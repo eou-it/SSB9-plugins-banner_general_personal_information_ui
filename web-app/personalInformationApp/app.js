@@ -38,6 +38,8 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
             // be consistent with the definition of "is tablet" elsewhere in this app.
             var isTablet = window.matchMedia("only screen and (min-width: 768px) and (max-width:1024px)");
             $rootScope.isTabletView = isTablet.matches;
+
+            $rootScope.playAudibleMessage = null;
         }
     ]
 );

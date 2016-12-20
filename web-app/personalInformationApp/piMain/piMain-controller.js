@@ -295,7 +295,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.openEditPersonalDetailsModal = function() {
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piPersonalDetails/piEditPersonalDetails.html'),
-                windowClass: 'edit-emer-contact pi-modal',
+                windowClass: 'edit-pers-details pi-modal',
                 keyboard: true,
                 controller: "piEditPersonalDetailsController",
                 scope: $scope
