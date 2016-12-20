@@ -627,12 +627,27 @@ class PersonalInformationDetailsController {
 
     def updatePersonalDetails() {
         def updatedPerson = request?.JSON ?: params
-        updatedPerson.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         fixJSONObjectForCast(updatedPerson)
 
+        def updatedMaritalStatus = updatedPerson.maritalStatus
+        def maritalStatusMap = [
+                id: updatedMaritalStatus.id,
+                version: updatedMaritalStatus.version,
+                code: updatedMaritalStatus.code,
+                description: updatedMaritalStatus.description
+        ]
+
+        def person = [
+                pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
+                id: updatedPerson.id,
+                version: updatedPerson.version,
+                preferenceFirstName: updatedPerson.preferenceFirstName,
+                maritalStatus: maritalStatusMap
+        ]
+
         try {
-            personBasicPersonBaseService.update(updatedPerson)
+            personBasicPersonBaseService.update(person)
 
             render([failure: false] as JSON)
         }
