@@ -253,7 +253,7 @@ input:disabled {
 
 .pi-comment {
     color: #7E858B;
-    word-wrap: break-word;
+    word-break: keep-all;
 }
 
 .button-block {
@@ -1356,6 +1356,10 @@ table tr td {
 }
 
 @media screen and (min-width:768px) {
+    .col-md-6 {
+        width: 50%;
+    }
+
     .dialog-hdr1 {
         font-size: 24px;
         padding: 1em 1em 0.75em;
@@ -1420,6 +1424,10 @@ table tr td {
 }
 
 @media screen and (min-width:1024px) {
+    .col-lg-4 {
+        width: 33%;
+    }
+
     .edit-addr .modal-dialog,
     .edit-emer-contact .modal-dialog {
         width: 896px;
@@ -1445,8 +1453,15 @@ table tr td {
         width: auto;
         margin: 0px;
     }
+
+    .view-list div.item-wrapper:nth-child(3n+1) {
+        clear: left;
+    }
 }
 
 /*Tablet device*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .view-list div.item-wrapper:nth-child(2n+1) {
+        clear: left;
+    }
 }
