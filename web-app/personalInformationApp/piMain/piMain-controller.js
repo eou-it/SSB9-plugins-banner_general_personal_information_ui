@@ -214,6 +214,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                                             (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
                     $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
                                             (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
+
+                    if (!$scope.personalDetails.maritalStatus) {
+                        $scope.personalDetails.maritalStatus = {code: null, description: null};
+                    }
                 }
             });
 
