@@ -253,7 +253,7 @@ input:disabled {
 
 .pi-comment {
     color: #7E858B;
-    word-wrap: break-word;
+    word-break: keep-all;
 }
 
 .button-block {
@@ -817,7 +817,7 @@ button.closebtn {
 
 .details-section.overview {
     float: left;
-    width: 310px;
+    width: 280px;
     padding-bottom: 15px;
     margin-right: 15px;
     text-align: center;
@@ -1378,6 +1378,37 @@ table tr td {
 }
 
 @media screen and (min-width:768px) {
+    .col-md-6 {
+        float: left;
+        width: 50%;
+    }
+
+    .col-md-4 {
+        float: left;
+        width: 33%;
+    }
+
+    .mobile-visible {
+        visibility: hidden;
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+
+    .desktop-visible {
+        visibility: visible;
+        position: relative;
+        overflow: auto;
+        height: auto;
+        width: auto;
+        margin: 0px;
+    }
+
     .dialog-hdr1 {
         font-size: 24px;
         padding: 1em 1em 0.75em;
@@ -1425,6 +1456,10 @@ table tr td {
         width: 650px;
     }
 
+    .edit-email.pi-modal .modal-dialog {
+        width: 600px;
+    }
+
     .pi-modal .modal-content {
         height: auto;
         border-radius: 6px;
@@ -1436,41 +1471,42 @@ table tr td {
 
     .clear-row .col-md-4:nth-child(3n+1),
     .edit-addr .maybe-clear:nth-child(3n+1),
-    .edit-emer-contact .maybe-clear:nth-child(3n),
-    .addr-list > div:nth-child(3n+1) {
+    .edit-emer-contact .maybe-clear:nth-child(3n) {
         clear: left;
     }
 }
 
 @media screen and (min-width:1024px) {
+    .col-lg-4 {
+        width: 33%;
+    }
+
+    .details-section.overview {
+        width: 310px;
+    }
+
     .edit-addr .modal-dialog,
     .edit-pers-details .modal-dialog,
     .edit-emer-contact .modal-dialog {
         width: 896px;
     }
 
-    .mobile-visible {
-        visibility: hidden;
-        position: absolute;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        width: 1px;
-        margin: -1px;
-        padding: 0;
-        border: 0;
-    }
-
-    .desktop-visible {
-        visibility: visible;
-        position: relative;
-        overflow: auto;
-        height: auto;
-        width: auto;
-        margin: 0px;
+    .view-list div.item-wrapper:nth-child(3n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(3n+1),
+    .addr-list > div:nth-child(3n+1) {
+        clear: left;
     }
 }
 
 /*Tablet device*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .view-list div.item-wrapper:nth-child(2n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(2n+1),
+    .addr-list > div:nth-child(2n+1) {
+        clear: left;
+    }
+
+    .pi-modal .modal-dialog {
+        width: 97%;
+    }
 }
