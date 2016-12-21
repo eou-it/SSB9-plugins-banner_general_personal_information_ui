@@ -329,7 +329,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piEmail/piEditEmail.html'),
-                windowClass: 'pi-modal',
+                windowClass: 'edit-email pi-modal',
                 keyboard: true,
                 controller: "piEditEmailController",
                 scope: $scope,

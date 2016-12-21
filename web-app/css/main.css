@@ -1383,6 +1383,11 @@ table tr td {
         width: 50%;
     }
 
+    .col-md-4 {
+        float: left;
+        width: 33%;
+    }
+
     .mobile-visible {
         visibility: hidden;
         position: absolute;
@@ -1451,6 +1456,10 @@ table tr td {
         width: 650px;
     }
 
+    .edit-email.pi-modal .modal-dialog {
+        width: 600px;
+    }
+
     .pi-modal .modal-content {
         height: auto;
         border-radius: 6px;
@@ -1495,5 +1504,9 @@ table tr td {
     .emergency-contact-list div.col-xs-12:nth-child(2n+1),
     .addr-list > div:nth-child(2n+1) {
         clear: left;
+    }
+
+    .pi-modal .modal-dialog {
+        width: 97%;
     }
 }
