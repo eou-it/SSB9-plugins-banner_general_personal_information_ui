@@ -94,8 +94,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         putPreferredEmailFirst = function() {
             //preferred emails come before unpreferred, then sort the unpreferred alphabetically
             $scope.emails.sort(function(a, b) {
-                var aTypeDesc = a.emailType.description,
-                    bTypeDesc = b.emailType.description;
+                var aTypeDesc = a.emailType.description.toUpperCase(),
+                    bTypeDesc = b.emailType.description.toUpperCase();
 
                 if(a.preferredIndicator) {
                     return -1;
