@@ -12,7 +12,7 @@ personalInformationApp.service('personalInformationService', ['$filter', functio
      * @returns {string} Name of appropriate state.
      */
     this.getFullProfileState = function() {
-        return isDesktop() ? 'personalInformationMain' : 'piFullViewMobile';
+        return isMobile() ? 'piFullViewMobile' : 'personalInformationMain';
     };
 
     this.stringToDate = function (date) {

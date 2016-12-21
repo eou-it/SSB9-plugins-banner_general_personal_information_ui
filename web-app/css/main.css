@@ -813,7 +813,7 @@ button.closebtn {
 
 .details-section.overview {
     float: left;
-    width: 310px;
+    width: 280px;
     padding-bottom: 15px;
     margin-right: 15px;
     text-align: center;
@@ -1361,6 +1361,27 @@ table tr td {
         width: 50%;
     }
 
+    .mobile-visible {
+        visibility: hidden;
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+
+    .desktop-visible {
+        visibility: visible;
+        position: relative;
+        overflow: auto;
+        height: auto;
+        width: auto;
+        margin: 0px;
+    }
+
     .dialog-hdr1 {
         font-size: 24px;
         padding: 1em 1em 0.75em;
@@ -1428,30 +1449,13 @@ table tr td {
         width: 33%;
     }
 
+    .details-section.overview {
+        width: 310px;
+    }
+
     .edit-addr .modal-dialog,
     .edit-emer-contact .modal-dialog {
         width: 896px;
-    }
-
-    .mobile-visible {
-        visibility: hidden;
-        position: absolute;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        width: 1px;
-        margin: -1px;
-        padding: 0;
-        border: 0;
-    }
-
-    .desktop-visible {
-        visibility: visible;
-        position: relative;
-        overflow: auto;
-        height: auto;
-        width: auto;
-        margin: 0px;
     }
 
     .view-list div.item-wrapper:nth-child(3n+1),
