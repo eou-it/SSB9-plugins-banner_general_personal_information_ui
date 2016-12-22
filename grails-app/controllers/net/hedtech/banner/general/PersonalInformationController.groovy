@@ -13,7 +13,7 @@ class PersonalInformationController {
         render model: [:], view: "personalInformation"
     }
 
-    def goToRaceAndEthnicitySurvey() {
+    def raceAndEthnicitySurvey() {
         //Redirect back to landing page after the survey
         request.getSession().setAttribute(PostLoginWorkflow.URI_ACCESSED, '/ssb/personalInformation')
 
