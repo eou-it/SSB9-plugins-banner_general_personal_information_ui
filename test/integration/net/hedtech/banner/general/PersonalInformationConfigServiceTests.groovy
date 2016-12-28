@@ -28,17 +28,17 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
     @Test
     void testGetParamFromSessionWithNoPreexistingConfig() {
-        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
 
         assertEquals "Y", val
     }
 
     @Test
     void testGetParamFromSessionWithPreexistingConfig() {
-        def personConfigInSession = [(personalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['UPD_P_EMAL': 'Y']]
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['PERS.INFO.UPDATE.PREF.EMAIL': 'Y']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
-        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
 
         assertEquals "Y", val
     }
@@ -48,7 +48,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         def personConfigInSession = [dummy: [dummy: 'Y']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
-        def val = personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
 
         assertEquals "Y", val
     }
@@ -61,9 +61,39 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     }
 
     @Test
-    void testGetPersonalInfoConfigFromSession() {
-        def config = personalInformationConfigService.getPersonalInfoConfigFromSession()
+    void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_ADDRESS() {
+        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.OVERVIEW.ADDRESS', null)
 
-        assertEquals "Y", config.UPD_P_EMAL
+        assertNull val
+    }
+
+    @Test
+    void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_PHONE() {
+        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.OVERVIEW.PHONE', null)
+
+        assertNull val
+    }
+
+    @Test
+    void testGetPersonalInfoConfigFromSession() {
+        def config = PersonalInformationConfigService.getPersonalInfoConfigFromSession()
+
+        assertEquals "Y", config["PERS.INFO.UPDATE.PREF.EMAIL"]
+    }
+
+    @Test
+    void testCreatePersonalInfoConfig() {
+        def personConfig = [:]
+        PersonalInformationConfigService.createPersonalInfoConfig(personConfig)
+        def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
+
+        assertEquals "Y", personalInfoConfig["PERS.INFO.UPDATE.PREF.EMAIL"]
+        assertEquals "Y", personalInfoConfig["PERS.INFO.DISP.PROFILE.PICTURE"]
+        assertEquals "2", personalInfoConfig["PERS.INFO.EMAIL.SECTION.MODE"]
+        assertEquals "2", personalInfoConfig["PERS.INFO.PHONE.SECTION.MODE"]
+        assertEquals "2", personalInfoConfig["PERS.INFO.ADDRESS.SECTION.MODE"]
+        assertEquals "2", personalInfoConfig["PERS.INFO.EMER.SECTION.MODE"]
+        assertNull        personalInfoConfig["PERS.INFO.OVERVIEW.PHONE"]
+        assertNull        personalInfoConfig["PERS.INFO.OVERVIEW.ADDRESS"]
     }
 }

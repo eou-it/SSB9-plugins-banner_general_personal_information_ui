@@ -66,8 +66,8 @@ class PersonalInformationDetailsController {
 
             model.addresses = []
 
-            // Define configuration to fetch phone sequence from GTVSDAX
-            def sequenceConfig = [gtvsdaxInternalCode: 'PINFOADDR', gtvsdaxInternalCodeGroup: 'ADDRESS']
+            // Define configuration to fetch phone sequence from GORICCR
+            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'PERS.INFO.OVERVIEW.ADDRESS']
             def addressDisplaySequence = PersonUtility.getDisplaySequence('addressDisplaySequence', sequenceConfig)
             def personAddress
 
@@ -157,7 +157,7 @@ class PersonalInformationDetailsController {
 
     def addAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -188,7 +188,7 @@ class PersonalInformationDetailsController {
 
     def updateAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -217,7 +217,7 @@ class PersonalInformationDetailsController {
 
     def deleteAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.ADDR_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -269,7 +269,7 @@ class PersonalInformationDetailsController {
 
     def addEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -297,7 +297,7 @@ class PersonalInformationDetailsController {
 
     def updateEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -325,7 +325,7 @@ class PersonalInformationDetailsController {
 
     def deleteEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMAIL_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -355,8 +355,8 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                // Define configuration to fetch phone sequence from GTVSDAX
-                def sequenceConfig = [gtvsdaxInternalCode: 'PINFOPHON', gtvsdaxInternalCodeGroup: 'TELEPHONE']
+                // Define configuration to fetch phone sequence from GORICCR
+                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'PERS.INFO.OVERVIEW.PHONE']
 
                 model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
             } catch (ApplicationException e) {
@@ -382,7 +382,7 @@ class PersonalInformationDetailsController {
 
     def addTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -406,7 +406,7 @@ class PersonalInformationDetailsController {
 
     def updateTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -430,7 +430,7 @@ class PersonalInformationDetailsController {
 
     def deleteTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.PHONE_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -485,7 +485,7 @@ class PersonalInformationDetailsController {
 
     def addEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -510,7 +510,7 @@ class PersonalInformationDetailsController {
 
     def updateEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -535,7 +535,7 @@ class PersonalInformationDetailsController {
 
     def deleteEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(personalInformationConfigService.EMER_MODE)
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -673,12 +673,12 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            model.isPreferredEmailUpdateable =  personalInformationConfigService.getParamFromSession('UPD_P_EMAL', 'Y') == 'Y'
-            model.isProfilePicDisplayable =     personalInformationConfigService.getParamFromSession('DISP_PICTU', 'Y') == 'Y'
-            model.emailSectionMode =            personalInformationConfigService.getParamFromSession(personalInformationConfigService.EMAIL_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode =        personalInformationConfigService.getParamFromSession(personalInformationConfigService.PHONE_MODE, personalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode =          personalInformationConfigService.getParamFromSession(personalInformationConfigService.ADDR_MODE,  personalInformationConfigService.SECTION_UPDATEABLE)
-            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(personalInformationConfigService.EMER_MODE,  personalInformationConfigService.SECTION_UPDATEABLE)
+            model.isPreferredEmailUpdateable =  personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'Y') == 'Y'
+            model.isProfilePicDisplayable =     personalInformationConfigService.getParamFromSession('PERS.INFO.DISP.PROFILE.PICTURE', 'Y') == 'Y'
+            model.emailSectionMode =            personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode =          personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,  PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,  PersonalInformationConfigService.SECTION_UPDATEABLE)
 
             render model as JSON
         }
@@ -726,9 +726,9 @@ class PersonalInformationDetailsController {
         // Make sure this operation is permitted based on configuration.
         // (If the configuration is not set to allow updates, that functionality should not be available
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
-        def mode = personalInformationConfigService.getParamFromSession(param, personalInformationConfigService.SECTION_UPDATEABLE)
+        def mode = personalInformationConfigService.getParamFromSession(param, PersonalInformationConfigService.SECTION_UPDATEABLE)
 
-        if (mode != personalInformationConfigService.SECTION_UPDATEABLE) {
+        if (mode != PersonalInformationConfigService.SECTION_UPDATEABLE) {
             log.error("Unauthorized attempt to update Personal Information data was prevented. Configured value for parameter ${param}: ${mode}")
             throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
         }
