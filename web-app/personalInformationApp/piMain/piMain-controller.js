@@ -131,7 +131,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
          * Initialize controller
          */
         this.init = function() {
-            var preferredNameParams = {pageName: 'PersonalInformation', sectionName: 'Overview'};
+            var preferredNameParams = {pageName: 'PersonalInformation', sectionName: 'Overview'},
+
+                setStartingTab = function(tabs) {
+                    if(tabs.length && $stateParams.isFirstTabUsedForStart) {
+                        $scope.startingTab = tabs[0].startingTab;
+                    } else if ($stateParams.startingTab) {
+                        $scope.startingTab = $stateParams.startingTab;
+                    }
+                };
 
             piCrudService.get('MaskingRules').$promise.then(function(response) {
                 if(response.failure) {
@@ -147,6 +155,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 } else {
                     $scope.piConfig = response;
                     $scope.sectionsToDisplay = $scope.getSectionsToDisplayForMobile(); // Depends on piConfig
+                    setStartingTab($scope.sectionsToDisplay);
                 }
             });
 
@@ -237,10 +246,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     $scope.bannerId = response.bannerId;
                 }
             });
-
-            if($stateParams.startingTab) {
-                $scope.startingTab = $stateParams.startingTab;
-            }
 
             displayNotificationsOnStateLoad();
         };
@@ -511,23 +516,27 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         };
 
         $scope.getSectionsToDisplayForMobile = function() {
-            var emailSectionMode =            $scope.piConfig.emailSectionMode,
-                telephoneSectionMode =        $scope.piConfig.telephoneSectionMode,
-                addressSectionMode =          $scope.piConfig.addressSectionMode,
-                emergencyContactSectionMode = $scope.piConfig.emergencyContactSectionMode,
+            var personalDetailsSectionMode =   $scope.piConfig.personalDetailsSectionMode,
+                emailSectionMode =             $scope.piConfig.emailSectionMode,
+                telephoneSectionMode =         $scope.piConfig.telephoneSectionMode,
+                addressSectionMode =           $scope.piConfig.addressSectionMode,
+                emergencyContactSectionMode =  $scope.piConfig.emergencyContactSectionMode,
+                additionalDetailsSectionMode = $scope.piConfig.additionalDetailsSectionMode,
                 sections = [];
 
-            sections.push(                {
-                    heading: 'personInfo.title.personalDetails',
-                    startingTab: 'personalDetails',
-                    template: 'personalInformationApp/piPersonalDetails/piViewPersonalDetails.html',
-                    clickFunction: $scope.openEditPersonalDetailsModal,
-                    footerButtonLabel: 'personInfo.label.edit',
-                    // TODO: update with proper config code when available
-                    isUpdateable: true,
-                    isEdit: true
-                }
-            );
+            if (personalDetailsSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push({
+                        heading: 'personInfo.title.personalDetails',
+                        startingTab: 'personalDetails',
+                        template: 'personalInformationApp/piPersonalDetails/piViewPersonalDetails.html',
+                        clickFunction: $scope.openEditPersonalDetailsModal,
+                        footerButtonLabel: 'personInfo.label.edit',
+                        // TODO: update with proper config code when available
+                        isUpdateable: !personalDetailsSectionMode || personalDetailsSectionMode === $scope.SECTION_UPDATEABLE,
+                        isEdit: true
+                    }
+                );
+            }
 
             if (emailSectionMode !== $scope.SECTION_HIDDEN) {
                 sections.push(                {
@@ -577,14 +586,16 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 );
             }
 
-            sections.push(                {
-                    heading: 'personInfo.title.additionalDetails',
-                    startingTab: 'additionalDetails',
-                    template: 'personalInformationApp/piAdditionalDetails/piViewAdditionalDetails.html',
-                    // TODO: update with proper config code when available
-                    isUpdateable: true
-                }
-            );
+            if (additionalDetailsSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push({
+                        heading: 'personInfo.title.additionalDetails',
+                        startingTab: 'additionalDetails',
+                        template: 'personalInformationApp/piAdditionalDetails/piViewAdditionalDetails.html',
+                        // TODO: update with proper config code when available
+                        isUpdateable: true
+                    }
+                );
+            }
 
             return sections;
         };

@@ -67,7 +67,7 @@ class PersonalInformationDetailsController {
             model.addresses = []
 
             // Define configuration to fetch phone sequence from GORICCR
-            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'PERS.INFO.OVERVIEW.ADDRESS']
+            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'OVERVIEW.ADDRESS']
             def addressDisplaySequence = PersonUtility.getDisplaySequence('addressDisplaySequence', sequenceConfig)
             def personAddress
 
@@ -356,7 +356,7 @@ class PersonalInformationDetailsController {
         if (pidm) {
             try {
                 // Define configuration to fetch phone sequence from GORICCR
-                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'PERS.INFO.OVERVIEW.PHONE']
+                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'OVERVIEW.PHONE']
 
                 model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
             } catch (ApplicationException e) {
@@ -626,6 +626,13 @@ class PersonalInformationDetailsController {
     }
 
     def updatePersonalDetails() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PERS_DETAILS_MODE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedPerson = request?.JSON ?: params
 
         fixJSONObjectForCast(updatedPerson)
@@ -673,12 +680,14 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            model.isPreferredEmailUpdateable =  personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'Y') == 'Y'
-            model.isProfilePicDisplayable =     personalInformationConfigService.getParamFromSession('PERS.INFO.DISP.PROFILE.PICTURE', 'Y') == 'Y'
-            model.emailSectionMode =            personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode =          personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,  PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,  PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.isPreferredEmailUpdateable =   personalInformationConfigService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'Y') == 'Y'
+            model.isProfilePicDisplayable =      personalInformationConfigService.getParamFromSession('DISPLAY.PROFILE.PICTURE', 'Y') == 'Y'
+            model.emailSectionMode =             personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode =         personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode =           personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emergencyContactSectionMode =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.personalDetailsSectionMode =   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.additionalDetailsSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDL_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
 
             render model as JSON
         }
