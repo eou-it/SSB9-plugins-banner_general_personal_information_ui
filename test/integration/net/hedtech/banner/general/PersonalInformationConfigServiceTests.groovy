@@ -28,17 +28,17 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
     @Test
     void testGetParamFromSessionWithNoPreexistingConfig() {
-        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
 
         assertEquals "Y", val
     }
 
     @Test
     void testGetParamFromSessionWithPreexistingConfig() {
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['PERS.INFO.UPDATE.PREF.EMAIL': 'Y']]
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['PREFERRED.EMAIL.UPDATABILITY': 'Y']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
-        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
 
         assertEquals "Y", val
     }
@@ -48,7 +48,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         def personConfigInSession = [dummy: [dummy: 'Y']]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
-        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.UPDATE.PREF.EMAIL', 'dummy_default_value')
+        def val = personalInformationConfigService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
 
         assertEquals "Y", val
     }
@@ -62,14 +62,14 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
     @Test
     void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_ADDRESS() {
-        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.OVERVIEW.ADDRESS', null)
+        def val = personalInformationConfigService.getParamFromSession('OVERVIEW.ADDRESS', null)
 
         assertNull val
     }
 
     @Test
     void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_PHONE() {
-        def val = personalInformationConfigService.getParamFromSession('PERS.INFO.OVERVIEW.PHONE', null)
+        def val = personalInformationConfigService.getParamFromSession('OVERVIEW.PHONE', null)
 
         assertNull val
     }
@@ -78,7 +78,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     void testGetPersonalInfoConfigFromSession() {
         def config = PersonalInformationConfigService.getPersonalInfoConfigFromSession()
 
-        assertEquals "Y", config["PERS.INFO.UPDATE.PREF.EMAIL"]
+        assertEquals "Y", config["PREFERRED.EMAIL.UPDATABILITY"]
     }
 
     @Test
@@ -87,13 +87,13 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         PersonalInformationConfigService.createPersonalInfoConfig(personConfig)
         def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
 
-        assertEquals "Y", personalInfoConfig["PERS.INFO.UPDATE.PREF.EMAIL"]
-        assertEquals "Y", personalInfoConfig["PERS.INFO.DISP.PROFILE.PICTURE"]
-        assertEquals "2", personalInfoConfig["PERS.INFO.EMAIL.SECTION.MODE"]
-        assertEquals "2", personalInfoConfig["PERS.INFO.PHONE.SECTION.MODE"]
-        assertEquals "2", personalInfoConfig["PERS.INFO.ADDRESS.SECTION.MODE"]
-        assertEquals "2", personalInfoConfig["PERS.INFO.EMER.SECTION.MODE"]
-        assertNull        personalInfoConfig["PERS.INFO.OVERVIEW.PHONE"]
-        assertNull        personalInfoConfig["PERS.INFO.OVERVIEW.ADDRESS"]
+        assertEquals "Y", personalInfoConfig["PREFERRED.EMAIL.UPDATABILITY"]
+        assertEquals "Y", personalInfoConfig["DISPLAY.PROFILE.PICTURE"]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.EMAIL_MODE]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.PHONE_MODE]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.ADDR_MODE]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.EMER_MODE]
+        assertNull        personalInfoConfig["OVERVIEW.PHONE"]
+        assertNull        personalInfoConfig["OVERVIEW.ADDRESS"]
     }
 }

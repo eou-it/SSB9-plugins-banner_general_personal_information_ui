@@ -13,10 +13,12 @@ class PersonalInformationConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
 
-    static final String EMAIL_MODE = 'PERS.INFO.EMAIL.SECTION.MODE'
-    static final String PHONE_MODE = 'PERS.INFO.PHONE.SECTION.MODE'
-    static final String ADDR_MODE = 'PERS.INFO.ADDRESS.SECTION.MODE'
-    static final String EMER_MODE = 'PERS.INFO.EMER.SECTION.MODE'
+    static final String EMAIL_MODE = 'EMAIL.SECTION.MODE'
+    static final String PHONE_MODE = 'PHONE.SECTION.MODE'
+    static final String ADDR_MODE = 'ADDRESS.SECTION.MODE'
+    static final String EMER_MODE = 'EMERGENCY.CONTACT.SECTION.MODE'
+    static final String PERS_DETAILS_MODE = 'PERSONAL.DETAIL.SECTION.MODE'
+    static final String ADDL_DETAILS_MODE = 'ADDITIONAL.DETAIL.SECTION.MODE'
 
     static final String SECTION_HIDDEN = '0'
     static final String SECTION_READONLY = '1'
@@ -58,7 +60,7 @@ class PersonalInformationConfigService {
         def config = [:]
 
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
-        def EXCLUDED_PROPERTIES = ['PERS.INFO.OVERVIEW.ADDRESS', 'PERS.INFO.OVERVIEW.PHONE']
+        def EXCLUDED_PROPERTIES = ['OVERVIEW.ADDRESS', 'OVERVIEW.PHONE']
 
         configFromGoriccr.each {it ->
             if (!EXCLUDED_PROPERTIES.contains(it.settingName)) {

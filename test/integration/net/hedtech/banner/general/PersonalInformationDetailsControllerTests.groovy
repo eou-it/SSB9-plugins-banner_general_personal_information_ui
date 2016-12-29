@@ -1289,7 +1289,39 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals false, data.failure
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdatePersonalDetailsWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to Personal Details
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '1']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def details = controller.personBasicPersonBaseService.getPersonalDetails(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating preferred first name and marital status
+        controller.request.json = """{
+            id:${details.id},
+            version: ${details.version},
+            preferenceFirstName: 'NickName',
+            maritalStatus:{
+                code:'S',
+                description:'Single'
+            }
+        }""".toString()
+
+        controller.updatePersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
