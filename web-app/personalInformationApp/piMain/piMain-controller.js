@@ -600,6 +600,10 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return sections;
         };
 
+        $scope.haveAddress = function() {
+            return _.isEmpty($scope.addressGroup);
+        };
+
 
 
 

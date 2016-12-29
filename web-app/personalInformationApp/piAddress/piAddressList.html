@@ -2,6 +2,7 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="row addr-list">
+    <notification-box ng-if="haveAddress()" notification-text="{{'personInfo.message.noAddresses'|i18n}}"></notification-box>
     <div ng-repeat="(addrType, addressTimePeriods) in addressGroup">
         <div class="col-xs-12 col-md-6 col-lg-4">
             <div class="address-type-view">
