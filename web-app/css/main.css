@@ -989,7 +989,7 @@ button.delete-btn {
     opacity: 1;
     font-size: 24px;
     font-family: open-sans-semi-bold;
-    background: url('../images/Trash_4.svg') 50% 50% no-repeat;
+    background: url('../images/trash_4.svg') 50% 50% no-repeat;
     padding: .9em;
     display: block;
     border: none;
@@ -1000,7 +1000,7 @@ button.delete-btn {
 .phone-icon {
     width: 24px;
     height: 24px;
-    background: url('../images/Phone_4.svg') 50% 50% no-repeat;
+    background: url('../images/phone_4.svg') 50% 50% no-repeat;
     margin-right: 8px;
     display: inline-block;
     vertical-align: middle;
@@ -1011,6 +1011,10 @@ button.delete-btn {
     text-decoration: none;
     margin-right: 8px;
     vertical-align: middle;
+}
+
+.pi-icon-align {
+    display: inline-block;
 }
 
 
