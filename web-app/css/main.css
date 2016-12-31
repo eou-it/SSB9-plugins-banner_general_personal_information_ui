@@ -1311,6 +1311,16 @@ table tr td {
 }
 
 
+/* Accessibility */
+.hidden-link-text-for-reader {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    left: -999px;
+    top: -999px;
+}
+
+
 /***********************/
 /* Media Query Section */
 /***********************/
