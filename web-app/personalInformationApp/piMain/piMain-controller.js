@@ -522,6 +522,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 addressSectionMode =           $scope.piConfig.addressSectionMode,
                 emergencyContactSectionMode =  $scope.piConfig.emergencyContactSectionMode,
                 additionalDetailsSectionMode = $scope.piConfig.additionalDetailsSectionMode,
+                otherSectionMode =             $scope.piConfig.otherSectionMode,
                 sections = [];
 
             if (personalDetailsSectionMode !== $scope.SECTION_HIDDEN) {
@@ -591,6 +592,17 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         heading: 'personInfo.title.additionalDetails',
                         startingTab: 'additionalDetails',
                         template: 'personalInformationApp/piAdditionalDetails/piViewAdditionalDetails.html',
+                        // TODO: update with proper config code when available
+                        isUpdateable: true
+                    }
+                );
+            }
+
+            if (otherSectionMode !== $scope.SECTION_HIDDEN) {
+                sections.push({
+                        heading: 'personInfo.title.other',
+                        startingTab: 'other',
+                        template: 'personalInformationApp/piOther/piOther.html',
                         // TODO: update with proper config code when available
                         isUpdateable: true
                     }
