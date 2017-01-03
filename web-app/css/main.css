@@ -363,7 +363,8 @@ a.pi-icon-link:focus {
 .xe-tab-container .addr-list,
 .xe-tab-container .phone-list,
 .xe-tab-container .view-list,
-.xe-tab-container .emergency-contact-list {
+.xe-tab-container .emergency-contact-list,
+.xe-tab-container .other-links {
     padding: 15px 15px 0;
 }
 
