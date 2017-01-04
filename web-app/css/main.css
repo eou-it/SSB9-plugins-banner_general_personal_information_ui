@@ -258,7 +258,7 @@ input:disabled {
 
 .button-block {
     float: left;
-    clear: left;
+    clear: both;
 }
 
 .pi-edit-item-link {
