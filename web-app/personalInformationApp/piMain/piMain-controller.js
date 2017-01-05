@@ -195,6 +195,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.emergencyContacts = response.emergencyContacts;
+                    $scope.hasMaxEmergencyContacts = $scope.haveMaxEmergencyContacts();
                 }
             });
 
@@ -275,6 +276,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.personalDetails = null;
         $scope.piConfig;
         $scope.sectionsToDisplay;
+        $scope.hasMaxEmergencyContacts = false;
 
 
         // CONTROLLER FUNCTIONS
@@ -464,6 +466,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     } else {
                         // Refresh contact info
                         $scope.emergencyContacts = response.emergencyContacts;
+                        $scope.hasMaxEmergencyContacts = $scope.haveMaxEmergencyContacts();
                     }
                 });
             };
@@ -582,7 +585,9 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         template: 'personalInformationApp/piEmergencyContact/piEmergencyContactList.html',
                         clickFunction: $scope.openEditEmergencyContactModal,
                         footerButtonLabel: 'personInfo.label.addEmergencyContact',
-                        isUpdateable: !emergencyContactSectionMode || emergencyContactSectionMode === $scope.SECTION_UPDATEABLE
+                        isUpdateable: !emergencyContactSectionMode || emergencyContactSectionMode === $scope.SECTION_UPDATEABLE,
+                        isFooterButtonDisabledFunction: $scope.haveMaxEmergencyContacts,
+                        disabledMsg: 'personInfo.message.maxEmergencyContacts'
                     }
                 );
             }
@@ -614,6 +619,12 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         $scope.haveAddress = function() {
             return _.isEmpty($scope.addressGroup);
+        };
+
+        $scope.haveMaxEmergencyContacts = function() {
+            var MAX_EMERGENCY_CONTACTS = 9;
+
+            return $scope.emergencyContacts.length >= MAX_EMERGENCY_CONTACTS;
         };
 
 

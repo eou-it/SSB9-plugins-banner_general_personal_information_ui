@@ -2,10 +2,11 @@
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <xe-tab-nav>
-    <div ng-repeat="sectionDetails in sectionsToDisplay">
+    <div hide-popover ng-repeat="sectionDetails in sectionsToDisplay">
         <xe-tab-panel heading="{{sectionDetails.heading|i18n}}" set-starting-tab="{{sectionDetails.startingTab}}" disable-default-tab-activation>
             <ng-include src="sectionDetails.template|webAppResourcePath"></ng-include>
             <pi-mobile-footer-button click-function="sectionDetails.clickFunction" is-edit="sectionDetails.isEdit"
+                                     is-disabled="sectionDetails.isFooterButtonDisabledFunction" disabled-msg="sectionDetails.disabledMsg"
                                      ng-if="sectionDetails.isUpdateable && sectionDetails.footerButtonLabel">
                 {{sectionDetails.footerButtonLabel|i18n}}
             </pi-mobile-footer-button>
