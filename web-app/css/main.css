@@ -345,11 +345,7 @@ a.pi-icon-link:focus {
     padding: 1.25em 0.875em 0.1em 1em;
     display: inline-block;
     margin: 0;
-}
-
-.edit-emer-contact .pi-modal-title {
-    padding-right: 0em;
-    width: 75%;
+    max-width: 75%;
 }
 
 .edit-pers-details .pi-modal-title {
