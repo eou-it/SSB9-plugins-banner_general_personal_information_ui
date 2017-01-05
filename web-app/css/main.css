@@ -606,6 +606,13 @@ input.hasMultiCalendarPicker.pi-date-input.input-error {
     right: 3em;
 }
 
+.input-fail.pi-phone-intl-err {
+    position: relative;
+    top: inherit;
+    bottom: 2.3em;
+    right: 1.2em;
+}
+
 .icon .icon-error {
     font-size: 16px;
 }
