@@ -20,6 +20,16 @@ class PersonalInformationControllerUtility {
         }
     }
 
+    def static getPrincipalUsername() {
+        try {
+            return SecurityContextHolder?.context?.authentication?.principal?.username
+        } catch (MissingPropertyException it) {
+            log.error("principal lacks a username - may be unauthenticated or session expired. Principal: ${SecurityContextHolder?.context?.authentication?.principal}")
+            log.error(it)
+            throw it
+        }
+    }
+
     public static getFetchListParams(params) {
         def maxItems = params.max as int
         def map = [
