@@ -45,6 +45,22 @@ class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetPrincipalUsernameLoggedIn(){
+        loginSSB 'GDP000005', '111111'
+
+        def username = PersonalInformationControllerUtility.getPrincipalUsername()
+        assertNotNull username
+        assertEquals 'GDP000005', username
+    }
+
+    @Test
+    void testGetPrincipalUsernameNotLoggedIn(){
+        def username = PersonalInformationControllerUtility.getPrincipalUsername()
+        assertNotNull username
+        assertEquals 'grails_user', username
+    }
+
+    @Test
     void testGetFetchListParams(){
         def parameters = [ searchString: 'Mal', offset: '2', max: '10' ]
         def map = PersonalInformationControllerUtility.getFetchListParams(parameters)
