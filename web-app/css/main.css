@@ -502,6 +502,27 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     color: #333
 }
 
+.edit-flex-div {
+    /* IE 10 flex */
+    display: -ms-flexbox;
+
+    display: flex;
+}
+
+.flex-end {
+    /* IE 10 flex */
+    display: -ms-flexbox;
+    -ms-flex-align: end;
+
+    display: flex;
+    align-items: flex-end;
+}
+
+.unflex {
+    display: inline-block;
+    width: 100%;
+}
+
 .rout-num-lbl {
     max-width: 90%;
 }
@@ -1336,10 +1357,6 @@ table tr td {
 }
 
 @media(max-width:568px){
-    .edit-flex-div2 {
-        display: inline;
-    }
-
     .mobile-errors {
         display: inline-block;
     }
@@ -1378,7 +1395,7 @@ table tr td {
 }
 
 @media screen and (max-width:767px) {
-    .edit-flex-div1 {
+    .edit-flex-div {
         display: inline;
     }
 
@@ -1438,10 +1455,6 @@ table tr td {
 
     .pad-dialog-lr {
         padding: 0em 1.5em;
-    }
-
-    .edit-flex-div2 {
-        width: 66.666666666%;
     }
 
     .mobile-errors-acType {
