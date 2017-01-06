@@ -1,0 +1,25 @@
+/*******************************************************************************
+ Copyright 2016 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
+/* adjust styling just for rtl page */
+
+/***********************/
+/* Media Query Section */
+/***********************/
+
+@media screen and (min-width:1024px) {
+    .view-list div.item-wrapper:nth-child(3n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(3n+1),
+    .addr-list > div:nth-child(3n+1) {
+        clear: right;
+    }
+}
+
+/*Tablet device*/
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .view-list div.item-wrapper:nth-child(2n+1),
+    .emergency-contact-list div.col-xs-12:nth-child(2n+1),
+    .addr-list > div:nth-child(2n+1) {
+        clear: right;
+    }
+}
