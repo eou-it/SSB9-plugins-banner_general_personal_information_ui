@@ -627,7 +627,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return sections;
         };
 
-        $scope.haveAddress = function() {
+        $scope.isAddressGroupEmpty = function() {
             return _.isEmpty($scope.addressGroup);
         };
 
