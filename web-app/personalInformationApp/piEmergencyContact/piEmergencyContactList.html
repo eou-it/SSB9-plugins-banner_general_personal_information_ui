@@ -1,7 +1,8 @@
 <!--*******************************************************************************
-Copyright 2016 Ellucian Company L.P. and its affiliates.
+Copyright 2017 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="clear-row emergency-contact-list">
+    <notification-box ng-if="emergencyContacts.length === 0" notification-text="{{'personInfo.message.noEmergencyContacts'|i18n}}"></notification-box>
     <div class="row">
         <div ng-repeat="contact in emergencyContacts" class="col-xs-12 col-md-6 col-lg-4">
             <ng-include src="'personalInformationApp/piEmergencyContact/piEmergencyContact.html'|webAppResourcePath"></ng-include>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2016 Ellucian Company L.P. and its affiliates.
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
     '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'personalInformationService',
@@ -627,7 +627,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return sections;
         };
 
-        $scope.haveAddress = function() {
+        $scope.isAddressGroupEmpty = function() {
             return _.isEmpty($scope.addressGroup);
         };
 
