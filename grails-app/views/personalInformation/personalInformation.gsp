@@ -46,7 +46,7 @@ Copyright 2015 Ellucian Company L.P. and its affiliates.
 <svg>
     <defs>
         <clipPath id="profilePicClip">
-            <circle cx="64" cy="64" r="60"/>
+            <circle cx="66" cy="80" r="66"/>
         </clipPath>
     </defs>
 </svg>
