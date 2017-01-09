@@ -2,7 +2,8 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
-personalInformationApp.service('personalInformationService', ['$rootScope', '$filter', function ($rootScope, $filter) {
+personalInformationApp.service('personalInformationService', ['$rootScope', '$filter', '$resource',
+    function ($rootScope, $filter, $resource) {
 
     var calendar = $.calendars.instance();
 
@@ -65,6 +66,11 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
 
         $rootScope.playAudibleMessage = msg;
         $rootScope.$broadcast(self.AUDIBLE_MSG_UPDATED);
+    };
+
+    this.checkSecurityQuestionsExist = function () {
+        return $resource('../ssb/:controller/:action',
+            {controller: 'PersonalInformation', action: 'checkSecurityQuestionsExist'}).get();
     };
 
 }]);

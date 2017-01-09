@@ -2,8 +2,8 @@
  Copyright 2016 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', 'notificationCenterService', 'piCrudService', 'personalInformationService',
-    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, notificationCenterService,
+    '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'personalInformationService',
+    function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, $window, notificationCenterService,
               piCrudService, personalInformationService) {
 
 
@@ -516,6 +516,16 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             ];
 
             notificationCenterService.displayNotification('personInfo.confirm.phone.delete.text', 'warning', false, prompts);
+        };
+
+        $scope.resetPassword = function() {
+            personalInformationService.checkSecurityQuestionsExist().$promise.then(function (response) {
+                if (response.failure) {
+                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                } else {
+                    $window.location.href = '/BannerGeneralSsb/ssb/personalInformation/resetPasswordWithSecurityQuestions';
+                }
+            });
         };
 
         $scope.getSectionsToDisplayForMobile = function() {

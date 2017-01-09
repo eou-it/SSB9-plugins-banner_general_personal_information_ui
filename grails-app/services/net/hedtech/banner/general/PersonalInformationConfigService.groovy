@@ -13,12 +13,22 @@ class PersonalInformationConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
 
+    static final String DIRECTORY_PROFILE = 'DISPLAY.DIRECTORY.PROFILE'
+    static final String PROFILE_PICTURE = 'DISPLAY.PROFILE.PICTURE'
+    static final String DISABILITY_STATUS = 'ENABLE.DISABILITY.STATUS'
+    static final String PASSWORD_CHANGE = 'ENABLE.PASSWORD.CHANGE'
+    static final String SECURITY_QA_CHANGE = 'ENABLE.SECURITY.QA.CHANGE'
+    static final String VETERANS_CLASSIFICATION = 'ENABLE.VETERANS.CLASSIFICATION'
+    static final String ETHN_RACE_MODE = 'ETHNICITY.RACE.MODE'
+    static final String MARITAL_STATUS = 'MARITAL.STATUS.UPDATABILITY'
+    static final String PREF_EMAIL = 'PREFERRED.EMAIL.UPDATABILITY'
+    static final String OVERVIEW_ADDR = 'OVERVIEW.ADDRESS'
+    static final String OVERVIEW_PHONE = 'OVERVIEW.PHONE'
     static final String EMAIL_MODE = 'EMAIL.SECTION.MODE'
     static final String PHONE_MODE = 'PHONE.SECTION.MODE'
     static final String ADDR_MODE = 'ADDRESS.SECTION.MODE'
     static final String EMER_MODE = 'EMERGENCY.CONTACT.SECTION.MODE'
     static final String PERS_DETAILS_MODE = 'PERSONAL.DETAIL.SECTION.MODE'
-    static final String ADDL_DETAILS_MODE = 'ADDITIONAL.DETAIL.SECTION.MODE'
 
     static final String SECTION_HIDDEN = '0'
     static final String SECTION_READONLY = '1'
@@ -60,7 +70,7 @@ class PersonalInformationConfigService {
         def config = [:]
 
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
-        def EXCLUDED_PROPERTIES = ['OVERVIEW.ADDRESS', 'OVERVIEW.PHONE']
+        def EXCLUDED_PROPERTIES = [OVERVIEW_ADDR, OVERVIEW_PHONE]
 
         configFromGoriccr.each {it ->
             if (!EXCLUDED_PROPERTIES.contains(it.settingName)) {

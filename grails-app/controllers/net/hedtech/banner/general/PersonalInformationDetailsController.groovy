@@ -680,14 +680,22 @@ class PersonalInformationDetailsController {
         def model = [:]
 
         try {
-            model.isPreferredEmailUpdateable =   personalInformationConfigService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'Y') == 'Y'
-            model.isProfilePicDisplayable =      personalInformationConfigService.getParamFromSession('DISPLAY.PROFILE.PICTURE', 'Y') == 'Y'
-            model.emailSectionMode =             personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode =         personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode =           personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emergencyContactSectionMode =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.personalDetailsSectionMode =   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.additionalDetailsSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDL_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.isPreferredEmailUpdateable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PREF_EMAIL, 'Y') == 'Y'
+            model.isProfilePicDisplayable =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PROFILE_PICTURE, 'Y') == 'Y'
+            model.isDirectoryProfileDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DIRECTORY_PROFILE, 'Y') == 'Y'
+            model.isVetClassificationDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y') == 'Y'
+            model.isSecurityQandADisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'
+            model.isPasswordChangeDisplayable =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PASSWORD_CHANGE, 'Y') == 'Y'
+            model.isDisabilityStatusDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISABILITY_STATUS, 'Y') == 'Y'
+            model.isMaritalStatusUpdateable =      personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.MARITAL_STATUS, 'Y') == 'Y'
+            model.ethnRaceMode =                   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ETHN_RACE_MODE,    PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emailSectionMode =               personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode =           personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode =             personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emergencyContactSectionMode =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.personalDetailsSectionMode =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.additionalDetailsSectionMode =   (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN)||(model.isVetClassificationDisplayable)||(model.isDisabilityStatusDisplayable)
+            model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
 
             render model as JSON
         }
