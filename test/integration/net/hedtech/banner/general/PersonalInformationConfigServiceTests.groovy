@@ -87,13 +87,21 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         PersonalInformationConfigService.createPersonalInfoConfig(personConfig)
         def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
 
-        assertEquals "Y", personalInfoConfig["PREFERRED.EMAIL.UPDATABILITY"]
-        assertEquals "Y", personalInfoConfig["DISPLAY.PROFILE.PICTURE"]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.PREF_EMAIL]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.PROFILE_PICTURE]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.DIRECTORY_PROFILE]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.DISABILITY_STATUS]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.PASSWORD_CHANGE]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.SECURITY_QA_CHANGE]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.VETERANS_CLASSIFICATION]
+        assertEquals "Y", personalInfoConfig[PersonalInformationConfigService.MARITAL_STATUS]
         assertEquals "2", personalInfoConfig[PersonalInformationConfigService.EMAIL_MODE]
         assertEquals "2", personalInfoConfig[PersonalInformationConfigService.PHONE_MODE]
         assertEquals "2", personalInfoConfig[PersonalInformationConfigService.ADDR_MODE]
         assertEquals "2", personalInfoConfig[PersonalInformationConfigService.EMER_MODE]
-        assertNull        personalInfoConfig["OVERVIEW.PHONE"]
-        assertNull        personalInfoConfig["OVERVIEW.ADDRESS"]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.PERS_DETAILS_MODE]
+        assertEquals "2", personalInfoConfig[PersonalInformationConfigService.ETHN_RACE_MODE]
+        assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_PHONE]
+        assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_ADDR]
     }
 }

@@ -1346,7 +1346,21 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals true, data.isPreferredEmailUpdateable
+        assertTrue data.isPreferredEmailUpdateable
+        assertTrue data.isProfilePicDisplayable
+        assertTrue data.isDirectoryProfileDisplayable
+        assertTrue data.isVetClassificationDisplayable
+        assertTrue data.isSecurityQandADisplayable
+        assertTrue data.isPasswordChangeDisplayable
+        assertTrue data.isDisabilityStatusDisplayable
+        assertTrue data.isMaritalStatusUpdateable
+        assertTrue data.additionalDetailsSectionMode
+        assertTrue data.otherSectionMode
+        assertEquals '2',data.emailSectionMode
+        assertEquals '2',data.telephoneSectionMode
+        assertEquals '2',data.addressSectionMode
+        assertEquals '2',data.personalDetailsSectionMode
+        assertEquals '2',data.emergencyContactSectionMode
     }
 
 }
