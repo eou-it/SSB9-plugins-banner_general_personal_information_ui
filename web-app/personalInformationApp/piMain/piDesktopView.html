@@ -1,7 +1,7 @@
 <!--*******************************************************************************
 Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
-<div class="pi-desktop-contents">
+<div hide-popover class="pi-desktop-contents">
     <div class="details-section overview">
         <ng-include src="'personalInformationApp/piMain/piDesktopOverview.html'|webAppResourcePath"></ng-include>
     </div>
@@ -70,9 +70,14 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditEmergencyContactModal()" enter-key="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
+                    <a ng-if="!hasMaxEmergencyContacts" ng-click="openEditEmergencyContactModal()" enter-key="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
                         <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
                     </a>
+                    <a ng-if="hasMaxEmergencyContacts" pi-pop-over popover-msg="personInfo.message.maxEmergencyContacts" popover-position="left" popover-width="220px"
+                       enter-key="togglePopover()" class="add-item-link disabled" aria-disabled="true" tabindex="0">
+                        <span>{{'personInfo.label.addNew'|i18n}}</span><span class="icon-add-CO"></span>
+                    </a>
+
                 </div>
             </div>
             <ng-include src="'personalInformationApp/piEmergencyContact/piEmergencyContactList.html'|webAppResourcePath"></ng-include>
