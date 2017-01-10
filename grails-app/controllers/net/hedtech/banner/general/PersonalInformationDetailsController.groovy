@@ -682,6 +682,9 @@ class PersonalInformationDetailsController {
         try {
             model.isPreferredEmailUpdateable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PREF_EMAIL, 'Y') == 'Y'
             model.isProfilePicDisplayable =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PROFILE_PICTURE, 'Y') == 'Y'
+            model.isOverviewAddressDisplayable =   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR, 'Y') == 'Y'
+            model.isOverviewPhoneDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE, 'Y') == 'Y'
+            model.isOverviewEmailDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL, 'Y') == 'Y'
             model.isDirectoryProfileDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DIRECTORY_PROFILE, 'Y') == 'Y'
             model.isVetClassificationDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y') == 'Y'
             model.isSecurityQandADisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'

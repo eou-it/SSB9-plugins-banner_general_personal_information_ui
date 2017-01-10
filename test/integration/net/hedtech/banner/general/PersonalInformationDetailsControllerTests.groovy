@@ -1348,6 +1348,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertTrue data.isPreferredEmailUpdateable
         assertTrue data.isProfilePicDisplayable
+        assertTrue data.isOverviewAddressDisplayable
+        assertTrue data.isOverviewPhoneDisplayable
+        assertTrue data.isOverviewEmailDisplayable
         assertTrue data.isDirectoryProfileDisplayable
         assertTrue data.isVetClassificationDisplayable
         assertTrue data.isSecurityQandADisplayable

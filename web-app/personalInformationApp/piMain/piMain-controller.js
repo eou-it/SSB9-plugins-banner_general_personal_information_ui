@@ -602,7 +602,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 );
             }
 
-            if (additionalDetailsSectionMode !== $scope.SECTION_HIDDEN) {
+            if (additionalDetailsSectionMode) {
                 sections.push({
                         heading: 'personInfo.title.additionalDetails',
                         startingTab: 'additionalDetails',
@@ -613,7 +613,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 );
             }
 
-            if (otherSectionMode !== $scope.SECTION_HIDDEN) {
+            if (otherSectionMode) {
                 sections.push({
                         heading: 'personInfo.title.other',
                         startingTab: 'other',
