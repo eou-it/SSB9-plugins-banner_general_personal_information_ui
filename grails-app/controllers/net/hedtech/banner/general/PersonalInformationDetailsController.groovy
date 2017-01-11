@@ -67,7 +67,7 @@ class PersonalInformationDetailsController {
             model.addresses = []
 
             // Define configuration to fetch phone sequence from GORICCR
-            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'OVERVIEW.ADDRESS']
+            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: PersonalInformationConfigService.OVERVIEW_ADDR]
             def addressDisplaySequence = PersonUtility.getDisplaySequence('addressDisplaySequence', sequenceConfig)
             def personAddress
 
@@ -356,7 +356,7 @@ class PersonalInformationDetailsController {
         if (pidm) {
             try {
                 // Define configuration to fetch phone sequence from GORICCR
-                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: 'OVERVIEW.PHONE']
+                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: PersonalInformationConfigService.OVERVIEW_PHONE]
 
                 model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
             } catch (ApplicationException e) {
@@ -699,6 +699,7 @@ class PersonalInformationDetailsController {
             model.personalDetailsSectionMode =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.additionalDetailsSectionMode =   (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN)||(model.isVetClassificationDisplayable)||(model.isDisabilityStatusDisplayable)
             model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
+            model.isGenderPronounDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y'
 
             render model as JSON
         }

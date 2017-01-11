@@ -33,7 +33,9 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
-            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}' type="hidden" />
+            <input ng-if="piConfig.isMaritalStatusUpdateable" select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}' type="hidden" />
+            <input ng-if="!piConfig.isMaritalStatusUpdateable" class="text-input-field semi-bold form-spacing" type="text"
+                   value="{{personalDetails.maritalStatus.description}}" id="maritalStatus" aria-disabled="true" disabled>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label" for="legalSex">{{'personInfo.label.legalSex'|i18n}}</label><br>
@@ -49,13 +51,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p class="input-field-label mobile-errors" ng-class="[(!!preferredFirstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{preferredFirstNameErrMsg|i18n}}</p>
             </div>
-            <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
+            <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
                     <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPersonalPronounList", "model": "FIX_ME_personalPronoun", "showNA": true}' type="hidden" />
                 </div>
             </div>
-            <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
+            <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
                     <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderIdentificationList", "model": "FIX_ME_genderIdentification", "showNA": true}' type="hidden" />

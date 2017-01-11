@@ -1359,6 +1359,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.isMaritalStatusUpdateable
         assertTrue data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
+        assertTrue data.isGenderPronounDisplayable
         assertEquals '2',data.emailSectionMode
         assertEquals '2',data.telephoneSectionMode
         assertEquals '2',data.addressSectionMode

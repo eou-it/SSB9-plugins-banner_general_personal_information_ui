@@ -62,14 +62,14 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
 
     @Test
     void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_ADDRESS() {
-        def val = personalInformationConfigService.getParamFromSession('OVERVIEW.ADDRESS', null)
+        def val = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.OVERVIEW_ADDR, null)
 
         assertNull val
     }
 
     @Test
     void testGetParamFromSessionExcludedPropertyPERS_INFO_OVERVIEW_PHONE() {
-        def val = personalInformationConfigService.getParamFromSession('OVERVIEW.PHONE', null)
+        def val = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.OVERVIEW_PHONE, null)
 
         assertNull val
     }
@@ -104,6 +104,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.EMER_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.PERS_DETAILS_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.ETHN_RACE_MODE]
+        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.GENDER_PRONOUN]
         assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_PHONE]
         assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_ADDR]
     }

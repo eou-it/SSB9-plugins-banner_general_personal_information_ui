@@ -13,8 +13,8 @@ class PersonalInformationConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
 
-    static final String OVERVIEW_ADDR = 'OVERVIEW.ADDRESS'
-    static final String OVERVIEW_PHONE = 'OVERVIEW.PHONE'
+    static final String OVERVIEW_ADDR = 'OVERVIEW.ADDRESS.TYPE'
+    static final String OVERVIEW_PHONE = 'OVERVIEW.PHONE.TYPE'
     static final String DISPLAY_OVERVIEW_ADDR = 'DISPLAY.OVERVIEW.ADDRESS'
     static final String DISPLAY_OVERVIEW_PHONE = 'DISPLAY.OVERVIEW.PHONE'
     static final String DISPLAY_OVERVIEW_EMAIL = 'DISPLAY.OVERVIEW.EMAIL'
@@ -30,12 +30,14 @@ class PersonalInformationConfigService {
     static final String EMER_MODE = 'EMERGENCY.CONTACT.SECTION.MODE'
 
     static final String ETHN_RACE_MODE = 'ETHNICITY.RACE.MODE'
-    static final String VETERANS_CLASSIFICATION = 'ENABLE.VETERANS.CLASSIFICATION'
+    static final String VETERANS_CLASSIFICATION = 'ENABLE.VETERAN.CLASSIFICATION'
     static final String DISABILITY_STATUS = 'ENABLE.DISABILITY.STATUS'
 
-    static final String DIRECTORY_PROFILE = 'DISPLAY.DIRECTORY.PROFILE'
+    static final String DIRECTORY_PROFILE = 'ENABLE.DIRECTORY.PROFILE'
     static final String SECURITY_QA_CHANGE = 'ENABLE.SECURITY.QA.CHANGE'
     static final String PASSWORD_CHANGE = 'ENABLE.PASSWORD.CHANGE'
+
+    static final String GENDER_PRONOUN = 'ENABLE.GENDER.IDENTITY.PRONOUN'
 
     static final String SECTION_HIDDEN = '0'
     static final String SECTION_READONLY = '1'
