@@ -618,7 +618,7 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render personBasicPersonBaseService.getPersonalDetails(pidm) as JSON
+            render personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm) as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON

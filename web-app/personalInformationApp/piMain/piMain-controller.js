@@ -228,6 +228,35 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     if (!$scope.personalDetails.maritalStatus) {
                         $scope.personalDetails.maritalStatus = {code: null, description: null};
                     }
+                    //initialize all veteran related scope variables
+                    $scope.veteranDisabled='';
+                    $scope.veteranRecent='';
+                    $scope.veteranCategory='';
+                    $scope.veteranArmedForcesServiceMedal='';
+
+                    //get all veteran related values
+                    if (!$scope.personalDetails.vetCategoryIndicator) {
+                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
+                    } else if ($scope.personalDetails.vetCategoryIndicator == 'B') {
+                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
+                    } else if ($scope.personalDetails.vetCategoryIndicator == 'O') {
+                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.active.veteran');
+                        if ($scope.personalDetails.vetActiveDutySeparationDate) {
+                            var nowDate = new Date();
+                            if (new Date($scope.personalDetails.vetActiveDutySeparationDate) >= nowDate.setFullYear((nowDate.getFullYear())-3) ){
+                                $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
+                            }
+                        }
+                    } else if ($scope.personalDetails.vetCategoryIndicator == 'V') {
+                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
+                    }
+                    if ($scope.personalDetails.vetDisabledIndicator == "Y") {
+                        $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
+                    }
+                    if ($scope.personalDetails.vetArmedServiceMedalIndicator) {
+                        $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
+                    }
+
                 }
             });
 
@@ -370,6 +399,18 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         };
 
+        $scope.openEditVeteranModal = function() {
+
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAdditionalDetails/piVeteranClassification.html'),
+                windowClass: 'edit-email pi-modal',
+                keyboard: true,
+                controller: "piEditPersonalDetailsController",
+                scope: $scope,
+                resolve: {
+                }
+            });
+        };
         $scope.openEditPhoneModal = function(currentPhone) {
 
             $modal.open({

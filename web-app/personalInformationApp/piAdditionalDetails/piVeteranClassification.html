@@ -1,0 +1,29 @@
+<!--******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div>
+    <div>
+    <h2 class="pi-modal-title" style="text-align: center">
+        {{'personinfo.veteran.classification.title'|i18n}}
+    </h2>
+
+    <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+    </div>
+    <div>
+       {{'personinfo.veteran.classification.detail'|i18n}}
+
+    </div>
+    <div class="dialog-footer-margin pi-modal-footer">
+        <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
+            {{'personInfo.label.button.cancel'|i18n}}
+        </button>
+        <button ng-click="savePersonalDetails()" ng-class="['two-btn-layout']" class="dialog-btn save-btn">
+            {{'personInfo.label.button.update'|i18n}}
+        </button>
+    </div>
+</div>
+<!-- Audible message div made visible when audible message is to be read by screen reader. Designed to be used with tooltips/popovers that may
+     not work correctly with readers. -->
+<div ng-class="{'audible-message': true, 'audible-message-hidden': !playAudibleMessage, 'audible-message-visible': playAudibleMessage}" role="alert" aria-live="assertive">
+    {{playAudibleMessage}}
+</div>

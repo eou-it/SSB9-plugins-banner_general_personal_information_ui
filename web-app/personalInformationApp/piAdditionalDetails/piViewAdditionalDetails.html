@@ -29,14 +29,16 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
                 <div>
                     <!-- TODO: update with proper page -->
-                    <div>Protected Veteran</div>
-                    <div>Disabled Veteran</div>
-                    <div>July 4, 2015</div>
+                    <div>{{veteranCategory}}</div>
+                    <div>{{veteranRecent}}</div>
+                    <div>{{veteranArmedForcesServiceMedal}}</div>
+                    <div>{{veteranDisabled}}</div>
+                    <div>{{'personinfo.veteran.classification.date.discharge.label'|i18n}}{{stringToDate(personalDetails.vetActiveDutySeparationDate)|date:'longDate'}}</div>
                 </div>
             </div>
 
             <div ng-if="piConfig.isVetClassificationDisplayable" class="button-block">
-                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                <a ng-click="openEditVeteranModal()" class="edit-veteran pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
