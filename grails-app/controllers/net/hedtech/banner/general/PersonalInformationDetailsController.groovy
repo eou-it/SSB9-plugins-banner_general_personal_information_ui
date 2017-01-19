@@ -653,9 +653,9 @@ class PersonalInformationDetailsController {
                 id: updatedPerson.id,
                 version: updatedPerson.version,
                 preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: updatedPerson.maritalStatus,
-                gender: updatedPerson.gender,
-                pronoun: updatedPerson.pronoun
+                maritalStatus: fixJSONObjectForCast(updatedPerson.maritalStatus),
+                gender: fixJSONObjectForCast(updatedPerson.gender),
+                pronoun: fixJSONObjectForCast(updatedPerson.pronoun)
         ]
 
         try {
