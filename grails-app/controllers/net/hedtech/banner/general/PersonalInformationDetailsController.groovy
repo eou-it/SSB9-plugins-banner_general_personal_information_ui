@@ -615,6 +615,16 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getGenderList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render personGenderPronounCompositeService.fetchGenderList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getPersonalDetails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
