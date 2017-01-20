@@ -30,6 +30,7 @@ class PersonalInformationDetailsController {
     def maritalStatusService
     def personBasicPersonBaseService
     def personRaceCompositeService
+    def personGenderPronounCompositeService
 
 
     private def findPerson() {
@@ -614,11 +615,31 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getGenderList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render personGenderPronounCompositeService.fetchGenderList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getPronounList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render personGenderPronounCompositeService.fetchPronounList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getPersonalDetails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm) as JSON
+            render personGenderPronounCompositeService.fetchPersonalDetails(pidm) as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
@@ -637,24 +658,18 @@ class PersonalInformationDetailsController {
 
         fixJSONObjectForCast(updatedPerson)
 
-        def updatedMaritalStatus = updatedPerson.maritalStatus
-        def maritalStatusMap = [
-                id: updatedMaritalStatus.id,
-                version: updatedMaritalStatus.version,
-                code: updatedMaritalStatus.code,
-                description: updatedMaritalStatus.description
-        ]
-
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
                 id: updatedPerson.id,
                 version: updatedPerson.version,
                 preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: maritalStatusMap
+                maritalStatus: updatedPerson.maritalStatus,
+                gender: updatedPerson.gender,
+                pronoun: updatedPerson.pronoun
         ]
 
         try {
-            personBasicPersonBaseService.update(person)
+            personGenderPronounCompositeService.updatePerson(person)
 
             render([failure: false] as JSON)
         }

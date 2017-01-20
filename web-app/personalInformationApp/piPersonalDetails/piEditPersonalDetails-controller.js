@@ -45,7 +45,9 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
                     version: maritalStatusFromScope.version,
                     code: maritalStatusFromScope.code,
                     description: maritalStatusFromScope.description
-                }
+                },
+                gender: $scope.personalDetails.gender,
+                pronoun: $scope.personalDetails.pronoun
             };
 
             piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);

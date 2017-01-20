@@ -54,13 +54,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
-                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPersonalPronounList", "model": "FIX_ME_personalPronoun", "showNA": true}' type="hidden" />
+                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPronounList", "model": "personalDetails.pronoun", "showNA": true}' type="hidden" />
                 </div>
             </div>
             <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
-                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderIdentificationList", "model": "FIX_ME_genderIdentification", "showNA": true}' type="hidden" />
+                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderList", "model": "personalDetails.gender", "showNA": true}' type="hidden" />
                 </div>
             </div>
         </div>

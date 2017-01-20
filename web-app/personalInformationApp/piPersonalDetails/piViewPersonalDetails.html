@@ -79,7 +79,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.personalPronoun'|i18n}}
                 </div>
                 <div>
-                    <div>{{'-'}}</div>
+                    <div>{{!personalDetails.pronoun.description ? '-' : personalDetails.pronoun.description}}</div>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.genderIdentification'|i18n}}
                 </div>
                 <div>
-                    <div>{{'Male'}}</div>
+                    <div>{{!personalDetails.gender.description ? '-' : personalDetails.gender.description}}</div>
                 </div>
             </div>
         </div>
