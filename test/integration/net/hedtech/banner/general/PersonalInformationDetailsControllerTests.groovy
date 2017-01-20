@@ -1265,6 +1265,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetPronounList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getPronounList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue 3 <= data.size()
+        assertTrue data.description.contains('one')
+    }
+
+    @Test
     void testGetPersonalDetails() {
         loginSSB 'GDP000005', '111111'
 

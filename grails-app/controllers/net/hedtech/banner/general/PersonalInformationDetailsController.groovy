@@ -625,6 +625,16 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getPronounList() {
+        def map = PersonalInformationControllerUtility.getFetchListParams(params)
+
+        try {
+            render personGenderPronounCompositeService.fetchPronounList(map.max, map.offset, map.searchString) as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getPersonalDetails() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -653,9 +663,9 @@ class PersonalInformationDetailsController {
                 id: updatedPerson.id,
                 version: updatedPerson.version,
                 preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: fixJSONObjectForCast(updatedPerson.maritalStatus),
-                gender: fixJSONObjectForCast(updatedPerson.gender),
-                pronoun: fixJSONObjectForCast(updatedPerson.pronoun)
+                maritalStatus: updatedPerson.maritalStatus,
+                gender: updatedPerson.gender,
+                pronoun: updatedPerson.pronoun
         ]
 
         try {
