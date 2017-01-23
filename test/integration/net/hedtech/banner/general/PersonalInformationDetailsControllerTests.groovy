@@ -1313,6 +1313,14 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             maritalStatus:{
                 code:'S',
                 description:'Single'
+            },
+            gender: {
+                code: null,
+                description: null
+            },
+            pronoun: {
+                code: B002,
+                description: 'she'
             }
         }""".toString()
 
