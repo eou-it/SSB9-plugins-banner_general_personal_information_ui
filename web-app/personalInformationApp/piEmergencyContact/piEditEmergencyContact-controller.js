@@ -67,7 +67,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                 var handleResponse = function (response) {
                     if (response.failure) {
                         $scope.addressErrMsg = response.message;
-                        notificationCenterService.displayNotification(response.message, "error");
+                        piEmergencyContactService.displayErrorMessage(response.message);
                     } else {
                         var notifications = [];
                         notifications.push({message: 'personInfo.save.success.message',

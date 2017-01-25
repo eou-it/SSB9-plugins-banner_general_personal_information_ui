@@ -19,7 +19,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             var handleResponse = function (response) {
                 if (response.failure) {
                     $scope.personalDetailsErrMsg = response.message;
-                    notificationCenterService.displayNotification(response.message, "error");
+                    piPersonalDetailsService.displayErrorMessage(response.message, "error");
                 } else {
                     var notifications = [];
                     notifications.push({message: 'personInfo.save.success.message',

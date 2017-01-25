@@ -64,8 +64,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
         </div>
-        <p class="input-field-label mobile-errors response-err" ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]"
+        <p ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]" class="input-field-label mobile-errors response-err"
            role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
+        <div id="personalDetailsErr" class="visuallyhidden" tabindex="-1">
+            <span>{{personalDetailsErrMsg}}</span>
+        </div>
     </div>
     <div class="dialog-footer-margin pi-modal-footer">
         <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
