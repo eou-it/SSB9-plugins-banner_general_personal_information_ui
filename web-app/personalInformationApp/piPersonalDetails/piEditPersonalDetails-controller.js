@@ -54,7 +54,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
         };
 
         this.init = function() {
-
+            $scope.personalDetails = angular.copy($scope.personalDetails);
         };
 
         // INITIALIZE
