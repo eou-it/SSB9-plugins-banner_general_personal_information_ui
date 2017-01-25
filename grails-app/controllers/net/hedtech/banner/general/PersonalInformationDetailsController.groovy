@@ -683,7 +683,9 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            model.races = personRaceCompositeService.getRacesByPidm(pidm)
+            model.races = personRaceCompositeService.getRacesByPidm(pidm).collect {
+                it = [description: it.description, race: it.race]
+            }
             render model as JSON
         }
         catch (ApplicationException e) {
