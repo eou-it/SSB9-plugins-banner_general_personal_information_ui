@@ -1,7 +1,8 @@
 personalInformationApp.service('piAddressService', ['notificationCenterService', '$filter', 'personalInformationService',
     function (notificationCenterService, $filter, personalInformationService) {
 
-        var messages = [];
+        var messages = [],
+            addressMessageCenter = "#addressErrorMsgCenter";
 
         this.getErrorAddressType = function (address) {
             var msg = 'personInfo.address.error.addressType';
@@ -152,11 +153,21 @@ personalInformationApp.service('piAddressService', ['notificationCenterService',
         };
 
         this.displayMessages = function() {
+            notificationCenterService.setLocalMessageCenter(addressMessageCenter);
+
             _.each(messages, function(message) {
                 notificationCenterService.addNotification(message.msg, message.type);
             });
 
             messages = [];
+
+            notificationCenterService.setLocalMessageCenter(null);
+        };
+
+        this.displayErrorMessage = function(message) {
+            notificationCenterService.setLocalMessageCenter(addressMessageCenter);
+            notificationCenterService.displayNotification(message, "error");
+            notificationCenterService.setLocalMessageCenter(null);
         };
     }
 ]);

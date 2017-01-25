@@ -1,7 +1,8 @@
 personalInformationApp.service('piEmergencyContactService', ['notificationCenterService',
     function (notificationCenterService) {
 
-        var messages = [];
+        var messages = [],
+            emerContactMessageCenter = "#emerContactsErrorMsgCenter";
 
         this.getErrorFirstName = function(contact) {
             var msg = 'personInfo.person.error.firstName';
@@ -88,11 +89,21 @@ personalInformationApp.service('piEmergencyContactService', ['notificationCenter
         };
 
         this.displayMessages = function() {
+            notificationCenterService.setLocalMessageCenter(emerContactMessageCenter);
+
             _.each(messages, function(message) {
                 notificationCenterService.addNotification(message.msg, message.type);
             });
 
             messages = [];
+
+            notificationCenterService.setLocalMessageCenter(null);
+        };
+
+        this.displayErrorMessage = function(message) {
+            notificationCenterService.setLocalMessageCenter(emerContactMessageCenter);
+            notificationCenterService.displayNotification(message, "error");
+            notificationCenterService.setLocalMessageCenter(null);
         };
     }
 ]);

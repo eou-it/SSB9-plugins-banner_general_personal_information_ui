@@ -1,6 +1,7 @@
 personalInformationApp.service('piPhoneService', ['notificationCenterService',
     function (notificationCenterService) {
         var messages = [],
+            phoneMessageCenter = "#phoneErrorMsgCenter",
             trimmableCharRegex = /[\s-]/g;
 
         this.getErrorPhoneType = function (phone) {
@@ -37,11 +38,21 @@ personalInformationApp.service('piPhoneService', ['notificationCenterService',
         };
 
         this.displayMessages = function() {
+            notificationCenterService.setLocalMessageCenter(phoneMessageCenter);
+
             _.each(messages, function(message) {
                 notificationCenterService.addNotification(message.msg, message.type);
             });
 
             messages = [];
+
+            notificationCenterService.setLocalMessageCenter(null);
+        };
+
+        this.displayErrorMessage = function(message) {
+            notificationCenterService.setLocalMessageCenter(phoneMessageCenter);
+            notificationCenterService.displayNotification(message, "error");
+            notificationCenterService.setLocalMessageCenter(null);
         };
     }
 ]);

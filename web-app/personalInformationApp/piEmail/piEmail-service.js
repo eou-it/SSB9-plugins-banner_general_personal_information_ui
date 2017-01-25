@@ -1,6 +1,7 @@
 personalInformationApp.service('piEmailService', ['notificationCenterService',
     function (notificationCenterService) {
         var messages = [],
+            emailMessageCenter = "#emailErrorMsgCenter",
             invalidCharRegEx = /[ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]/i;
 
         this.getErrorEmailType = function (email) {
@@ -42,11 +43,21 @@ personalInformationApp.service('piEmailService', ['notificationCenterService',
         };
 
         this.displayMessages = function() {
+            notificationCenterService.setLocalMessageCenter(emailMessageCenter);
+
             _.each(messages, function(message) {
                 notificationCenterService.addNotification(message.msg, message.type);
             });
 
             messages = [];
+
+            notificationCenterService.setLocalMessageCenter(null);
+        };
+
+        this.displayErrorMessage = function(message) {
+            notificationCenterService.setLocalMessageCenter(emailMessageCenter);
+            notificationCenterService.displayNotification(message, "error");
+            notificationCenterService.setLocalMessageCenter(null);
         };
     }
 ]);

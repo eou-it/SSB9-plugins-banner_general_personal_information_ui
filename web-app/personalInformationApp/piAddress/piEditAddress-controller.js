@@ -82,7 +82,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                 var handleResponse = function (response) {
                     if (response.failure) {
                         $scope.addressErrMsg = response.message;
-                        notificationCenterService.displayNotification(response.message, "error");
+                        piAddressService.displayErrorMessage(response.message);
                     }
                     else {
                         notificationCenterService.clearNotifications();

@@ -39,6 +39,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             <p class="input-field-label mobile-errors response-err" ng-class="[(!!emailErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{emailErrMsg}}</p>
         </div>
+        <div id="emailErrorMsgCenter" class="visuallyhidden" tabindex="-1">
+            <span>{{emailTypeErrMsg|i18n}}</span>
+            <span>{{emailAddressErrMsg|i18n}}</span>
+            <span>{{emailErrMsg}}</span>
+        </div>
     </div>
     <div class="dialog-footer-margin pi-modal-footer">
         <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">

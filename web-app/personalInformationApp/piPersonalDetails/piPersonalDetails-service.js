@@ -1,6 +1,10 @@
 personalInformationApp.service('piPersonalDetailsService', ['notificationCenterService',
     function (notificationCenterService) {
 
-        // TODO: stub
+        this.displayErrorMessage = function(message) {
+            notificationCenterService.setLocalMessageCenter("#personalDetailsErr");
+            notificationCenterService.displayNotification(message, "error");
+            notificationCenterService.setLocalMessageCenter(null);
+        };
     }
 ]);
