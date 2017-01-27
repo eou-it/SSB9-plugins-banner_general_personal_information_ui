@@ -4,6 +4,8 @@
 
 personalInformationApp.service('notificationCenterService', ['$filter', function ($filter) {
     var flashNotification = false;
+
+    this.localMessageCenter = null;
     this.clearNotifications = function() {
         notifications.clearNotifications();
     };
@@ -34,7 +36,7 @@ personalInformationApp.service('notificationCenterService', ['$filter', function
         );
         notifications.addNotification(notification);
 
-        focusNotificationCenter(messageType);
+        this.focusNotificationCenter(messageType);
     };
 
     /**
@@ -75,27 +77,28 @@ personalInformationApp.service('notificationCenterService', ['$filter', function
             notificationCenter.openNotificationFlyout();
         }
 
-        focusNotificationCenter(messageType);
+        this.focusNotificationCenter(messageType);
         return notification;
     };
 
-    function focusNotificationCenter(messageType) {
+    this.focusNotificationCenter = function(messageType) {
         var notifCenterElems;
- 
-        if(messageType === "error") {
-            notifCenterElems = $("div.notification-center-flyout > ul.error-container");
-        }
-        else if(messageType === "warning") {
-            notifCenterElems = $("div.notification-center-flyout > ul.prompt-container > li > div.notification-item-prompts > button:first-child");
-        }
-        else {
-            notifCenterElems = $("div.notification-center-flyout > ul > li > div");
-        }
 
-        notifCenterElems.attr("tabindex", 0);
-        notifCenterElems.focus();
-        notifCenterElems.removeAttr("tabindex");
-    }
+        if(this.localMessageCenter !== null) {
+            notifCenterElems = $(this.localMessageCenter);
+            notifCenterElems.focus();
+        }
+        else if(messageType === "success") {
+            notifCenterElems = $("div.notification-center-flyout > ul > li > div");
+            notifCenterElems.attr("tabindex", 0);
+            notifCenterElems.focus();
+            notifCenterElems.removeAttr("tabindex");
+        }
+    };
+
+    this.setLocalMessageCenter = function(elementSelector) {
+        this.localMessageCenter = elementSelector;
+    };
 
     this.removeNotification = function(notification) {
         // make sure argument is a Notification object, if it is not, then find the Notification object by

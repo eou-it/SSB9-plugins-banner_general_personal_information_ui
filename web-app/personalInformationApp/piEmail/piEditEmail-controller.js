@@ -38,8 +38,8 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
             if (isValidEmail()) {
                 var handleResponse = function (response) {
                     if (response.failure) {
-                        notificationCenterService.displayNotification(response.message, "error");
                         $scope.emailErrMsg = response.message;
+                        piEmailService.displayErrorMessage(response.message);
                     }
                     else {
                         notificationCenterService.clearNotifications();

@@ -3,8 +3,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="view-list">
     <div class="row">
-        <div class="item-wrapper col-xs-12 col-md-6 col-lg-4">
-            <div class="addtl-details-detail">
+        <div ng-if="piConfig.ethnRaceMode !== SECTION_HIDDEN" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+            <div ng-if="piConfig.ethnRaceMode !== SECTION_HIDDEN" class="addtl-details-detail">
                 <div class="semi-bold">
                     {{'personInfo.label.ethnicityAndRace'|i18n}}
                 </div>
@@ -15,33 +15,36 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <!-- TODO: update with proper config code when available -->
-            <div ng-if="piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
+            <div ng-if="piConfig.ethnRaceMode === SECTION_UPDATEABLE" class="button-block">
                 <a href="/BannerGeneralSsb/ssb/personalInformation/raceAndEthnicitySurvey" class="pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
             </div>
         </div>
-        <div class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+        <div ng-if="piConfig.isVetClassificationDisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
             <div class="email-detail">
                 <div class="semi-bold">
                     {{'personInfo.label.veteranClassification'|i18n}}
                 </div>
                 <div>
-                    <div>Protected Veteran</div>
-                    <div>Disabled Veteran</div>
-                    <div>July 4, 2015</div>
+                    <!-- TODO: update with proper page -->
+                    <div>{{veteranCategory}}</div>
+                    <div>{{veteranRecent}}</div>
+                    <div>{{veteranArmedForcesServiceMedal}}</div>
+                    <div>{{veteranDisabled}}</div>
+                    <div>{{'personinfo.veteran.classification.date.discharge.label'|i18n}}{{stringToDate(personalDetails.vetActiveDutySeparationDate)|date:'longDate'}}</div>
                 </div>
             </div>
-            <!-- TODO: update with proper config code when available -->
-            <div ng-if="piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
-                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+
+            <div ng-if="piConfig.isVetClassificationDisplayable" class="button-block">
+                <a ng-click="openEditVeteranModal()" class="edit-veteran pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
             </div>
         </div>
-        <div class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+        <div ng-if="piConfig.isDisabilityStatusDisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
             <div class="email-detail">
                 <div class="semi-bold">
                     {{'personInfo.label.disabilityClassification'|i18n}}
@@ -51,7 +54,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <!-- TODO: update with proper config code when available -->
-            <div ng-if="piConfig.additionalDetailsSectionMode === SECTION_UPDATEABLE" class="button-block">
+            <div ng-if="piConfig.isDisabilityStatusDisplayable" class="button-block">
                 <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>

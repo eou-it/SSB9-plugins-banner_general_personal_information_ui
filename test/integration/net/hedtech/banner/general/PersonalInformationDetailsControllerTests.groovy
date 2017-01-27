@@ -1249,6 +1249,38 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetGenderList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getGenderList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue 3 <= data.size()
+        assertTrue data.description.contains('Woman')
+    }
+
+    @Test
+    void testGetPronounList() {
+        loginSSB 'HOSH00018', '111111'
+
+        def params = [ searchString: "", offset: 0, max: 10 ]
+
+        controller.params.putAll(params)
+        controller.getPronounList()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue 3 <= data.size()
+        assertTrue data.description.contains('one')
+    }
+
+    @Test
     void testGetPersonalDetails() {
         loginSSB 'GDP000005', '111111'
 
@@ -1281,6 +1313,14 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
             maritalStatus:{
                 code:'S',
                 description:'Single'
+            },
+            gender: {
+                code: null,
+                description: null
+            },
+            pronoun: {
+                code: B002,
+                description: 'she'
             }
         }""".toString()
 
@@ -1348,6 +1388,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertTrue data.isPreferredEmailUpdateable
         assertTrue data.isProfilePicDisplayable
+        assertTrue data.isOverviewAddressDisplayable
+        assertTrue data.isOverviewPhoneDisplayable
+        assertTrue data.isOverviewEmailDisplayable
         assertTrue data.isDirectoryProfileDisplayable
         assertTrue data.isVetClassificationDisplayable
         assertTrue data.isSecurityQandADisplayable
@@ -1356,6 +1399,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.isMaritalStatusUpdateable
         assertTrue data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
+        assertTrue data.isGenderPronounDisplayable
         assertEquals '2',data.emailSectionMode
         assertEquals '2',data.telephoneSectionMode
         assertEquals '2',data.addressSectionMode

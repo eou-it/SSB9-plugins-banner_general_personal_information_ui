@@ -109,6 +109,18 @@
             <p class="input-field-label mobile-errors response-err" ng-class="[(!!addressErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{addressErrMsg}}</p>
         </div>
+        <div id="addressErrorMsgCenter" class="visuallyhidden" tabindex="-1">
+            <span>{{addressTypeErrMsg|i18n}}</span>
+            <span>{{fromDateErrMsg|i18n}}</span>
+            <span>{{dateRangeErrMsg|i18n}}</span>
+            <span>{{toDateErrMsg|i18n}}</span>
+            <span>{{streetLine1ErrMsg|i18n}}</span>
+            <span>{{cityErrMsg|i18n}}</span>
+            <span>{{stateErrMsg|i18n}}</span>
+            <span>{{zipErrMsg|i18n}}</span>
+            <span>{{nationErrMsg|i18n}}</span>
+            <span>{{addressErrMsg}}</span>
+        </div>
     </div>
     <div class="dialog-footer-margin pi-modal-footer">
         <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">

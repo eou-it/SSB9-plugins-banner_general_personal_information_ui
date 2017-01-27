@@ -19,7 +19,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             var handleResponse = function (response) {
                 if (response.failure) {
                     $scope.personalDetailsErrMsg = response.message;
-                    notificationCenterService.displayNotification(response.message, "error");
+                    piPersonalDetailsService.displayErrorMessage(response.message, "error");
                 } else {
                     var notifications = [];
                     notifications.push({message: 'personInfo.save.success.message',
@@ -45,14 +45,16 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
                     version: maritalStatusFromScope.version,
                     code: maritalStatusFromScope.code,
                     description: maritalStatusFromScope.description
-                }
+                },
+                gender: $scope.personalDetails.gender,
+                pronoun: $scope.personalDetails.pronoun
             };
 
             piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);
         };
 
         this.init = function() {
-
+            $scope.personalDetails = angular.copy($scope.personalDetails);
         };
 
         // INITIALIZE

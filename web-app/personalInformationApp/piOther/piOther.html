@@ -5,10 +5,11 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     <div ng-if="piConfig.isDirectoryProfileDisplayable"class="item-wrapper col-xs-12 col-md-6 col-lg-4">
         <a  ng-click="openEditDisplayProfileModal()" enter-key="openEditDisplayProfileModal()" class="pi-link">{{'personInfo.label.directoryProfile'|i18n}}</a>
     </div>
-    <div class="item-wrapper col-xs-12 col-md-6 col-lg-4">
-        <a href="TODO" class="pi-link">{{'personInfo.label.securityQuestionsAndAnswers'|i18n}}</a>
     </div>
-    <div class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+    <div ng-if="piConfig.isSecurityQandADisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+        {{'personInfo.label.securityQuestionsAndAnswers'|i18n}}
+    </div>
+    <div ng-if="piConfig.isPasswordChangeDisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
         <a  ng-click="resetPassword()" enter-key="resetPassword()" class="pi-link">{{'personInfo.label.changePassword'|i18n}}</a>
     </div>
 </div>

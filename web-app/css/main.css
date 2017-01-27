@@ -830,8 +830,8 @@ button.closebtn {
 }
 
 .pi-profile-image > svg {
-    width: 128px;
-    margin-bottom: -15px;
+    width: 132px;
+    height: 160px;
 }
 
 .details-wrapper {

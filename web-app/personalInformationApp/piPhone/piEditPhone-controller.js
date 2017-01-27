@@ -42,8 +42,8 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
 
                 var handleResponse = function (response) {
                     if (response.failure) {
-                        notificationCenterService.displayNotification(response.message, "error");
                         $scope.phoneErrMsg = response.message;
+                        piPhoneService.displayErrorMessage(response.message);
                     }
                     else {
                         notificationCenterService.clearNotifications();
