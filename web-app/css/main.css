@@ -1352,6 +1352,30 @@ table tr td {
 }
 
 
+/* Directory Profile */
+.dir-profile-col-hdg {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+div.dir-profile {
+    margin-top: 25px;
+}
+
+.dir-profile-desc {
+    font-weight: bold;
+}
+
+.dir-profile .row {
+    padding: 3px 0;
+}
+
+.dir-profile .shaded {
+    background-color: #f2f2f2;
+}
+
+
 /***********************/
 /* Media Query Section */
 /***********************/
@@ -1483,7 +1507,8 @@ table tr td {
 
     .edit-addr.pi-modal.modal.in .modal-dialog,
     .edit-pers-details.pi-modal.modal.in .modal-dialog,
-    .edit-emer-contact.pi-modal.modal.in .modal-dialog {
+    .edit-emer-contact.pi-modal.modal.in .modal-dialog,
+    .edit-directory-profile.pi-modal.modal.in .modal-dialog{
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1524,7 +1549,8 @@ table tr td {
 
     .edit-addr .modal-dialog,
     .edit-pers-details .modal-dialog,
-    .edit-emer-contact .modal-dialog {
+    .edit-emer-contact .modal-dialog,
+    .edit-directory-profile .modal-dialog{
         width: 896px;
     }
 

@@ -31,6 +31,7 @@ class PersonalInformationDetailsController {
     def personBasicPersonBaseService
     def personRaceCompositeService
     def personGenderPronounCompositeService
+    def directoryProfileCompositeService
 
 
     private def findPerson() {
@@ -689,6 +690,19 @@ class PersonalInformationDetailsController {
             render model as JSON
         }
         catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def getDirectoryProfile() {
+        def model = [:]
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        try {
+            def addrMaskingRule = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
+            model.directoryProfile = directoryProfileCompositeService.fetchDirectoryProfileItemsForUser(pidm, addrMaskingRule)
+            render model as JSON
+        } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }

@@ -58,7 +58,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return addrLines.join(', ');
         },
 
-        // Return true if addr1 is higher priority than addr2
+        // Return true if item1 is higher priority than item2
         isHigherPriority = function(item1, item2) {
             var priority1 = item1 && item1.displayPriority,
                 priority2 = item2 && item2.displayPriority;
@@ -426,6 +426,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         };
                     }
                 }
+            });
+        };
+
+        $scope.openEditDisplayProfileModal = function() {
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piDirectoryProfile/piEditDirectoryProfile.html'),
+                windowClass: 'edit-directory-profile pi-modal',
+                keyboard: true,
+                controller: "piEditDirectoryProfileController"
             });
         };
 

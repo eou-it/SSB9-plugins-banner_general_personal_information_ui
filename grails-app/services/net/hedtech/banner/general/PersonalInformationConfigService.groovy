@@ -69,7 +69,6 @@ class PersonalInformationConfigService {
                 createPersonalInfoConfig(personConfigInSession)
             }
         } else {
-            personConfigInSession = [:]
             createPersonalInfoConfig(personConfigInSession)
             PersonUtility.setPersonConfigInSession(personConfigInSession)
         }
