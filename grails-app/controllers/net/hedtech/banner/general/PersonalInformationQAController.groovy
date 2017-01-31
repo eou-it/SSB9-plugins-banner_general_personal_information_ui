@@ -27,8 +27,6 @@ class PersonalInformationQAController {
 
 
     def getSecurityQA() {
-        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-
         setGlobalVariables()
         def model = [
                 questions: questionList,
@@ -36,7 +34,7 @@ class PersonalInformationQAController {
                 noOfquestions: noOfQuestions,
                 questionMinimumLength: questionMinimumLength,
                 answerMinimumLength: answerMinimumLength,
-                userQuestions: generalForStoringResponsesAndPinQuestionService.fetchQuestionForPidm(pidm)
+                userQuestions: getUserQuestions()
         ]
 
         render model as JSON
@@ -62,6 +60,35 @@ class PersonalInformationQAController {
             questions.put(it.description, it.pinQuestionId)
         }
         questions.keySet().collect()
+    }
+
+    private List getUserQuestions() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def userQuestions = generalForStoringResponsesAndPinQuestionService.fetchQuestionForPidm(pidm)
+        List resultList = []
+        userQuestions.each {
+            def qstnNum
+            def userDefQuestion
+            if(it.pinQuestion){
+                qstnNum = questionList.indexOf(it.pinQuestion.description)+1
+                userDefQuestion = ''
+            }
+            else {
+                qstnNum = 0;
+                userDefQuestion = it.questionDescription
+            }
+            def question = [
+                    id: it.id,
+                    version: it.version,
+                    questionNum: qstnNum,
+                    userDefinedQuestion: userDefQuestion,
+                    answer: ''
+            ]
+
+            resultList << question
+        }
+
+        return resultList
     }
 
     def save() {

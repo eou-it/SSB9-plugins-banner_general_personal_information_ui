@@ -767,6 +767,7 @@ button.closebtn {
     background: #206E9F;
     color: white;
     box-shadow: 0px -4px #0C5482 inset;
+    float: right;
 }
 
 .save-btn[disabled] {
@@ -1050,6 +1051,21 @@ button.delete-btn {
 
 
 /*  Dropdown menu  */
+.pi-modal .dropdown {
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: normal;
+    padding: 0;
+    color: transparent;
+    text-shadow: none;
+}
+
+
 .form-spacing,
 .dropdown-menu > li > a.form-spacing {
     padding: 1em .75em;

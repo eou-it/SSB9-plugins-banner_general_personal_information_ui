@@ -1,0 +1,85 @@
+<!--******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-flex-cont">
+    <div class="modal-unflex">
+        <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmail':'personInfo.title.editEmail')|i18n}}</h2>
+        <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+        <div class="row pad-dialog-lr">
+            <div class="clearfix hidden-xs"></div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
+                       class="input-field-label" for="emailAddr">{{'personInfo.label.confirmPin'|i18n}}</label><br>
+                <input ng-model="pin" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
+                       ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
+                       class="text-input-field semi-bold form-spacing" type="password" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
+                       maxlength="128" id="emailAddr">
+                    <span ng-if="!!emailAddressErrMsg && !emailAddrFocused" class="icon input-fail">
+                        <span class="icon-error ellucian-font"></span>
+                    </span>
+                <p class="input-field-label mobile-errors" ng-class="[(!!emailAddressErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{emailAddressErrMsg|i18n}}</p>
+            </div>
+            <div ng-repeat="question in questions">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
+                           class="input-field-label" for="emailAddr">{{'personInfo.label.selectQuestion'|i18n:($index+1).toString()}}</label><br>
+                    <div class="dropdown" role="menu">
+                        <button dropdown-helper="begin" class="dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-labelledby="priority priority-menu">
+                            <span class="float-l semi-bold form-spacing">
+                                {{!pinQuestions[question.questionNum] ? 'Select Question' : pinQuestions[question.questionNum]}}
+                            </span>
+                            <span class="float-r form-spacing down-caret caret-color"></span>
+                        </button>
+                        <ul menu-controls class="dropdown-menu addAcct">
+                            <li ng-repeat="pinQuestion in pinQuestions" role="presentation">
+                                <a ng-click="setPinQuestion(question, $index)" dropdown-helper="{{($last ? 'end': null)}}" ng-class="[($last ? 'end-dropdown-radius' : null)]" class="addAcct form-spacing" id="acct-inpPri{{$index}}" role="menuitem" aria-label="" aria-describedby="" aria-labelledby="acct-inpPri{{$index}}" tabindex="0">{{pinQuestion}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
+                           class="input-field-label" for="emailAddr">{{'personInfo.label.defineQuestion'|i18n:($index+1).toString()}}</label><br>
+                    <input ng-model="question.userDefinedQuestion" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
+                           ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
+                           class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
+                           maxlength="128" id="emailAddr">
+                    <span ng-if="!!emailAddressErrMsg && !emailAddrFocused" class="icon input-fail">
+                        <span class="icon-error ellucian-font"></span>
+                    </span>
+                    <p class="input-field-label mobile-errors" ng-class="[(!!emailAddressErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                       role="alert" aria-live="assertive">{{emailAddressErrMsg|i18n}}</p>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label ng-class="(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-label field-error' : 'input-field-label')"
+                           class="input-field-label" for="emailAddr">{{'personInfo.label.answer'|i18n:($index+1).toString()}}</label><br>
+                    <input ng-model="question.answer" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
+                           ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
+                           class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
+                           maxlength="128" id="emailAddr">
+                    <span ng-if="!!emailAddressErrMsg && !emailAddrFocused" class="icon input-fail">
+                        <span class="icon-error ellucian-font"></span>
+                    </span>
+                    <p class="input-field-label mobile-errors" ng-class="[(!!emailAddressErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                       role="alert" aria-live="assertive">{{emailAddressErrMsg|i18n}}</p>
+                </div>
+            </div>
+            <p class="input-field-label mobile-errors response-err" ng-class="[(!!emailErrMsg ? 'field-error error-font-size' : 'no-display')]"
+               role="alert" aria-live="assertive">{{emailErrMsg}}</p>
+        </div>
+        <div id="emailErrorMsgCenter" class="visuallyhidden" tabindex="-1">
+            <span>{{emailTypeErrMsg|i18n}}</span>
+            <span>{{emailAddressErrMsg|i18n}}</span>
+            <span>{{emailErrMsg}}</span>
+        </div>
+    </div>
+    <div class="dialog-footer-margin pi-modal-footer">
+        <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+            {{'personInfo.label.button.cancel'|i18n}}
+        </button>
+        <button ng-click="saveQuestions()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn save-btn">
+            {{(isCreateNew?'personInfo.label.button.add':'personInfo.label.button.update')|i18n}}
+        </button>
+    </div>
+</div>

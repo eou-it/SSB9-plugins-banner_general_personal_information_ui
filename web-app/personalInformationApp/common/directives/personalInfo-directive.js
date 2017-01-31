@@ -52,3 +52,118 @@ personalInformationAppDirectives.directive('notificationBox',['$filter', functio
         }
     };
 }]);
+
+/*
+ * usage:
+ * place dropdown-helper="begin" on the element with the data-toggle attribute so that when user keys to the previous focusable element
+ * with shift+tab the dropdown menu is closed. Place dropdown-helper="end" on the last item in the menu so when the user keys to the
+ * next focusable element with tab the dropdown menu closes.
+ */
+personalInformationAppDirectives.directive('dropdownHelper', [function () {
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+
+            elem.bind('keydown', function(event) {
+                var code = event.keyCode || event.which;
+
+                if (code === 9) {
+                    if(attrs.dropdownHelper === 'begin'){
+                        if(event.shiftKey){
+                            //close dropdown if it is open when shift+tab off element
+                            if(elem.parent().hasClass('open')){
+                                elem.dropdown('toggle');
+                            }
+                        }
+                    }
+                    else if(attrs.dropdownHelper === 'end'){
+                        if(!event.shiftKey){
+                            //close dropdown when tab off element, toggle button so events fire as expected
+                            elem.parents('ul.dropdown-menu').siblings('button.dropdown-btn').dropdown('toggle');
+                        }
+                    }
+                }
+            });
+            scope.$on('$destroy', function () {
+                elem.unbind('keydown');
+            });
+        }
+    };
+}]);
+
+personalInformationAppDirectives.directive('menuControls', [function () {
+    var PREV = -1, NEXT = 1;
+
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function (scope, elem) {
+            var listItems;
+
+            var getSelectedItem = function(){
+                var selected = 0;
+
+                listItems = elem.find('li > a');
+
+                listItems.each(function(index){
+                    if($(this).is(':focus')){
+                        selected = index;
+                        return false;
+                    }
+                });
+
+                return selected;
+            };
+
+            var selectItem = function(direction){
+                var selected = getSelectedItem();
+
+                selected += direction;
+
+                if (selected >= listItems.length) {
+                    selected = 0;
+                }
+                else if (selected < 0) {
+                    selected = listItems.length - 1;
+                }
+
+                listItems.eq(selected).focus();
+            };
+
+            var clickSelectedItem = function(direction){
+                var selected = getSelectedItem();
+
+                listItems.eq(selected).click();
+
+                elem.siblings("button.dropdown-btn").focus();
+            };
+
+            elem.bind('keydown', function(event) {
+                var code = event.keyCode || event.which;
+
+                switch (code){
+                    case 37: //left arrow key
+                    case 38: //up arrow key
+                        selectItem(PREV);
+                        event.preventDefault();
+                        event.stopPropagation();
+                        break;
+                    case 39: //right arrow key
+                    case 40: //down arrow key
+                        selectItem(NEXT);
+                        event.preventDefault();
+                        event.stopPropagation();
+                        break;
+                    case 13: //enter key
+                        clickSelectedItem();
+                        event.preventDefault();
+                        event.stopPropagation();
+                        break;
+                }
+            });
+            scope.$on('$destroy', function () {
+                elem.unbind('keydown');
+            });
+        }
+    };
+}]);
