@@ -1407,4 +1407,17 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals '2',data.emergencyContactSectionMode
     }
 
+    @Test
+    void testGetDirectoryProfile() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.getDirectoryProfile()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 'Name', data.directoryProfile[0].description
+        assertEquals 'Delihia Gaddis', data.directoryProfile[0].currentListing[0]
+    }
+
 }
