@@ -66,7 +66,7 @@ class UrlMappings {
         }
 
         "/login/ajaxDenied" {
-            controller = "hrDashboard"
+            controller = "GeneralController"
             action = "denied403"
         }
 
