@@ -144,8 +144,7 @@ input:disabled {
     float: left;
 }
 
-.float-r,
-.secqa-answer.float-r {
+.float-r {
     float: right;
 }
 
@@ -1468,6 +1467,10 @@ div.dir-profile {
     .col-md-4 {
         float: left;
         width: 33%;
+    }
+
+    .secqa-answer {
+        float: right;
     }
 
     .mobile-visible {

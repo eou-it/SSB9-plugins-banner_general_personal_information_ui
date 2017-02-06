@@ -22,6 +22,7 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
 
         $scope.setPinQuestion = function(question, questionNum) {
             question.questionNum = questionNum;
+            question.removeErrors();
         };
 
         $scope.removePinFieldError = function() {
@@ -30,14 +31,14 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
             }
         };
 
-        var processQuestions = function(qstnArray) {
+        var createQuestionsForSave = function(qstnArray) {
             var result = [];
             qstnArray.forEach(function(q) {
                 result.push({
                     id: q.id,
                     version: q.version,
-                    question: 'question'+ (q.questionNum > 0 ? q.questionNum : 0),
-                    userDefinedQuestion: q.userDefinedQuestion,
+                    question: 'question' + (q.questionNum > 0 ? q.questionNum : 0),
+                    userDefinedQuestion: (q.questionNum > 0 ? '' : q.userDefinedQuestion),
                     answer: q.answer
                 });
             });
@@ -45,7 +46,7 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
         };
 
         var isValidSecurityQuestionAnswers = function() {
-            var questionsInvalid = piSecurityQAService.getQuestionErrors($scope.questions, $scope.constraints);
+            var questionsInvalid = piSecurityQAService.getAllQuestionErrors($scope.questions, $scope.constraints);
             $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
 
             return !($scope.pinErrMsg || questionsInvalid);
@@ -55,7 +56,7 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
             if (isValidSecurityQuestionAnswers()) {
                 var payload = {
                     pin: $scope.pin,
-                    questions: processQuestions($scope.questions)
+                    questions: createQuestionsForSave($scope.questions)
                 },
                     handleResponse = function (response) {
                         if (response.failure) {
@@ -98,16 +99,22 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
                     $scope.constraints.numQuestions = response.noOfquestions;
                     $scope.constraints.questionMinLength = response.questionMinimumLength;
                     $scope.constraints.answerMinLength = response.answerMinimumLength;
+
+                    var removeErrorFn = function() {
+                        piSecurityQAService.removeQuestionFieldErrors(this, $scope.constraints);
+                    };
                     var i;
                     for(i = 0; i < $scope.constraints.numQuestions; i++) {
                         if(response.userQuestions[i]) {
+                            response.userQuestions[i].removeErrors = removeErrorFn;
                             $scope.questions.push(response.userQuestions[i]);
                         }
                         else {
                             $scope.questions.push({
                                 questionNum:null,
                                 userDefinedQuestion:'',
-                                answer:''
+                                answer:'',
+                                removeErrors: removeErrorFn
                             });
                         }
                     }

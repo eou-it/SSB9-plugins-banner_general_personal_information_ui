@@ -1,5 +1,5 @@
-personalInformationApp.service('piSecurityQAService', ['$resource', 'notificationCenterService',
-    function ($resource, notificationCenterService) {
+personalInformationApp.service('piSecurityQAService', ['$resource', 'notificationCenterService', '$filter',
+    function ($resource, notificationCenterService, $filter) {
 
         this.getQuestions = function () {
             return $resource('../ssb/:controller/:action',
@@ -14,34 +14,67 @@ personalInformationApp.service('piSecurityQAService', ['$resource', 'notificatio
         var messages = [],
             secQAMessageCenter = '#securityQAErrorMsgCenter';
 
-        this.getQuestionErrors = function(questions, constraints) {
+        var getQuestionSelectErrMsg = function(question) {
+            question.questionSelectErrMsg = '';
+
+            if (question.questionNum !== 0 && !question.questionNum) {
+                question.questionSelectErrMsg = $filter('i18n')('personInfo.securityQA.error.questionRequired');
+            }
+
+            return question.questionSelectErrMsg;
+        };
+
+        var getDefQuestionErrMsg = function(question, constraints) {
+            question.defQuestionErrMsg = '';
+
+            if(question.questionNum === 0) {
+                if(!question.userDefinedQuestion) {
+                    question.defQuestionErrMsg = $filter('i18n')('personInfo.securityQA.error.defineQuesiton');
+                }
+                else if(question.userDefinedQuestion.length < constraints.questionMinLength) {
+                    question.defQuestionErrMsg = $filter('i18n')('personInfo.securityQA.error.questionLength', [constraints.questionMinLength]);
+                }
+            }
+
+            return question.defQuestionErrMsg;
+        };
+
+        var getAnswerErrMsg = function(question, constraints) {
+            question.answerErrMsg = '';
+
+            if(!question.answer) {
+                question.answerErrMsg = $filter('i18n')('personInfo.securityQA.error.answerRequired');
+            }
+            else if(question.answer.length < constraints.answerMinLength) {
+                question.answerErrMsg = $filter('i18n')('personInfo.securityQA.error.answerLength', [constraints.answerMinLength]);
+            }
+
+            return question.answerErrMsg;
+        };
+
+        this.removeQuestionFieldErrors = function(question, constraints) {
+            if(question.questionSelectErrMsg){
+                getQuestionSelectErrMsg(question);
+            }
+
+            if(question.defQuestionErrMsg){
+                getDefQuestionErrMsg(question, constraints);
+            }
+
+            if(question.answerErrMsg){
+                getAnswerErrMsg(question, constraints);
+            }
+        };
+
+        this.getAllQuestionErrors = function(questions, constraints) {
             var errorOccurred = false;
-            questions.forEach(function(qstn) {
-                qstn.questionSelectErrMsg = '';
-                qstn.defQuestionErrMsg = '';
-                qstn.answerErrMsg = '';
+            var i;
+            for(i = 0; i < questions.length; i++){
+                errorOccurred = getQuestionSelectErrMsg(questions[i]) || errorOccurred;
+                errorOccurred = getDefQuestionErrMsg(questions[i], constraints) || errorOccurred;
+                errorOccurred = getAnswerErrMsg(questions[i], constraints) || errorOccurred;
+            }
 
-                if(qstn.questionNum === 0) {
-                    if(!qstn.userDefinedQuestion) {
-                        qstn.defQuestionErrMsg = 'personInfo.securityQA.error.defineQuesiton';
-                    }
-                    else if(qstn.userDefinedQuestion.length < constraints.questionMinLength) {
-                        qstn.defQuestionErrMsg = 'personInfo.securityQA.error.questionLength';
-                    }
-                }
-                else if (!(qstn.questionNum > 0)) {
-                    qstn.questionSelectErrMsg = 'personInfo.securityQA.error.questionRequired';
-                }
-
-                if(!qstn.answer) {
-                    qstn.answerErrMsg = 'personInfo.securityQA.error.answerRequired';
-                }
-                else if(qstn.answer.length < constraints.answerMinLength) {
-                    qstn.answerErrMsg = 'personInfo.securityQA.error.answerLength';
-                }
-
-                errorOccurred = !!qstn.errMsg || errorOccurred;
-            });
             return errorOccurred;
         };
 
