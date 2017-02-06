@@ -62,6 +62,11 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 url: "/personalInformationMain",
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/personalInformationMain.html',
                 controller: 'piMainController',
+                resolve: {
+                    piConfigResolve: function (piCrudService) {
+                        return piCrudService.get('PiConfig').$promise;
+                    }
+                },
                 data: {
                     breadcrumbs: []
                 },
@@ -74,6 +79,11 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 url: "/personalInformationMobileFullProfile",
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piMobileFullView.html',
                 controller: 'piMainController',
+                resolve: {
+                    piConfigResolve: function (piCrudService) {
+                        return piCrudService.get('PiConfig').$promise;
+                    }
+                },
                 data: {
                     breadcrumbs: []
                 },

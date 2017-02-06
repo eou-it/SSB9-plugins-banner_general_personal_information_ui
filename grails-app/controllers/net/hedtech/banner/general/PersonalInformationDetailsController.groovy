@@ -3,8 +3,10 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
+import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.system.SdaCrosswalkConversion
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -573,6 +575,51 @@ class PersonalInformationDetailsController {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }
+
+    //get the disability classification status of the person. Return the internal sequence of the
+    //equivalent sdax record for the DISA value.
+    def getDisabilityStatus() {
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def model =[:]
+        try {
+            MedicalInformation mi = MedicalInformation.fetchByPidmForDisabSurvey(pidm)
+            if (mi?.id != null) {
+                List sdax = SdaCrosswalkConversion.fetchAllByInternalAndExternalAndInternalGroup('SURVEY',mi.disability.code,'DISABILITY')
+                model.internalSequence = sdax ? sdax[0]?.internalSequenceNumber : 0
+            } else {
+                model.internalSequence = 0
+            }
+            render model as JSON
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateVeteranClassification() {
+        def updatedValues = request?.JSON ?: params
+
+        fixJSONObjectForCast(updatedPerson)
+
+        def person = [
+                pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
+                id: updatedValues.id,
+                version: updatedValues.version,
+                veraIndicator:updatedValues.vetCategoryIndicator,
+                activeDutySeprDate:updatedValues.vetActiveDutySeparationDate,
+                sdvetIndicator:updatedValues.vetDisabledIndicator,
+                armedServiceMedalVetIndicator:updatedValues.vetArmedServiceMedalIndicator
+        ]
+
+        try {
+            personBasicPersonBaseService.update(person)
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+
+    }
+
 
     def getUserName() {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()

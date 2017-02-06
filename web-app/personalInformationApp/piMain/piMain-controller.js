@@ -2,9 +2,9 @@
  Copyright 2017 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
-    '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'personalInformationService',
+    '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'piConfigResolve','personalInformationService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, $window, notificationCenterService,
-              piCrudService, personalInformationService) {
+              piCrudService, piConfigResolve, personalInformationService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -141,6 +141,12 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     }
                 };
 
+
+            $scope.piConfig = piConfigResolve;
+            $scope.sectionsToDisplay = $scope.getSectionsToDisplayForMobile(); // Depends on piConfig
+            setStartingTab($scope.sectionsToDisplay);
+
+
             piCrudService.get('MaskingRules').$promise.then(function(response) {
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
@@ -149,15 +155,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
-            piCrudService.get('PiConfig').$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.piConfig = response;
-                    $scope.sectionsToDisplay = $scope.getSectionsToDisplayForMobile(); // Depends on piConfig
-                    setStartingTab($scope.sectionsToDisplay);
-                }
-            });
 
             piCrudService.get('Addresses').$promise.then(function(response) {
                 if(response.failure) {
@@ -234,31 +231,45 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     $scope.veteranCategory='';
                     $scope.veteranArmedForcesServiceMedal='';
 
-                    //get all veteran related values
-                    if (!$scope.personalDetails.vetCategoryIndicator) {
-                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
-                    } else if ($scope.personalDetails.vetCategoryIndicator == 'B') {
-                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
-                    } else if ($scope.personalDetails.vetCategoryIndicator == 'O') {
-                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.active.veteran');
-                        if ($scope.personalDetails.vetActiveDutySeparationDate) {
-                            var nowDate = new Date();
-                            if (new Date($scope.personalDetails.vetActiveDutySeparationDate) >= nowDate.setFullYear((nowDate.getFullYear())-3) ){
-                                $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
+                    if ( $scope.piConfig.isVetClassificationDisplayable) {
+                        //get all veteran related values
+                        if (!$scope.personalDetails.veraIndicator) {
+                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
+                        } else if ($scope.personalDetails.veraIndicator == 'B') {
+                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
+                        } else if ($scope.personalDetails.veraIndicator == 'O') {
+                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.active.veteran');
+                            if ($scope.personalDetails.activeDutySeprDate) {
+                                var nowDate = new Date();
+                                if (new Date($scope.personalDetails.activeDutySeprDate) >= nowDate.setFullYear((nowDate.getFullYear()) - 3)) {
+                                    $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
+                                }
                             }
+                        } else if ($scope.personalDetails.veraIndicator == 'V') {
+                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
                         }
-                    } else if ($scope.personalDetails.vetCategoryIndicator == 'V') {
-                        $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
-                    }
-                    if ($scope.personalDetails.vetDisabledIndicator == "Y") {
-                        $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
-                    }
-                    if ($scope.personalDetails.vetArmedServiceMedalIndicator) {
-                        $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
+                        if ($scope.personalDetails.sdvetIndicator == "Y") {
+                            $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
+                        }
+                        if ($scope.personalDetails.armedServiceMedalVetIndicator) {
+                            $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
+                        }
                     }
 
                 }
             });
+
+            if ($scope.piConfig.isDisabilityStatusDisplayable) {
+                piCrudService.get('DisabilityStatus').$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.disabilityStatus = $filter('i18n')('personinfo.disability.' + response.internalSequence);
+                    }
+                });
+            } else {
+                $scope.disabilityStatus = '';
+            }
 
             piCrudService.get('Races').$promise.then(function(response) {
                 if(response.failure) {

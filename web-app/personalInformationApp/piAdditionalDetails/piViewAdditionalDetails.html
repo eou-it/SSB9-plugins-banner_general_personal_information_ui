@@ -28,12 +28,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.veteranClassification'|i18n}}
                 </div>
                 <div>
-                    <!-- TODO: update with proper page -->
                     <div>{{veteranCategory}}</div>
                     <div>{{veteranRecent}}</div>
                     <div>{{veteranArmedForcesServiceMedal}}</div>
                     <div>{{veteranDisabled}}</div>
-                    <div>{{'personinfo.veteran.classification.date.discharge.label'|i18n}}{{stringToDate(personalDetails.vetActiveDutySeparationDate)|date:'longDate'}}</div>
+                    <div>{{personalDetails.activeDutySeprDate ? (('personinfo.veteran.classification.date.discharge.label'|i18n)+(stringToDate(personalDetails.activeDutySeprDate)|date:'longDate')):''}}</div>
                 </div>
             </div>
 
@@ -50,7 +49,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.disabilityClassification'|i18n}}
                 </div>
                 <div>
-                    Yes
+                    {{disabilityStatus}}
                 </div>
             </div>
             <!-- TODO: update with proper config code when available -->
