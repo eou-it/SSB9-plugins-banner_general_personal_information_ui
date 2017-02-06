@@ -167,3 +167,22 @@ personalInformationAppDirectives.directive('menuControls', [function () {
         }
     };
 }]);
+
+/*
+ * place on div that encapsulates the dropdown to bind a variable to the open/close state of the dropdown
+ */
+personalInformationAppDirectives.directive('dropdownState', [function () {
+    return {
+        restrict: 'A',
+        scope: {
+            state: '=dropdownState'
+        },
+        link: function (scope, elem) {
+            elem.on('shown.bs.dropdown hidden.bs.dropdown', function (event) {
+                // state will be true when dropdown is open aka shown, false when it closes
+                scope.state = (event.type === 'shown');
+                scope.$apply();
+            });
+        }
+    };
+}]);

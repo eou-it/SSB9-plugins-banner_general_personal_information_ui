@@ -6,9 +6,11 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
         // CONTROLLER VARIABLES
         // --------------------
         $scope.pin = null;
-        $scope.pinQuestions = ["Not Selected"];
+        $scope.pinQuestions = [$filter('i18n')('personInfo.selection.defineQuestion')];
+        $scope.constraints = {};
         $scope.questions = [];
         $scope.questionAnswerErrMsg = '';
+        $scope.pinErrMsg = null;
 
 
         // CONTROLLER FUNCTIONS
@@ -20,6 +22,12 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
 
         $scope.setPinQuestion = function(question, questionNum) {
             question.questionNum = questionNum;
+        };
+
+        $scope.removePinFieldError = function() {
+            if(!!$scope.pinErrMsg) {
+                $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
+            }
         };
 
         var processQuestions = function(qstnArray) {
@@ -36,8 +44,15 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
             return result;
         };
 
+        var isValidSecurityQuestionAnswers = function() {
+            var questionsInvalid = piSecurityQAService.getQuestionErrors($scope.questions, $scope.constraints);
+            $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
+
+            return !($scope.pinErrMsg || questionsInvalid);
+        };
+
         $scope.saveQuestions = function() {
-            if (true) {
+            if (isValidSecurityQuestionAnswers()) {
                 var payload = {
                     pin: $scope.pin,
                     questions: processQuestions($scope.questions)
@@ -49,6 +64,7 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
                         }
                         else {
                             notificationCenterService.clearNotifications();
+                            $scope.cancelModal();
 
                             var notifications = [];
                             notifications.push({
@@ -79,9 +95,11 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
                     $scope.pinQuestions = $scope.pinQuestions.concat(response.questions);
-                    $scope.numQuestions = response.noOfquestions;
+                    $scope.constraints.numQuestions = response.noOfquestions;
+                    $scope.constraints.questionMinLength = response.questionMinimumLength;
+                    $scope.constraints.answerMinLength = response.answerMinimumLength;
                     var i;
-                    for(i = 0; i < $scope.numQuestions; i++) {
+                    for(i = 0; i < $scope.constraints.numQuestions; i++) {
                         if(response.userQuestions[i]) {
                             $scope.questions.push(response.userQuestions[i]);
                         }
