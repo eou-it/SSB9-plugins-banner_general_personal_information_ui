@@ -1416,8 +1416,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 'Name', data.directoryProfile[0].description
-        assertEquals 'Delihia Gaddis', data.directoryProfile[0].currentListing[0]
     }
 
 }
