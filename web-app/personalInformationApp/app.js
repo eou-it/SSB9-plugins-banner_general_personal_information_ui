@@ -89,8 +89,7 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 },
                 params: {
                     onLoadNotifications: [],
-                    startingTab: '',
-                    isFirstTabUsedForStart: true
+                    startingTab: ''
                 }
             });
     }
