@@ -767,6 +767,7 @@ button.closebtn {
     background: #206E9F;
     color: white;
     box-shadow: 0px -4px #0C5482 inset;
+    float: right;
 }
 
 .save-btn[disabled] {
@@ -1050,6 +1051,21 @@ button.delete-btn {
 
 
 /*  Dropdown menu  */
+.pi-modal .dropdown {
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: normal;
+    padding: 0;
+    color: transparent;
+    text-shadow: none;
+}
+
+
 .form-spacing,
 .dropdown-menu > li > a.form-spacing {
     padding: 1em .75em;
@@ -1453,6 +1469,10 @@ div.dir-profile {
         width: 33%;
     }
 
+    .secqa-answer {
+        float: right;
+    }
+
     .mobile-visible {
         visibility: hidden;
         position: absolute;
@@ -1508,7 +1528,8 @@ div.dir-profile {
     .edit-addr.pi-modal.modal.in .modal-dialog,
     .edit-pers-details.pi-modal.modal.in .modal-dialog,
     .edit-emer-contact.pi-modal.modal.in .modal-dialog,
-    .edit-directory-profile.pi-modal.modal.in .modal-dialog{
+    .edit-directory-profile.pi-modal.modal.in .modal-dialog,
+    .security-qa.pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1550,8 +1571,12 @@ div.dir-profile {
     .edit-addr .modal-dialog,
     .edit-pers-details .modal-dialog,
     .edit-emer-contact .modal-dialog,
-    .edit-directory-profile .modal-dialog{
+    .edit-directory-profile .modal-dialog {
         width: 896px;
+    }
+
+    .security-qa .modal-dialog {
+        width: 728px;
     }
 
     .view-list div.item-wrapper:nth-child(3n+1),

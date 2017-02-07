@@ -62,6 +62,7 @@ modules = {
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piAddress/piAddress-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmail/piEmail-service.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmergencyContact/piEmergencyContact-service.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piOther/piSecurityQA-service.js']
 
         // Controllers
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piMain/piMain-controller.js']
@@ -71,6 +72,7 @@ modules = {
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piEmergencyContact/piEditEmergencyContact-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piPhone/piEditPhone-controller.js']
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piDirectoryProfile/piEditDirectoryProfile-controller.js']
+        resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/piOther/piEditSecurityQA-controller.js']
 
         // Filters
         resource url:[plugin: 'banner-general-personal-information-ui', file: 'personalInformationApp/common/filters/i18n-filter.js']

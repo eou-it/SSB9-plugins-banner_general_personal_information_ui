@@ -6,7 +6,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <a  ng-click="openEditDisplayProfileModal()" enter-key="openEditDisplayProfileModal()" class="pi-link">{{'personInfo.label.directoryProfile'|i18n}}</a>
     </div>
     <div ng-if="piConfig.isSecurityQandADisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
-        {{'personInfo.label.securityQuestionsAndAnswers'|i18n}}
+        <a ng-click="openSecurityQAModal()" enter-key="openSecurityQAModal()" class="pi-link">{{'personInfo.label.securityQuestionsAndAnswers'|i18n}}</a>
     </div>
     <div ng-if="piConfig.isPasswordChangeDisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
         <a  ng-click="resetPassword()" enter-key="resetPassword()" class="pi-link">{{'personInfo.label.changePassword'|i18n}}</a>

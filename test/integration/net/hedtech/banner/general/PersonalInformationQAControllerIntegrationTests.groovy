@@ -74,6 +74,9 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
         assertEquals 10, data.questionMinimumLength
         assertEquals 2, data.answerMinimumLength
         assertEquals 3, data.userQuestions.size()
+        assertEquals 2, data.userQuestions[0].questionNum
+        assertEquals 3, data.userQuestions[1].questionNum
+        assertEquals 1, data.userQuestions[2].questionNum
     }
 
     @Test

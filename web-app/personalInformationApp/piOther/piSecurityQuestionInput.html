@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <label ng-class="(!!question.questionSelectErrMsg && !question.dropdownOpen ? 'input-field-label field-error' : 'input-field-label')"
+               class="input-field-label" id="secQA-selQstn{{$index}}">{{'personInfo.label.selectQuestion'|i18n:[($index+1)]}}</label><br>
+        <div dropdown-state="question.dropdownOpen" class="dropdown" role="menu">
+            <button dropdown-helper="begin" ng-class="(question.questionSelectErrMsg ? 'dropdown-btn input-field-error' : 'dropdown-btn')"
+                    class="dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-labelledby="secQA-selQstn{{$index}}">
+                <span class="float-l semi-bold form-spacing">
+                    {{!pinQuestions[question.questionNum] ? ('personInfo.placeholder.selectQuestion'|i18n) : pinQuestions[question.questionNum]}}
+                </span>
+                <span class="float-r form-spacing down-caret caret-color"></span>
+            </button>
+            <ul menu-controls class="dropdown-menu addAcct">
+                <li ng-repeat="pinQuestion in pinQuestions" role="presentation">
+                    <a ng-click="setPinQuestion(question, $index)" dropdown-helper="{{($last ? 'end': null)}}"
+                       ng-class="[($last ? 'end-dropdown-radius' : null)]" class="addAcct form-spacing" id="acct-inpPri{{$index}}"
+                       role="menuitem" aria-label="" aria-describedby="" aria-labelledby="acct-inpPri{{$index}}" tabindex="0">{{pinQuestion}}</a>
+                </li>
+            </ul>
+        </div>
+        <p class="input-field-label mobile-errors" ng-class="[(!!question.questionSelectErrMsg ? 'field-error error-font-size' : 'no-display')]"
+           role="alert" aria-live="assertive">{{question.questionSelectErrMsg}}</p>
+    </div>
+    <div ng-show="question.questionNum === 0" class="col-sm-12 col-md-6 col-lg-6">
+        <label ng-class="(!!question.defQuestionErrMsg && !question.defQuestionFocused ? 'input-field-label field-error' : 'input-field-label')"
+               class="input-field-label" for="secQA-defQstn{{$index}}">{{'personInfo.label.defineQuestion'|i18n:[($index+1)]}}</label><br>
+        <input ng-model="question.userDefinedQuestion" ng-blur="question.defQuestionFocused=false; question.removeErrors()" ng-focus="question.defQuestionFocused=true"
+               ng-class="[(!!question.defQuestionErrMsg && !question.defQuestionFocused ? 'input-field-error' : null)]"
+               class="text-input-field semi-bold form-spacing" type="text" placeholder="" maxlength="255" id="secQA-defQstn{{$index}}">
+        <span ng-if="!!question.defQuestionErrMsg && !question.defQuestionFocused" class="icon input-fail">
+            <span class="icon-error ellucian-font"></span>
+        </span>
+        <p class="input-field-label mobile-errors" ng-class="[(!!question.defQuestionErrMsg ? 'field-error error-font-size' : 'no-display')]"
+           role="alert" aria-live="assertive">{{question.defQuestionErrMsg}}</p>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6 secqa-answer">
+        <label ng-class="(!!question.answerErrMsg && !question.answerFocused ? 'input-field-label field-error' : 'input-field-label')"
+               class="input-field-label" for="secQA-answer{{$index}}">{{'personInfo.label.answer'|i18n:[($index+1)]}}</label>
+        <br>
+        <input ng-model="question.answer" ng-blur="question.answerFocused=false; question.removeErrors()" ng-focus="question.answerFocused=true"
+               ng-class="[(!!question.answerErrMsg && !question.answerFocused ? 'input-field-error' : null)]"
+               class="text-input-field semi-bold form-spacing" type="text" placeholder=""
+               maxlength="255" id="secQA-answer{{$index}}">
+        <span ng-if="!!question.answerErrMsg && !question.answerFocused" class="icon input-fail">
+            <span class="icon-error ellucian-font"></span>
+        </span>
+        <p class="input-field-label mobile-errors" ng-class="[(!!question.answerErrMsg ? 'field-error error-font-size' : 'no-display')]"
+           role="alert" aria-live="assertive">{{question.answerErrMsg}}</p>
+    </div>
+</div>

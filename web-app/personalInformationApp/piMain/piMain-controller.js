@@ -449,6 +449,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         };
 
+        $scope.openSecurityQAModal = function() {
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piOther/piEditSecurityQA.html'),
+                windowClass: 'security-qa pi-modal',
+                keyboard: true,
+                controller: "piEditSecurityQAController"
+            });
+        };
+
         // Display address delete confirmation modal
         $scope.confirmAddressDelete = function (address) {
             var deleteAddress = function () {
