@@ -1418,4 +1418,64 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
     }
 
+    @Test
+    void testUpdateDirectoryProfilePreferences() {
+        loginSSB 'GDP000001', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """[
+            {
+                code: 'ADDR_PR',
+                checked: true
+            },
+            {
+                code: 'EMAIL',
+                checked: true
+            }
+        ]""".toString()
+
+        controller.updateDirectoryProfilePreferences()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateDirectoryProfilePreferencesWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to Directory Profile
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DIRECTORY_PROFILE): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+
+        controller.request.contentType = "text/json"
+
+        // Updating streetLine1
+        controller.request.json = """[
+            {
+                code: 'ADDR_PR',
+                checked: true
+            },
+            {
+                code: 'EMAIL',
+                checked: true
+            }
+        ]""".toString()
+
+        controller.updateDirectoryProfilePreferences()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
+    }
+
 }

@@ -3,6 +3,7 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
+import net.hedtech.banner.general.overall.DirectoryProfileCompositeService
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
@@ -754,6 +755,25 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def updateDirectoryProfilePreferences() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.DIRECTORY_PROFILE)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def preferences = request?.JSON ?: params
+
+        try {
+            directoryProfileCompositeService.createOrUpdate(pidm, preferences)
+            render([failure: false] as JSON)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     def getPiConfig() {
         def model = [:]
 
@@ -827,9 +847,11 @@ class PersonalInformationDetailsController {
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
         def mode = personalInformationConfigService.getParamFromSession(param, PersonalInformationConfigService.SECTION_UPDATEABLE)
 
-        if (mode != PersonalInformationConfigService.SECTION_UPDATEABLE) {
-            log.error("Unauthorized attempt to update Personal Information data was prevented. Configured value for parameter ${param}: ${mode}")
-            throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
+        if (mode != 'Y' ) {
+            if (mode != PersonalInformationConfigService.SECTION_UPDATEABLE) {
+                log.error("Unauthorized attempt to update Personal Information data was prevented. Configured value for parameter ${param}: ${mode}")
+                throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
+            }
         }
     }
 
