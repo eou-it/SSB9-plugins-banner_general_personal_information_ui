@@ -17,7 +17,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     <p class="input-field-label mobile-errors response-err" ng-class="[(!!dirProfileErrMsg ? 'field-error error-font-size' : 'no-display')]"
        role="alert" aria-live="assertive">{{dirProfileErrMsg}}</p>
     <div class="dialog-footer-margin pi-modal-footer">
-        <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+        <button ng-click="cancelModal()" class="dialog-btn cancel-btn two-btn-layout">
             {{'personInfo.label.button.cancel'|i18n}}
         </button>
         <button ng-click="saveDirectoryProfile()" class="dialog-btn save-btn two-btn-layout">
