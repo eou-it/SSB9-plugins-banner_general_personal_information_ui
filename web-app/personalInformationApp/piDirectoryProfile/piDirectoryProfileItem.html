@@ -14,7 +14,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             <span class="lbl"></span>
         </div>
         <div ng-if="!listing.changeable && listing.checked">
-            Yes
+            {{'personInfo.label.yes'|i18n}}
+        </div>
+        <div ng-if="!listing.changeable && !listing.checked">
+            {{'personInfo.label.no'|i18n}}
         </div>
     </div>
 </div>
