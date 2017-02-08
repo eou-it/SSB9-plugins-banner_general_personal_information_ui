@@ -1,11 +1,11 @@
 personalInformationAppControllers.controller('piEditDirectoryProfileController',['$scope', '$modalInstance', '$rootScope', '$state',
-    '$filter', 'notificationCenterService', 'piCrudService', 'personalInformationService',
-    function ($scope, $modalInstance, $rootScope, $state, $filter, notificationCenterService, piCrudService,
-              personalInformationService){
+    '$filter', 'notificationCenterService', 'piCrudService',
+    function ($scope, $modalInstance, $rootScope, $state, $filter, notificationCenterService, piCrudService) {
 
         // CONTROLLER VARIABLES
         // --------------------
-        $scope.directoryProfile
+        $scope.directoryProfile;
+        $scope.dirProfileErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -16,35 +16,22 @@ personalInformationAppControllers.controller('piEditDirectoryProfileController',
         };
 
         $scope.saveDirectoryProfile = function() {
-            //if(isValidContact($scope.emergencyContact)) {
-            //    var handleResponse = function (response) {
-            //        if (response.failure) {
-            //            $scope.addressErrMsg = response.message;
-            //            notificationCenterService.displayNotification(response.message, "error");
-            //        } else {
-            //            var notifications = [];
-            //            notifications.push({message: 'personInfo.save.success.message',
-            //                messageType: $scope.notificationSuccessType,
-            //                flashType: $scope.flashNotification}
-            //            );
-            //
-            //            $state.go(personalInformationService.getFullProfileState(),
-            //                {onLoadNotifications: notifications, startingTab: 'emergencyContact'},
-            //                {reload: true, inherit: false, notify: true}
-            //            );
-            //        }
-            //    };
-            //
-            //    if($scope.isCreateNew) {
-            //        piCrudService.create('EmergencyContact', $scope.emergencyContact).$promise.then(handleResponse);
-            //    }
-            //    else {
-            //        piCrudService.update('EmergencyContact', $scope.emergencyContact).$promise.then(handleResponse);
-            //    }
-            //}
-            //else {
-            //    piEmergencyContactService.displayMessages();
-            //}
+            var handleResponse = function (response) {
+                if (response.failure) {
+                    $scope.dirProfileErrMsg = response.message;
+                    notificationCenterService.displayNotification(response.message, "error");
+                } else {
+                    $modalInstance.dismiss('cancel');
+
+                    notificationCenterService.displayNotification(
+                        'personInfo.save.success.message',
+                        $scope.notificationSuccessType,
+                        $scope.flashNotification
+                    );
+                }
+            };
+
+            piCrudService.update('DirectoryProfilePreferences', $scope.directoryProfile).$promise.then(handleResponse);
         };
 
         this.init = function() {
