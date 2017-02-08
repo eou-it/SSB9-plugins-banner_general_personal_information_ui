@@ -767,7 +767,6 @@ button.closebtn {
     background: #206E9F;
     color: white;
     box-shadow: 0px -4px #0C5482 inset;
-    float: right;
 }
 
 .save-btn[disabled] {
