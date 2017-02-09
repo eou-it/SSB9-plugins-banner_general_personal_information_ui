@@ -1569,9 +1569,12 @@ div.dir-profile {
 
     .edit-addr .modal-dialog,
     .edit-pers-details .modal-dialog,
-    .edit-emer-contact .modal-dialog,
-    .edit-directory-profile .modal-dialog {
+    .edit-emer-contact .modal-dialog {
         width: 896px;
+    }
+
+    .edit-directory-profile .modal-dialog {
+        width: 960px;
     }
 
     .security-qa .modal-dialog {
