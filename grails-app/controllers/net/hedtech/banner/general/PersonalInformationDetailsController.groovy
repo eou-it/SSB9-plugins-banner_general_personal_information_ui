@@ -35,6 +35,9 @@ class PersonalInformationDetailsController {
     def personRaceCompositeService
     def personGenderPronounCompositeService
     def directoryProfileCompositeService
+    def medicalInformationCompositeService
+    def disabilityService
+    def medicalConditionService
 
 
     private def findPerson() {
@@ -592,6 +595,35 @@ class PersonalInformationDetailsController {
             }
             render model as JSON
         } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateDisabilityStatus() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.DISABILITY_STATUS)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
+        def updatedDisability = request?.JSON ?: params
+
+        try {
+            def medicalInfo = MedicalInformation.fetchByPidmForDisabSurvey(PersonalInformationControllerUtility.getPrincipalPidm())
+            if(!medicalInfo) {
+                medicalInfo = new MedicalInformation([
+                        pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
+                        disabilityIndicator: false,
+                        medicalCondition: medicalConditionService.fetchMedicalCondition('DISABSURV')
+                ])
+            }
+            medicalInfo.disability = disabilityService.fetchDisability(updatedDisability.code)
+
+            medicalInformationCompositeService.createOrUpdate([medicalInformations: [medicalInfo]])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }

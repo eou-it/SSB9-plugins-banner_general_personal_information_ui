@@ -1478,4 +1478,45 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.failure
     }
 
+    @Test
+    void testUpdateDisabilityStatus() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+                code:'DN'
+        }""".toString()
+
+        controller.updateDisabilityStatus()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateDisabilityStatusWithConfigSetToNotUpdateable() {
+        loginSSB 'HOSH00018', '111111'
+
+        // Set configuration to prohibit updates to Disability Status
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DISABILITY_STATUS): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+                code:'DN'
+        }""".toString()
+
+        controller.updateDisabilityStatus()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertTrue data.failure
+    }
 }
