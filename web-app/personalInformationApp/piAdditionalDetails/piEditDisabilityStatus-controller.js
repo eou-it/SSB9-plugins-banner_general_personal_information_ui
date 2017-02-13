@@ -23,12 +23,6 @@ personalInformationAppControllers.controller('piEditDisabilityStatusController',
             $scope.isDisablilityTextClipped = !$scope.isDisablilityTextClipped;
         };
 
-        $scope.removeDisabilityErrors = function() {
-            if (!!$scope.disabilityErrMsg) {
-                $scope.disabilityErrMsg = piDisabilityStatusService.getDisabilityStatusError($scope.disabilityStatus);
-            }
-        };
-
         var isValidDisabilityStatus = function() {
             $scope.disabilityErrMsg = piDisabilityStatusService.getDisabilityStatusError($scope.disabilityStatus);
 

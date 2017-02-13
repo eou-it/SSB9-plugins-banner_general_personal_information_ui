@@ -1479,6 +1479,18 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetDisabilityStatus() {
+        loginSSB 'GDP000005', '111111'
+
+        controller.getDisabilityStatus()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertEquals 0, data.disabilityStatusCode
+    }
+
+    @Test
     void testUpdateDisabilityStatus() {
         loginSSB 'HOSH00018', '111111'
 
@@ -1493,7 +1505,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        println data
         assertFalse data.failure
     }
 
@@ -1516,7 +1527,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        println data
         assertTrue data.failure
     }
 }

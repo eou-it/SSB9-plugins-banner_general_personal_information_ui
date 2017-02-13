@@ -265,7 +265,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
-                        $scope.disabilityStatus = $filter('i18n')('personinfo.disability.' + response.internalSequence);
+                        $scope.disabilityStatus = response.disabilityStatusCode;
+                        $scope.disabilityStatusText = $filter('i18n')('personinfo.disability.' + response.disabilityStatusCode);
                     }
                 });
             } else {
@@ -466,7 +467,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 keyboard: true,
                 resolve: {
                     disabilityStatus: function() {
-                        return $scope.disabilityStatus;
+                        return ($scope.disabilityStatus === 0 ? null : $scope.disabilityStatus);
                     }
                 },
                 controller: "piEditDisabilityStatusController"
