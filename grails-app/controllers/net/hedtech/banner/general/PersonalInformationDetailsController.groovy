@@ -585,11 +585,7 @@ class PersonalInformationDetailsController {
         def model =[:]
         try {
             MedicalInformation mi = MedicalInformation.fetchByPidmForDisabSurvey(pidm)
-            if (mi?.id != null) {
-                model.disabilityStatusCode = mi.disability.code
-            } else {
-                model.disabilityStatusCode = 0
-            }
+            model.disabilityStatusCode = mi?.id ? mi.disability.code : 0
             render model as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
