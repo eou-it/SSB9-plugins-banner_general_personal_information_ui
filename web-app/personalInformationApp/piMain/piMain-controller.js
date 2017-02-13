@@ -459,6 +459,20 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             });
         };
 
+        $scope.openDisabilityStatusModal = function() {
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAdditionalDetails/piEditDisabilityStatus.html'),
+                windowClass: 'disability-status pi-modal',
+                keyboard: true,
+                resolve: {
+                    disabilityStatus: function() {
+                        return $scope.disabilityStatus;
+                    }
+                },
+                controller: "piEditDisabilityStatusController"
+            });
+        };
+
         // Display address delete confirmation modal
         $scope.confirmAddressDelete = function (address) {
             var deleteAddress = function () {

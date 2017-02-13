@@ -887,6 +887,15 @@ button.closebtn {
     margin-top: 1.0em;
 }
 
+.disability-status .pi-title-divider {
+    width: 70px;
+}
+
+.disability-status .pi-title-divider span {
+    border-bottom: 1px solid #4F585F;
+    margin-bottom: 0.25em;
+}
+
 .pi-overview-divider span {
     margin-top: 1.5em;
 }
@@ -1047,7 +1056,57 @@ button.delete-btn {
 .pi-icon-align {
     display: inline-block;
 }
+.pad-disability {
+    padding: 0px 15px;
+}
 
+.clip-disability-text {
+    height: 192px;
+    overflow-y: hidden;
+    clear: right;
+}
+
+.form-id-item {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: right;
+    clear: right;
+    font-size: 12px;
+    display: inline;
+    float: right;
+}
+
+.disability-status .pad-dialog-lr .form-id-item:nth-child(-n+2) {
+    width: 100%;
+}
+
+.disability-status .pad-disability > label {
+    padding-top: 0px;
+}
+
+.disability-status .pad-disability > p:last-child {
+    margin-bottom: 0px;
+}
+
+.toggle-disability {
+    display: inline-block;
+    padding: 15px 0px;
+}
+
+.disability-status .lbl.radio-list > label {
+    font-weight: normal;
+}
+
+.disability-item {
+    margin-bottom: 0;
+}
+
+.input-field-label.input-field-label.pi-accom-notice {
+    padding-top: 0.875em;
+}
 
 /*  Dropdown menu  */
 .pi-modal .dropdown {
@@ -1261,6 +1320,12 @@ span.radio-list.no-padding {
     padding: 0px;
 }
 
+input[type="radio"] + label.radio-list.pi-fix {
+    padding-left: 0px;
+    line-height: 20px;
+    background-image: none;
+}
+
 .ws-nowrap {
     white-space: nowrap;
 }
@@ -1283,6 +1348,9 @@ span.radio-list.no-padding {
     padding: 0em 0.75em;
 }
 
+.disability-act-text {
+    clear: left;
+}
 
 /*Table and grid section styles*/
 table {
@@ -1552,7 +1620,8 @@ div.dir-profile {
     .edit-pers-details.pi-modal.modal.in .modal-dialog,
     .edit-emer-contact.pi-modal.modal.in .modal-dialog,
     .edit-directory-profile.pi-modal.modal.in .modal-dialog,
-    .security-qa.pi-modal.modal.in .modal-dialog {
+    .security-qa.pi-modal.modal.in .modal-dialog,
+    .disability-status.pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1603,6 +1672,10 @@ div.dir-profile {
 
     .security-qa .modal-dialog {
         width: 728px;
+    }
+
+    .disability-status.pi-modal .modal-dialog {
+        width: 988px;
     }
 
     .view-list div.item-wrapper:nth-child(3n+1),

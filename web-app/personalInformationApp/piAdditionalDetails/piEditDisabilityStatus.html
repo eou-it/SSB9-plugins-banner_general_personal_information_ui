@@ -1,0 +1,79 @@
+<!--******************************************************************************
+Copyright 2017 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="modal-flex-cont">
+    <div class="modal-unflex">
+        <h2 class="pi-modal-title">{{'personinfo.disability.status.page.title'|i18n}}</h2>
+        <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
+        <div class="pad-dialog-lr">
+            <div ng-class="[(isDisablilityTextClipped ? 'clip-disability-text' : null)]" class="pad-disability">
+                <p class="form-id-item">{{'personinfo.disability.status.form'|i18n}}</p>
+                <p class="form-id-item">{{'personinfo.disability.status.OMBnumber'|i18n}}</p>
+                <p class="form-id-item">{{'personinfo.disability.status.expiry.date'|i18n}}</p>
+                <label class="input-field-label">{{'personinfo.disability.status.why.title'|i18n}}</label>
+                <p>{{'personinfo.disability.status.why.desc.1'|i18n}}</p>
+                <p>{{'personinfo.disability.status.why.desc.2'|i18n}}</p>
+                <label class="input-field-label">{{'personinfo.disability.status.how.title'|i18n}}</label>
+                <p>{{'personinfo.disability.status.how.desc.1'|i18n}}</p>
+                <p>{{'personinfo.disability.status.how.desc.2'|i18n}}</p>
+                <div class="row pad-dialog-lr">
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <p class="disability-item">{{'personinfo.disability.Blindness'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Deafness'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Cancer'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Diabetes'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Epilepsy'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Autism'|i18n}}</p>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <p class="disability-item">{{'personinfo.disability.Cerebralpalsy'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.HIVAIDS'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Schizophrenia'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Musculardystrophy'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Bipolardisorder'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Majordepression'|i18n}}</p>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <p class="disability-item">{{'personinfo.disability.Multiplesclerosis'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.Missinglimbs'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.PTSD'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.OCD'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.wheelchair'|i18n}}</p>
+                    <p class="disability-item">{{'personinfo.disability.intellectual'|i18n}}</p>
+                </div>
+                </div>
+                <label class="input-field-label pi-accom-notice">{{'personinfo.reasonable.accomodation.notice.title'|i18n}}</label>
+                <p>{{'personinfo.disability.notice'|i18n}}</p>
+                <div class="pi-title-divider"><span></span></div>
+                <p class="disability-act-text">{{'personinfo.disability.act'|i18n:[('personinfo.deptOfLabor.website'|i18n)]}}</p>
+                <p>{{'personinfo.publicBurden.statement'|i18n}}</p>
+            </div>
+            <div class="pad-disability">
+                <a ng-click="toggleDisabilityTextVisibility()" class="toggle-disability">
+                    {{(isDisablilityTextClipped ? 'View more' : 'View less')}}
+                </a><br>
+                <label class="input-field-label">{{'personinfo.disability.question'|i18n}}</label><br>
+                <input ng-model="disabilityStatus" class="edit-radio" type="radio" name="disability-status" value="DY"
+                       id="dy-radio-lbl">
+                <label class="lbl radio-list pi-fix" for="dy-radio-lbl">{{'personinfo.disability.1'|i18n}}</label>
+                <br>
+                <input ng-model="disabilityStatus" class="edit-radio" type="radio" name="disability-status" value="DN"
+                       id="dn-radio-lbl">
+                <label class="lbl radio-list pi-fix" for="dn-radio-lbl">{{'personinfo.disability.2'|i18n}}</label>
+                <br>
+                <input ng-model="disabilityStatus" class="edit-radio" type="radio" name="disability-status" value="NA"
+                       id="na-radio-lbl">
+                <label class="lbl radio-list pi-fix" for="na-radio-lbl">{{'personinfo.disability.3'|i18n}}</label>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="dialog-footer-margin pi-modal-footer">
+        <button ng-click="cancelModal()" class="dialog-btn cancel-btn two-btn-layout">
+            {{'personInfo.label.button.cancel'|i18n}}
+        </button>
+        <button ng-click="saveDisabilityStatus()" class="dialog-btn save-btn two-btn-layout">
+            {{'personInfo.label.button.update'|i18n}}
+        </button>
+    </div>
+</div>
