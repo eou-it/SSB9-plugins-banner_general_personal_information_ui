@@ -265,7 +265,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     if (response.failure) {
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
-                        $scope.disabilityStatus = $filter('i18n')('personinfo.disability.' + response.internalSequence);
+                        $scope.disabilityStatus = response.disabilityStatusCode;
+                        $scope.disabilityStatusText = $filter('i18n')('personinfo.disability.' + response.disabilityStatusCode);
                     }
                 });
             } else {
@@ -456,6 +457,20 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 windowClass: 'security-qa pi-modal',
                 keyboard: true,
                 controller: "piEditSecurityQAController"
+            });
+        };
+
+        $scope.openDisabilityStatusModal = function() {
+            $modal.open({
+                templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAdditionalDetails/piEditDisabilityStatus.html'),
+                windowClass: 'disability-status pi-modal',
+                keyboard: true,
+                resolve: {
+                    disabilityStatus: function() {
+                        return ($scope.disabilityStatus === 0 ? null : $scope.disabilityStatus);
+                    }
+                },
+                controller: "piEditDisabilityStatusController"
             });
         };
 

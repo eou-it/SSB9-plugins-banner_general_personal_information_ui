@@ -3,11 +3,9 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
-import net.hedtech.banner.general.overall.DirectoryProfileCompositeService
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
-import net.hedtech.banner.general.system.SdaCrosswalkConversion
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -35,6 +33,9 @@ class PersonalInformationDetailsController {
     def personRaceCompositeService
     def personGenderPronounCompositeService
     def directoryProfileCompositeService
+    def medicalInformationCompositeService
+    def disabilityService
+    def medicalConditionService
 
 
     private def findPerson() {
@@ -584,14 +585,38 @@ class PersonalInformationDetailsController {
         def model =[:]
         try {
             MedicalInformation mi = MedicalInformation.fetchByPidmForDisabSurvey(pidm)
-            if (mi?.id != null) {
-                List sdax = SdaCrosswalkConversion.fetchAllByInternalAndExternalAndInternalGroup('SURVEY',mi.disability.code,'DISABILITY')
-                model.internalSequence = sdax ? sdax[0]?.internalSequenceNumber : 0
-            } else {
-                model.internalSequence = 0
-            }
+            model.disabilityStatusCode = mi?.id ? mi.disability.code : 0
             render model as JSON
         } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
+    def updateDisabilityStatus() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.DISABILITY_STATUS)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
+        def updatedDisability = request?.JSON ?: params
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        try {
+            def medicalInfo = MedicalInformation.fetchByPidmForDisabSurvey(pidm)
+            if(!medicalInfo) {
+                medicalInfo = new MedicalInformation([
+                        pidm: pidm,
+                        disabilityIndicator: false,
+                        medicalCondition: medicalConditionService.fetchMedicalCondition('DISABSURV')
+                ])
+            }
+            medicalInfo.disability = disabilityService.fetchDisability(updatedDisability.code)
+
+            medicalInformationCompositeService.createOrUpdate([medicalInformations: [medicalInfo]])
+            render([failure: false] as JSON)
+        }
+        catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
     }

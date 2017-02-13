@@ -46,15 +46,14 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <div ng-if="piConfig.isDisabilityStatusDisplayable" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
             <div class="email-detail">
                 <div class="semi-bold">
-                    {{'personInfo.label.disabilityClassification'|i18n}}
+                    {{'personInfo.label.disabilityStatus'|i18n}}
                 </div>
                 <div>
-                    {{disabilityStatus}}
+                    {{disabilityStatusText}}
                 </div>
             </div>
-            <!-- TODO: update with proper config code when available -->
             <div ng-if="piConfig.isDisabilityStatusDisplayable" class="button-block">
-                <a ng-click="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                <a ng-click="openDisabilityStatusModal()" class="pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
