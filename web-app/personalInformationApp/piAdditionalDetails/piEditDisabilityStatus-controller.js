@@ -1,16 +1,15 @@
 personalInformationAppControllers.controller('piEditDisabilityStatusController',['$scope', '$modalInstance', '$rootScope', '$state',
-    '$filter', 'notificationCenterService', 'piSecurityQAService', 'personalInformationService', 'disabilityStatus',
-    function ($scope, $modalInstance, $rootScope, $state, $filter, notificationCenterService, piSecurityQAService,
-              personalInformationService, disabilityStatus){
+    '$filter', 'notificationCenterService', 'piDisabilityStatusService', 'personalInformationService', 'piCrudService',
+    'disabilityStatus',
+    function ($scope, $modalInstance, $rootScope, $state, $filter, notificationCenterService, piDisabilityStatusService,
+              personalInformationService, piCrudService, disabilityStatus){
 
         // CONTROLLER VARIABLES
         // --------------------
-        $scope.disabilityStatus = null;
+        $scope.disabilityStatus = disabilityStatus;
         $scope.isDisablilityTextClipped = true;
-        $scope.constraints = {};
-        $scope.questions = [];
-        $scope.questionAnswerErrMsg = '';
-        $scope.pinErrMsg = null;
+        $scope.disabilityErrMsg = '';
+        $scope.disabilityUpdateErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -24,43 +23,25 @@ personalInformationAppControllers.controller('piEditDisabilityStatusController',
             $scope.isDisablilityTextClipped = !$scope.isDisablilityTextClipped;
         };
 
-        $scope.removePinFieldError = function() {
-            if(!!$scope.pinErrMsg) {
-                $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
+        $scope.removeDisabilityErrors = function() {
+            if (!!$scope.disabilityErrMsg) {
+                $scope.disabilityErrMsg = piDisabilityStatusService.getDisabilityStatusError($scope.disabilityStatus);
             }
         };
 
-        var createQuestionsForSave = function(qstnArray) {
-            var result = [];
-            qstnArray.forEach(function(q) {
-                result.push({
-                    id: q.id,
-                    version: q.version,
-                    question: 'question' + (q.questionNum > 0 ? q.questionNum : 0),
-                    userDefinedQuestion: (q.questionNum > 0 ? '' : q.userDefinedQuestion),
-                    answer: q.answer
-                });
-            });
-            return result;
+        var isValidDisabilityStatus = function() {
+            $scope.disabilityErrMsg = piDisabilityStatusService.getDisabilityStatusError($scope.disabilityStatus);
+
+            return !($scope.disabilityErrMsg);
         };
 
-        var isValidSecurityQuestionAnswers = function() {
-            var questionsInvalid = piSecurityQAService.getAllQuestionErrors($scope.questions, $scope.constraints);
-            $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
-
-            return !($scope.pinErrMsg || questionsInvalid);
-        };
-
-        $scope.saveQuestions = function() {
-            if (isValidSecurityQuestionAnswers()) {
-                var payload = {
-                        pin: $scope.pin,
-                        questions: createQuestionsForSave($scope.questions)
-                    },
-                    handleResponse = function (response) {
+        $scope.saveDisabilityStatus = function() {
+            if (isValidDisabilityStatus()) {
+                var disabilityStatusCode = {code: $scope.disabilityStatus},
+                handleResponse = function (response) {
                         if (response.failure) {
-                            $scope.questionAnswerErrMsg = response.message;
-                            piSecurityQAService.displayErrorMessage(response.message);
+                            $scope.disabilityUpdateErrMsg = response.message;
+                            piDisabilityStatusService.displayErrorMessage(response.message);
                         }
                         else {
                             notificationCenterService.clearNotifications();
@@ -75,50 +56,20 @@ personalInformationAppControllers.controller('piEditDisabilityStatusController',
                             );
 
                             $state.go(personalInformationService.getFullProfileState(),
-                                {onLoadNotifications: notifications, startingTab: 'other'},
+                                {onLoadNotifications: notifications, startingTab: 'additionalDetails'},
                                 {reload: true, inherit: false, notify: true}
                             );
                         }
                     };
 
-                piSecurityQAService.saveQuestions(payload).$promise.then(handleResponse);
+                piCrudService.update('DisabilityStatus', disabilityStatusCode).$promise.then(handleResponse);
             }
             else {
-                piSecurityQAService.displayMessages();
+                piDisabilityStatusService.displayMessages();
             }
         };
 
         this.init = function() {
-
-            piSecurityQAService.getQuestions().$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.pinQuestions = $scope.pinQuestions.concat(response.questions);
-                    $scope.constraints.numQuestions = response.noOfquestions;
-                    $scope.constraints.questionMinLength = response.questionMinimumLength;
-                    $scope.constraints.answerMinLength = response.answerMinimumLength;
-
-                    var removeErrorFn = function() {
-                        piSecurityQAService.removeQuestionFieldErrors(this, $scope.constraints);
-                    };
-                    var i;
-                    for(i = 0; i < $scope.constraints.numQuestions; i++) {
-                        if(response.userQuestions[i]) {
-                            response.userQuestions[i].removeErrors = removeErrorFn;
-                            $scope.questions.push(response.userQuestions[i]);
-                        }
-                        else {
-                            $scope.questions.push({
-                                questionNum:null,
-                                userDefinedQuestion:'',
-                                answer:'',
-                                removeErrors: removeErrorFn
-                            });
-                        }
-                    }
-                }
-            });
         };
 
         // INITIALIZE

@@ -49,10 +49,14 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <p>{{'personinfo.publicBurden.statement'|i18n}}</p>
             </div>
             <div class="pad-disability">
-                <a ng-click="toggleDisabilityTextVisibility()" class="toggle-disability">
-                    {{(isDisablilityTextClipped ? 'View more' : 'View less')}}
+                <a ng-click="toggleDisabilityTextVisibility()" class="toggle-disability pi-link">
+                    {{(isDisablilityTextClipped ? 'personinfo.disability.viewMore' : 'personinfo.disability.viewLess')|i18n}}
                 </a><br>
-                <label class="input-field-label">{{'personinfo.disability.question'|i18n}}</label><br>
+                <label class="input-field-label"
+                       ng-class="(disabilityErrMsg && !disabilityStatus ? 'input-field-label field-error' : 'input-field-label')">
+                    {{'personinfo.disability.question'|i18n}}
+                </label>
+                <br>
                 <input ng-model="disabilityStatus" class="edit-radio" type="radio" name="disability-status" value="DY"
                        id="dy-radio-lbl">
                 <label class="lbl radio-list pi-fix" for="dy-radio-lbl">{{'personinfo.disability.1'|i18n}}</label>
@@ -65,6 +69,14 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                        id="na-radio-lbl">
                 <label class="lbl radio-list pi-fix" for="na-radio-lbl">{{'personinfo.disability.3'|i18n}}</label>
                 <br>
+                <p class="input-field-label mobile-errors" ng-class="[(!!disabilityErrMsg && !disabilityStatus ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{disabilityErrMsg|i18n}}</p>
+                <p class="input-field-label mobile-errors response-err" ng-class="[(!!disabilityUpdateErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{disabilityUpdateErrMsg}}</p>
+                <div id="disabilityErrorMsgCenter" class="visuallyhidden" tabindex="-1">
+                    <span>{{disabilityErrMsg|i18n}}</span>
+                    <span>{{disabilityUpdateErrMsg}}</span>
+                </div>
             </div>
         </div>
     </div>
