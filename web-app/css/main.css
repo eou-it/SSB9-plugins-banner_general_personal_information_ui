@@ -1236,7 +1236,8 @@ input[type="checkbox"].dir-profile-nav-check {
     margin-top: 0.875em;
 }
 
-input[type="checkbox"].main-nav-check + .lbl {
+input[type="checkbox"].main-nav-check + .lbl,
+input[type="checkbox"].dir-profile-nav-check + .lbl {
     padding-top: 0.875em;
 }
 
