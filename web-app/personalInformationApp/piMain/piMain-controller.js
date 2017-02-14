@@ -416,14 +416,15 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAdditionalDetails/piVeteranClassification.html'),
-                windowClass: 'edit-email pi-modal',
+                windowClass: 'edit-veteran pi-modal',
                 keyboard: true,
-                controller: "piEditPersonalDetailsController",
+                controller: "piEditVeteranClassificationController",
                 scope: $scope,
                 resolve: {
                 }
             });
         };
+
         $scope.openEditPhoneModal = function(currentPhone) {
 
             $modal.open({

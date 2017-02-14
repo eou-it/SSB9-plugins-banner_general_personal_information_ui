@@ -1087,13 +1087,14 @@ button.delete-btn {
     padding-top: 0px;
 }
 
-.disability-status .pad-disability > p:last-child {
+.disability-status .pad-disability > p:last-child,
+.edit-veteran .pad-disability > p:last-child {
     margin-bottom: 0px;
 }
 
 .toggle-disability {
     display: inline-block;
-    padding: 15px 0px;
+    padding: 0.5em 0px 1.5em;
 }
 
 .disability-status .lbl.radio-list > label {
@@ -1106,6 +1107,16 @@ button.delete-btn {
 
 .input-field-label.input-field-label.pi-accom-notice {
     padding-top: 0.875em;
+}
+
+.pi-modal-title.veterans-title {
+    color: #4F585F;
+    padding-left: 0px;
+    padding-bottom: 0.625em;
+}
+
+.edit-veteran .input-field-label.pi-accom-notice {
+    padding-top: 0;
 }
 
 /*  Dropdown menu  */
@@ -1622,7 +1633,8 @@ div.dir-profile {
     .edit-emer-contact.pi-modal.modal.in .modal-dialog,
     .edit-directory-profile.pi-modal.modal.in .modal-dialog,
     .security-qa.pi-modal.modal.in .modal-dialog,
-    .disability-status.pi-modal.modal.in .modal-dialog {
+    .disability-status.pi-modal.modal.in .modal-dialog,
+    .edit-veteran.pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1675,7 +1687,8 @@ div.dir-profile {
         width: 728px;
     }
 
-    .disability-status.pi-modal .modal-dialog {
+    .disability-status.pi-modal .modal-dialog,
+    .edit-veteran.pi-modal .modal-dialog {
         width: 988px;
     }
 
