@@ -416,14 +416,25 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
             $modal.open({
                 templateUrl: $filter('webAppResourcePath')('personalInformationApp/piAdditionalDetails/piVeteranClassification.html'),
-                windowClass: 'edit-email pi-modal',
+                windowClass: 'edit-veteran pi-modal',
                 keyboard: true,
-                controller: "piEditPersonalDetailsController",
+                controller: "piEditVeteranClassificationController",
                 scope: $scope,
                 resolve: {
+                    veteranClassInfo: function() {
+                        return {
+                            id: $scope.personalDetails.id,
+                            version: $scope.personalDetails.version,
+                            veraIndicator: $scope.personalDetails.veraIndicator,
+                            sdvetIndicator: $scope.personalDetails.sdvetIndicator,
+                            armedServiceMedalVetIndicator: $scope.personalDetails.armedServiceMedalVetIndicator,
+                            activeDutySeprDate: $scope.personalDetails.activeDutySeprDate
+                        };
+                    }
                 }
             });
         };
+
         $scope.openEditPhoneModal = function(currentPhone) {
 
             $modal.open({

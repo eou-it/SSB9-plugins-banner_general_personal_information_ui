@@ -1056,11 +1056,12 @@ button.delete-btn {
 .pi-icon-align {
     display: inline-block;
 }
-.pad-disability {
+.pad-wordy-modal {
     padding: 0px 15px;
 }
 
-.clip-disability-text {
+.clip-disability-text,
+.clip-vet-text {
     height: 192px;
     overflow-y: hidden;
     clear: right;
@@ -1083,17 +1084,19 @@ button.delete-btn {
     width: 100%;
 }
 
-.disability-status .pad-disability > label {
+.disability-status .pad-wordy-modal > label {
     padding-top: 0px;
 }
 
-.disability-status .pad-disability > p:last-child {
+.disability-status .pad-wordy-modal > p:last-child,
+.edit-veteran .pad-wordy-modal > p:last-child {
     margin-bottom: 0px;
 }
 
-.toggle-disability {
+.toggle-disability,
+.toggle-vet {
     display: inline-block;
-    padding: 15px 0px;
+    padding: 0.5em 0px 1.5em;
 }
 
 .disability-status .lbl.radio-list > label {
@@ -1106,6 +1109,25 @@ button.delete-btn {
 
 .input-field-label.input-field-label.pi-accom-notice {
     padding-top: 0.875em;
+}
+
+.pi-modal-title.veterans-title {
+    color: #4F585F;
+    padding-left: 0px;
+    padding-bottom: 0.625em;
+}
+
+.edit-veteran .input-field-label.pi-accom-notice {
+    padding-top: 0;
+}
+
+.pad-vet-class {
+    padding-left: 1.5em;
+}
+
+.vet-date-input {
+    width: 15em;
+    padding-bottom: 1em;
 }
 
 /*  Dropdown menu  */
@@ -1231,6 +1253,9 @@ li.listing .radio-txt-input {
     margin-top: 7px;
 }
 
+/*  Check box  */
+/*Custom Radio and check boxes*/
+
 input[type="checkbox"].main-nav-check,
 input[type="checkbox"].dir-profile-nav-check {
     margin-top: 0.875em;
@@ -1241,8 +1266,10 @@ input[type="checkbox"].dir-profile-nav-check + .lbl {
     padding-top: 0.875em;
 }
 
-/*  Check box  */
-/*Custom Radio and check boxes*/
+input[type="checkbox"].main-nav-check + .lbl.pi-fix {
+    padding-top: 0;
+}
+
 input[type=checkbox],input[type=radio] {
     opacity: 0;
     position: absolute;
@@ -1308,7 +1335,8 @@ input[type=radio]:checked+.lbl::before {
     content: "\2022";
 }
 
-input[type=radio]:checked+.lbl {
+input[type=radio]:checked+.lbl,
+.edit-veteran input[type=checkbox]:checked+.lbl {
     color: #1C8445;
 }
 
@@ -1622,7 +1650,8 @@ div.dir-profile {
     .edit-emer-contact.pi-modal.modal.in .modal-dialog,
     .edit-directory-profile.pi-modal.modal.in .modal-dialog,
     .security-qa.pi-modal.modal.in .modal-dialog,
-    .disability-status.pi-modal.modal.in .modal-dialog {
+    .disability-status.pi-modal.modal.in .modal-dialog,
+    .edit-veteran.pi-modal.modal.in .modal-dialog {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         transform: translate(0, 0);
@@ -1675,7 +1704,8 @@ div.dir-profile {
         width: 728px;
     }
 
-    .disability-status.pi-modal .modal-dialog {
+    .disability-status.pi-modal .modal-dialog,
+    .edit-veteran.pi-modal .modal-dialog {
         width: 988px;
     }
 
