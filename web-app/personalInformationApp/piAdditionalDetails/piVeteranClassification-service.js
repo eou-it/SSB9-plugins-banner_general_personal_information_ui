@@ -64,13 +64,9 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
                     this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate)) {
                     result.veraIndicator = 'B';
                 }
-                else {
-                    //throw an error, no choice under OPT 1 was selected
-                    throw 'NoClassSelectedError';
-                }
+
                 result.sdvetIndicator = veteranClassInfo.sdvetIndicator ? 'Y' : null;
                 result.armedServiceMedalVetIndicator = veteranClassInfo.armedServiceMedalVetIndicator;
-                //result.activeDutySeprDate = veteranClassInfo.activeDutySeprDate;
             }
             else if(veteranClassInfo.choice === c.PROTECTED_VET_UNCLASSIFIED) {
                 result.veraIndicator = 'B';
@@ -85,10 +81,11 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
             return result;
         };
 
-        /*
-        this.getDisabilityStatusError = function(disabilityStatus) {
-            var msg = 'personinfo.disability.error.noneSelected';
-            if (!disabilityStatus) {
+        this.getVeteranClassificationError = function(veteranClassInfo) {
+            var msg = 'personinfo.veteran.classification.error.notprotected';
+            if(veteranClassInfo.choice !== this.vetChoiceConst.PROTECTED_VET && (veteranClassInfo.sdvetIndicator ||
+                veteranClassInfo.armedServiceMedalVetIndicator || veteranClassInfo.badgeVeteran ||
+                this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate))) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
@@ -97,7 +94,20 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
                 notificationCenterService.removeNotification(msg);
             }
         };
-        */
+
+        this.getVeteranProtectedError = function(veteranClassInfo) {
+            var msg = 'personinfo.veteran.classification.error.protected';
+            if(veteranClassInfo.choice === this.vetChoiceConst.PROTECTED_VET && !(veteranClassInfo.sdvetIndicator ||
+                veteranClassInfo.armedServiceMedalVetIndicator || veteranClassInfo.badgeVeteran ||
+                this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate))) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
 
         this.displayMessages = function() {
             notificationCenterService.setLocalMessageCenter(veteranMessageCenter);

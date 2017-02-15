@@ -6,7 +6,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <h2 class="pi-modal-title">{{'personInfo.title.editVeteran'|i18n}}</h2>
         <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
         <div class="pad-dialog-lr">
-            <div ng-class="[(isVeteranTextClipped ? 'clip-disability-text' : null)]" class="pad-disability">
+            <div ng-class="[(isVeteranTextClipped ? 'clip-vet-text' : null)]" class="pad-wordy-modal">
                 <h3 class="pi-modal-title veterans-title">{{'personinfo.veteran.classification.title'|i18n}}</h3>
                 <p>{{'personinfo.veteran.classification.detail'|i18n}}
                     {{'personinfo.veteran.classification.types.title'|i18n}}</p>
@@ -29,14 +29,33 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p>{{'personinfo.veteran.classification.notice.detail.3'|i18n}}</p>
                 <p>{{'personinfo.veteran.classification.notice.detail.4'|i18n}}</p>
             </div>
-            <div class="pad-disability">
-                <a ng-click="toggleVeteranTextVisibility()" class="toggle-disability pi-link">
+            <div class="pad-wordy-modal">
+                <a ng-click="toggleVeteranTextVisibility()" class="toggle-vet pi-link">
                     {{(isVeteranTextClipped ? 'personinfo.disability.viewMore' : 'personinfo.disability.viewLess')|i18n}}
                 </a><br>
                 <input ng-model="veteranClassInfo.choice" class="edit-radio" type="radio" name="veteran-category" value="{{vetConsts.PROTECTED_VET}}"
                        id="o-radio-lbl">
                 <label class="lbl radio-list pi-fix" for="o-radio-lbl">{{'personinfo.veteran.classification.first'|i18n}}</label>
                 <br>
+                <div class="pad-vet-class">
+                    <p>{{'personinfo.veteran.classification.separated.note'|i18n}}</p>
+                    <div class="vet-date-input">
+                        <label>{{'personinfo.veteran.classification.date.discharge.label'|i18n}}</label>
+                        <input date-picker ng-model="veteranClassInfo.activeDutySeprDate" on-select="setFromDate" ng-blur="validFromFocused=false; removeAddressFieldErrors()"
+                               ng-focus="validFromFocused=true" ng-class="[((fromDateErrMsg || dateRangeErrMsg) && !validFromFocused ? 'input-error' : null)]"
+                               class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate" aria-label="{{'personInfo.label.validFrom'|i18n}}"/>
+                    </div>
+                    <input ng-model="veteranClassInfo.sdvetIndicator" class="main-nav-check" type="checkbox" id="dis-checkbx-lbl">
+                    <label class="lbl radio-list pi-fix" for="dis-checkbx-lbl">{{'personinfo.veteran.classification.disabled.veteran'|i18n}}</label>
+                    <br>
+                    <input ng-model="veteranClassInfo.badgeVeteran" class="main-nav-check" type="checkbox" id="act-checkbx-lbl">
+                    <label class="lbl radio-list pi-fix" for="act-checkbx-lbl">{{'personinfo.veteran.classification.active.veteran'|i18n}}</label>
+                    <br>
+                    <input ng-model="veteranClassInfo.armedServiceMedalVetIndicator" class="main-nav-check" type="checkbox"
+                           id="med-checkbx-lbl">
+                    <label class="lbl radio-list pi-fix" for="med-checkbx-lbl">{{'personinfo.veteran.classification.medal.veteran'|i18n}}</label>
+                    <br>
+                </div>
                 <input ng-model="veteranClassInfo.choice" class="edit-radio" type="radio" name="veteran-category" value="{{vetConsts.PROTECTED_VET_UNCLASSIFIED}}"
                        id="b-radio-lbl">
                 <label class="lbl radio-list pi-fix" for="b-radio-lbl">{{'personinfo.veteran.classification.second'|i18n}}</label>
@@ -49,8 +68,12 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                        id="na-radio-lbl">
                 <label class="lbl radio-list pi-fix" for="na-radio-lbl">{{'personinfo.veteran.classification.fourth'|i18n}}</label>
                 <br>
+                <p class="mobile-errors" ng-class="[(!!veteranErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{veteranErrMsg|i18n}}</p>
+                <p class="mobile-errors" ng-class="[(!!veteranUpdateErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                   role="alert" aria-live="assertive">{{veteranUpdateErrMsg}}</p>
                 <div id="veteransErrorMsgCenter" class="visuallyhidden" tabindex="-1">
-                    <span>{{''|i18n}}</span>
+                    <span>{{veteranErrMsg|i18n}}</span>
                     <span>{{veteranUpdateErrMsg}}</span>
                 </div>
             </div>

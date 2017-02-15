@@ -6,10 +6,10 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
 
         // CONTROLLER VARIABLES
         // --------------------
-        //$scope.disabilityStatus = disabilityStatus;
         $scope.isVeteranTextClipped = true;
         $scope.veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice(veteranClassInfo);
         $scope.vetConsts = piVeteranClassificationService.vetChoiceConst;
+        $scope.veteranErrMsg = '';
         $scope.veteranUpdateErrMsg = '';
 
 
@@ -25,8 +25,10 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
         };
 
         var isValidVeteranClassification = function() {
+            $scope.veteranErrMsg = piVeteranClassificationService.getVeteranProtectedError($scope.veteranClassInfo);
+            $scope.veteranErrMsg = !$scope.veteranErrMsg ? piVeteranClassificationService.getVeteranClassificationError($scope.veteranClassInfo) : $scope.veteranErrMsg;
 
-            return true;
+            return !$scope.veteranErrMsg;
         };
 
         $scope.saveVeteranClassification = function() {
@@ -68,7 +70,7 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
 
         // INITIALIZE
         // ----------
-        this.init();
+        //this.init();
 
     }
 ]);

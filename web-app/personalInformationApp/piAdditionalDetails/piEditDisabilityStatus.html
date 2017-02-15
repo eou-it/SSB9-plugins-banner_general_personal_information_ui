@@ -6,7 +6,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <h2 class="pi-modal-title">{{'personinfo.disability.status.page.title'|i18n}}</h2>
         <button class="close closebtn" ng-click="cancelModal()" title="close"></button>
         <div class="pad-dialog-lr">
-            <div ng-class="[(isDisablilityTextClipped ? 'clip-disability-text' : null)]" class="pad-disability">
+            <div ng-class="[(isDisablilityTextClipped ? 'clip-disability-text' : null)]" class="pad-wordy-modal">
                 <p class="form-id-item">{{'personinfo.disability.status.form'|i18n}}</p>
                 <p class="form-id-item">{{'personinfo.disability.status.OMBnumber'|i18n}}</p>
                 <p class="form-id-item">{{'personinfo.disability.status.expiry.date'|i18n}}</p>
@@ -48,7 +48,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 <p class="disability-act-text">{{'personinfo.disability.act'|i18n:[('personinfo.deptOfLabor.website'|i18n)]}}</p>
                 <p>{{'personinfo.publicBurden.statement'|i18n}}</p>
             </div>
-            <div class="pad-disability">
+            <div class="pad-wordy-modal">
                 <a ng-click="toggleDisabilityTextVisibility()" class="toggle-disability pi-link">
                     {{(isDisablilityTextClipped ? 'personinfo.disability.viewMore' : 'personinfo.disability.viewLess')|i18n}}
                 </a><br>
