@@ -1,14 +1,16 @@
 personalInformationAppControllers.controller('piEditVeteranClassificationController',['$scope', '$modalInstance', '$rootScope', '$state',
     '$filter', 'notificationCenterService', 'piVeteranClassificationService', 'personalInformationService', 'piCrudService',
+    'veteranClassInfo',
     function ($scope, $modalInstance, $rootScope, $state, $filter, notificationCenterService, piVeteranClassificationService,
-              personalInformationService, piCrudService){
+              personalInformationService, piCrudService, veteranClassInfo){
 
         // CONTROLLER VARIABLES
         // --------------------
         //$scope.disabilityStatus = disabilityStatus;
         $scope.isVeteranTextClipped = true;
-        $scope.disabilityErrMsg = '';
-        $scope.disabilityUpdateErrMsg = '';
+        $scope.veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice(veteranClassInfo);
+        $scope.vetConsts = piVeteranClassificationService.vetChoiceConst;
+        $scope.veteranUpdateErrMsg = '';
 
 
         // CONTROLLER FUNCTIONS
@@ -22,18 +24,16 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
             $scope.isVeteranTextClipped = !$scope.isVeteranTextClipped;
         };
 
-        var isValidDisabilityStatus = function() {
-            $scope.disabilityErrMsg = piVeteranClassificationService.getDisabilityStatusError($scope.disabilityStatus);
+        var isValidVeteranClassification = function() {
 
-            return !($scope.disabilityErrMsg);
+            return true;
         };
 
-        $scope.saveDisabilityStatus = function() {
-            if (isValidDisabilityStatus()) {
-                var disabilityStatusCode = {code: $scope.disabilityStatus},
-                    handleResponse = function (response) {
+        $scope.saveVeteranClassification = function() {
+            if (isValidVeteranClassification()) {
+                var handleResponse = function (response) {
                         if (response.failure) {
-                            $scope.disabilityUpdateErrMsg = response.message;
+                            $scope.veteranUpdateErrMsg = response.message;
                             piVeteranClassificationService.displayErrorMessage(response.message);
                         }
                         else {
@@ -53,9 +53,10 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
                                 {reload: true, inherit: false, notify: true}
                             );
                         }
-                    };
+                    },
+                veteranInfoToSave = piVeteranClassificationService.decodeChoiceToVeteranClass($scope.veteranClassInfo);
 
-                piCrudService.update('DisabilityStatus', disabilityStatusCode).$promise.then(handleResponse);
+                piCrudService.update('VeteranClassification', veteranInfoToSave).$promise.then(handleResponse);
             }
             else {
                 piVeteranClassificationService.displayMessages();

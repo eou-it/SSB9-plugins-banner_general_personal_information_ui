@@ -421,6 +421,16 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 controller: "piEditVeteranClassificationController",
                 scope: $scope,
                 resolve: {
+                    veteranClassInfo: function() {
+                        return {
+                            id: $scope.personalDetails.id,
+                            version: $scope.personalDetails.version,
+                            veraIndicator: $scope.personalDetails.veraIndicator,
+                            sdvetIndicator: $scope.personalDetails.sdvetIndicator,
+                            armedServiceMedalVetIndicator: $scope.personalDetails.armedServiceMedalVetIndicator,
+                            activeDutySeprDate: $scope.personalDetails.activeDutySeprDate
+                        };
+                    }
                 }
             });
         };
