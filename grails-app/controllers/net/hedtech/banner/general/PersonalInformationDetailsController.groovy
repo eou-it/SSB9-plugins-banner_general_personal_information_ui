@@ -622,18 +622,25 @@ class PersonalInformationDetailsController {
     }
 
     def updateVeteranClassification() {
+        try {
+            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.VETERANS_CLASSIFICATION)
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def updatedValues = request?.JSON ?: params
 
-        fixJSONObjectForCast(updatedPerson)
+        fixJSONObjectForCast(updatedValues)
 
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
                 id: updatedValues.id,
                 version: updatedValues.version,
-                veraIndicator:updatedValues.vetCategoryIndicator,
-                activeDutySeprDate:updatedValues.vetActiveDutySeparationDate,
-                sdvetIndicator:updatedValues.vetDisabledIndicator,
-                armedServiceMedalVetIndicator:updatedValues.vetArmedServiceMedalIndicator
+                veraIndicator: updatedValues.veraIndicator,
+                activeDutySeprDate: updatedValues.activeDutySeprDate,
+                sdvetIndicator: updatedValues.sdvetIndicator,
+                armedServiceMedalVetIndicator: updatedValues.armedServiceMedalVetIndicator
         ]
 
         try {

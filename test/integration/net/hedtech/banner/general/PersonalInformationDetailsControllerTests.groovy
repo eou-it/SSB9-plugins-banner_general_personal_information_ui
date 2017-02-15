@@ -1301,7 +1301,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         loginSSB 'GDP000005', '111111'
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def details = controller.personBasicPersonBaseService.getPersonalDetails(pidm)
+        def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
 
         controller.request.contentType = "text/json"
 
@@ -1341,7 +1341,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        def details = controller.personBasicPersonBaseService.getPersonalDetails(pidm)
+        def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
 
         controller.request.contentType = "text/json"
 
@@ -1523,6 +1523,62 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         }""".toString()
 
         controller.updateDisabilityStatus()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
+    void testUpdateVeteranClassification() {
+        loginSSB 'GDP000005', '111111'
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+            id:${details.id},
+            version: ${details.version},
+            veraIndicator: 'B',
+            sdvetIndicator: 'Y',
+            activeDutySeprDate: null,
+            armedServiceMedalVetIndicator: false
+        }""".toString()
+
+        controller.updateVeteranClassification()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertFalse data.failure
+    }
+
+    @Test
+    void testUpdateVeteranClassificationWithConfigSetToNotUpdateable() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to Disability Status
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.VETERANS_CLASSIFICATION): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+            id:${details.id},
+            version: ${details.version},
+            veraIndicator: 'B',
+            sdvetIndicator: 'Y',
+            activeDutySeprDate: null,
+            armedServiceMedalVetIndicator: false
+        }""".toString()
+
+        controller.updateVeteranClassification()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
 
