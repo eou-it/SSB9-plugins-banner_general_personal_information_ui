@@ -1,5 +1,5 @@
-personalInformationApp.service('piVeteranClassificationService', ['notificationCenterService',
-    function (notificationCenterService) {
+personalInformationApp.service('piVeteranClassificationService', ['notificationCenterService', 'personalInformationService',
+    function (notificationCenterService, personalInformationService) {
 
         // CONSTANTS
         // ----------
@@ -13,15 +13,21 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
         var messages = [],
             veteranMessageCenter = '#veteransErrorMsgCenter';
 
-        this.isRecentlySeperated = function(seprDate) {
+        this.isRecentlySeparated = function(seprDate) {
+            var nowDate = new Date(),
+            dateSeprDate = personalInformationService.stringToDate(seprDate),
+            seprDateInPast = nowDate > dateSeprDate;
 
-            return false;
+            // recently separated if seprDate is within the last 3 years
+            nowDate.setFullYear((nowDate.getFullYear()) - 3);
+            return seprDateInPast && dateSeprDate >= nowDate;
         };
 
         this.encodeVeteranClassToChoice = function(veteranClassInfo) {
             var c = this.vetChoiceConst;
             veteranClassInfo.badgeVeteran = false;
             veteranClassInfo.sdvetIndicator = veteranClassInfo.sdvetIndicator === 'Y';
+            veteranClassInfo.activeDutySeprDate = veteranClassInfo.activeDutySeprDate;
 
             if(veteranClassInfo.veraIndicator === 'O') {
                 veteranClassInfo.choice = c.PROTECTED_VET;
@@ -29,7 +35,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
             }
             else if(veteranClassInfo.veraIndicator === 'B') {
                 if(veteranClassInfo.sdvetIndicator || veteranClassInfo.armedServiceMedalVetIndicator ||
-                    this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate)) {
+                    this.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
                     veteranClassInfo.choice = c.PROTECTED_VET;
                 }
                 else {
@@ -53,7 +59,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
                 version: veteranClassInfo.version,
                 armedServiceMedalVetIndicator: false,
                 sdvetIndicator: null,
-                activeDutySeprDate: veteranClassInfo.activeDutySeprDate
+                activeDutySeprDate: personalInformationService.stringToDate(veteranClassInfo.activeDutySeprDate)
             };
 
             if(veteranClassInfo.choice === c.PROTECTED_VET) {
@@ -61,7 +67,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
                     result.veraIndicator = 'O';
                 }
                 else if(veteranClassInfo.sdvetIndicator || veteranClassInfo.armedServiceMedalVetIndicator ||
-                    this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate)) {
+                    this.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
                     result.veraIndicator = 'B';
                 }
 
@@ -85,7 +91,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
             var msg = 'personinfo.veteran.classification.error.notprotected';
             if(veteranClassInfo.choice !== this.vetChoiceConst.PROTECTED_VET && (veteranClassInfo.sdvetIndicator ||
                 veteranClassInfo.armedServiceMedalVetIndicator || veteranClassInfo.badgeVeteran ||
-                this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate))) {
+                this.isRecentlySeparated(veteranClassInfo.activeDutySeprDate))) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
@@ -99,7 +105,19 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
             var msg = 'personinfo.veteran.classification.error.protected';
             if(veteranClassInfo.choice === this.vetChoiceConst.PROTECTED_VET && !(veteranClassInfo.sdvetIndicator ||
                 veteranClassInfo.armedServiceMedalVetIndicator || veteranClassInfo.badgeVeteran ||
-                this.isRecentlySeperated(veteranClassInfo.activeDutySeprDate))) {
+                this.isRecentlySeparated(veteranClassInfo.activeDutySeprDate))) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+        };
+
+        this.getSeprDateError = function(date) {
+            var msg = 'personInfo.address.error.dateFormat';
+            if(!personalInformationService.stringToDate(date)){
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;

@@ -10,7 +10,9 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
         $scope.veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice(veteranClassInfo);
         $scope.vetConsts = piVeteranClassificationService.vetChoiceConst;
         $scope.veteranErrMsg = '';
+        $scope.seprDateErrMsg = '';
         $scope.veteranUpdateErrMsg = '';
+        $scope.datePlaceholder = $filter('i18n')('default.date.format').toUpperCase();
 
 
         // CONTROLLER FUNCTIONS
@@ -24,11 +26,24 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
             $scope.isVeteranTextClipped = !$scope.isVeteranTextClipped;
         };
 
-        var isValidVeteranClassification = function() {
-            $scope.veteranErrMsg = piVeteranClassificationService.getVeteranProtectedError($scope.veteranClassInfo);
-            $scope.veteranErrMsg = !$scope.veteranErrMsg ? piVeteranClassificationService.getVeteranClassificationError($scope.veteranClassInfo) : $scope.veteranErrMsg;
+        $scope.setSeprDate = function(date){
+            $scope.veteranClassInfo.activeDutySeprDate = date;
+        };
 
-            return !$scope.veteranErrMsg;
+        $scope.removeVeteranErrors = function() {
+            if(!!$scope.seprDateErrMsg) {
+                $scope.seprDateErrMsg = piVeteranClassificationService.getSeprDateError($scope.veteranClassInfo.activeDutySeprDate);
+            }
+        };
+
+        var isValidVeteranClassification = function() {
+            $scope.seprDateErrMsg = piVeteranClassificationService.getSeprDateError($scope.veteranClassInfo.activeDutySeprDate);
+            if(!$scope.seprDateErrMsg) {
+                $scope.veteranErrMsg = piVeteranClassificationService.getVeteranProtectedError($scope.veteranClassInfo);
+                $scope.veteranErrMsg = !$scope.veteranErrMsg ? piVeteranClassificationService.getVeteranClassificationError($scope.veteranClassInfo) : $scope.veteranErrMsg;
+            }
+
+            return !($scope.seprDateErrMsg || $scope.veteranErrMsg);
         };
 
         $scope.saveVeteranClassification = function() {

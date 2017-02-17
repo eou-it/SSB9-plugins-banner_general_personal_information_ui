@@ -10,6 +10,10 @@ h2 {
     font-size: 24px;
 }
 
+p, li {
+    color: #4F585F;
+}
+
 .break-word {
     word-wrap: break-word;
 }
@@ -447,6 +451,11 @@ input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
     cursor: pointer;
 }
 
+.edit-veteran input.hasMultiCalendarPicker.pi-date-input + span.calendar-img {
+    left: 11.5em;
+    right: inherit;
+}
+
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img::before {
     content: "\e651";
 }
@@ -505,7 +514,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     padding: 0.875em 0em;
     margin: 0px;
     font-weight: bold;
-    color: #333
+    color: #283036;
 }
 
 .edit-flex-div {
@@ -1130,6 +1139,10 @@ button.delete-btn {
     padding-bottom: 1em;
 }
 
+.vet-date-input > label {
+    font-weight: normal;
+}
+
 /*  Dropdown menu  */
 .pi-modal .dropdown {
     border: none;
@@ -1678,6 +1691,10 @@ div.dir-profile {
     .edit-addr .maybe-clear:nth-child(3n+1),
     .edit-emer-contact .maybe-clear:nth-child(3n) {
         clear: left;
+    }
+
+    .edit-veteran input.hasMultiCalendarPicker.pi-date-input + span.calendar-img {
+        left: 12em;
     }
 }
 

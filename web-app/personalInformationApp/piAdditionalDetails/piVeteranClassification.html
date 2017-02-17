@@ -40,11 +40,16 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <div class="pad-vet-class">
                     <p>{{'personinfo.veteran.classification.separated.note'|i18n}}</p>
                     <div class="vet-date-input">
-                        <label>{{'personinfo.veteran.classification.date.discharge.label'|i18n}}</label>
-                        <input date-picker ng-model="veteranClassInfo.activeDutySeprDate" on-select="setFromDate" ng-blur="validFromFocused=false; removeAddressFieldErrors()"
-                               ng-focus="validFromFocused=true" ng-class="[((fromDateErrMsg || dateRangeErrMsg) && !validFromFocused ? 'input-error' : null)]"
-                               class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate" aria-label="{{'personInfo.label.validFrom'|i18n}}"/>
+                        <label ng-class="(seprDateErrMsg && !seprDateFocused ? 'field-error' : '')">
+                            {{'personinfo.veteran.classification.date.discharge.label'|i18n}}
+                        </label>
+                        <input date-picker ng-model="veteranClassInfo.activeDutySeprDate" on-select="setSeprDate" ng-blur="seprDateFocused=false; removeVeteranErrors()"
+                               ng-focus="seprDateFocused=true" ng-class="[(seprDateErrMsg && !seprDateFocused ? 'input-error' : null)]"
+                               class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate"
+                               aria-label="{{'personinfo.veteran.classification.date.discharge.label'|i18n}}"/>
                     </div>
+                    <p class="mobile-errors" ng-class="[(!!seprDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
+                       role="alert" aria-live="assertive">{{seprDateErrMsg|i18n}}</p>
                     <input ng-model="veteranClassInfo.sdvetIndicator" class="main-nav-check" type="checkbox" id="dis-checkbx-lbl">
                     <label class="lbl radio-list pi-fix" for="dis-checkbx-lbl">{{'personinfo.veteran.classification.disabled.veteran'|i18n}}</label>
                     <br>
@@ -73,6 +78,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p class="mobile-errors" ng-class="[(!!veteranUpdateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{veteranUpdateErrMsg}}</p>
                 <div id="veteransErrorMsgCenter" class="visuallyhidden" tabindex="-1">
+                    <span>{{seprDateErrMsg|i18n}}</span>
                     <span>{{veteranErrMsg|i18n}}</span>
                     <span>{{veteranUpdateErrMsg}}</span>
                 </div>
