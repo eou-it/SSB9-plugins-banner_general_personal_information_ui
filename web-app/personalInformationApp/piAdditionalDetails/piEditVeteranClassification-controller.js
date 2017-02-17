@@ -31,7 +31,7 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
         };
 
         $scope.removeVeteranErrors = function() {
-            if(!!$scope.seprDateErrMsg) {
+            if($scope.seprDateErrMsg) {
                 $scope.seprDateErrMsg = piVeteranClassificationService.getSeprDateError($scope.veteranClassInfo.activeDutySeprDate);
             }
         };

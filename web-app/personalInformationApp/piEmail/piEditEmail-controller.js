@@ -19,10 +19,10 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
         };
 
         $scope.removeEmailFieldErrors = function() {
-            if(!!$scope.emailTypeErrMsg) {
+            if($scope.emailTypeErrMsg) {
                 $scope.emailTypeErrMsg = piEmailService.getErrorEmailType($scope.email);
             }
-            if(!!$scope.emailAddressErrMsg) {
+            if($scope.emailAddressErrMsg) {
                 $scope.emailAddressErrMsg = piEmailService.getErrorEmailAddress($scope.email);
             }
         };

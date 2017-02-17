@@ -26,25 +26,25 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
         };
 
         $scope.removeContactFieldErrors = function() {
-            if(!!$scope.firstNameErrMsg) {
+            if($scope.firstNameErrMsg) {
                 $scope.firstNameErrMsg = piEmergencyContactService.getErrorFirstName($scope.emergencyContact);
             }
-            if(!!$scope.lastNameErrMsg) {
+            if($scope.lastNameErrMsg) {
                 $scope.lastNameErrMsg = piEmergencyContactService.getErrorLastName($scope.emergencyContact);
             }
-            if(!!$scope.streetLine1ErrMsg) {
+            if($scope.streetLine1ErrMsg) {
                 $scope.streetLine1ErrMsg = piEmergencyContactService.getErrorStreetLine1($scope.emergencyContact);
             }
-            if(!!$scope.cityErrMsg){
+            if($scope.cityErrMsg){
                 $scope.cityErrMsg = piEmergencyContactService.getErrorCity($scope.emergencyContact);
             }
-            if(!!$scope.stateErrMsg) {
+            if($scope.stateErrMsg) {
                 $scope.stateErrMsg = piEmergencyContactService.getErrorState($scope.emergencyContact);
             }
-            if(!!$scope.zipErrMsg) {
+            if($scope.zipErrMsg) {
                 $scope.zipErrMsg = piEmergencyContactService.getErrorZip($scope.emergencyContact);
             }
-            if(!!$scope.nationErrMsg) {
+            if($scope.nationErrMsg) {
                 $scope.nationErrMsg = piEmergencyContactService.getErrorNation($scope.emergencyContact);
             }
         };
