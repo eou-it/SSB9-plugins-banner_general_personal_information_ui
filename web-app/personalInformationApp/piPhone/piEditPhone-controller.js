@@ -19,10 +19,10 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
         };
 
         $scope.removePhoneFieldErrors = function() {
-            if(!!$scope.phoneTypeErrMsg) {
+            if($scope.phoneTypeErrMsg) {
                 $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType($scope.phone);
             }
-            if(!!$scope.phoneNumberErrMsg) {
+            if($scope.phoneNumberErrMsg) {
                 $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber($scope.phone);
             }
         };

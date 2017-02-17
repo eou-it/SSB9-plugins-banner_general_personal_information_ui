@@ -27,32 +27,32 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         };
 
         $scope.removeAddressFieldErrors = function() {
-            if(!!$scope.addressTypeErrMsg) {
+            if($scope.addressTypeErrMsg) {
                 $scope.addressTypeErrMsg = piAddressService.getErrorAddressType($scope.address);
             }
-            if(!!$scope.fromDateErrMsg) {
+            if($scope.fromDateErrMsg) {
                 $scope.fromDateErrMsg = piAddressService.getErrorFromDate($scope.address);
             }
-            if(!!$scope.toDateErrMsg) {
+            if($scope.toDateErrMsg) {
                 $scope.toDateErrMsg = piAddressService.getErrorDateFormat($scope.address.toDate);
             }
-            if(!!$scope.dateRangeErrMsg) {
+            if($scope.dateRangeErrMsg) {
                 $scope.dateRangeErrMsg = piAddressService.getErrorDateRange($scope.address,
                     $scope.addressGroup[$scope.address.addressType.description]);
             }
-            if(!!$scope.streetLine1ErrMsg) {
+            if($scope.streetLine1ErrMsg) {
                 $scope.streetLine1ErrMsg = piAddressService.getErrorStreetLine1($scope.address);
             }
-            if(!!$scope.cityErrMsg){
+            if($scope.cityErrMsg){
                 $scope.cityErrMsg = piAddressService.getErrorCity($scope.address);
             }
-            if(!!$scope.stateErrMsg) {
+            if($scope.stateErrMsg) {
                 $scope.stateErrMsg = piAddressService.getErrorState($scope.address);
             }
-            if(!!$scope.zipErrMsg) {
+            if($scope.zipErrMsg) {
                 $scope.zipErrMsg = piAddressService.getErrorZip($scope.address);
             }
-            if(!!$scope.nationErrMsg) {
+            if($scope.nationErrMsg) {
                 $scope.nationErrMsg = piAddressService.getErrorNation($scope.address);
             }
         };

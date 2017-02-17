@@ -26,7 +26,7 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
         };
 
         $scope.removePinFieldError = function() {
-            if(!!$scope.pinErrMsg) {
+            if($scope.pinErrMsg) {
                 $scope.pinErrMsg = piSecurityQAService.getPinErrMsg($scope.pin);
             }
         };

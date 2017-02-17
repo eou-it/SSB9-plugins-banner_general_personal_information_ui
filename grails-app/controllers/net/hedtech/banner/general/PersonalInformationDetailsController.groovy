@@ -638,7 +638,7 @@ class PersonalInformationDetailsController {
                 id: updatedValues.id,
                 version: updatedValues.version,
                 veraIndicator: updatedValues.veraIndicator,
-                activeDutySeprDate: updatedValues.activeDutySeprDate,
+                activeDutySeprDate: parseJavaScriptDate(updatedValues.activeDutySeprDate),
                 sdvetIndicator: updatedValues.sdvetIndicator,
                 armedServiceMedalVetIndicator: updatedValues.armedServiceMedalVetIndicator
         ]
@@ -859,11 +859,19 @@ class PersonalInformationDetailsController {
         return roles
     }
 
-    private def convertAddressDates(addressMap){
+    private def convertAddressDates(addressMap) {
+        addressMap.fromDate = parseJavaScriptDate(addressMap.fromDate)
+        addressMap.toDate = parseJavaScriptDate(addressMap.toDate)
+    }
+
+    private def parseJavaScriptDate(date) {
         // Convert date Strings to Date objects
-        addressMap.fromDate = DateUtility.parseDateString(addressMap.fromDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
-        if(addressMap.toDate)
-            addressMap.toDate = DateUtility.parseDateString(addressMap.toDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+        if(date) {
+            return DateUtility.parseDateString(date, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+        }
+        else {
+            return null
+        }
     }
 
     private def isDateInFuture(date) {
