@@ -20,7 +20,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <input ng-model="email.emailAddress" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
                        ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
                        class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
-                       maxlength="128" id="emailAddr">
+                       maxlength="128" id="emailAddr" dir="ltr">
                 <span ng-if="!!emailAddressErrMsg && !emailAddrFocused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>

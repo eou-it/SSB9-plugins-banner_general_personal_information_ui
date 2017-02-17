@@ -258,6 +258,7 @@ input:disabled {
 .pi-comment {
     color: #7E858B;
     word-break: keep-all;
+    padding-top: 0.25em;
 }
 
 .button-block {
@@ -420,13 +421,18 @@ a.add-item-link {
     cursor: pointer;
 }
 
-a.pi-overview-link,
-a.pi-overview-link:hover,
-a.pi-overview-link:focus {
+.pi-overview-link,
+.pi-overview-link:hover,
+.pi-overview-link:focus {
+    color: #206E9F;
     text-decoration: none;
 }
 
-.email-link {
+.pi-overview-link > .email-text {
+    color: #333;
+}
+
+.email-text {
     padding: 0px;
     word-wrap: break-word;
 }
@@ -932,6 +938,10 @@ button.closebtn {
     float: left;
     width: 100%;
     word-break: break-all;
+}
+
+.email-detail > div:first-child {
+    padding-bottom: 0.25em;
 }
 
 .item-wrapper,
@@ -1585,10 +1595,10 @@ div.dir-profile {
         clear: both;
     }
 
-    .email-link,
-    a.email-link:hover,
-    a.email-link:active,
-    a.email-link:focus {
+    .email-text,
+    a.email-text:hover,
+    a.email-text:active,
+    a.email-text:focus {
         color: #333;
         text-decoration: none;
     }
