@@ -10,9 +10,9 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferred'|i18n)+')' : '')}}
                 </div>
                 <div>
-                    <a class="email-link pi-link" href="mailto:{{email.emailAddress}}">{{email.emailAddress}}</a>
+                    <span class="email-text" dir="ltr">{{email.emailAddress}}</span>
                 </div>
-                <div class="pi-comment">
+                <div class="pi-comment" ng-if="email.commentData">
                     {{email.commentData}}
                 </div>
             </div>

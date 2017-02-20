@@ -258,6 +258,7 @@ input:disabled {
 .pi-comment {
     color: #7E858B;
     word-break: keep-all;
+    padding-top: 0.25em;
 }
 
 .button-block {
@@ -420,13 +421,18 @@ a.add-item-link {
     cursor: pointer;
 }
 
-a.pi-overview-link,
-a.pi-overview-link:hover,
-a.pi-overview-link:focus {
+.pi-overview-link,
+.pi-overview-link:hover,
+.pi-overview-link:focus {
+    color: #206E9F;
     text-decoration: none;
 }
 
-.email-link {
+.pi-overview-link > .email-text {
+    color: #333;
+}
+
+.email-text {
     padding: 0px;
     word-wrap: break-word;
 }
@@ -934,6 +940,11 @@ button.closebtn {
     word-break: break-all;
 }
 
+.email-detail > div:first-child,
+.addtl-details-detail > div:first-child {
+    padding-bottom: 0.25em;
+}
+
 .item-wrapper,
 .emergency-contact-wrapper {
     float: left;
@@ -942,6 +953,11 @@ button.closebtn {
 
 .address-type-view {
     font-weight: bold;
+    padding-bottom: 0.25em;
+}
+
+.addr-time-period {
+    color: #7E858B;
 }
 
 .address-date-range {
@@ -1001,18 +1017,21 @@ span.id-label {
 
 .pi-phone-ctry {
     margin-top: 0.875em;
-    width: 20%;
+    width: 30%;
+    min-width: 10em;
     display: inline-block;
 }
 
 .pi-phone-area {
     margin-top: 0.875em;
-    width: 20%;
+    width: 30%;
+    min-width: 10em;
 }
 
 .pi-phone-num {
     margin-top: 0.875em;
-    width: 35%
+    width: 35%;
+    min-width: 10em;
 }
 
 .pi-phone-extn {
@@ -1582,10 +1601,10 @@ div.dir-profile {
         clear: both;
     }
 
-    .email-link,
-    a.email-link:hover,
-    a.email-link:active,
-    a.email-link:focus {
+    .email-text,
+    a.email-text:hover,
+    a.email-text:active,
+    a.email-text:focus {
         color: #333;
         text-decoration: none;
     }
