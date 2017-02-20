@@ -940,7 +940,8 @@ button.closebtn {
     word-break: break-all;
 }
 
-.email-detail > div:first-child {
+.email-detail > div:first-child,
+.addtl-details-detail > div:first-child {
     padding-bottom: 0.25em;
 }
 
@@ -952,6 +953,11 @@ button.closebtn {
 
 .address-type-view {
     font-weight: bold;
+    padding-bottom: 0.25em;
+}
+
+.addr-time-period {
+    color: #7E858B;
 }
 
 .address-date-range {
