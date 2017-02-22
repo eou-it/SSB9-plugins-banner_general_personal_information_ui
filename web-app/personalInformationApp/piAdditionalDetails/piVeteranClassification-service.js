@@ -117,7 +117,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
 
         this.getSeprDateError = function(date) {
             var msg = 'personInfo.address.error.dateFormat';
-            if(!personalInformationService.stringToDate(date)){
+            if(date && !personalInformationService.stringToDate(date)){
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
