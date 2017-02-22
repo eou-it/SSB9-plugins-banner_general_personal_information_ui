@@ -2,7 +2,8 @@ personalInformationApp.service('piEmailService', ['notificationCenterService',
     function (notificationCenterService) {
         var messages = [],
             emailMessageCenter = "#emailErrorMsgCenter",
-            invalidCharRegEx = /[ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]/i;
+            invalidCharRegEx = /[ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]/i,
+            validEmailRegEx = /[^ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]+@[^ !#\$%\^&*\(\)\+=\{}\[\]\|"<>\?\\`;]+\.[A-Z]{2,}/i;
 
         this.getErrorEmailType = function (email) {
             var msg = 'personInfo.email.error.emailType';
@@ -33,6 +34,20 @@ personalInformationApp.service('piEmailService', ['notificationCenterService',
         this.getErrorEmailAddressFormat = function (email) {
             var msg = 'personInfo.email.error.emailAddressFormat';
             if (invalidCharRegEx.test(email.emailAddress)) {
+                messages.push({msg: msg, type: 'error'});
+
+                return msg;
+            }
+            else {
+                notificationCenterService.removeNotification(msg);
+            }
+
+            return this.getErrorEmailAddressValid(email);
+        };
+
+        this.getErrorEmailAddressValid = function (email) {
+            var msg = 'personInfo.email.error.emailAddressValid';
+            if (!email.emailType.urlIndicator && !validEmailRegEx.test(email.emailAddress)) {
                 messages.push({msg: msg, type: 'error'});
 
                 return msg;
