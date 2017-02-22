@@ -6,7 +6,6 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         // CONTROLLER VARIABLES
         // --------------------
         $scope.isCreateNew = true;
-        $scope.datePlaceholder = $filter('i18n')('default.date.format').toUpperCase();
         $scope.addressTypeErrMsg = '';
         $scope.fromDateErrMsg = '';
         $scope.dateRangeErrMsg = '';
