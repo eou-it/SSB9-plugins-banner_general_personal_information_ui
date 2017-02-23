@@ -343,7 +343,17 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.clearNotifications();
         };
 
-        $scope.stringToDate = personalInformationService.stringToDate;
+        var localeLang = $('meta[name=locale]').attr("content").split('-')[0];
+        $scope.stringToDate = function(date) {
+            var result = personalInformationService.stringToDate(date);
+
+            if(localeLang === 'ar') {
+                return result.toLocaleDateString('ar-SA-u-nu-latn-ca-islamic', {year: 'numeric', month: 'long', day: 'numeric'});
+            }
+            else {
+                return result;
+            }
+        };
 
         $scope.openEditPersonalDetailsModal = function() {
             $modal.open({
