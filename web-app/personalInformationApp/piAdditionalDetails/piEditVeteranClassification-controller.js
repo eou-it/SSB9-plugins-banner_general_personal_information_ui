@@ -12,7 +12,6 @@ personalInformationAppControllers.controller('piEditVeteranClassificationControl
         $scope.veteranErrMsg = '';
         $scope.seprDateErrMsg = '';
         $scope.veteranUpdateErrMsg = '';
-        $scope.datePlaceholder = $filter('i18n')('default.date.format').toUpperCase();
 
 
         // CONTROLLER FUNCTIONS

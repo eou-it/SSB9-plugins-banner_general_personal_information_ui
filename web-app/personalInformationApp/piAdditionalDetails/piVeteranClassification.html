@@ -40,12 +40,12 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <div class="pad-vet-class">
                     <p>{{'personinfo.veteran.classification.separated.note'|i18n}}</p>
                     <div class="vet-date-input">
-                        <label ng-class="(seprDateErrMsg && !seprDateFocused ? 'field-error' : '')">
+                        <label ng-class="(seprDateErrMsg && !seprDateFocused ? 'field-error' : '')" for="seprDate">
                             {{'personinfo.veteran.classification.date.discharge.label'|i18n}}
                         </label>
                         <input date-picker ng-model="veteranClassInfo.activeDutySeprDate" on-select="setSeprDate" ng-blur="seprDateFocused=false; removeVeteranErrors()"
                                ng-focus="seprDateFocused=true" ng-class="[(seprDateErrMsg && !seprDateFocused ? 'input-error' : null)]"
-                               class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate"
+                               class="pi-date-input input-colors" placeholder="{{'personInfo.placeholder.datePicker'|i18n}}" id="seprDate"
                                aria-label="{{'personinfo.veteran.classification.date.discharge.label'|i18n}}"/>
                     </div>
                     <p class="mobile-errors" ng-class="[(!!seprDateErrMsg ? 'field-error error-font-size' : 'no-display')]"

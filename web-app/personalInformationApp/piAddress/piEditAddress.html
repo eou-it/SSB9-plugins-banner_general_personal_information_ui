@@ -6,7 +6,7 @@
             <div class="clearfix hidden-xs"></div>
             <div class="select2-container col-xs-12 col-md-4 col-lg-4 disp-inherit">
                 <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "Address Type", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
+                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.addressType"|i18n}}", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
                 <p class="input-field-label mobile-errors" ng-class="[(!!addressTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{addressTypeErrMsg|i18n}}</p>
             </div>
@@ -15,7 +15,7 @@
                        class="input-field-label">{{'personInfo.label.validFrom'|i18n}}</label><br>
                 <input date-picker ng-model="address.fromDate" on-select="setFromDate" ng-blur="validFromFocused=false; removeAddressFieldErrors()"
                        ng-focus="validFromFocused=true" ng-class="[((fromDateErrMsg || dateRangeErrMsg) && !validFromFocused ? 'input-error' : null)]"
-                       class="pi-date-input input-colors" placeholder="{{datePlaceholder}}" id="addrFromDate" aria-label="{{'personInfo.label.validFrom'|i18n}}"/>
+                       class="pi-date-input input-colors" placeholder="{{'personInfo.placeholder.datePicker'|i18n}}" id="addrFromDate" aria-label="{{'personInfo.label.validFrom'|i18n}}"/>
                 <p class="input-field-label mobile-errors" ng-class="[(!!fromDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{fromDateErrMsg|i18n}}</p>
                 <p class="input-field-label mobile-errors" ng-class="[(!!dateRangeErrMsg ? 'field-error error-font-size' : 'no-display')]"
@@ -26,7 +26,7 @@
                        class="input-field-label">{{'personInfo.label.validTo'|i18n}}</label><br>
                 <input date-picker ng-model="address.toDate" on-select="setToDate" ng-blur="validToFocused=false; removeAddressFieldErrors()"
                        ng-focus="validToFocused=true" ng-class="[((toDateErrMsg || dateRangeErrMsg) && !validToFocused ? 'input-error' : null)]"
-                       class="pi-date-input text-input-field input-colors" placeholder="{{datePlaceholder}}" id="" aria-label="{{'personInfo.label.validTo'|i18n}}"/>
+                       class="pi-date-input text-input-field input-colors" placeholder="{{'personInfo.placeholder.datePicker'|i18n}}" id="" aria-label="{{'personInfo.label.validTo'|i18n}}"/>
                 <p class="input-field-label mobile-errors" ng-class="[(!!toDateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{toDateErrMsg|i18n}}</p>
             </div>
