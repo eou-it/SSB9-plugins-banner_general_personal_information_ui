@@ -110,6 +110,7 @@ modules = {
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/banner-icon-font-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/select2-box-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main-rtl-patch.css'], attrs: [media: 'screen, projection']
+            resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/select2-rtl-patch.css'], attrs: [media: 'screen, projection']
         }
     }
 

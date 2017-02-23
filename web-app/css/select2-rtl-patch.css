@@ -1,0 +1,23 @@
+
+/* Some select2 CSS fixes are needed only for RTL, so they are placed here rather than in select2-box.css. */
+
+/* Certain CSS appears to be fixed in the banner-ui-ss plugin's select2-rtl-patch.css
+   file, while other CSS seems not to have been fixed for RTL at all.  Doing it here. */
+html[dir="rtl"] .select2-container .select2-choice  {
+    padding:0 8px 0 0;
+}
+
+/* Forcing these using .pi-modal, as the fixed CSS in the banner_ui_ss plugin's select2-rtl-patch.css is
+   overridden by a more specific selector in select2-rtl.css. */
+html[dir="rtl"] .pi-modal .select2-container .select2-choice .select2-arrow  {
+    right:auto;
+    left:0;
+    border-left:none;
+    border-right:1px solid #aaa;
+    border-radius:4px 0 0 4px;
+}
+
+html[dir="rtl"] .pi-modal .select2-container .select2-choice > .select2-chosen  {
+    margin-right:0;
+    margin-left:26px;
+}
