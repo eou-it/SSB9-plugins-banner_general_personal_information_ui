@@ -497,7 +497,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 
 .pi-modal-divider {
     overflow-x: hidden;
-    width: 106%;
+    width: 104.9%;
     margin-right: -1.5em;
     float: right;
 }
@@ -770,6 +770,7 @@ button.closebtn {
 
 .cancel-btn {
     border-top: 1px solid #869FB1;
+    border-bottom-left-radius: 6px;
 }
 
 .cancel-btn.one-btn-layout {
@@ -1183,6 +1184,11 @@ button.delete-btn {
     padding: 1em .75em;
 }
 
+.dropdown-btn > span.form-spacing.pi-dropdown {
+    text-align: left;
+    width: 85%;
+}
+
 .dropdown-btn {
     border-radius: 4px;
     background-color: #fff;
@@ -1215,6 +1221,59 @@ button.delete-btn {
     border:1px solid #206E9F;
     box-shadow: 0px -4px #DEE5E7 inset;
     color: #4F585F;
+}
+
+.dropdown-menu.addAcct {
+    left: 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.open > .dropdown-menu.addAcct {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #206E9F;
+    top: 3.175em;
+    min-width: 100%;
+    width: auto;
+}
+
+.dropdown .dropdown-menu.addAcct > li {
+    padding-left: 0px;
+}
+
+.dropdown .dropdown-menu.addAcct > li:hover {
+    outline: none;
+    background: transparent;
+}
+
+.dropdown-menu > li > a.addAcct {
+    border-width: 1px;
+    border-radius: 0px;
+    border-style: solid none;
+    border-color: #FFFFFF;
+    color: #4F585F;
+    font-weight: bold;
+    white-space: normal;
+}
+
+.dropdown-menu > li > a.addAcct:hover,
+.dropdown-menu > li > a.addAcct:focus {
+    border-top-color: #B0DEEC;
+    border-bottom-color: #B0DEEC;
+    background-color: #F3FCFF;
+}
+
+.dropdown-menu > li > a.addAcct.end-dropdown-radius, .dropdown-menu > li.listing.end-dropdown-radius {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 .float-r.form-spacing.down-caret:after {
@@ -1700,6 +1759,7 @@ div.dir-profile {
     .pi-modal .modal-content {
         height: auto;
         border-radius: 6px;
+        overflow-y: visible;
     }
 
     .pi-modal-title {
