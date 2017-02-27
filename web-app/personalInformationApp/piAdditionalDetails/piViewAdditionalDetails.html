@@ -31,7 +31,10 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div>{{veteranRecent}}</div>
                     <div>{{veteranArmedForcesServiceMedal}}</div>
                     <div>{{veteranDisabled}}</div>
-                    <div>{{personalDetails.activeDutySeprDate ? (('personinfo.veteran.classification.date.discharge.label'|i18n)+(stringToDate(personalDetails.activeDutySeprDate)|date:'longDate')):''}}</div>
+                    <div ng-if="personalDetails.activeDutySeprDate">
+                        {{'personinfo.veteran.classification.date.discharge.label'|i18n}}
+                        {{stringToDate(personalDetails.activeDutySeprDate)|date:'longDate'}}
+                    </div>
                 </div>
             </div>
 
