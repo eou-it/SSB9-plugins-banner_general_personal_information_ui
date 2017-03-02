@@ -17,7 +17,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                         <span class="icon-error ellucian-font"></span>
                     </span>
                 <p class="input-field-label mobile-errors" ng-class="[(!!pinErrMsg ? 'field-error error-font-size' : 'no-display')]"
-                   role="alert" aria-live="assertive">{{pinErrMsg|i18n}}</p>
+                   role="alert" aria-live="assertive">{{pinErrMsg}}</p>
             </div>
             <div class="clearfix hidden-xs"></div>
             <div ng-repeat="question in questions" class="clear-both">
@@ -29,7 +29,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                role="alert" aria-live="assertive">{{questionAnswerErrMsg}}</p>
         </div>
         <div id="securityQAErrorMsgCenter" class="visuallyhidden" tabindex="-1">
-            <span>{{pinErrMsg|i18n}}</span>
+            <span>{{pinErrMsg}}</span>
             <span>{{questionAnswerErrMsg}}</span>
         </div>
     </div>
