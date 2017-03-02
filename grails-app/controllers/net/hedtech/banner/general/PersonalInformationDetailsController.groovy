@@ -55,6 +55,16 @@ class PersonalInformationDetailsController {
     }
 
     def getAddresses() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.ADDR_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -163,7 +173,10 @@ class PersonalInformationDetailsController {
 
     def addAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.ADDR_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -194,7 +207,10 @@ class PersonalInformationDetailsController {
 
     def updateAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.ADDR_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -223,7 +239,10 @@ class PersonalInformationDetailsController {
 
     def deleteAddress() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.ADDR_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.ADDR_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -251,6 +270,16 @@ class PersonalInformationDetailsController {
     }
 
     def getEmails() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMAIL_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def model = [:]
 
@@ -275,7 +304,10 @@ class PersonalInformationDetailsController {
 
     def addEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMAIL_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -303,7 +335,10 @@ class PersonalInformationDetailsController {
 
     def updateEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMAIL_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -331,7 +366,10 @@ class PersonalInformationDetailsController {
 
     def deleteEmail() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMAIL_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMAIL_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -356,6 +394,16 @@ class PersonalInformationDetailsController {
     }
 
     def getTelephoneNumbers() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PHONE_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def model = [:]
 
@@ -388,7 +436,10 @@ class PersonalInformationDetailsController {
 
     def addTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PHONE_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -412,7 +463,10 @@ class PersonalInformationDetailsController {
 
     def updateTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PHONE_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -436,7 +490,10 @@ class PersonalInformationDetailsController {
 
     def deleteTelephoneNumber() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PHONE_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PHONE_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -469,6 +526,16 @@ class PersonalInformationDetailsController {
     }
 
     def getEmergencyContacts() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMER_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -491,7 +558,10 @@ class PersonalInformationDetailsController {
 
     def addEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMER_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -516,7 +586,10 @@ class PersonalInformationDetailsController {
 
     def updateEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMER_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -541,7 +614,10 @@ class PersonalInformationDetailsController {
 
     def deleteEmergencyContact() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.EMER_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.EMER_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -564,6 +640,16 @@ class PersonalInformationDetailsController {
     }
 
     def getPreferredName() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PERS_DETAILS_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def usage = preferredNameService.getUsage(params.pageName, params.sectionName)
         def model = [:]
@@ -581,6 +667,16 @@ class PersonalInformationDetailsController {
     //get the disability classification status of the person. Return the internal sequence of the
     //equivalent sdax record for the DISA value.
     def getDisabilityStatus() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.DISABILITY_STATUS,
+                  minRequiredMode: PersonalInformationConfigService.YES
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def model =[:]
         try {
@@ -594,7 +690,10 @@ class PersonalInformationDetailsController {
 
     def updateDisabilityStatus() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.DISABILITY_STATUS)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.DISABILITY_STATUS,
+                  minRequiredMode: PersonalInformationConfigService.YES
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -623,7 +722,10 @@ class PersonalInformationDetailsController {
 
     def updateVeteranClassification() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.VETERANS_CLASSIFICATION)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.VETERANS_CLASSIFICATION,
+                  minRequiredMode: PersonalInformationConfigService.YES
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -717,6 +819,16 @@ class PersonalInformationDetailsController {
     }
 
     def getPersonalDetails() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PERS_DETAILS_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
@@ -729,7 +841,10 @@ class PersonalInformationDetailsController {
 
     def updatePersonalDetails() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.PERS_DETAILS_MODE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.PERS_DETAILS_MODE,
+                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -775,6 +890,16 @@ class PersonalInformationDetailsController {
     }
 
     def getDirectoryProfile() {
+        try {
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.DIRECTORY_PROFILE,
+                  minRequiredMode: PersonalInformationConfigService.YES
+            ])
+        } catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+            return
+        }
+
         def model = [:]
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -789,7 +914,10 @@ class PersonalInformationDetailsController {
 
     def updateDirectoryProfilePreferences() {
         try {
-            checkUpdateIsPermittedPerConfiguration(PersonalInformationConfigService.DIRECTORY_PROFILE)
+            checkActionPermittedPerConfiguration([
+                  name: PersonalInformationConfigService.DIRECTORY_PROFILE,
+                  minRequiredMode: PersonalInformationConfigService.YES
+            ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
@@ -881,15 +1009,18 @@ class PersonalInformationDetailsController {
         return date.after(today)
     }
 
-    private def checkUpdateIsPermittedPerConfiguration(param) {
+    private def checkActionPermittedPerConfiguration(param) {
         // Make sure this operation is permitted based on configuration.
         // (If the configuration is not set to allow updates, that functionality should not be available
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
-        def mode = personalInformationConfigService.getParamFromSession(param, PersonalInformationConfigService.SECTION_UPDATEABLE)
+        def SECTION_UPDATEABLE = PersonalInformationConfigService.SECTION_UPDATEABLE
+        def mode = personalInformationConfigService.getParamFromSession(param.name, SECTION_UPDATEABLE)
 
         if (mode != 'Y' ) {
-            if (mode != PersonalInformationConfigService.SECTION_UPDATEABLE) {
-                log.error("Unauthorized attempt to update Personal Information data was prevented. Configured value for parameter ${param}: ${mode}")
+            if (mode == 'N' || mode == PersonalInformationConfigService.SECTION_HIDDEN ||
+                (param.minRequiredMode == SECTION_UPDATEABLE && mode != SECTION_UPDATEABLE)) {
+
+                log.error("Unauthorized attempt to access Personal Information data was prevented. Configured value for parameter ${param.name}: ${mode}")
                 throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
             }
         }
