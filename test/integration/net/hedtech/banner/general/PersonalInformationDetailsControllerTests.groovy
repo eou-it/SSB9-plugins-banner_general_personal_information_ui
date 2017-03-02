@@ -62,6 +62,23 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetAddressesForCurrentUserButHidden() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.getAddresses()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse(dataForNullCheck)
+        println data
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testGetCountyList() {
         loginSSB 'HOSH00018', '111111'
 
@@ -461,6 +478,23 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetEmailsButHidden(){
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.getEmails()
+
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testGetEmailTypeList() {
         loginSSB 'HOSH00018', '111111'
 
@@ -721,6 +755,23 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetTelephoneNumbersButHidden() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.getTelephoneNumbers()
+
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testGetTelephoneTypeList() {
         loginSSB 'HOSH00018', '111111'
 
@@ -954,6 +1005,23 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertEquals 1, data.emergencyContacts.size()
         assertEquals 'P', data.emergencyContacts[0].relationship.code
+    }
+
+    @Test
+    void testGetEmergencyContactsForCurrentUserButHidden() {
+        loginSSB 'GDP000001', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.request.contentType = "text/json"
+        controller.getEmergencyContacts()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse(dataForNullCheck)
+        println data
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -1207,6 +1275,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetPreferredNameButHidden() {
+        loginSSB 'HOSH00018', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.getPreferredName()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testGetUserName() {
         loginSSB 'HOSH00018', '111111'
 
@@ -1294,6 +1378,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertEquals JSONObject.NULL, data.preferenceFirstName
         assertEquals 'M', data.maritalStatus.code
         assertEquals '1', data.ethnic
+    }
+
+    @Test
+    void testGetPersonalDetailsButHidden() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '0']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.getPersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
@@ -1419,6 +1519,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testGetDirectoryProfileButHidden() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DIRECTORY_PROFILE): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.getDirectoryProfile()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testUpdateDirectoryProfilePreferences() {
         loginSSB 'GDP000001', '111111'
 
@@ -1488,6 +1604,22 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 0, data.disabilityStatusCode
+    }
+
+    @Test
+    void testGetDisabilityStatusButHidden() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DISABILITY_STATUS): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        controller.getDisabilityStatus()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
     }
 
     @Test
