@@ -4,8 +4,8 @@
                class="input-field-label" id="secQA-selQstn{{$index}}">{{'personInfo.label.selectQuestion'|i18n:[($index+1)]}}</label><br>
         <div dropdown-state="question.dropdownOpen" class="dropdown" role="menu">
             <button dropdown-helper="begin" ng-class="(question.questionSelectErrMsg ? 'dropdown-btn input-field-error' : 'dropdown-btn')"
-                    class="dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-labelledby="secQA-selQstn{{$index}}">
-                <span class="float-l semi-bold form-spacing pi-dropdown">
+                    class="dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-labelledby="secQA-selQstn{{$index}} selectQABtnText{{$index}}">
+                <span class="float-l semi-bold form-spacing pi-dropdown" id="selectQABtnText{{$index}}">
                     {{!pinQuestions[question.questionNum] ? ('personInfo.placeholder.selectQuestion'|i18n) : pinQuestions[question.questionNum]}}
                 </span>
                 <span class="float-r form-spacing down-caret caret-color"></span>
@@ -28,7 +28,7 @@
                class="input-field-label" for="secQA-defQstn{{$index}}">{{'personInfo.label.defineQuestion'|i18n:[($index+1)]}}</label><br>
         <input ng-model="question.userDefinedQuestion" ng-blur="question.defQuestionFocused=false; question.removeErrors()" ng-focus="question.defQuestionFocused=true"
                ng-class="[(!!question.defQuestionErrMsg && !question.defQuestionFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" placeholder="" maxlength="255" id="secQA-defQstn{{$index}}">
+               class="text-input-field semi-bold form-spacing" type="text" maxlength="255" id="secQA-defQstn{{$index}}">
         <span ng-if="!!question.defQuestionErrMsg && !question.defQuestionFocused" class="icon input-fail">
             <span class="icon-error ellucian-font"></span>
         </span>
@@ -41,8 +41,7 @@
         <br>
         <input ng-model="question.answer" ng-blur="question.answerFocused=false; question.removeErrors()" ng-focus="question.answerFocused=true"
                ng-class="[(!!question.answerErrMsg && !question.answerFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" placeholder=""
-               maxlength="255" id="secQA-answer{{$index}}">
+               class="text-input-field semi-bold form-spacing" type="text" maxlength="255" id="secQA-answer{{$index}}">
         <span ng-if="!!question.answerErrMsg && !question.answerFocused" class="icon input-fail">
             <span class="icon-error ellucian-font"></span>
         </span>
