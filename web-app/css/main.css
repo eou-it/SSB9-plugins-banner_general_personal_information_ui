@@ -523,6 +523,11 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     color: #283036;
 }
 
+.input-field-label.pi-emer-phone {
+    padding-bottom: 0;
+    padding-left: 15px;
+}
+
 .edit-flex-div {
     /* IE 10 flex */
     display: -ms-flexbox;
@@ -1038,6 +1043,10 @@ span.id-label {
 .pi-phone-extn {
     margin-top: 0.875em;
     width: 23%;
+}
+
+.pi-emer-phone-field {
+    margin-top: 0.875em;
 }
 
 /* Icons */

@@ -43,20 +43,22 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectRelationship"|i18n}}", "action": "PersonalInformationDetails/getRelationshipList", "model": "emergencyContact.relationship", "showNA": true}' type="hidden" />
     </div>
     <div class="clearfix hidden-xs"></div>
-    <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="phoneArea">{{'personInfo.label.areaCode'|i18n}}</label><br>
-        <input ng-model="emergencyContact.phoneArea" class="text-input-field semi-bold form-spacing" type="text"
-               maxlength="6" id="phoneArea" value="610">
+    <label class="input-field-label pi-emer-phone col-sm-12 col-md-12 col-lg-12" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
+    <div ng-if="maskingRules.displayCountryCode" class="col-sm-12 col-md-4 col-lg-4">
+        <input ng-model="emergencyContact.countryPhone" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+               placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="6" id="countryCode">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="phoneNumber">{{'personInfo.label.phoneNumber'|i18n}}</label><br>
-        <input ng-model="emergencyContact.phoneNumber" class="text-input-field semi-bold form-spacing" type="text" id="phoneNumber"
-               maxlength="12" value="7778888">
+        <input ng-model="emergencyContact.phoneArea" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+               placeholder="{{'personInfo.placeholder.areaCode'|i18n}}" maxlength="6" id="phoneArea">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <label class="input-field-label" for="phoneExtension">{{'personInfo.label.phoneExtension'|i18n}}</label><br>
-        <input ng-model="emergencyContact.phoneExtension" class="text-input-field semi-bold form-spacing" type="text"
-               maxlength="10" id="phoneExtension" value="123">
+        <input ng-model="emergencyContact.phoneNumber" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text" id="phoneNumber"
+               placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <input ng-model="emergencyContact.phoneExtension" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+               placeholder="{{'personInfo.placeholder.extension'|i18n}}" maxlength="10" id="phoneExtension">
     </div>
     <div class="pi-modal-divider"><div class="hidden-xs"><span></span></div></div>
     <div ng-if="maskingRules.displayHouseNumber" class="col-sm-12 col-md-4 col-lg-4">
