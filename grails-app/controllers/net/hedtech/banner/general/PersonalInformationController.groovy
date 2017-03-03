@@ -9,6 +9,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.overall.loginworkflow.PostLoginWorkflow
 import net.hedtech.banner.security.ResetPasswordService
+import org.springframework.web.context.request.RequestContextHolder
 
 import java.sql.SQLException
 
@@ -19,6 +20,8 @@ class PersonalInformationController {
 
 
     def landingPage() {
+        RequestContextHolder?.currentRequestAttributes()?.request?.session.setAttribute("enableHRSecurityCheckForMedicalInfo", false)
+
         render model: [:], view: "personalInformation"
     }
 
