@@ -853,6 +853,7 @@ class PersonalInformationDetailsController {
         def updatedPerson = request?.JSON ?: params
 
         fixJSONObjectForCast(updatedPerson)
+        fixJSONObjectForCast(updatedPerson.maritalStatus)
 
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),

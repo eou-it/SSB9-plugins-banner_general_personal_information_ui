@@ -49,7 +49,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.maritalStatus'|i18n}}
                 </div>
                 <div>
-                    <div>{{personalDetails.maritalStatus.description}}</div>
+                    <div>{{!personalDetails.maritalStatus.description ? '-' : personalDetails.maritalStatus.description}}</div>
                 </div>
             </div>
         </div>
