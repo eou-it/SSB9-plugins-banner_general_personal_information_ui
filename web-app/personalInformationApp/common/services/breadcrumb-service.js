@@ -14,7 +14,7 @@ personalInformationApp.service( 'breadcrumbService', ['$filter',function ($filte
             },
             {
                 label: 'general.breadcrumb.personalInformation',
-                url: '/personalInformationMain'
+                url: ''
             }
         ];
     };
