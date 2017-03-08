@@ -26,7 +26,7 @@ personalInformationApp.service( 'breadcrumbService', ['$filter',function ($filte
 
     this.refreshBreadcrumbs = function() {
         var baseurl = $('meta[name=menuBase]').attr("content"),
-            landingPageUrl = document.location.origin + baseurl,
+            landingPageUrl = document.location.origin + baseurl + '/ssb/general',
             breadCrumbInputData = {},
             updatedHeaderAttributes,
             registerBackButtonClickListenerOverride = function(location) {
