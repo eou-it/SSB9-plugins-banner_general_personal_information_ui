@@ -6236,6 +6236,9 @@ button.close {
 .popover {
     position: absolute;
     top: 0;
+    /* Remove 'left' property so rtl converter does not create 'right' property that overrides properties set
+       via JavaScript in RTL pages
+    left: 0; */
     z-index: 1010;
     display: none;
     max-width: 276px;
