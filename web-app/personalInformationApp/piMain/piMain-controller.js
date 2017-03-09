@@ -347,7 +347,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
         $scope.stringToDate = function(date) {
             var result = personalInformationService.stringToDate(date);
 
-            if(localeLang === 'ar') {
+            if(result && localeLang === 'ar') {
                 return result.toLocaleDateString('ar-SA-u-nu-latn-ca-islamic', {year: 'numeric', month: 'long', day: 'numeric'});
             }
             else {

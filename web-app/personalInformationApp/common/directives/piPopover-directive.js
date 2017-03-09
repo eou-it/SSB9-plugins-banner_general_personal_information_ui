@@ -5,6 +5,8 @@
 personalInformationAppDirectives.directive('piPopOver', ['$filter', 'personalInformationService',
     function($filter, personalInformationService) {
 
+        var styleLeftRegex = /left: ([-0-9.]+)/i;
+
     var link = function (scope, element, attrs) {
         var width = attrs.popoverWidth || '300px',
             position = attrs.popoverPosition || 'top',
@@ -35,19 +37,50 @@ personalInformationAppDirectives.directive('piPopOver', ['$filter', 'personalInf
                     html: true
                 });
 
-                // Offset popover to left if so configured
-                if (slideLeft) {
-                    element.on('shown.bs.popover', function (event) {
-                        // Slide the popover 80px to the left, while offsetting the arrow to
-                        // remain pointing at its element.
-                        var popoverElement = $(event.target).next(),
-                            popoverLeftOffsetPx = -80,
-                            arrowLeftOffsetPct = 79.5;
+                element.on('shown.bs.popover', function (event) {
+                    var popoverElement = $(event.target).next(),
+                        popoverLeft,
+                        popoverLeftShift = 0,
+                        popoverWidth = popoverElement.outerWidth(),
+                        arrowStyle,
+                        arrowTargetLeftVal,
+                        arrowPctOffset;
 
-                        popoverElement.css('left', parseInt(popoverElement.css('left')) + popoverLeftOffsetPx + 'px');
-                        popoverElement.find('.arrow').css('left', arrowLeftOffsetPct + '%');
-                    });
-                }
+                    // Offset popover to left if so configured
+                    if (slideLeft) {
+                        popoverLeft = parseInt(popoverElement.css('left'));
+
+                        // only move popover if it is very close to edge of screen
+                        if (popoverLeft < 15) {
+                            popoverLeftShift = 15;
+                            popoverElement.css('left', popoverLeftShift);
+
+                            arrowStyle = popoverElement.find('.arrow').attr('style');
+                            if (arrowStyle) {
+                                arrowTargetLeftVal = +arrowStyle.match(styleLeftRegex)[1];
+                            }
+                            else {
+                                arrowTargetLeftVal = 50;
+                            }
+                            arrowPctOffset = popoverLeftShift / (popoverWidth / 100);
+
+                            // in RTL pages the 'right' CSS property has precedence over 'left'
+                            if (scope.isRTL) {
+                                var arrowRightShift = 100 - arrowTargetLeftVal + arrowPctOffset;
+                                popoverElement.find('.arrow').css('right', arrowRightShift + '%');
+                            }
+                            else {
+                                var arrowLeftShift = arrowTargetLeftVal - arrowPctOffset;
+                                popoverElement.find('.arrow').css('left', arrowLeftShift + '%');
+                            }
+                        }
+                    }
+                    // put the popover on the right of its element instead of left in RTL page
+                    if(scope.isRTL && position === 'left'){
+                        popoverLeftShift = element.offset().left + element.outerWidth();
+                        popoverElement.css('left', popoverLeftShift);
+                    }
+                });
 
                 element.popover('show');
 

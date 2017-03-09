@@ -31,8 +31,8 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
                 window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
             }
 
-            //$rootScope.isDesktopView = function() { return isDesktop(); };
             $rootScope.isMobileView = function() { return isMobile(); };
+            $rootScope.isRTL = $('meta[name=dir]').attr("content") === 'rtl';
 
             // Above, we use the isDesktop function implemented in the banner_ui_ss plugin, which thus far has
             // proven to be satisfactory.  Below we modify the implementation of isTablet from banner_ui_ss to
