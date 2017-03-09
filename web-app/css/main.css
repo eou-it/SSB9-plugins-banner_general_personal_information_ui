@@ -956,6 +956,11 @@ button.closebtn {
     padding-bottom: 0.25em;
 }
 
+.addtl-details-detail.ethn-race-wrapper {
+    float: none;
+    word-wrap: break-word;
+}
+
 .item-wrapper,
 .emergency-contact-wrapper {
     float: left;
