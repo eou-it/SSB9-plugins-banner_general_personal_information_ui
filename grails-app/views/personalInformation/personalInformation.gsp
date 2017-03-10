@@ -1,5 +1,5 @@
 %{--*******************************************************************************
-Copyright 2015 Ellucian Company L.P. and its affiliates.
+Copyright 2017 Ellucian Company L.P. and its affiliates.
 *******************************************************************************--}%
 <!DOCTYPE html>
 <!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app" class="ie9"> <![endif]-->
@@ -38,6 +38,25 @@ Copyright 2015 Ellucian Company L.P. and its affiliates.
 
     <script type="text/javascript">
         <g:i18n_setup/>
+    </script>
+    <script type="text/javascript">
+        // Track calling page for breadcrumbs
+        (function () {
+            // URLs to blacklist from updating genAppCallingPage, because they're actually
+            // part of the Personal Information app and not "calling pages."
+            var referrerUrl = document.referrer,
+                blacklistRegex = [
+                    /\/BannerGeneralSsb\/ssb\/survey\/survey$/,
+                    /\/BannerGeneralSsb\/resetPassword\/validateans$/,
+                    /\/BannerGeneralSsb\/ssb\/personalInformation\/resetPasswordWithSecurityQuestions$/
+                ],
+                isBlacklisted = _.find(blacklistRegex, function(regex) {return regex.test(referrerUrl)});
+
+            if (!isBlacklisted) {
+                // Track this page
+                sessionStorage.setItem('genAppCallingPage', referrerUrl);
+            }
+        })();
     </script>
 </head>
 
