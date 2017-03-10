@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2015 Ellucian Company L.P. and its affiliates.
+ Copyright 2017 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 var personalInformationAppControllers = angular.module('personalInformationAppControllers', []);
 var personalInformationAppDirectives = angular.module('personalInformationAppDirectives', []);
