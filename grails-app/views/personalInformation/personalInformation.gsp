@@ -39,8 +39,24 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     <script type="text/javascript">
         <g:i18n_setup/>
     </script>
-    <script>
-        sessionStorage.setItem('genAppCallingPage', document.referrer);
+    <script type="text/javascript">
+        // Track calling page for breadcrumbs
+        (function () {
+            // URLs to blacklist from updating genAppCallingPage, because they're actually
+            // part of the Personal Information app and not "calling pages."
+            var referrerUrl = document.referrer,
+                blacklistRegex = [
+                    /\/BannerGeneralSsb\/ssb\/survey\/survey$/,
+                    /\/BannerGeneralSsb\/resetPassword\/validateans$/,
+                    /\/BannerGeneralSsb\/ssb\/personalInformation\/resetPasswordWithSecurityQuestions$/
+                ],
+                isBlacklisted = _.find(blacklistRegex, function(regex) {return regex.test(referrerUrl)});
+
+            if (!isBlacklisted) {
+                // Track this page
+                sessionStorage.setItem('genAppCallingPage', referrerUrl);
+            }
+        })();
     </script>
 </head>
 
