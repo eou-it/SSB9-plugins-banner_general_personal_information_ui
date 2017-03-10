@@ -1173,6 +1173,10 @@ button.delete-btn {
     padding-left: 1.5em;
 }
 
+.edit-veteran ul {
+    padding-left: 40px;
+}
+
 .vet-date-input {
     width: 15em;
     padding-bottom: 1em;
@@ -1180,6 +1184,10 @@ button.delete-btn {
 
 .vet-date-input > label {
     font-weight: normal;
+}
+
+.vet-date-input > .pi-date-input {
+    float: none;
 }
 
 /*  Dropdown menu  */
