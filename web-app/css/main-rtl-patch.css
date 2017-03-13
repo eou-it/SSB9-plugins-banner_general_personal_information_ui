@@ -3,6 +3,10 @@
  *******************************************************************************/
 /* adjust styling just for rtl page */
 
+.disability-act-text {
+    display: inline-block;
+}
+
 /***********************/
 /* Media Query Section */
 /***********************/
