@@ -10,7 +10,8 @@
 @media screen and (min-width: 768px) {
     .clear-row .col-md-4:nth-child(3n+1),
     .edit-addr .maybe-clear:nth-child(3n+1),
-    .edit-emer-contact .maybe-clear:nth-child(3n+1) {
+    .edit-emer-contact .maybe-clear:nth-child(3n+1),
+    .edit-emer-contact div.maybe-clear:nth-child(3n+1) {
         clear: right;
     }
 }
