@@ -586,6 +586,7 @@ input.hasMultiCalendarPicker.pi-date-input {
     color: #869FB1;
     padding: 1em .75em;
     line-height: 136%;
+    float: none;
 }
 
 .text-input-field::-webkit-input-placeholder,
@@ -1173,6 +1174,10 @@ button.delete-btn {
     padding-left: 1.5em;
 }
 
+.edit-veteran ul {
+    padding-left: 40px;
+}
+
 .vet-date-input {
     width: 15em;
     padding-bottom: 1em;
@@ -1181,6 +1186,7 @@ button.delete-btn {
 .vet-date-input > label {
     font-weight: normal;
 }
+
 
 /*  Dropdown menu  */
 .pi-modal .dropdown {
@@ -1666,7 +1672,7 @@ div.dir-profile {
     }
 
     .cntry-code-visible.input-fail.pi-phone-num-err {
-        right: 12em;
+        right: 3.5em;
     }
 }
 
