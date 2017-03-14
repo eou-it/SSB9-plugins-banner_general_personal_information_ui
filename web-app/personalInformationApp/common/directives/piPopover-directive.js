@@ -12,7 +12,7 @@ personalInformationAppDirectives.directive('piPopOver', ['$filter', 'personalInf
             position = attrs.popoverPosition || 'top',
             slideLeft = attrs.slideLeft === 'true',
             msg = $filter('i18n')(attrs.popoverMsg),
-            template = '<div class="popover pi-tooltip" style="width: ' + width + ';"><div class="popover-content"></div><div class="arrow"></div></div>';
+            template = '<div class="pi-popover pi-tooltip" style="width: ' + width + ';"><div class="popover-content"></div><div class="arrow"></div></div>';
 
         scope.togglePopover = function(event) {
             // Prevent the hidePopover directive from handling the event, immediately closing the popover
@@ -21,7 +21,7 @@ personalInformationAppDirectives.directive('piPopOver', ['$filter', 'personalInf
             }
 
             // Toggle popover open/closed
-            if (element.next('.popover.in').length !== 0) {
+            if (element.next('.pi-popover.in').length !== 0) {
                 // Popover is already open, toggle it closed
                 element.popover('destroy');
             } else {
@@ -113,7 +113,7 @@ personalInformationAppDirectives.directive('hidePopover', ['personalInformationS
         element.on('click', function(event) {
             // If not clicking on the modal (the check for ".parents('.popover.in')" checks for that),
             // destroy all popovers.
-            if ($(event.target).parents('.popover.in').length === 0) {
+            if ($(event.target).parents('.pi-popover.in').length === 0) {
                 personalInformationService.destroyAllPopovers();
             }
         });

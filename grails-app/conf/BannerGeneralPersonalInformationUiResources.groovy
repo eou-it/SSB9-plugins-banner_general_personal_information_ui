@@ -20,7 +20,7 @@ modules = {
         dependsOn "jquery"
         defaultBundle environment == "development" ? false : "bootstrap"
 
-        resource url:[plugin: 'banner-general-personal-information-ui', file: 'css/pi-bootstrap.css'], attrs: [media: 'screen, projection']
+        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap.css'], attrs: [media: 'screen, projection']
         resource url:[plugin: 'banner-ui-ss', file: 'css/bootstrap-fixes.css'], attrs: [media: 'screen, projection']
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/js/bootstrap.js']
     }
@@ -29,7 +29,7 @@ modules = {
         dependsOn "jquery"
         defaultBundle environment == "development" ? false : "bootstrap"
 
-        resource url:[plugin: 'banner-general-personal-information-ui', file: 'css/pi-bootstrap-rtl.css'], attrs: [media: 'screen, projection']
+        resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/css/bootstrap-rtl.css'], attrs: [media: 'screen, projection']
         resource url:[plugin: 'banner-ui-ss', file: 'css/bootstrap-fixes-rtl.css'], attrs: [media: 'screen, projection']
         resource url:[plugin: 'banner-ui-ss', file: 'bootstrap/js/bootstrap.js']
     }
