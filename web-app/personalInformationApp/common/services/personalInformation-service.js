@@ -53,7 +53,7 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
         //
         // Thus the previous sibling (grabbed with prev()) is the
         // AngularJS popover element that needs to have 'destroy' called on it.
-        $('body').find('.popover.in').prev().popover('destroy');
+        $('body').find('.pi-popover.in').prev().popover('destroy');
     };
 
     /**
