@@ -42,10 +42,11 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     <script type="text/javascript">
         // Track calling page for breadcrumbs
         (function () {
-            // URLs to exclude from updating genAppCallingPage, because they're actually
-            // part of the Personal Information app and not "calling pages."
+            // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
+            // page or a part of the Personal Information app and are not "calling pages."
             var referrerUrl = document.referrer,
                 excludedRegex = [
+                    /\/BannerGeneralSsb\/login\/auth$/,
                     /\/BannerGeneralSsb\/ssb\/survey\/survey$/,
                     /\/BannerGeneralSsb\/resetPassword\/validateans$/,
                     /\/BannerGeneralSsb\/ssb\/personalInformation\/resetPasswordWithSecurityQuestions$/
