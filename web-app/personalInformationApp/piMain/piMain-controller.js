@@ -3,8 +3,9 @@
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
     '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'piConfigResolve','personalInformationService',
+    'piVeteranClassificationService',
     function ($scope, $rootScope, $state, $stateParams, $modal, $filter, $q, $timeout, $window, notificationCenterService,
-              piCrudService, piConfigResolve, personalInformationService) {
+              piCrudService, piConfigResolve, personalInformationService, piVeteranClassificationService) {
 
 
         var displayNotificationsOnStateLoad = function() {
@@ -228,32 +229,41 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                     }
                     //initialize all veteran related scope variables
                     $scope.veteranDisabled='';
+                    $scope.badgeVeteran='';
                     $scope.veteranRecent='';
                     $scope.veteranCategory='';
                     $scope.veteranArmedForcesServiceMedal='';
 
-                    if ( $scope.piConfig.isVetClassificationDisplayable) {
+                    if ($scope.piConfig.isVetClassificationDisplayable) {
                         //get all veteran related values
-                        if (!$scope.personalDetails.veraIndicator) {
-                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
-                        } else if ($scope.personalDetails.veraIndicator == 'B') {
-                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
-                        } else if ($scope.personalDetails.veraIndicator == 'O') {
-                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.active.veteran');
-                            if ($scope.personalDetails.activeDutySeprDate) {
-                                var nowDate = new Date();
-                                if (new Date($scope.personalDetails.activeDutySeprDate) >= nowDate.setFullYear((nowDate.getFullYear()) - 3)) {
-                                    $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
-                                }
-                            }
-                        } else if ($scope.personalDetails.veraIndicator == 'V') {
-                            $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
+                        var c = piVeteranClassificationService.vetChoiceConst,
+                            veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice($scope.personalDetails);
+                        switch(veteranClassInfo.choice) {
+                            case c.PROTECTED_VET:
+                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.first');
+                                break;
+                            case c.PROTECTED_VET_UNCLASSIFIED:
+                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
+                                break;
+                            case c.UNPROTECTED_VET:
+                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
+                                break;
+                            case c.NOT_A_VET:
+                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
+                                break;
                         }
-                        if ($scope.personalDetails.sdvetIndicator == "Y") {
+
+                        if (veteranClassInfo.sdvetIndicator) {
                             $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
                         }
-                        if ($scope.personalDetails.armedServiceMedalVetIndicator) {
+                        if (veteranClassInfo.badgeVeteran) {
+                            $scope.badgeVeteran = $filter('i18n')('personinfo.veteran.classification.active.veteran');
+                        }
+                        if (veteranClassInfo.armedServiceMedalVetIndicator) {
                             $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
+                        }
+                        if (piVeteranClassificationService.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
+                            $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
                         }
                     }
 
@@ -432,14 +442,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 scope: $scope,
                 resolve: {
                     veteranClassInfo: function() {
-                        return {
-                            id: $scope.personalDetails.id,
-                            version: $scope.personalDetails.version,
-                            veraIndicator: $scope.personalDetails.veraIndicator,
-                            sdvetIndicator: $scope.personalDetails.sdvetIndicator,
-                            armedServiceMedalVetIndicator: $scope.personalDetails.armedServiceMedalVetIndicator,
-                            activeDutySeprDate: $scope.personalDetails.activeDutySeprDate
-                        };
+                        return $scope.personalDetails;
                     }
                 }
             });
