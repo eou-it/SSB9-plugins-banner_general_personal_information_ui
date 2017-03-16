@@ -832,7 +832,13 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            render personGenderPronounCompositeService.fetchPersonalDetails(pidm) as JSON
+            def model = personGenderPronounCompositeService.fetchPersonalDetails(pidm)
+
+            if (!model) {
+                model = [:] // Force it to be a map, which is what is expected to be rendered
+            }
+            
+            render model as JSON
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
