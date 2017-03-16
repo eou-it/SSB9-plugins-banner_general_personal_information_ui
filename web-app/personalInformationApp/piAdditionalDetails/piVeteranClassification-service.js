@@ -23,17 +23,22 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
             return seprDateInPast && dateSeprDate >= nowDate;
         };
 
-        this.encodeVeteranClassToChoice = function(veteranClassInfo) {
-            var c = this.vetChoiceConst;
-            veteranClassInfo.badgeVeteran = false;
-            veteranClassInfo.sdvetIndicator = veteranClassInfo.sdvetIndicator === 'Y';
-            veteranClassInfo.activeDutySeprDate = veteranClassInfo.activeDutySeprDate;
+        this.encodeVeteranClassToChoice = function(vetData) {
+            var c = this.vetChoiceConst,
+                veteranClassInfo = {
+                    id: vetData.id,
+                    version: vetData.version,
+                    badgeVeteran: false,
+                    sdvetIndicator: vetData.sdvetIndicator === 'Y',
+                    armedServiceMedalVetIndicator: vetData.armedServiceMedalVetIndicator,
+                    activeDutySeprDate: vetData.activeDutySeprDate
+                };
 
-            if(veteranClassInfo.veraIndicator === 'O') {
+            if(vetData.veraIndicator === 'O') {
                 veteranClassInfo.choice = c.PROTECTED_VET;
                 veteranClassInfo.badgeVeteran = true;
             }
-            else if(veteranClassInfo.veraIndicator === 'B') {
+            else if(vetData.veraIndicator === 'B') {
                 if(veteranClassInfo.sdvetIndicator || veteranClassInfo.armedServiceMedalVetIndicator ||
                     this.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
                     veteranClassInfo.choice = c.PROTECTED_VET;
@@ -42,7 +47,7 @@ personalInformationApp.service('piVeteranClassificationService', ['notificationC
                     veteranClassInfo.choice = c.PROTECTED_VET_UNCLASSIFIED;
                 }
             }
-            else if(veteranClassInfo.veraIndicator === 'V') {
+            else if(vetData.veraIndicator === 'V') {
                 veteranClassInfo.choice = c.UNPROTECTED_VET;
             }
             else {
