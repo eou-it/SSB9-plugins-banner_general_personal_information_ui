@@ -17,8 +17,9 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
             <span class="email-text" dir="ltr">{{preferredEmail.emailAddress}}</span>
         </span>
     </div>
-    <div ng-if="addressForOverview && piConfig.isOverviewAddressDisplayable" class="overview-line">
-        <div class="pi-icon-align"><span class="icon-location-CO pi-icon"></span></div>{{addressForOverview}}
+    <div ng-if="addressForOverview && piConfig.isOverviewAddressDisplayable" class="overview-line addr">
+        <div class="pi-icon-align"><span class="icon-location-CO pi-icon"></span></div>
+        <span class="addr-text">{{addressForOverview}}</span>
     </div>
     <div ng-if="phoneForOverview && piConfig.isOverviewPhoneDisplayable" class="overview-line">
         <div class="phone-icon"></div>{{phoneForOverview}}
