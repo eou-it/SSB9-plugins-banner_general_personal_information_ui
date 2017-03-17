@@ -26,8 +26,10 @@ class PersonalInformationController {
     }
 
     def raceAndEthnicitySurvey() {
-        //Redirect back to landing page after the survey
-        request.getSession().setAttribute(PostLoginWorkflow.URI_ACCESSED, '/ssb/personalInformation')
+        //Redirect back to landing page after the survey or the full profile in mobile
+        def url = (params.mobile == 'y') ? '/ssb/personalInformation#/personalInformationMobileFullProfile' : '/ssb/personalInformation'
+
+        request.getSession().setAttribute(PostLoginWorkflow.URI_ACCESSED, url)
 
         redirect uri: '/ssb/survey/survey'
     }

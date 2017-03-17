@@ -135,8 +135,13 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             var preferredNameParams = {pageName: 'PersonalInformation', sectionName: 'Overview'},
 
                 setStartingTab = function(tabs) {
+                    var startingTab = sessionStorage.getItem('startingTab');
                     if ($stateParams.startingTab) {
                         $scope.startingTab = $stateParams.startingTab;
+                    }
+                    else if(startingTab) {
+                        sessionStorage.removeItem('startingTab');
+                        $scope.startingTab = startingTab;
                     }
                     else if(tabs.length) {
                         $scope.startingTab = tabs[0].startingTab;
