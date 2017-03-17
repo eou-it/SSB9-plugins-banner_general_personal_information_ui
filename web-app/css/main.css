@@ -446,6 +446,10 @@ a.add-item-link {
     word-wrap: break-word;
 }
 
+.addr-text {
+    word-wrap: break-word;
+}
+
 input.hasMultiCalendarPicker.pi-date-input + span.calendar-img{
     font-family: 'BannerIcon';
     font-style: normal;
@@ -848,7 +852,8 @@ button.closebtn {
     margin-top: 15px;
 }
 
-.overview-line.email {
+.overview-line.email,
+.overview-line.addr {
     word-break: break-all;
 }
 
