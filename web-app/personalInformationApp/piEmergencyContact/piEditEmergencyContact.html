@@ -46,7 +46,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     <label class="input-field-label pi-emer-phone col-sm-12 col-md-12 col-lg-12" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
     <div ng-if="maskingRules.displayCountryCode" class="col-sm-12 col-md-4 col-lg-4">
         <input ng-model="emergencyContact.countryPhone" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
-               placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="6" id="countryCode">
+               placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="4" id="countryCode">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <input ng-model="emergencyContact.phoneArea" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
