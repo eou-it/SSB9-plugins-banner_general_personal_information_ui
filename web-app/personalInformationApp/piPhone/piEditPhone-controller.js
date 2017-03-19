@@ -71,7 +71,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                 }
             }
             else {
-                piPhoneService.displayMessages();
+                piPhoneService.displayMessages($scope.maskingRules.displayInternationalAccess);
             }
         };
 

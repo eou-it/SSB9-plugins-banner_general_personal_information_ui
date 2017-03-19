@@ -58,7 +58,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         </div>
         <div id="phoneErrorMsgCenter" class="visuallyhidden" tabindex="-1">
             <span>{{phoneTypeErrMsg|i18n}}</span>
-            <span>{{phoneNumberErrMsg|i18n}}</span>
+            <span ng-if="!maskingRules.displayInternationalAccess">{{phoneNumberErrMsg|i18n}}</span>
+            <span ng-if="phoneNumberErrMsg && maskingRules.displayInternationalAccess">{{'personInfo.phone.error.intlPhoneNumber'|i18n}}</span>
             <span>{{phoneErrMsg}}</span>
         </div>
     </div>
