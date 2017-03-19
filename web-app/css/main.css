@@ -662,8 +662,6 @@ input.hasMultiCalendarPicker.pi-date-input.input-error {
 }
 
 .input-fail.pi-phone-num-err {
-    top: inherit;
-    bottom: 5.25em;
     right: 3em;
 }
 
@@ -1798,11 +1796,21 @@ div.dir-profile {
     input[type="checkbox"].dir-profile-nav-check {
         margin-top: 0;
     }
+
+    .intl-access-visible.input-fail.pi-phone-num-err {
+        top: inherit;
+        bottom: 5.25em;
+    }
+
+    .cntry-code-visible.input-fail.pi-phone-num-err {
+        top: 8.8em;
+    }
 }
 
 @media(min-width:569px) {
     .input-fail.pi-phone-num-err {
         top: 4.3em;
+        bottom: auto;
         right: 16.5em;
     }
 
