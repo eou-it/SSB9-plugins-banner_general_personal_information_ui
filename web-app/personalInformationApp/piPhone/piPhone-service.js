@@ -2,7 +2,9 @@ personalInformationApp.service('piPhoneService', ['notificationCenterService',
     function (notificationCenterService) {
         var messages = [],
             phoneMessageCenter = "#phoneErrorMsgCenter",
-            trimmableCharRegex = /[\s-]/g;
+            trimmableCharRegex = /[\s-]/g,
+            DOMESTIC_PHONE_NUM_ERROR = 'personInfo.phone.error.phoneNumber',
+            INTL_PHONE_NUM_ERROR = 'personInfo.phone.error.intlPhoneNumber';
 
         this.getErrorPhoneType = function (phone) {
             var msg = 'personInfo.phone.error.phoneType';
@@ -17,7 +19,7 @@ personalInformationApp.service('piPhoneService', ['notificationCenterService',
         };
 
         this.getErrorPhoneNumber = function (phone) {
-            var msg = 'personInfo.phone.error.phoneNumber';
+            var msg = DOMESTIC_PHONE_NUM_ERROR;
             if (!phone.internationalAccess && !phone.phoneNumber) {
                 messages.push({msg: msg, type: 'error'});
 
@@ -37,11 +39,15 @@ personalInformationApp.service('piPhoneService', ['notificationCenterService',
             }
         };
 
-        this.displayMessages = function() {
+        this.displayMessages = function(useIntlOverride) {
+            var notificationMsg;
+
             notificationCenterService.setLocalMessageCenter(phoneMessageCenter);
 
             _.each(messages, function(message) {
-                notificationCenterService.addNotification(message.msg, message.type);
+                notificationMsg = (useIntlOverride && message.msg === DOMESTIC_PHONE_NUM_ERROR) ? INTL_PHONE_NUM_ERROR : message.msg;
+
+                notificationCenterService.addNotification(notificationMsg, message.type);
             });
 
             messages = [];
