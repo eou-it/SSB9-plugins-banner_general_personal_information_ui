@@ -30,7 +30,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p>{{'personinfo.veteran.classification.notice.detail.4'|i18n}}</p>
             </div>
             <div class="pad-wordy-modal">
-                <a ng-click="toggleVeteranTextVisibility()" class="toggle-vet pi-link">
+                <a ng-click="toggleVeteranTextVisibility()" enter-key="toggleVeteranTextVisibility()" class="toggle-vet pi-link" tabindex="0">
                     {{(isVeteranTextClipped ? 'personinfo.disability.viewMore' : 'personinfo.disability.viewLess')|i18n}}
                 </a><br>
                 <input ng-model="veteranClassInfo.choice" class="edit-radio" type="radio" name="veteran-category" value="{{vetConsts.PROTECTED_VET}}"
