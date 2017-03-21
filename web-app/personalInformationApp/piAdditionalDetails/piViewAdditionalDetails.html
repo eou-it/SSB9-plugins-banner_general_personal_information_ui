@@ -41,7 +41,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
 
             <div class="button-block">
-                <a ng-click="openEditVeteranModal()" class="edit-veteran pi-edit-item-link pi-icon-link"
+                <a ng-click="openEditVeteranModal()" enter-key="openEditVeteranModal()" class="edit-veteran pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.title.editVeteran'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
@@ -57,7 +57,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                 </div>
             </div>
             <div ng-if="piConfig.isDisabilityStatusDisplayable" class="button-block">
-                <a ng-click="openDisabilityStatusModal()" class="pi-edit-item-link pi-icon-link"
+                <a ng-click="openDisabilityStatusModal()" enter-key="openDisabilityStatusModal()" class="pi-edit-item-link pi-icon-link"
                    title="{{'personInfo.title.editDisabilityStatus'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
