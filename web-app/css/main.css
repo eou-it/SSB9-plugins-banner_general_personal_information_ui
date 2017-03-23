@@ -1093,6 +1093,10 @@ button.delete-btn {
     float: left;
 }
 
+button.delete-btn:focus {
+    outline: 1px dotted #333;
+}
+
 .phone-icon {
     width: 24px;
     height: 24px;
@@ -1434,6 +1438,10 @@ input[type=checkbox]+.lbl::before,input[type=radio]+.lbl::before {
 
 input[type=checkbox]:focus+.lbl::before,input[type=radio]:focus+.lbl::before,input[type=checkbox][focus]+.lbl::before,input[type=radio][focus]+.lbl::before,input[type=checkbox].focus+.lbl::before,input[type=radio].focus+.lbl::before {
     border: 1px solid  #316699;
+}
+
+input[type=radio]:focus+.lbl::before {
+    outline: 1px dotted #333;
 }
 
 /* Checked state styles */
