@@ -530,7 +530,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 }
 
 .input-field-label {
-    padding: 0.875em 0em;
+    padding: 1em 0em 0.5em;
     margin: 0px;
     font-weight: bold;
     color: #283036;
@@ -657,7 +657,7 @@ input.hasMultiCalendarPicker.pi-date-input.input-error {
     position: absolute;
     float: right;
     right: 2.25em;
-    top: 4.3em;
+    top: 4.1em;
     background: #F6E5E6;
 }
 
@@ -1040,31 +1040,31 @@ span.id-label {
 }
 
 .pi-phone-ctry {
-    margin-top: 0.875em;
+    margin-top: 0.5em;
     width: 30%;
     min-width: 10em;
     display: inline-block;
 }
 
 .pi-phone-area {
-    margin-top: 0.875em;
+    margin-top: 0.5em;
     width: 30%;
     min-width: 10em;
 }
 
 .pi-phone-num {
-    margin-top: 0.875em;
+    margin-top: 0.5em;
     width: 35%;
     min-width: 10em;
 }
 
 .pi-phone-extn {
-    margin-top: 0.875em;
+    margin-top: 0.5em;
     width: 23%;
 }
 
 .pi-emer-phone-field {
-    margin-top: 0.875em;
+    margin-top: 0.5em;
 }
 
 /* Icons */
@@ -1091,6 +1091,10 @@ button.delete-btn {
     border: none;
     outline: none;
     float: left;
+}
+
+button.delete-btn:focus {
+    outline: 1px dotted #333;
 }
 
 .phone-icon {
@@ -1434,6 +1438,10 @@ input[type=checkbox]+.lbl::before,input[type=radio]+.lbl::before {
 
 input[type=checkbox]:focus+.lbl::before,input[type=radio]:focus+.lbl::before,input[type=checkbox][focus]+.lbl::before,input[type=radio][focus]+.lbl::before,input[type=checkbox].focus+.lbl::before,input[type=radio].focus+.lbl::before {
     border: 1px solid  #316699;
+}
+
+input[type=radio]:focus+.lbl::before {
+    outline: 1px dotted #333;
 }
 
 /* Checked state styles */
@@ -1809,7 +1817,7 @@ div.dir-profile {
 
 @media(min-width:569px) {
     .input-fail.pi-phone-num-err {
-        top: 4.3em;
+        top: 4.1em;
         bottom: auto;
         right: 16.5em;
     }

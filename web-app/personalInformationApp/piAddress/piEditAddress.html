@@ -70,7 +70,7 @@
                        class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
                 <input ng-model="address.city" ng-blur="cityFocused=false; removeAddressFieldErrors()" ng-focus="cityFocused=true"
                        ng-class="[(!!cityErrMsg && !cityFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing"
-                       type="text" placeholder="{{'personInfo.placeholder.enterCity'|i18n}}" maxlength="60" id="city">
+                       type="text" placeholder="{{'personInfo.placeholder.enterCity'|i18n}}" maxlength="50" id="city">
                 <span ng-if="!!cityErrMsg && !cityFocused" class="icon input-fail">
                     <span class="icon-error ellucian-font"></span>
                 </span>
