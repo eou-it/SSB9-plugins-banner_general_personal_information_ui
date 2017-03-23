@@ -7,7 +7,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
         <div class="row pad-dialog-lr">
             <div class="clearfix hidden-xs"></div>
-            <div class="col-sm-10 col-md-5 col-lg-5">
+            <div class="col-sm-5 col-md-5 col-lg-5">
                 <label ng-class="(!!pinErrMsg && !pinFocused ? 'input-field-label field-error' : 'input-field-label')"
                        class="input-field-label" for="pinput">{{'personInfo.label.confirmPin'|i18n}}</label><br>
                 <input ng-model="pin" ng-blur="pinFocused=false; removePinFieldError()" ng-focus="pinFocused=true"
