@@ -18,10 +18,24 @@ html {
 body {
   margin: 0; }
 
-/* Personal Information Custom Style for Race and Ethnicity Survey page */
+
+/* Personal Information Custom Style for Race and Ethnicity Survey page
+   ========================================================================== */
 div#contentHolder {
   width: auto;
 }
+
+/* Hide the Ethnicity and Race breadcrumbs */
+div#breadcrumbHeader > span.breadcrumbButton ~ span,
+div#breadcrumbHeader > span.breadcrumbButton:first-child {
+  display: none;
+}
+
+/* Display the app's breadcrumbs */
+div#breadcrumbHeader.breadcrumb-show-leaf > span.breadcrumbButton:first-child {
+  display: block;
+}
+
 
 /* HTML5 display definitions
    ========================================================================== */
