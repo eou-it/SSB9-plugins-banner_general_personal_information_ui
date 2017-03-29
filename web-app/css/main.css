@@ -276,7 +276,7 @@ input:disabled {
 }
 
 .pi-edit-item-link {
-    margin-right: 0.5em;
+    margin-right: 0.75em;
     float: left;
     padding-top: 0.35em;
 }
@@ -855,6 +855,10 @@ button.closebtn {
     word-break: break-all;
 }
 
+.overview-line.addr > .pi-icon-align {
+    color: #206E9F;
+}
+
 .overview-name {
     font-size: 1.5em;
 }
@@ -1081,16 +1085,18 @@ a:focus.details-section-edit-link {
 }
 
 button.delete-btn {
-    color: #428bca;
-    opacity: 1;
-    font-size: 24px;
-    font-family: open-sans-semi-bold;
-    background: url('../images/trash_4.svg') 50% 50% no-repeat;
-    padding: .9em;
-    display: block;
+    background: transparent;
     border: none;
-    outline: none;
-    float: left;
+    padding-top: 8px;
+    padding-left: 9px;
+}
+
+path#Phone-Icon-2 {
+    stroke: #206E9F;
+}
+
+path#Shape-Copy-Copy-4 {
+    fill: #206E9F;
 }
 
 button.delete-btn:focus {
@@ -1100,10 +1106,13 @@ button.delete-btn:focus {
 .phone-icon {
     width: 24px;
     height: 24px;
-    background: url('../images/phone_4.svg') 50% 50% no-repeat;
     margin-right: 8px;
     display: inline-block;
     vertical-align: middle;
+}
+
+path#Path {
+    fill: #206E9F;
 }
 
 .pi-icon {

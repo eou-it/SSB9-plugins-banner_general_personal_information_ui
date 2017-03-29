@@ -29,6 +29,18 @@ personalInformationAppDirectives.directive('piMobileFooterButton', ['$filter', f
     };
 }]);
 
+personalInformationAppDirectives.directive('piDeleteButton', ['$filter', function ($filter) {
+    return {
+        restrict: 'E',
+        scope: {
+            clickFunction: '=',
+            item: '=',
+            buttonTitle: '@'
+        },
+        templateUrl: $filter('webAppResourcePath')('personalInformationApp/piMain/piDeleteButton.html')
+    };
+}]);
+
 personalInformationAppDirectives.directive('enterKey', function() {
     return function(scope, element, attrs) {
         element.bind("keydown keypress", function(event) {
