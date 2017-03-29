@@ -27,6 +27,14 @@ svg.hide-svg {
     white-space: normal !important;
 }
 
+.break-long-words {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+}
+
 .no-margin {
     margin: 0 !important;
 }
@@ -266,7 +274,6 @@ input:disabled {
 
 .pi-comment {
     color: #7E858B;
-    word-break: keep-all;
     padding-top: 0.25em;
 }
 
@@ -323,9 +330,13 @@ a.pi-icon-link:focus {
 .overview-footer {
     width: 100%;
     background-color: #206E9F;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
+}
+
+.mobile-footer-spacer {
+    height: 50px;
 }
 
 .overview-footer a {

@@ -3,7 +3,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="overview-wrapper">
     <ng-include ng-if="piConfig.isProfilePicDisplayable" src="'personalInformationApp/piMain/piOverviewPicture.html'|webAppResourcePath"></ng-include>
-    <div class="overview-name">
+    <div class="overview-name break-long-words">
         {{preferredName}}
     </div>
     <div class="overview-line">
@@ -27,6 +27,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         </div>
         {{phoneForOverview}}
     </div>
+    <div class="mobile-footer-spacer"></div>
     <div class="overview-footer">
         <a ui-sref="piFullViewMobile">{{'personInfo.label.viewFullProfile'|i18n}}</a>
     </div>
