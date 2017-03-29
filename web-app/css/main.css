@@ -330,9 +330,13 @@ a.pi-icon-link:focus {
 .overview-footer {
     width: 100%;
     background-color: #206E9F;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
+}
+
+.mobile-footer-spacer {
+    height: 50px;
 }
 
 .overview-footer a {
