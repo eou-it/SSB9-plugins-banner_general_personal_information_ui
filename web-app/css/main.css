@@ -276,7 +276,7 @@ input:disabled {
 }
 
 .pi-edit-item-link {
-    margin-right: 0.5em;
+    margin-right: 0.75em;
     float: left;
     padding-top: 0.35em;
 }
@@ -1081,16 +1081,18 @@ a:focus.details-section-edit-link {
 }
 
 button.delete-btn {
-    color: #428bca;
-    opacity: 1;
-    font-size: 24px;
-    font-family: open-sans-semi-bold;
-    background: url('../images/trash_4.svg') 50% 50% no-repeat;
-    padding: .9em;
-    display: block;
+    background: transparent;
     border: none;
-    outline: none;
-    float: left;
+    padding-top: 8px;
+    padding-left: 9px;
+}
+
+path#Phone-Icon-2 {
+    stroke: #206E9F;
+}
+
+path#Shape-Copy-Copy-4 {
+    fill: #206E9F;
 }
 
 button.delete-btn:focus {

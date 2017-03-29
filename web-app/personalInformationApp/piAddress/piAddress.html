@@ -48,8 +48,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <span class="icon-edit-CO"></span>
                 <span class="visuallyhidden">{{'personInfo.button.title.editAddress'|i18n}}</span>
             </a>
-            <button ng-click="confirmAddressDelete(address)" class="delete-btn"
-                    title="{{'personInfo.button.title.deleteAddress'|i18n}}"></button>
+            <pi-delete-button item="address" click-function="confirmAddressDelete" button-title="{{'personInfo.button.title.deleteAddress'|i18n}}"/>
         </div>
     </div>
 </div>
