@@ -855,6 +855,10 @@ button.closebtn {
     word-break: break-all;
 }
 
+.overview-line.addr > .pi-icon-align {
+    color: #206E9F;
+}
+
 .overview-name {
     font-size: 1.5em;
 }
@@ -1102,10 +1106,13 @@ button.delete-btn:focus {
 .phone-icon {
     width: 24px;
     height: 24px;
-    background: url('../images/phone_4.svg') 50% 50% no-repeat;
     margin-right: 8px;
     display: inline-block;
     vertical-align: middle;
+}
+
+path#Path {
+    fill: #206E9F;
 }
 
 .pi-icon {
