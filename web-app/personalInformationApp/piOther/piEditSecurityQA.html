@@ -25,7 +25,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                     <ng-include src="'personalInformationApp/piOther/piSecurityQuestionInput.html'|webAppResourcePath"></ng-include>
                 </div>
             </div>
-            <p class="input-field-label mobile-errors response-err" ng-class="[(!!emailErrMsg ? 'field-error error-font-size' : 'no-display')]"
+            <p class="input-field-label mobile-errors response-err" ng-class="[(!!questionAnswerErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{questionAnswerErrMsg}}</p>
         </div>
         <div id="securityQAErrorMsgCenter" class="visuallyhidden" tabindex="-1">
