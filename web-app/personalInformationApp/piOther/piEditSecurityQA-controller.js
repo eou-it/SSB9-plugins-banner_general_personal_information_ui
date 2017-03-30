@@ -60,7 +60,8 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
                 },
                     handleResponse = function (response) {
                         if (response.failure) {
-                            $scope.questionAnswerErrMsg = $filter('i18n')(response.message) ? $filter('i18n')(response.message) : response.message;
+                            var i18nedMessage = $filter('i18n')(response.message);
+                            $scope.questionAnswerErrMsg = i18nedMessage ? i18nedMessage : response.message;
                             piSecurityQAService.displayErrorMessage($scope.questionAnswerErrMsg);
                         }
                         else {
