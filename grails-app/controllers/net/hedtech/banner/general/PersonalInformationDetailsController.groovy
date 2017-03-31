@@ -258,6 +258,8 @@ class PersonalInformationDetailsController {
         ]
 
         try {
+            addressRolePrivilegesCompositeService.fetchAddressType(getRoles(), map.addressType.code)
+
             personAddressService.update(addressToDelete)
 
             render([failure: false] as JSON)
