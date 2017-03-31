@@ -240,6 +240,10 @@ input:disabled {
     margin-right: auto;
 }
 
+.addr-list .dd-notification-box {
+    padding: 0 15px;
+}
+
 .addtl-details-detail .dd-notification-box {
     margin-top: 10px;
     margin-bottom: 0;

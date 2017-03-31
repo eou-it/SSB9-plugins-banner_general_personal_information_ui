@@ -40,14 +40,19 @@ personalInformationAppDirectives.directive('selectBox',['$filter', function($fil
                     cache: true,
                     allowClear: true,
                     results: function(data, page) {
-                        var results = (showNA && page === 1) ? [{id: 'not/app', text: notApplicableText}] : [];
-                        $.each(data, function(i, item) {
-                            results.push({
-                                id: item.code,
-                                text: getDescriptionFromAddressComponent(item)
+                        var results = (showNA && page === 1) ? [{id: 'not/app', text: notApplicableText}] : [],
+                            more = false;
+
+                        if(!data.failure) {
+                            $.each(data, function(i, item) {
+                                results.push({
+                                    id: item.code,
+                                    text: getDescriptionFromAddressComponent(item)
+                                });
                             });
-                        });
-                        var more = (page * 1) < data.length;
+                            more = (page * 1) < data.length;
+                        }
+
                         return {
                             results: results,
                             more: more

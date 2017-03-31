@@ -28,15 +28,20 @@ personalInformationAppDirectives.directive('emailTypeSelectBox', function() {
                     cache: true,
                     allowClear: true,
                     results: function(data, page) {
-                        var results = [];
-                        $.each(data, function(i, item) {
-                            results.push({
-                                id: item.code,
-                                text: item.description,
-                                urlIndicator: item.urlIndicator
+                        var results = [],
+                            more = false;
+
+                        if(!data.failure) {
+                            $.each(data, function (i, item) {
+                                results.push({
+                                    id: item.code,
+                                    text: item.description,
+                                    urlIndicator: item.urlIndicator
+                                });
                             });
-                        });
-                        var more = (page * 1) < data.length;
+                            more = (page * 1) < data.length;
+                        }
+
                         return {
                             results: results,
                             more: more
