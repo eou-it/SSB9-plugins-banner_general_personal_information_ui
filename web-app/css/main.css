@@ -676,15 +676,20 @@ input.hasMultiCalendarPicker.pi-date-input.input-error {
     background: #F6E5E6;
 }
 
-.input-fail.pi-phone-num-err {
-    right: 3em;
-}
-
 .input-fail.pi-phone-intl-err {
     position: relative;
     top: inherit;
     bottom: 2.3em;
     right: 1.2em;
+}
+
+span.pi-phone-error {
+    margin-right: -20px;
+}
+
+.phone-input-fail {
+    right: 2.5em;
+    top: 0.15em;
 }
 
 .icon .icon-error {
@@ -1827,27 +1832,6 @@ div.dir-profile {
 
     input[type="checkbox"].dir-profile-nav-check {
         margin-top: 0;
-    }
-
-    .intl-access-visible.input-fail.pi-phone-num-err {
-        top: inherit;
-        bottom: 5.25em;
-    }
-
-    .cntry-code-visible.input-fail.pi-phone-num-err {
-        top: 8.8em;
-    }
-}
-
-@media(min-width:569px) {
-    .input-fail.pi-phone-num-err {
-        top: 4.1em;
-        bottom: auto;
-        right: 16.5em;
-    }
-
-    .cntry-code-visible.input-fail.pi-phone-num-err {
-        right: 3.5em;
     }
 }
 
