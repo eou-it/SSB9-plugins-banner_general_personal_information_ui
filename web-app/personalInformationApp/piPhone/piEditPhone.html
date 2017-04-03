@@ -22,14 +22,14 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
                 <input ng-model="phone.phoneArea" class="text-input-field semi-bold form-spacing pi-phone-area" type="text"
                        placeholder="{{'personInfo.placeholder.areaCode'|i18n}}" maxlength="6">
-                <input ng-model="phone.phoneNumber" ng-blur="phoneNumFocused=false; removePhoneFieldErrors()" ng-focus="phoneNumFocused=true"
-                       ng-class="[(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-error' : null)]"
-                       class="text-input-field semi-bold form-spacing pi-phone-num" type="text"
-                       placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
-                <span ng-if="!!phoneNumberErrMsg && !phoneNumFocused"
-                      ng-class="[(maskingRules.displayCountryCode ? 'cntry-code-visible' : null), (maskingRules.displayInternationalAccess ? 'intl-access-visible' : null)]"
-                      class="icon input-fail pi-phone-num-err">
-                    <span class="icon-error ellucian-font"></span>
+                <span ng-class="[(phoneNumberErrMsg && !phoneNumFocused ? 'pi-phone-error' : null)]" class="">
+                    <input ng-model="phone.phoneNumber" ng-blur="phoneNumFocused=false; removePhoneFieldErrors()" ng-focus="phoneNumFocused=true"
+                           ng-class="[(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-error' : null)]"
+                           class="text-input-field semi-bold form-spacing pi-phone-num" type="text"
+                           placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
+                    <span ng-if="!!phoneNumberErrMsg && !phoneNumFocused" class="icon phone-input-fail pi-phone-num-err">
+                        <span class="icon-error ellucian-font"></span>
+                    </span>
                 </span>
                 <input ng-model="phone.phoneExtension" class="text-input-field semi-bold form-spacing pi-phone-extn" type="text"
                        placeholder="{{'personInfo.placeholder.extension'|i18n}}" maxlength="10">
