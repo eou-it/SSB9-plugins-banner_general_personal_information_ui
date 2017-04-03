@@ -1995,6 +1995,7 @@ div.dir-profile {
 
     .view-list div.item-wrapper:nth-child(3n+1),
     .emergency-contact-list div.col-xs-12:nth-child(3n+1),
+    .phone-list > .row > div:nth-child(3n+1),
     .addr-list > div:nth-child(3n+1) {
         clear: left;
     }
@@ -2004,6 +2005,7 @@ div.dir-profile {
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .view-list div.item-wrapper:nth-child(2n+1),
     .emergency-contact-list div.col-xs-12:nth-child(2n+1),
+    .phone-list > .row > div:nth-child(2n+1),
     .addr-list > div:nth-child(2n+1) {
         clear: left;
     }
