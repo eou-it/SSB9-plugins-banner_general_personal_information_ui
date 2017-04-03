@@ -642,15 +642,6 @@ class PersonalInformationDetailsController {
     }
 
     def getPreferredName() {
-        try {
-            checkActionPermittedPerConfiguration([
-                  name: PersonalInformationConfigService.PERS_DETAILS_MODE,
-                  minRequiredMode: PersonalInformationConfigService.SECTION_READONLY
-            ])
-        } catch (ApplicationException e) {
-            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
-            return
-        }
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def usage = preferredNameService.getUsage(params.pageName, params.sectionName)
@@ -1024,9 +1015,20 @@ class PersonalInformationDetailsController {
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
         def SECTION_UPDATEABLE = PersonalInformationConfigService.SECTION_UPDATEABLE
         def mode = personalInformationConfigService.getParamFromSession(param.name, SECTION_UPDATEABLE)
+        def associatedMode   //query even if hidden if associated entity is displayable
+        if (param.name == PersonalInformationConfigService.EMAIL_MODE) {
+            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL, 'Y')
+        } else if (param.name == PersonalInformationConfigService.ADDR_MODE) {
+            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR, 'Y')
+        } else if (param.name == PersonalInformationConfigService.PHONE_MODE) {
+            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE, 'Y')
+        } else if (param.name == PersonalInformationConfigService.PERS_DETAILS_MODE) {
+            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y')
+        } else
+            associatedMode = 'N'
 
         if (mode != 'Y' ) {
-            if (mode == 'N' || mode == PersonalInformationConfigService.SECTION_HIDDEN ||
+            if (mode == 'N' || (mode == PersonalInformationConfigService.SECTION_HIDDEN && associatedMode == 'N') ||
                 (param.minRequiredMode == SECTION_UPDATEABLE && mode != SECTION_UPDATEABLE)) {
 
                 log.error("Unauthorized attempt to access Personal Information data was prevented. Configured value for parameter ${param.name}: ${mode}")

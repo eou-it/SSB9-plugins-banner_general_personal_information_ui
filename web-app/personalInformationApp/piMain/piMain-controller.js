@@ -94,24 +94,26 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         putPreferredEmailFirst = function() {
             //preferred emails come before unpreferred, then sort the unpreferred alphabetically
-            $scope.emails.sort(function(a, b) {
-                var aTypeDesc = a.emailType.description.toUpperCase(),
-                    bTypeDesc = b.emailType.description.toUpperCase();
+            if ($scope.emails) {
+                $scope.emails.sort(function (a, b) {
+                    var aTypeDesc = a.emailType.description.toUpperCase(),
+                        bTypeDesc = b.emailType.description.toUpperCase();
 
-                if(a.preferredIndicator) {
-                    return -1;
-                }
-                if(b.preferredIndicator) {
-                    return 1;
-                }
-                if (aTypeDesc < bTypeDesc) {
-                    return -1;
-                }
-                if(aTypeDesc > bTypeDesc) {
-                    return 1;
-                }
-                return 0;
-            });
+                    if (a.preferredIndicator) {
+                        return -1;
+                    }
+                    if (b.preferredIndicator) {
+                        return 1;
+                    }
+                    if (aTypeDesc < bTypeDesc) {
+                        return -1;
+                    }
+                    if (aTypeDesc > bTypeDesc) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            };
         },
 
         getPhoneNumberForOverview = function(phoneList) {
@@ -162,46 +164,53 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
+            if ($scope.piConfig.addressSectionMode > 0 || $scope.piConfig.isOverviewAddressDisplayable) {
+                piCrudService.get('Addresses').$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.addressGroup = sortAddresses(response.addresses);
+                        $scope.addressForOverview = formatAddressForSingleLine(getAddressForOverview($scope.addressGroup));
+                    }
+                })
+            };
 
-            piCrudService.get('Addresses').$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.addressGroup = sortAddresses(response.addresses);
-                    $scope.addressForOverview = formatAddressForSingleLine(getAddressForOverview($scope.addressGroup));
-                }
-            });
+            if ($scope.piConfig.telephoneSectionMode > 0 || $scope.piConfig.isOverviewPhoneDisplayable) {
+                piCrudService.get('TelephoneNumbers').$promise.then(function (response) {
+                    var phone;
 
-            piCrudService.get('TelephoneNumbers').$promise.then(function(response) {
-                var phone;
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.phones = response.telephones;
+                        phone = getPhoneNumberForOverview($scope.phones);
+                        $scope.phoneForOverview = phone ? phone.displayPhoneNumber : '';
+                    }
+                })
+            };
 
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.phones = response.telephones;
-                    phone = getPhoneNumberForOverview($scope.phones);
-                    $scope.phoneForOverview = phone ? phone.displayPhoneNumber : '';
-                }
-            });
+            if ($scope.piConfig.emailSectionMode > 0 || $scope.piConfig.isOverviewEmailDisplayable) {
+                piCrudService.get('Emails').$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.emails = response.emails;
+                        putPreferredEmailFirst();
+                        $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
+                    }
+                })
+            };
 
-            piCrudService.get('Emails').$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.emails = response.emails;
-                    putPreferredEmailFirst();
-                    $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
-                }
-            });
-
-            piCrudService.get('EmergencyContacts').$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.emergencyContacts = response.emergencyContacts;
-                    $scope.hasMaxEmergencyContacts = $scope.haveMaxEmergencyContacts();
-                }
-            });
+            if ($scope.piConfig.emergencyContactSectionMode > 0) {
+                piCrudService.get('EmergencyContacts').$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.emergencyContacts = response.emergencyContacts;
+                        $scope.hasMaxEmergencyContacts = $scope.haveMaxEmergencyContacts();
+                    }
+                })
+            };
 
             piCrudService.get('PreferredName', preferredNameParams).$promise.then(function(response) {
                 if(response.failure) {
@@ -219,61 +228,63 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 }
             });
 
-            piCrudService.get('PersonalDetails').$promise.then(function(response) {
-                if(response.failure) {
-                    notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
-                } else {
-                    $scope.personalDetails = response;
-                    $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
-                                            (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
-                    $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
-                                            (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
+            if ($scope.piConfig.personalDetailsSectionMode > 0 || $scope.piConfig.isVetClassificationDisplayable) {
+                piCrudService.get('PersonalDetails').$promise.then(function (response) {
+                    if (response.failure) {
+                        notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+                    } else {
+                        $scope.personalDetails = response;
+                        $scope.ethnicity = response.ethnic === '1' ? 'personInfo.label.notHispanic' :
+                            (response.ethnic === '2' ? 'personInfo.label.hispanic' : null);
+                        $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
+                            (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
 
-                    if (!$scope.personalDetails.maritalStatus) {
-                        $scope.personalDetails.maritalStatus = {code: null, description: null};
+                        if (!$scope.personalDetails.maritalStatus) {
+                            $scope.personalDetails.maritalStatus = {code: null, description: null};
+                        }
+                        //initialize all veteran related scope variables
+                        $scope.veteranDisabled = '';
+                        $scope.badgeVeteran = '';
+                        $scope.veteranRecent = '';
+                        $scope.veteranCategory = '';
+                        $scope.veteranArmedForcesServiceMedal = '';
+
+                        if ($scope.piConfig.isVetClassificationDisplayable) {
+                            //get all veteran related values
+                            var c = piVeteranClassificationService.vetChoiceConst,
+                                veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice($scope.personalDetails);
+                            switch (veteranClassInfo.choice) {
+                                case c.PROTECTED_VET:
+                                    $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.first');
+                                    break;
+                                case c.PROTECTED_VET_UNCLASSIFIED:
+                                    $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
+                                    break;
+                                case c.UNPROTECTED_VET:
+                                    $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
+                                    break;
+                                case c.NOT_A_VET:
+                                    $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
+                                    break;
+                            }
+
+                            if (veteranClassInfo.sdvetIndicator) {
+                                $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
+                            }
+                            if (veteranClassInfo.badgeVeteran) {
+                                $scope.badgeVeteran = $filter('i18n')('personinfo.veteran.classification.active.veteran');
+                            }
+                            if (veteranClassInfo.armedServiceMedalVetIndicator) {
+                                $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
+                            }
+                            if (piVeteranClassificationService.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
+                                $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
+                            }
+                        }
+
                     }
-                    //initialize all veteran related scope variables
-                    $scope.veteranDisabled='';
-                    $scope.badgeVeteran='';
-                    $scope.veteranRecent='';
-                    $scope.veteranCategory='';
-                    $scope.veteranArmedForcesServiceMedal='';
-
-                    if ($scope.piConfig.isVetClassificationDisplayable) {
-                        //get all veteran related values
-                        var c = piVeteranClassificationService.vetChoiceConst,
-                            veteranClassInfo = piVeteranClassificationService.encodeVeteranClassToChoice($scope.personalDetails);
-                        switch(veteranClassInfo.choice) {
-                            case c.PROTECTED_VET:
-                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.first');
-                                break;
-                            case c.PROTECTED_VET_UNCLASSIFIED:
-                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.second');
-                                break;
-                            case c.UNPROTECTED_VET:
-                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.third');
-                                break;
-                            case c.NOT_A_VET:
-                                $scope.veteranCategory = $filter('i18n')('personinfo.veteran.classification.fourth');
-                                break;
-                        }
-
-                        if (veteranClassInfo.sdvetIndicator) {
-                            $scope.veteranDisabled = $filter('i18n')('personinfo.veteran.classification.disabled.veteran');
-                        }
-                        if (veteranClassInfo.badgeVeteran) {
-                            $scope.badgeVeteran = $filter('i18n')('personinfo.veteran.classification.active.veteran');
-                        }
-                        if (veteranClassInfo.armedServiceMedalVetIndicator) {
-                            $scope.veteranArmedForcesServiceMedal = $filter('i18n')('personinfo.veteran.classification.medal.veteran');
-                        }
-                        if (piVeteranClassificationService.isRecentlySeparated(veteranClassInfo.activeDutySeprDate)) {
-                            $scope.veteranRecent = $filter('i18n')('personinfo.veteran.classification.recentlySeparated');
-                        }
-                    }
-
-                }
-            });
+                })
+            };
 
             if ($scope.piConfig.isDisabilityStatusDisplayable) {
                 piCrudService.get('DisabilityStatus').$promise.then(function (response) {
