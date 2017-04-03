@@ -1833,6 +1833,10 @@ div.dir-profile {
     input[type="checkbox"].dir-profile-nav-check {
         margin-top: 0;
     }
+
+    button.closebtn {
+        padding: 2.85em 2.65em;
+    }
 }
 
 @media screen and (max-width:767px) {
