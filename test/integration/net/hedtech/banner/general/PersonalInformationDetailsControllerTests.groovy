@@ -65,8 +65,11 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testGetAddressesForCurrentUserButHidden() {
         loginSSB 'GDP000005', '111111'
 
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '0']]
+        // Set configuration to prohibit access to address
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
+                (PersonalInformationConfigService.ADDR_MODE): '0',
+                (PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR): 'N',
+        ]]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         controller.request.contentType = "text/json"
@@ -429,7 +432,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         controller.request.contentType = "text/json"
         controller.request.json = """{
             id:${addresses[0].id},
-            version:${addresses[0].version}
+            version:${addresses[0].version},
+            addressType: {
+                code:${addresses[0].addressType.code}
+            }
         }""".toString()
 
         controller.deleteAddress()
@@ -453,7 +459,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         controller.request.contentType = "text/json"
         controller.request.json = """{
             id:${addresses[0].id},
-            version:${addresses[0].version}
+            version:${addresses[0].version},
+            addressType: {
+                code:${addresses[0].addressType.code}
+            }
         }""".toString()
 
         controller.deleteAddress()
@@ -481,8 +490,11 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testGetEmailsButHidden(){
         loginSSB 'GDP000001', '111111'
 
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '0']]
+        // Set configuration to prohibit access to emails
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
+                (PersonalInformationConfigService.EMAIL_MODE): '0',
+                (PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL): 'N'
+        ]]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         controller.request.contentType = "text/json"
@@ -758,8 +770,11 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testGetTelephoneNumbersButHidden() {
         loginSSB 'GDP000005', '111111'
 
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '0']]
+        // Set configuration to prohibit access to telephone numbers
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
+                (PersonalInformationConfigService.PHONE_MODE): '0',
+                (PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE): 'N'
+        ]]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         controller.request.contentType = "text/json"
@@ -1275,22 +1290,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
-    void testGetPreferredNameButHidden() {
-        loginSSB 'HOSH00018', '111111'
-
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '0']]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
-        controller.getPreferredName()
-        def dataForNullCheck = controller.response.contentAsString
-        def data = JSON.parse( dataForNullCheck )
-
-        assertNotNull data
-        assertTrue data.failure
-    }
-
-    @Test
     void testGetUserName() {
         loginSSB 'HOSH00018', '111111'
 
@@ -1384,8 +1383,11 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     void testGetPersonalDetailsButHidden() {
         loginSSB 'GDP000005', '111111'
 
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '0']]
+        // Set configuration to prohibit access to personal details
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
+                (PersonalInformationConfigService.PERS_DETAILS_MODE): '0',
+                (PersonalInformationConfigService.VETERANS_CLASSIFICATION): 'N'
+        ]]
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         controller.getPersonalDetails()
