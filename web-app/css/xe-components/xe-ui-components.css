@@ -25,6 +25,10 @@ div#contentHolder {
   width: auto;
 }
 
+.races-content {
+  word-break: break-all;
+}
+
 /* Hide the Ethnicity and Race breadcrumbs */
 div#breadcrumbHeader > span.breadcrumbButton ~ span,
 div#breadcrumbHeader > span.breadcrumbButton:first-child {
