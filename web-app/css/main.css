@@ -866,8 +866,7 @@ button.closebtn {
     margin-top: 15px;
 }
 
-.overview-line.email,
-.overview-line.addr {
+.overview-line.email {
     word-break: break-all;
 }
 
