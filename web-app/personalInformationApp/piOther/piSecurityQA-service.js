@@ -94,7 +94,7 @@ personalInformationApp.service('piSecurityQAService', ['$resource', 'notificatio
 
         var getDefQuestionErrMsg = function(question, constraints) {
 
-            if(question.questionNum === 0) {
+            if(constraints.userDefinedQuesFlag && question.questionNum === 0) {
                 if(!question.userDefinedQuestion) {
                     concealDefQuestionErrMsg(question);
                     question.defQuestionErrMsg = $filter('i18n')('personInfo.securityQA.error.defineQuesiton');

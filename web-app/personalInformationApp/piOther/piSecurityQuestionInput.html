@@ -23,7 +23,7 @@
         <p class="input-field-label mobile-errors" ng-class="[(!!question.questionSelectErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{question.questionSelectErrMsg}}</p>
     </div>
-    <div ng-show="question.questionNum === 0" class="col-sm-12 col-md-6 col-lg-6">
+    <div ng-show="constraints.userDefinedQuesFlag && question.questionNum === 0" class="col-sm-12 col-md-6 col-lg-6">
         <label ng-class="(!!question.defQuestionErrMsg && !question.defQuestionFocused ? 'input-field-label field-error' : 'input-field-label')"
                class="input-field-label" for="secQA-defQstn{{$index}}">{{'personInfo.label.defineQuestion'|i18n:[($index+1)]}}</label><br>
         <input ng-model="question.userDefinedQuestion" ng-blur="question.defQuestionFocused=false; question.removeErrors()" ng-focus="question.defQuestionFocused=true"
