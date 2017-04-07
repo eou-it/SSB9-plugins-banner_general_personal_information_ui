@@ -34,6 +34,10 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
         var createQuestionsForSave = function(qstnArray) {
             var result = [];
             qstnArray.forEach(function(q) {
+                if(!$scope.constraints.userDefinedQuesFlag) {
+                    q.questionNum++;
+                }
+
                 result.push({
                     id: q.id,
                     version: q.version,
@@ -96,27 +100,37 @@ personalInformationAppControllers.controller('piEditSecurityQAController',['$sco
                 if(response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
-                    $scope.pinQuestions = $scope.pinQuestions.concat(response.questions);
                     $scope.constraints.numQuestions = response.noOfquestions;
                     $scope.constraints.questionMinLength = response.questionMinimumLength;
                     $scope.constraints.answerMinLength = response.answerMinimumLength;
+                    $scope.constraints.userDefinedQuesFlag = response.userDefinedQuesFlag === 'Y';
+                    $scope.pinQuestions = $scope.constraints.userDefinedQuesFlag ? $scope.pinQuestions.concat(response.questions) : response.questions;
 
                     var removeErrorFn = function() {
                         piSecurityQAService.removeQuestionFieldErrors(this, $scope.constraints);
                     };
                     var i;
                     for(i = 0; i < $scope.constraints.numQuestions; i++) {
-                        if(response.userQuestions[i]) {
-                            response.userQuestions[i].removeErrors = removeErrorFn;
-                            $scope.questions.push(response.userQuestions[i]);
-                        }
-                        else {
+                        if(!response.userQuestions[i]) {
                             $scope.questions.push({
                                 questionNum:null,
                                 userDefinedQuestion:'',
                                 answer:'',
                                 removeErrors: removeErrorFn
                             });
+                        }
+                        else if(response.userQuestions[i].questionNum === 0 && !$scope.constraints.userDefinedQuesFlag) {
+                            response.userQuestions[i].removeErrors = removeErrorFn;
+                            response.userQuestions[i].questionNum = null;
+                            response.userQuestions[i].userDefinedQuestion = '';
+                            $scope.questions.push(response.userQuestions[i]);
+                        }
+                        else {
+                            if(!$scope.constraints.userDefinedQuesFlag) {
+                                response.userQuestions[i].questionNum--;
+                            }
+                            response.userQuestions[i].removeErrors = removeErrorFn;
+                            $scope.questions.push(response.userQuestions[i]);
                         }
                     }
                 }
