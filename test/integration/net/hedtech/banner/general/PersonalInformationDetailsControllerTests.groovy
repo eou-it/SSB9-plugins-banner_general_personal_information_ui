@@ -1,6 +1,7 @@
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import groovy.sql.Sql
 import net.hedtech.banner.general.person.PersonUtility
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.junit.After
@@ -1496,6 +1497,44 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.isDirectoryProfileDisplayable
         assertTrue data.isVetClassificationDisplayable
         assertTrue data.isSecurityQandADisplayable
+        assertTrue data.isPasswordChangeDisplayable
+        assertTrue data.isDisabilityStatusDisplayable
+        assertTrue data.isMaritalStatusUpdateable
+        assertTrue data.additionalDetailsSectionMode
+        assertTrue data.otherSectionMode
+        assertTrue data.isGenderPronounDisplayable
+        assertEquals '2',data.emailSectionMode
+        assertEquals '2',data.telephoneSectionMode
+        assertEquals '2',data.addressSectionMode
+        assertEquals '2',data.personalDetailsSectionMode
+        assertEquals '2',data.emergencyContactSectionMode
+    }
+
+    @Test
+    void testGetPiConfigSecurityQuestionDisabled() {
+        loginSSB 'HOSH00018', '111111'
+
+        def sql
+        try {
+            sql = new Sql(sessionFactory.getCurrentSession().connection())
+            sql.executeUpdate("update GUBPPRF set GUBPPRF_NO_OF_QSTNS = ?",[0])
+        } finally {
+            sql?.close() // note that the test will close the connection, since it's our current session's connection
+        }
+
+        controller.getPiConfig()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.isPreferredEmailUpdateable
+        assertTrue data.isProfilePicDisplayable
+        assertTrue data.isOverviewAddressDisplayable
+        assertTrue data.isOverviewPhoneDisplayable
+        assertTrue data.isOverviewEmailDisplayable
+        assertTrue data.isDirectoryProfileDisplayable
+        assertTrue data.isVetClassificationDisplayable
+        assertFalse data.isSecurityQandADisplayable
         assertTrue data.isPasswordChangeDisplayable
         assertTrue data.isDisabilityStatusDisplayable
         assertTrue data.isMaritalStatusUpdateable
