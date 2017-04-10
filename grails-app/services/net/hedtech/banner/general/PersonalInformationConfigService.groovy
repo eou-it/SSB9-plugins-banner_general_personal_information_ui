@@ -37,6 +37,8 @@ class PersonalInformationConfigService {
     static final String SECURITY_QA_CHANGE = 'ENABLE.SECURITY.QA.CHANGE'
     static final String PASSWORD_CHANGE = 'ENABLE.PASSWORD.CHANGE'
 
+    static final String NO_OF_QSTNS = 'GUBPPRF_NO_OF_QSTNS'
+
     static final String GENDER_PRONOUN = 'ENABLE.GENDER.IDENTITY.PRONOUN'
 
     static final String SECTION_HIDDEN = '0'
