@@ -36,6 +36,7 @@ class PersonalInformationDetailsController {
     def medicalInformationCompositeService
     def disabilityService
     def medicalConditionService
+    def securityQAService
 
 
     private def findPerson() {
@@ -956,8 +957,21 @@ class PersonalInformationDetailsController {
             model.emergencyContactSectionMode =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.personalDetailsSectionMode =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.additionalDetailsSectionMode =   (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN)||(model.isVetClassificationDisplayable)||(model.isDisabilityStatusDisplayable)
-            model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
             model.isGenderPronounDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y'
+
+            def personConfig = PersonUtility.getPersonConfigFromSession()
+            def noOfQuestions = personConfig[PersonalInformationConfigService.NO_OF_QSTNS]
+            if(noOfQuestions == null) {
+                Map result = securityQAService.getUserDefinedPreference()
+                if (result != null) {
+                    noOfQuestions = result.GUBPPRF_NO_OF_QSTNS?.intValue()
+                }
+                personConfig[PersonalInformationConfigService.NO_OF_QSTNS] = noOfQuestions
+                PersonUtility.setPersonConfigInSession(personConfig)
+            }
+
+            model.isSecurityQandADisplayable = model.isSecurityQandADisplayable && noOfQuestions > 0
+            model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
 
             render model as JSON
         }
