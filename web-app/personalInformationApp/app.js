@@ -41,6 +41,8 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
             $rootScope.isTabletView = isTablet.matches;
 
             $rootScope.playAudibleMessage = null;
+
+            $rootScope.applicationName = $('meta[name=applicationName]').attr("content");
         }
     ]
 );
