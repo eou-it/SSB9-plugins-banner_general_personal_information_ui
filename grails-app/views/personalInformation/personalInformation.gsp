@@ -45,19 +45,20 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         // Track calling page for breadcrumbs
         (function () {
             // URLs to exclude from updating genAppCallingPage, because they're actually either the authentication
-            // page or a part of the Personal Information app and are not "calling pages."
+            // page, a part of the Personal Information app, or App Nav, and are not "calling pages."
             var referrerUrl = document.referrer,
                 excludedRegex = [
                     /\/${applicationName}\/login\/auth$/,
                     /\/${applicationName}\/ssb\/survey\/survey$/,
                     /\/${applicationName}\/resetPassword\/validateans$/,
-                    /\/${applicationName}\/ssb\/personalInformation\/resetPasswordWithSecurityQuestions$/
+                    /\/${applicationName}\/ssb\/personalInformation\/resetPasswordWithSecurityQuestions$/,
+                    /\/seamless/
                 ],
                 isExcluded;
 
             if (referrerUrl) {
                 isExcluded = _.find(excludedRegex, function (regex) {
-                    return regex.test(referrerUrl)
+                    return regex.test(referrerUrl);
                 });
 
                 if (!isExcluded) {
