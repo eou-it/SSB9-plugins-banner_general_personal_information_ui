@@ -996,9 +996,12 @@ class PersonalInformationDetailsController {
 
     private def getRoles() {
         def roles = SecurityContextHolder?.context?.authentication?.principal?.authorities.collect {
-            it.getAssignedSelfServiceRole()
+            if (it.authority.contains('ROLE_SELFSERVICE')) {
+                it.getAssignedSelfServiceRole()
+            }
         }
-        return roles
+
+        return roles.unique()
     }
 
     private def convertAddressDates(addressMap) {
