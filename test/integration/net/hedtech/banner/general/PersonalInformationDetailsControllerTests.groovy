@@ -626,6 +626,31 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testAddEmailReactivate() {
+        loginSSB 'GDP000001', '111111'
+
+        // this user's below email should be inactive
+        controller.request.contentType = "text/json"
+        controller.request.json = """{
+            emailAddress:'mrbigbear@theweb.com',
+            preferredIndicator:false,
+            commentData: null,
+            emailType:{
+                code:'BUSI',
+                description:'Business E-Mail'
+            }
+        }""".toString()
+
+        controller.addEmail()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        println data
+        assertEquals false, data.failure
+    }
+
+    @Test
     void testUpdateEmail() {
         loginSSB 'GDP000001', '111111'
 
