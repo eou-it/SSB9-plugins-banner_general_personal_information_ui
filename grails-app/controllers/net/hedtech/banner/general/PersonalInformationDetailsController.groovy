@@ -326,8 +326,9 @@ class PersonalInformationDetailsController {
             personalInformationCompositeService.validateEmailTypeRule(newEmail.emailType, newEmail.pidm, getRoles())
 
             def emails = []
-            emails[0] = newEmail
             personEmailService.updatePreferredEmail(newEmail)
+            newEmail = personEmailService.updateIfExistingEmail(newEmail)
+            emails[0] = newEmail
             personEmailCompositeService.createOrUpdate([personEmails: emails])
             render([failure: false] as JSON)
         }
