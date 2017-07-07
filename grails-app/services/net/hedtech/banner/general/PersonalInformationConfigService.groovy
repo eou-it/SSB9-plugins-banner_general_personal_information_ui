@@ -1,17 +1,12 @@
 /*******************************************************************************
- Copyright 2016 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2017 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
-import net.hedtech.banner.general.overall.IntegrationConfiguration
-import net.hedtech.banner.general.person.PersonUtility
-import org.springframework.transaction.annotation.Propagation
-import org.springframework.transaction.annotation.Transactional
-
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED )
-class PersonalInformationConfigService {
+class PersonalInformationConfigService extends BasePersonConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
+    static final String PERSONAL_INFO_PROCESS_CODE = 'PERSONAL_INFORMATION_SSB'
 
     static final String OVERVIEW_ADDR = 'OVERVIEW.ADDRESS.TYPE'
     static final String OVERVIEW_PHONE = 'OVERVIEW.PHONE.TYPE'
@@ -48,51 +43,19 @@ class PersonalInformationConfigService {
     static final String YES = 'Y'
     static final String NO = 'N'
 
-    def getParamFromSession(param, defaultVal) {
-        def personalInfoConfig = getPersonalInfoConfigFromSession()
-
-        def paramVal = personalInfoConfig[param]
-
-        if (!paramVal) {
-            log.error("No value found for integration configuration setting \"" + param + "\". " +
-                      "This should be configured in GORICCR. Using default value of \"" + defaultVal + "\".")
-
-            paramVal = defaultVal
-        }
-
-        paramVal
+    @Override
+    protected String getCacheName() {
+        return PERSONAL_INFO_CONFIG_CACHE_NAME
     }
 
-    private static getPersonalInfoConfigFromSession() {
-        def personConfigInSession = PersonUtility.getPersonConfigFromSession()
-
-        if (personConfigInSession) {
-            if (!personConfigInSession.containsKey(PERSONAL_INFO_CONFIG_CACHE_NAME)) {
-                createPersonalInfoConfig(personConfigInSession)
-            }
-        } else {
-            createPersonalInfoConfig(personConfigInSession)
-            PersonUtility.setPersonConfigInSession(personConfigInSession)
-        }
-
-        personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME]
+    @Override
+    protected String getProcessCode() {
+        return PERSONAL_INFO_PROCESS_CODE
     }
 
-    private static createPersonalInfoConfig(personConfigInSession) {
-        def configFromGoriccr = IntegrationConfiguration.fetchAllByProcessCode('PERSONAL_INFORMATION_SSB')
-        def config = [:]
-
+    @Override
+    protected List getExcludedProperties() {
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
-        def EXCLUDED_PROPERTIES = [OVERVIEW_ADDR, OVERVIEW_PHONE]
-
-        configFromGoriccr.each {it ->
-            if (!EXCLUDED_PROPERTIES.contains(it.settingName)) {
-                config[it.settingName] = it.value
-            }
-        }
-
-        personConfigInSession[PERSONAL_INFO_CONFIG_CACHE_NAME] = config
-
-        personConfigInSession
+        return [OVERVIEW_ADDR, OVERVIEW_PHONE]
     }
 }
