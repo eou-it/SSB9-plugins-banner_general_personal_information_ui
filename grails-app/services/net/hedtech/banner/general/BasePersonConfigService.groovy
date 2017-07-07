@@ -13,12 +13,12 @@ abstract class BasePersonConfigService {
     
     protected abstract String getCacheName();
 
-    protected abstract String getProccessCode();
+    protected abstract String getProcessCode();
 
     protected abstract List getExcludedProperties();
 
     def getParamFromSession(param, defaultVal) {
-        def personalInfoConfig = getPersonConfigFromSession(getCacheName(), getProccessCode(), getExcludedProperties())
+        def personalInfoConfig = getPersonConfigFromSession(getCacheName(), getProcessCode(), getExcludedProperties())
 
         def paramVal = personalInfoConfig[param]
 

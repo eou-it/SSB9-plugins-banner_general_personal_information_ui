@@ -49,7 +49,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     }
 
     @Override
-    protected String getProccessCode() {
+    protected String getProcessCode() {
         return PERSONAL_INFO_PROCESS_CODE
     }
 

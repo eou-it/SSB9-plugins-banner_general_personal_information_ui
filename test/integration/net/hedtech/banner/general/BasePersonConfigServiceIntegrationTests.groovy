@@ -81,7 +81,7 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testGetPersonalInfoConfigFromSession() {
         def configService = getMockPersonalInfoConfigService()
-        def config = configService.getPersonConfigFromSession(configService.getCacheName(),configService.getProccessCode(), configService.getExcludedProperties())
+        def config = configService.getPersonConfigFromSession(configService.getCacheName(),configService.getProcessCode(), configService.getExcludedProperties())
 
         assertEquals PersonalInformationConfigService.YES, config["PREFERRED.EMAIL.UPDATABILITY"]
     }
@@ -90,7 +90,7 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
     void testCreateConfig() {
         def personConfig = [:]
         def configService = getMockPersonalInfoConfigService()
-        configService.createConfig(personConfig, configService.getCacheName(),configService.getProccessCode(), configService.getExcludedProperties())
+        configService.createConfig(personConfig, configService.getCacheName(),configService.getProcessCode(), configService.getExcludedProperties())
         def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
 
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PREF_EMAIL]
@@ -118,7 +118,7 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
     private def getMockPersonalInfoConfigService(){
         def mockPersonalInfoConfigService = [
                 getCacheName: {-> return PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME },
-                getProccessCode: {-> return PersonalInformationConfigService.PERSONAL_INFO_PROCESS_CODE },
+                getProcessCode: {-> return PersonalInformationConfigService.PERSONAL_INFO_PROCESS_CODE },
                 getExcludedProperties: {-> return  [PersonalInformationConfigService.OVERVIEW_ADDR, PersonalInformationConfigService.OVERVIEW_PHONE]}
         ] as BasePersonConfigService
 
