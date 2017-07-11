@@ -879,12 +879,8 @@ button.closebtn {
 }
 
 .pi-profile-image {
+    margin: 5px 0 15px;
     vertical-align: middle;
-}
-
-.pi-profile-image > svg {
-    width: 132px;
-    height: 160px;
 }
 
 .details-wrapper {

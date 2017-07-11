@@ -73,13 +73,6 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 <body>
 
 <div class="body-overlay"></div>
-<svg class="hide-svg" role="presentation">
-    <defs>
-        <clipPath id="profilePicClip">
-            <circle cx="66" cy="80" r="66"/>
-        </clipPath>
-    </defs>
-</svg>
 <div id="content" class="container-fluid" aria-relevant="additions" role="main">
     <div ui-view></div>
 </div>
