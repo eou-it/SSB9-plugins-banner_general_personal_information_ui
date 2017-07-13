@@ -283,8 +283,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         }
 
                     }
-                })
-            };
+                });
+            }
 
             if ($scope.piConfig.isDisabilityStatusDisplayable) {
                 piCrudService.get('DisabilityStatus').$promise.then(function (response) {
@@ -649,7 +649,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                 if (response.failure) {
                     notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                 } else {
-                    $window.location.href = '/'+ $scope.applicationName +'/ssb/personalInformation/resetPasswordWithSecurityQuestions';
+                    $window.location.href = $scope.applicationContextRoot +'/ssb/personalInformation/resetPasswordWithSecurityQuestions';
                 }
             });
         };

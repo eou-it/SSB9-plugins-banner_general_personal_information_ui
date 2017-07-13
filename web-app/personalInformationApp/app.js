@@ -42,7 +42,7 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
 
             $rootScope.playAudibleMessage = null;
 
-            $rootScope.applicationName = $('meta[name=applicationName]').attr("content");
+            $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
         }
     ]
 );
