@@ -8,8 +8,8 @@ personalInformationApp.service( 'breadcrumbService', ['$filter', '$rootScope', f
         CALLING_URL = 1,
         GEN_LANDING_PAGE_SIGNATURE;
 
-    $rootScope.applicationName = $('meta[name=applicationName]').attr("content");
-    GEN_LANDING_PAGE_SIGNATURE = new RegExp('/'+ $rootScope.applicationName +'/ssb/general$');
+    $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
+    GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general$');
 
     this.reset = function() {
         var label;

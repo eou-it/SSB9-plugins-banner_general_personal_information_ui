@@ -16,7 +16,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
             </div>
             <div ng-if="piConfig.ethnRaceMode === SECTION_UPDATEABLE" class="button-block">
                 <a race-and-ethn-navigation
-                   ng-href="{{isMobileView() ? '/'+ applicationName +'/ssb/personalInformation/raceAndEthnicitySurvey?mobile=y' : '/'+ applicationName +'/ssb/personalInformation/raceAndEthnicitySurvey'}}"
+                   ng-href="{{isMobileView() ? applicationContextRoot +'/ssb/personalInformation/raceAndEthnicitySurvey?mobile=y' : applicationContextRoot +'/ssb/personalInformation/raceAndEthnicitySurvey'}}"
                    class="pi-edit-item-link pi-icon-link" title="{{'personInfo.title.editRaceEthnicity'|i18n}}" tabindex="0">
                     <span class="icon-edit-CO"></span>
                 </a>
