@@ -39,7 +39,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     {{'personInfo.label.dateOfBirth'|i18n}}
                 </div>
                 <div>
-                    <div>{{stringToDate(personalDetails.birthDate)|date:'longDate'}}</div>
+                    <div>{{(!personalDetails.birthDate ? '-' : stringToDate(personalDetails.birthDate)|date:'longDate')}}</div>
                 </div>
             </div>
         </div>

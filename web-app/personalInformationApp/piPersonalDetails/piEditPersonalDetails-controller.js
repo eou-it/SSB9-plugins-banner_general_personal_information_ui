@@ -55,6 +55,14 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
 
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);
+
+            if(!$scope.personalDetails.gender) {
+                $scope.personalDetails.gender = {};
+            }
+
+            if(!$scope.personalDetails.pronoun) {
+                $scope.personalDetails.pronoun = {};
+            }
         };
 
         // INITIALIZE

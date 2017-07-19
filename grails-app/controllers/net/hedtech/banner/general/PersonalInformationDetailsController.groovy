@@ -861,10 +861,14 @@ class PersonalInformationDetailsController {
                 id: updatedPerson.id,
                 version: updatedPerson.version,
                 preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: updatedPerson.maritalStatus,
-                gender: updatedPerson.gender,
-                pronoun: updatedPerson.pronoun
+                maritalStatus: updatedPerson.maritalStatus
         ]
+
+        if(personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y') {
+            person.gender = updatedPerson.gender
+            person.pronoun = updatedPerson.pronoun
+        }
+
 
         try {
             personGenderPronounCompositeService.updatePerson(person)
