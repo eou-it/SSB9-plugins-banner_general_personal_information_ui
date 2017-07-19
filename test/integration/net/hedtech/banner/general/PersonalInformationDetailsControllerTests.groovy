@@ -1493,6 +1493,42 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testUpdatePersonalDetailsWithGndrConfigSetToOff() {
+        loginSSB 'GDP000005', '111111'
+
+        // Set configuration to prohibit updates to Personal Details
+        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.GENDER_PRONOUN): 'N']]
+        PersonUtility.setPersonConfigInSession(personConfigInSession)
+
+        def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
+
+        controller.request.contentType = "text/json"
+
+        // Updating preferred first name and marital status, gender should have no effect
+        controller.request.json = """{
+            id:${details.id},
+            version: ${details.version},
+            preferenceFirstName: 'NickName',
+            maritalStatus:{
+                code:'S',
+                description:'Single'
+            },
+            gender:{
+               code: 'INVALID_CODE',
+               description: 'should not matter'
+            }
+        }""".toString()
+
+        controller.updatePersonalDetails()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertFalse data.failure
+    }
+
+    @Test
     void testGetRaces() {
         loginSSB 'GDP000005', '111111'
 
