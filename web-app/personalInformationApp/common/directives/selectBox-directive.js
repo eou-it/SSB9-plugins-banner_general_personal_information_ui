@@ -22,6 +22,11 @@ personalInformationAppDirectives.directive('selectBox',['$filter', function($fil
                 maxItems = 10,
                 showNA = data.showNA;
 
+            // set the element's title to interpolated value from the attributes
+            if(elem.attr('title')) {
+                elem.attr('title', attrs.title);
+            }
+
             elem.select2({
                 width: '100%',
                 placeholder: data.placeholder,

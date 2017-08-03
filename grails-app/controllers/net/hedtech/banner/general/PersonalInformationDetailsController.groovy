@@ -741,6 +741,7 @@ class PersonalInformationDetailsController {
         ]
 
         try {
+            personGenderPronounCompositeService.checkPersonBaseExists(person)
             personBasicPersonBaseService.update(person)
             render([failure: false] as JSON)
         }
