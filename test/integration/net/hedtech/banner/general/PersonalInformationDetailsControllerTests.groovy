@@ -1791,6 +1791,29 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     }
 
     @Test
+    void testUpdateVeteranClassificationNoPersRecord() {
+        loginSSB 'HOSH00018', '111111'
+
+        controller.request.contentType = "text/json"
+
+        controller.request.json = """{
+            id: null,
+            version: null,
+            veraIndicator: 'B',
+            sdvetIndicator: 'Y',
+            activeDutySeprDate: null,
+            armedServiceMedalVetIndicator: false
+        }""".toString()
+
+        controller.updateVeteranClassification()
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+
+        assertNotNull data
+        assertTrue data.failure
+    }
+
+    @Test
     void testUpdateVeteranClassificationWithConfigSetToNotUpdateable() {
         loginSSB 'GDP000005', '111111'
 
