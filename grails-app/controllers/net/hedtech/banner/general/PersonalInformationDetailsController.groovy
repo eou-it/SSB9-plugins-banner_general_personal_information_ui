@@ -584,7 +584,7 @@ class PersonalInformationDetailsController {
             personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
             newContact = personalInformationCompositeService.getPersonValidationObjects(newContact)
 
-            personEmergencyContactService.createUpdateOrDeleteEmergencyContactWithPriorityShuffle(newContact)
+            personEmergencyContactService.createEmergencyContactWithPriorityShuffle(newContact)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
@@ -612,7 +612,7 @@ class PersonalInformationDetailsController {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
             updatedContact = personalInformationCompositeService.getPersonValidationObjects(updatedContact)
 
-            personEmergencyContactService.createUpdateOrDeleteEmergencyContactWithPriorityShuffle(updatedContact)
+            personEmergencyContactService.updateEmergencyContactWithPriorityShuffle(updatedContact)
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
@@ -635,7 +635,8 @@ class PersonalInformationDetailsController {
         deletedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            def contacts = personEmergencyContactService.createUpdateOrDeleteEmergencyContactWithPriorityShuffle(deletedContact, true)
+            personEmergencyContactService.deleteEmergencyContactWithPriorityShuffle(deletedContact)
+            def contacts = personEmergencyContactService.getEmergencyContactsByPidm(deletedContact.pidm)
             def model = populateEmergencyContactsModel(contacts)
 
             JSON.use("deep") {
