@@ -3,7 +3,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 *******************************************************************************--}%
 <!DOCTYPE html>
 <!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app" class="ie9"> <![endif]-->
-<html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app">
+<html xmlns:ng="http://angularjs.org"  id="ng-app">
 <head>
     <script type="text/javascript">
         var superUser=${session['SUPER_USER_INDICATOR'] ?: 'undefined'};
@@ -73,7 +73,7 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
 <body>
 
 <div class="body-overlay"></div>
-<div id="content" class="container-fluid" aria-relevant="additions" role="main">
+<div id="content" ng-app="personalInformationApp" class="container-fluid" aria-relevant="additions" role="main">
     <div ui-view></div>
 </div>
 </body>
