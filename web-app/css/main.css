@@ -494,6 +494,10 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     display: none;
 }
 
+#multiCalendarContainer {
+    display: none;
+}
+
 .input-colors + span {
     color: #869FB1;
 }
