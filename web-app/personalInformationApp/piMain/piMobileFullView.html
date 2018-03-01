@@ -3,7 +3,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <xe-tab-nav>
     <div hide-popover ng-repeat="sectionDetails in sectionsToDisplay">
-        <xe-tab-panel heading="{{sectionDetails.heading|i18n}}" state="personalInformationMobileFullProfile" set-starting-tab="{{sectionDetails.startingTab}}" disable-default-tab-activation>
+        <xe-tab-panel heading="{{sectionDetails.heading|i18n}}" state="piFullViewMobile" load-data-on-click=""
+                      set-starting-tab="{{sectionDetails.startingTab}}" disable-default-tab-activation>
             <ng-include src="sectionDetails.template|webAppResourcePath"></ng-include>
             <pi-mobile-footer-button click-function="sectionDetails.clickFunction" is-edit="sectionDetails.isEdit"
                                      is-disabled="sectionDetails.isFooterButtonDisabledFunction" disabled-msg="sectionDetails.disabledMsg"
