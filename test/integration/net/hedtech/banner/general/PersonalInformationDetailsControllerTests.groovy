@@ -99,7 +99,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'Ada County', data[0].description
+        assertEquals 'Abbeville, SC', data[0].description
     }
 
     @Test
@@ -114,8 +114,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 3, data.size()
-        assertEquals 'Provence of Quebec', data[0].description
+        assertEquals 4, data.size()
+        assertEquals 'Prince Edward Island', data[0].description
     }
 
     @Test
@@ -131,7 +131,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'Greece', data[0].nation
+        assertEquals 'Burkina Faso', data[0].nation
     }
 
     @Test
@@ -146,7 +146,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
 
         assertNotNull data
-        assertEquals 7, data.size()
+        assertTrue 7 <= data.size()
+        assertTrue 10 >= data.size()
         assertEquals 'Foreign', data[0].description
     }
 
@@ -172,8 +173,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
                 description:"United States of America"
             },
             state:{
-                code:"CM",
-                description:"Northern Mariana Islands"
+                code:"UT",
+                description:"Utah"
             },
             streetLine1:"123 Fake Street",
             streetLine2:"Apt 333",
@@ -524,7 +525,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals 10, data.size()
-        assertEquals 'Family E-Mail', data[0].description
+        assertEquals 'Denver Email', data[0].description
     }
 
     @Test
