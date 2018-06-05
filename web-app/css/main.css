@@ -1867,6 +1867,16 @@ div.dir-profile {
     }
 }
 
+/* Catches mobile devices up through iPhone X landscape */
+@media screen and (max-width:812px) {
+    /* Fix iPhone-only issue where background scrolls when user touches an <input> element to scroll */
+    body.modal-open {
+        overflow: hidden;
+        position:fixed;
+        width: 100%;
+    }
+}
+
 @media screen and (min-width:768px) {
     .col-md-6 {
         float: left;
