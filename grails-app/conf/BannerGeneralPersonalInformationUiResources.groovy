@@ -35,13 +35,14 @@ modules = {
     }
 
     'commonComponents' {
+        resource url:[file: 'js/d3/d3.min.js']
         resource url:[file: 'js/xe-components/xe-ui-components.js']
     }
     'commonComponentsLTR' {
-        resource url:[file: 'css/xe-components/xe-ui-components.css']
+        resource url:[file: 'css/xe-components/xe-ui-components.min.css']
     }
     'commonComponentsRTL' {
-        resource url:[file: 'css/xe-components/xe-ui-components-rtl.css']
+        resource url:[file: 'css/xe-components/xe-ui-components-rtl.min.css']
     }
 
     'personalInformationApp' {
