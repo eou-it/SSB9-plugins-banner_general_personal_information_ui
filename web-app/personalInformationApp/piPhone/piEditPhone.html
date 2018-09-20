@@ -50,9 +50,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{'personInfo.phone.error.intlPhoneNumber'|i18n}}</p>
             </div>
-            <div class="col-sm-12">
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <input ng-model="phone.primaryIndicator" class="main-nav-check" id="phone-primary" type="checkbox" aria-describedby="phone-primary-txt"/>
+                <p class="lbl break-long-words" id="phone-primary-txt"><label for="phone-primary">{{'personInfo.label.primaryIndicator'|i18n}}</label></p>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
                 <input ng-model="phone.unlistIndicator" class="main-nav-check" id="phone-unlisted" type="checkbox" aria-describedby="phone-unlisted-txt"/>
-                <p class="lbl" id="phone-unlisted-txt"><label for="phone-unlisted">{{'personInfo.label.unlistedIndicator'|i18n}}</label></p>
+                <p class="lbl break-long-words" id="phone-unlisted-txt"><label for="phone-unlisted">{{'personInfo.label.unlistedIndicator'|i18n}}</label></p>
             </div>
             <p class="input-field-label mobile-errors response-err" ng-class="[(!!phoneErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{phoneErrMsg}}</p>

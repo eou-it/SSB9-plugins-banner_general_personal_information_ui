@@ -37,6 +37,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
         $scope.savePhone = function() {
             if (isValidTelephoneNumber()) {
                 var phoneToSave = angular.copy($scope.phone);
+                phoneToSave.primaryIndicator = phoneToSave.primaryIndicator ? 'Y' : null;
                 phoneToSave.unlistIndicator = phoneToSave.unlistIndicator ? 'Y' : null;
                 piPhoneService.trimPhoneNumber(phoneToSave);
 
@@ -81,6 +82,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                 // Set up for "update phone"
                 $scope.isCreateNew = false;
                 $scope.phone = angular.copy(editPhoneProperties.currentPhone);
+                $scope.phone.primaryIndicator = $scope.phone.primaryIndicator === 'Y';
                 $scope.phone.unlistIndicator = $scope.phone.unlistIndicator === 'Y';
             } else {
                 // Create "new phone" object
@@ -91,6 +93,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
                     phoneArea: '',
                     phoneNumber: '',
                     phoneExtension: '',
+                    primaryIndicator: false,
                     unlistIndicator: false
                 };
             }
