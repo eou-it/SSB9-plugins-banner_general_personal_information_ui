@@ -40,7 +40,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 <div class="pad-vet-class">
                     <p>{{'personinfo.veteran.classification.separated.note'|i18n}}</p>
                     <div class="vet-date-input">
-                        <label ng-class="(seprDateErrMsg && !seprDateFocused ? 'field-error' : '')" for="seprDate">
+                        <label for="seprDate">
                             {{'personinfo.veteran.classification.date.discharge.label'|i18n}}
                         </label>
                         <input date-picker ng-model="veteranClassInfo.activeDutySeprDate" pi-input-watcher on-select="setSeprDate" ng-blur="seprDateFocused=false; removeVeteranErrors()"

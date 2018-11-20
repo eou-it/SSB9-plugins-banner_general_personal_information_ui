@@ -8,14 +8,10 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <div class="row pad-dialog-lr">
             <div class="clearfix hidden-xs"></div>
             <div class="col-sm-5 col-md-5 col-lg-5">
-                <label ng-class="(!!pinErrMsg && !pinFocused ? 'input-field-label field-error' : 'input-field-label')"
-                       class="input-field-label" for="pinput">{{'personInfo.label.confirmPin'|i18n}}</label><br>
+                <label class="input-field-label" for="pinput">{{'personInfo.label.confirmPin'|i18n}}</label><br>
                 <input ng-model="pin" ng-blur="pinFocused=false; removePinFieldError()" ng-focus="pinFocused=true"
                        ng-class="[(!!pinErrMsg && !pinFocused ? 'input-field-error' : null)]"
-                       class="text-input-field semi-bold form-spacing" type="password" maxlength="300" id="pinput">
-                    <span ng-if="!!pinErrMsg && !pinFocused" class="icon input-fail">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
+                       class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="password" maxlength="300" id="pinput">
                 <p class="input-field-label mobile-errors" ng-class="[(!!pinErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{pinErrMsg}}</p>
             </div>

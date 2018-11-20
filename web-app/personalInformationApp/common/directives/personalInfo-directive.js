@@ -199,6 +199,30 @@ personalInformationAppDirectives.directive('dropdownState', [function () {
     };
 }]);
 
+/*
+ * place on dropdown button to bind a variable that determines whether an item in dropdown has been selected. If the
+ * item is truthy the ng-not-empty CSS class is added to the button
+ */
+personalInformationAppDirectives.directive('dropdownSelected', [function () {
+    return {
+        restrict: 'A',
+        scope: {
+            item: '=dropdownSelected'
+        },
+        link: function (scope, elem) {
+
+            scope.$watch('item', function(newVal, oldVal) {
+                if (newVal) {
+                    elem.addClass('ng-not-empty');
+                }
+                else {
+                    elem.removeClass('ng-not-empty');
+                }
+            });
+        }
+    };
+}]);
+
 personalInformationAppDirectives.directive('piInputWatcher', [function () {
     return {
         restrict: 'A',

@@ -14,38 +14,34 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                    role="alert" aria-live="assertive">{{phoneTypeErrMsg|i18n}}</p>
             </div>
             <div class="col-sm-12">
-                <label ng-class="(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-label field-error' : 'input-field-label')"
-                       class="input-field-label pi-phone-num-lbl" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
+                <label class="input-field-label pi-phone-num-lbl" for="phoneNum">
+                    {{('personInfo.label.phoneNumber')|i18n}}
+                </label><br>
                 <div ng-if="maskingRules.displayCountryCode" class="pi-phone-ctry">
-                    <input ng-model="phone.countryPhone" class="text-input-field semi-bold form-spacing" type="text"
+                    <input ng-model="phone.countryPhone" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                        placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="4">
                 </div>
-                <input ng-model="phone.phoneArea" class="text-input-field semi-bold form-spacing pi-phone-area" type="text"
+                <input ng-model="phone.phoneArea" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-phone-area" type="text"
                        placeholder="{{'personInfo.placeholder.areaCode'|i18n}}" maxlength="6">
                 <span ng-class="[(phoneNumberErrMsg && !phoneNumFocused ? 'pi-phone-error' : null)]" class="">
                     <input ng-model="phone.phoneNumber" ng-blur="phoneNumFocused=false; removePhoneFieldErrors()" ng-focus="phoneNumFocused=true"
                            ng-class="[(!!phoneNumberErrMsg && !phoneNumFocused ? 'input-field-error' : null)]"
-                           class="text-input-field semi-bold form-spacing pi-phone-num" type="text"
+                           class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-phone-num" type="text"
                            placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
-                    <span ng-if="!!phoneNumberErrMsg && !phoneNumFocused" class="icon phone-input-fail pi-phone-num-err">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
                 </span>
-                <input ng-model="phone.phoneExtension" class="text-input-field semi-bold form-spacing pi-phone-extn" type="text"
+                <input ng-model="phone.phoneExtension" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-phone-extn" type="text"
                        placeholder="{{'personInfo.placeholder.extension'|i18n}}" maxlength="10">
                 <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg && !maskingRules.displayInternationalAccess ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{phoneNumberErrMsg|i18n}}</p>
             </div>
             <div ng-if="maskingRules.displayInternationalAccess" class="col-sm-12">
-                <label ng-class="(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-label field-error' : 'input-field-label')"
-                       class="input-field-label" for="intlAccess">{{('personInfo.label.intlAccess')|i18n}}</label><br>
+                <label class="input-field-label" for="intlAccess">
+                    {{('personInfo.label.intlAccess')|i18n}}
+                </label><br>
                 <div>
                     <input ng-model="phone.internationalAccess" ng-blur="intlAccessFocused=false; removePhoneFieldErrors()" ng-focus="intlAccessFocused=true"
-                       ng-class="[(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing" type="text"
+                       ng-class="[(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-error' : null)]" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                        placeholder="{{'personInfo.placeholder.intlAccess'|i18n}}" maxlength="16" id="intlAccess">
-                    <span ng-if="!!phoneNumberErrMsg && !intlAccessFocused" class="icon input-fail pi-phone-intl-err">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
                 </div>
                 <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{'personInfo.phone.error.intlPhoneNumber'|i18n}}</p>

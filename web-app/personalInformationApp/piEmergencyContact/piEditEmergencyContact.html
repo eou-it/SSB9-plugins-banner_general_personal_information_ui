@@ -13,28 +13,22 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
         <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
         <input ng-model="emergencyContact.firstName" ng-blur="firstNameFocused=false; removeContactFieldErrors()" ng-focus="firstNameFocused=true"
                ng-class="[(!!firstNameErrMsg && !firstNameFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterFirstName'|i18n}}"
+               class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterFirstName'|i18n}}"
                maxlength="60" id="firstName">
-        <span ng-if="!!firstNameErrMsg && !firstNameFocused" class="icon input-fail">
-            <span class="icon-error ellucian-font"></span>
-        </span>
         <p class="input-field-label mobile-errors" ng-class="[(!!firstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{firstNameErrMsg|i18n}}</p>
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label" for="middleName">{{'personInfo.label.middleName'|i18n}}</label><br>
-        <input ng-model="emergencyContact.middleInitial" class="text-input-field semi-bold form-spacing" type="text"
+        <input ng-model="emergencyContact.middleInitial" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                placeholder="{{'personInfo.placeholder.enterMiddleName'|i18n}}" maxlength="60" id="middleName">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label" for="lastName">{{'personInfo.label.lastName'|i18n}}</label><br>
         <input ng-model="emergencyContact.lastName" ng-blur="lastNameFocused=false; removeContactFieldErrors()" ng-focus="lastNameFocused=true"
                ng-class="[(!!lastNameErrMsg && !lastNameFocused ? 'input-field-error' : null)]"
-               class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterLastName'|i18n}}"
+               class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterLastName'|i18n}}"
                maxlength="60" id="lastName">
-        <span ng-if="!!lastNameErrMsg && !lastNameFocused" class="icon input-fail">
-            <span class="icon-error ellucian-font"></span>
-        </span>
         <p class="input-field-label mobile-errors" ng-class="[(!!lastNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{lastNameErrMsg|i18n}}</p>
     </div>
@@ -45,68 +39,60 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
     <div class="clearfix hidden-xs"></div>
     <label class="input-field-label pi-emer-phone col-sm-12 col-md-12 col-lg-12" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
     <div ng-if="maskingRules.displayCountryCode" class="col-sm-12 col-md-4 col-lg-4">
-        <input ng-model="emergencyContact.countryPhone" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+        <input ng-model="emergencyContact.countryPhone" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-emer-phone-field" type="text"
                placeholder="{{'personInfo.placeholder.countryCode'|i18n}}" maxlength="4" id="countryCode">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <input ng-model="emergencyContact.phoneArea" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+        <input ng-model="emergencyContact.phoneArea" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-emer-phone-field" type="text"
                placeholder="{{'personInfo.placeholder.areaCode'|i18n}}" maxlength="6" id="phoneArea">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <input ng-model="emergencyContact.phoneNumber" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text" id="phoneNumber"
+        <input ng-model="emergencyContact.phoneNumber" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-emer-phone-field" type="text" id="phoneNumber"
                placeholder="{{'personInfo.placeholder.phoneNumber'|i18n}}" maxlength="12" id="phoneNum">
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <input ng-model="emergencyContact.phoneExtension" class="text-input-field semi-bold form-spacing pi-emer-phone-field" type="text"
+        <input ng-model="emergencyContact.phoneExtension" class="text-input-field gssb-eds-text-field semi-bold form-spacing pi-emer-phone-field" type="text"
                placeholder="{{'personInfo.placeholder.extension'|i18n}}" maxlength="10" id="phoneExtension">
     </div>
     <div class="pi-modal-divider"><div class="hidden-xs"><span></span></div></div>
     <div>
         <div ng-if="maskingRules.displayHouseNumber" class="col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label" for="houseNumber">{{'personInfo.label.houseNumber'|i18n}}</label><br>
-            <input ng-model="emergencyContact.houseNumber" class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterHouseNumber'|i18n}}"
+            <input ng-model="emergencyContact.houseNumber" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterHouseNumber'|i18n}}"
                    maxlength="10" id="houseNumber">
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
-            <label ng-class="(!!streetLine1ErrMsg && !streetLine1Focused ? 'input-field-label field-error' : 'input-field-label')"
-                   class="input-field-label" for="addrLine1">{{'personInfo.label.addressLine1'|i18n}}</label><br>
+            <label class="input-field-label" for="addrLine1">{{'personInfo.label.addressLine1'|i18n}}</label><br>
             <input ng-model="emergencyContact.streetLine1" ng-blur="streetLine1Focused=false; removeContactFieldErrors()" ng-focus="streetLine1Focused=true"
                    ng-class="[(!!streetLine1ErrMsg && !streetLine1Focused ? 'input-field-error' : null)]"
-                   class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine1'|i18n}}"
+                   class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterAddressLine1'|i18n}}"
                    maxlength="75" id="addrLine1">
-                    <span ng-if="!!streetLine1ErrMsg && !streetLine1Focused" class="icon input-fail">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
             <p class="input-field-label mobile-errors" ng-class="[(!!streetLine1ErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{streetLine1ErrMsg|i18n}}</p>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label" for="addrLine2">{{'personInfo.label.addressLine2'|i18n}}</label><br>
-            <input ng-model="emergencyContact.streetLine2" class="text-input-field semi-bold form-spacing" type="text"
+            <input ng-model="emergencyContact.streetLine2" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                    placeholder="{{'personInfo.placeholder.enterAddressLine2'|i18n}}" maxlength="75" id="addrLine2">
         </div>
         <div class="maybe-clear col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label" for="addrLine3">{{'personInfo.label.addressLine3'|i18n}}</label><br>
-            <input ng-model="emergencyContact.streetLine3" class="text-input-field semi-bold form-spacing" type="text"
+            <input ng-model="emergencyContact.streetLine3" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                    placeholder="{{'personInfo.placeholder.enterAddressLine3'|i18n}}" maxlength="75" id="addrLine3">
         </div>
         <div ng-if="maskingRules.displayStreetLine4" class="maybe-clear col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label" for="addrLine4">{{'personInfo.label.addressLine4'|i18n}}</label><br>
-            <input ng-model="emergencyContact.streetLine4" class="text-input-field semi-bold form-spacing" type="text"
+            <input ng-model="emergencyContact.streetLine4" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                    placeholder="{{'personInfo.placeholder.enterAddressLine4'|i18n}}" maxlength="75" id="addrLine4">
         </div>
         <div class="clearfix hidden-xs"></div>
     </div>
     <div>
         <div class="col-sm-12 col-md-4 col-lg-4">
-            <label ng-class="(!!cityErrMsg && !cityFocused ? 'input-field-label field-error' : 'input-field-label')"
-                   class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
+            <label class="input-field-label" for="city">{{'personInfo.label.city'|i18n}}</label><br>
             <input ng-model="emergencyContact.city" ng-blur="cityFocused=false; removeContactFieldErrors()" ng-focus="cityFocused=true"
-                   ng-class="[(!!cityErrMsg && !cityFocused ? 'input-field-error' : null)]" class="text-input-field semi-bold form-spacing"
+                   ng-class="[(!!cityErrMsg && !cityFocused ? 'input-field-error' : null)]" class="text-input-field gssb-eds-text-field semi-bold form-spacing"
                    type="text" placeholder="{{'personInfo.placeholder.enterCity'|i18n}}" maxlength="50" id="city">
-                    <span ng-if="!!cityErrMsg && !cityFocused" class="icon input-fail">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
             <p class="input-field-label mobile-errors" ng-class="[(!!cityErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{cityErrMsg|i18n}}</p>
         </div>
@@ -117,15 +103,11 @@ Copyright 2017 Ellucian Company L.P. and its affiliates.
                role="alert" aria-live="assertive">{{stateErrMsg|i18n}}</p>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
-            <label ng-class="(!!zipErrMsg && !zipFocused ? 'input-field-label field-error' : 'input-field-label')"
-                   class="input-field-label" for="zip">{{'personInfo.label.zip'|i18n}}</label><br>
+            <label class="input-field-label" for="zip">{{'personInfo.label.zip'|i18n}}</label><br>
             <input ng-model="emergencyContact.zip" ng-blur="zipFocused=false; removeContactFieldErrors()" ng-focus="zipFocused=true"
                    ng-class="[(!!zipErrMsg && !zipFocused ? 'input-field-error' : null)]"
-                   class="text-input-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterZipCode'|i18n}}"
+                   class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterZipCode'|i18n}}"
                    maxlength="30" id="zip">
-                    <span ng-if="!!zipErrMsg && !zipFocused" class="icon input-fail">
-                        <span class="icon-error ellucian-font"></span>
-                    </span>
             <p class="input-field-label mobile-errors" ng-class="[(!!zipErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{zipErrMsg|i18n}}</p>
         </div>
