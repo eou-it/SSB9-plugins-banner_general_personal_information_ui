@@ -103,7 +103,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                     piCrudService.create('Address', addressToSave).$promise.then(handleResponse);
                 }
                 else {
-                    piCrudService.update('Address', addressToSave).$promise.then(handleResponse);
+                    piCrudService.update('AddressWithoutOverwrite', addressToSave).$promise.then(handleResponse);
                 }
             }
             else {
