@@ -1,3 +1,6 @@
+/********************************************************************************
+  Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+********************************************************************************/
 personalInformationAppControllers.controller('piEditPhoneController',['$scope', '$modalInstance', 'piPhoneService','$rootScope', '$state',
     '$filter', 'notificationCenterService', 'piCrudService', 'editPhoneProperties', 'personalInformationService',
     function ($scope, $modalInstance, piPhoneService, $rootScope, $state, $filter, notificationCenterService, piCrudService, editPhoneProperties,
