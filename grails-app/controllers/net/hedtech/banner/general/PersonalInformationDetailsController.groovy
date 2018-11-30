@@ -213,38 +213,6 @@ class PersonalInformationDetailsController {
     def updateAddress() {
         try {
             checkActionPermittedPerConfiguration([
-                  name: PersonalInformationConfigService.ADDR_MODE,
-                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
-            ])
-        } catch (ApplicationException e) {
-            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
-            return
-        }
-
-        def updatedAddress = request?.JSON ?: params
-        updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-
-        fixJSONObjectForCast(updatedAddress)
-
-        try {
-            personAddressService.checkAddressFieldsValid(updatedAddress)
-
-            updatedAddress = personalInformationCompositeService.getPersonValidationObjects(updatedAddress, getRoles())
-
-            convertAddressDates(updatedAddress)
-            personAddressCompositeService.checkDatesForUpdate(updatedAddress)
-
-            personAddressService.update(updatedAddress)
-            render([failure: false] as JSON)
-        }
-        catch (ApplicationException e) {
-            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
-        }
-    }
-
-    def updateAddressWithoutOverwrite() {
-        try {
-            checkActionPermittedPerConfiguration([
                     name: PersonalInformationConfigService.ADDR_MODE,
                     minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
             ])
