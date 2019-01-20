@@ -1080,6 +1080,16 @@ span.id-label {
     margin-top: 0.5em;
 }
 
+.nonupdatable-phone {
+    font-weight: bold;
+}
+
+.nonupdatable-email {
+    font-weight: bold;
+    float: left;
+    margin-top: 0.35em;
+}
+
 /* Icons */
 button.delete-btn {
     background: transparent;

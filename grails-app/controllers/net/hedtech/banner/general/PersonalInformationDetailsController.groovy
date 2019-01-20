@@ -295,6 +295,8 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             model.emails = personEmailService.getDisplayableEmails(pidm)
+            personalInformationCompositeService.populateEmailUpdateableStatus(model.emails, getRoles())
+
             JSON.use("deep") {
                 render model as JSON
             }
@@ -424,6 +426,7 @@ class PersonalInformationDetailsController {
                 def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: PersonalInformationConfigService.OVERVIEW_PHONE]
 
                 model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
+                personalInformationCompositeService.populateTelephoneUpdateableStatus(model.telephones, getRoles())
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             }
