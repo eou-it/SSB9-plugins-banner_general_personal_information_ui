@@ -6,6 +6,13 @@ personalInformationApp.service('piCrudService', ['$resource',
                 {controller: 'PersonalInformationDetails', action: 'get'+entityName}).get(params);
         };
 
+        this.getListFn = function(entityName) {
+            return function (params) {
+                return $resource('../ssb/:controller/:action',
+                    {controller: 'PersonalInformationDetails', action: 'get'+ entityName +'List'}).query(params);
+            };
+        };
+
         this.create = function (entityName, entity) {
             return $resource('../ssb/:controller/:action',
                 {controller: 'PersonalInformationDetails', action: 'add'+entityName}, {save: {method: 'POST'}}).save(entity);

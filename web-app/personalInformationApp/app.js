@@ -6,7 +6,7 @@ var personalInformationAppDirectives = angular.module('personalInformationAppDir
 
 
 var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
-    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components'])
+    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components', 'ui.select'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {

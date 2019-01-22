@@ -119,12 +119,23 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
             $scope.address.toDate = data;
         };
 
+        $scope.getAddressTypes = piCrudService.getListFn('AddressType');
+        $scope.getNations = piCrudService.getListFn('Nation');
+        $scope.getStates = piCrudService.getListFn('State');
+        $scope.getCounties = piCrudService.getListFn('County');
+
         this.init = function() {
 
             if (editAddressProperties.currentAddress) {
                 // Set up for "update address"
                 $scope.isCreateNew = false;
                 $scope.address = angular.copy(editAddressProperties.currentAddress);
+                if($scope.address.nation.code){
+                    $scope.address.nation = {
+                        code: $scope.address.nation.code,
+                        description: $scope.address.nation.nation
+                    };
+                }
             } else {
                 // Create "new address" object
                 $scope.address = {
