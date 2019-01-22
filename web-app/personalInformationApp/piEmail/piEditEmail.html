@@ -9,8 +9,11 @@ Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
             <div class="clearfix hidden-xs"></div>
             <div class="select2-container disp-inherit sm-fix col-sm-12 col-md-6 col-lg-6">
                 <label class="input-field-label">{{'personInfo.label.emailType'|i18n}}</label><br>
-                <input email-type-select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}'
-                       type="hidden" />
+                <!--<input email-type-select-box for-select='{"placeholder": "{{"personInfo.placeholder.emailType"|i18n}}", "action": "PersonalInformationDetails/getEmailTypeList", "model": "email.emailType"}'-->
+                       <!--type="hidden" />-->
+                <genssb-xe-dropdown fetch-function="getEmailTypes" model-holder="email" model-name="emailType"
+                                    is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.emailType'|i18n}}">
+                </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!emailTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{emailTypeErrMsg|i18n}}</p>
             </div>

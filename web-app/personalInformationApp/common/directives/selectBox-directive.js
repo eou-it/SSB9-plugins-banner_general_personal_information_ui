@@ -191,10 +191,12 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
                         max: 10
                     }).$promise.then(function (response) {
                         _.each(response, function(item) {
-                            scope.selectItems.push({
-                                code: item.code,
-                                description: getDescriptionFromAddressComponent(item)
-                            });
+                            item.description = getDescriptionFromAddressComponent(item);
+                            // scope.selectItems.push({
+                            //     code: item.code,
+                            //     description: getDescriptionFromAddressComponent(item)
+                            // });
+                            scope.selectItems.push(item);
                         });
                         scope.isLoading = false;
                         if (response.length < 10) {

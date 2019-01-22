@@ -71,6 +71,8 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
             }
         };
 
+        $scope.getEmailTypes = piCrudService.getListFn('EmailType');
+
         this.init = function() {
 
             if (editEmailProperties.currentEmail) {
