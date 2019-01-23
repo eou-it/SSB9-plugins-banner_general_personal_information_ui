@@ -1088,7 +1088,7 @@ class PersonalInformationDetailsController {
             emerContact = [:]
             emerContact.id = it.id
             emerContact.version = it.version
-            emerContact.relationship = it.relationship ? [code: it.relationship.code, description: it.relationship.description] : [:]
+            emerContact.relationship = it.relationship ? [code: it.relationship.code, description: it.relationship.description] : null
             emerContact.phoneArea = it.phoneArea
             emerContact.phoneNumber = it.phoneNumber
             emerContact.phoneExtension = it.phoneExtension
@@ -1103,9 +1103,9 @@ class PersonalInformationDetailsController {
             emerContact.streetLine3 = it.streetLine3
             emerContact.streetLine4 = it.streetLine4
             emerContact.city = it.city
-            emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : [:]
+            emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : null
             emerContact.zip = it.zip
-            emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : [:]
+            emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : null
             emerContact.displayAddress = PersonAddressUtility.formatDefaultAddress(
                     [houseNumber: it.houseNumber,
                      streetLine1: it.streetLine1,

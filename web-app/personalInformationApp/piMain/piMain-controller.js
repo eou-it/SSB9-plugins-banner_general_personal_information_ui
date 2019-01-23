@@ -172,8 +172,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         $scope.addressGroup = sortAddresses(response.addresses);
                         $scope.addressForOverview = formatAddressForSingleLine(getAddressForOverview($scope.addressGroup));
                     }
-                })
-            };
+                });
+            }
 
             if ($scope.piConfig.telephoneSectionMode > 0 || $scope.piConfig.isOverviewPhoneDisplayable) {
                 piCrudService.get('TelephoneNumbers').$promise.then(function (response) {
@@ -186,8 +186,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         phone = getPhoneNumberForOverview($scope.phones);
                         $scope.phoneForOverview = phone ? phone.displayPhoneNumber : '';
                     }
-                })
-            };
+                });
+            }
 
             if ($scope.piConfig.emailSectionMode > 0 || $scope.piConfig.isOverviewEmailDisplayable) {
                 piCrudService.get('Emails').$promise.then(function (response) {
@@ -198,8 +198,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         putPreferredEmailFirst();
                         $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
                     }
-                })
-            };
+                });
+            }
 
             if ($scope.piConfig.emergencyContactSectionMode > 0) {
                 piCrudService.get('EmergencyContacts').$promise.then(function (response) {
@@ -209,8 +209,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         $scope.emergencyContacts = response.emergencyContacts;
                         $scope.hasMaxEmergencyContacts = $scope.haveMaxEmergencyContacts();
                     }
-                })
-            };
+                });
+            }
 
             piCrudService.get('PreferredName', preferredNameParams).$promise.then(function(response) {
                 if(response.failure) {
@@ -239,9 +239,9 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
                             (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
 
-                        if (!$scope.personalDetails.maritalStatus) {
-                            $scope.personalDetails.maritalStatus = {code: null, description: null};
-                        }
+                        // if (!$scope.personalDetails.maritalStatus) {
+                        //     $scope.personalDetails.maritalStatus = {code: null, description: null};
+                        // }
                         //initialize all veteran related scope variables
                         $scope.veteranDisabled = '';
                         $scope.badgeVeteran = '';

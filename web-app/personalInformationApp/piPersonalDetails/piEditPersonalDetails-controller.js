@@ -60,12 +60,12 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);
 
-            if(!$scope.personalDetails.gender) {
-                $scope.personalDetails.gender = {};
+            if(!$scope.personalDetails.gender.code) {
+                $scope.personalDetails.gender = null;
             }
 
-            if(!$scope.personalDetails.pronoun) {
-                $scope.personalDetails.pronoun = {};
+            if(!$scope.personalDetails.pronoun.code) {
+                $scope.personalDetails.pronoun = null;
             }
         };
 

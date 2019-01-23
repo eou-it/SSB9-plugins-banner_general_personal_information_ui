@@ -104,6 +104,12 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                 // Set up for "update emergency contact"
                 $scope.isCreateNew = false;
                 $scope.emergencyContact = angular.copy(editEmergencyContactProperties.currentEmergencyContact);
+                if($scope.emergencyContact.nation) {
+                    $scope.emergencyContact.nation = {
+                        code: $scope.emergencyContact.nation.code,
+                        description: $scope.emergencyContact.nation.nation
+                    };
+                }
             } else {
                 // Create "new emergency contact" object
                 $scope.emergencyContact = {

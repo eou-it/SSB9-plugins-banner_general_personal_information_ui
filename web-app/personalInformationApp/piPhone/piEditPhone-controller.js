@@ -92,7 +92,7 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
             } else {
                 // Create "new phone" object
                 $scope.phone = {
-                    telephoneType: {},
+                    telephoneType: null,
                     internationalAccess: '',
                     countryPhone: '',
                     phoneArea: '',
