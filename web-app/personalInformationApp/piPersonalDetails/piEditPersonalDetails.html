@@ -33,8 +33,12 @@ Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
         </div>
         <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
-            <input ng-if="piConfig.isMaritalStatusUpdateable" select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}'
-                   title="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}" type="hidden" />
+            <!--<input ng-if="piConfig.isMaritalStatusUpdateable" select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectMaritalStatus"|i18n}}", "action": "PersonalInformationDetails/getMaritalStatusList", "model": "personalDetails.maritalStatus", "showNA": true}'-->
+                   <!--title="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}" type="hidden" />-->
+            <genssb-xe-dropdown ng-if="piConfig.isMaritalStatusUpdateable" fetch-function="getMaritalStatuses"
+                                model-holder="personalDetails" model-name="maritalStatus" show-na="true"
+                                dropdown-placeholder="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}">
+            </genssb-xe-dropdown>
             <input ng-if="!piConfig.isMaritalStatusUpdateable" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                    value="{{personalDetails.maritalStatus.description}}" id="maritalStatus" aria-disabled="true" disabled>
         </div>
@@ -55,15 +59,21 @@ Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
             <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
-                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPronounList", "model": "personalDetails.pronoun", "showNA": true}'
-                           title="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}" type="hidden" />
+                    <!--<input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectPersonalPronoun"|i18n}}", "action": "PersonalInformationDetails/getPronounList", "model": "personalDetails.pronoun", "showNA": true}'-->
+                           <!--title="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}" type="hidden" />-->
+                    <genssb-xe-dropdown fetch-function="getPronouns" model-holder="personalDetails" model-name="pronoun"
+                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}">
+                    </genssb-xe-dropdown>
                 </div>
             </div>
             <div ng-if="piConfig.isGenderPronounDisplayable" class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
-                    <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderList", "model": "personalDetails.gender", "showNA": true}'
-                           title="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}" type="hidden" />
+                    <!--<input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectGenderIdentification"|i18n}}", "action": "PersonalInformationDetails/getGenderList", "model": "personalDetails.gender", "showNA": true}'-->
+                           <!--title="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}" type="hidden" />-->
+                    <genssb-xe-dropdown fetch-function="getGenders" model-holder="personalDetails" model-name="gender"
+                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}">
+                    </genssb-xe-dropdown>
                 </div>
             </div>
         </div>

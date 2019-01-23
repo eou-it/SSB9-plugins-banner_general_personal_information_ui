@@ -53,6 +53,10 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);
         };
 
+        $scope.getMaritalStatuses = piCrudService.getListFn('MaritalStatus');
+        $scope.getGenders = piCrudService.getListFn('Gender');
+        $scope.getPronouns = piCrudService.getListFn('Pronoun');
+
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);
 
