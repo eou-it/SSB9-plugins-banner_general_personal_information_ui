@@ -1,5 +1,5 @@
 /********************************************************************************
-  Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+  Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /* General Styles */
 body {
@@ -433,21 +433,21 @@ a.pi-icon-link:focus {
 }
 /* END Overrides for xe-ui-components.css/_select.scss */
 
-/*.profile-dropdown*/.select2-container {
+.select2-container {
     height: 48px;
     width: 100%;
     margin-bottom: 0px;
 }
 
-/*.profile-dropdown*/.ui-select-container .select2-choice {
+.ui-select-container .select2-choice {
     height: 100%;
 }
 
-/*.profile-dropdown*/.ui-select-container.ng-not-empty .select2-choice {
+.ui-select-container.ng-not-empty .select2-choice {
     border-color: #151618;
 }
 
-/*.profile-dropdown*/.ui-select-container .select2-choice > .select2-chosen {
+.ui-select-container .select2-choice > .select2-chosen {
     padding-top: 0.5em;
     display: inline-block;
 }

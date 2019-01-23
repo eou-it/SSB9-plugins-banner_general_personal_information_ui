@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 personalInformationAppControllers.controller('piMainController',['$scope', '$rootScope', '$state', '$stateParams', '$modal',
     '$filter', '$q', '$timeout', '$window', 'notificationCenterService', 'piCrudService', 'piConfigResolve','personalInformationService',
@@ -239,9 +239,6 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         $scope.sexDescription = response.sex === 'M' ? 'personInfo.label.male' :
                             (response.sex === 'F' ? 'personInfo.label.female' : 'personInfo.label.unknownSex');
 
-                        // if (!$scope.personalDetails.maritalStatus) {
-                        //     $scope.personalDetails.maritalStatus = {code: null, description: null};
-                        // }
                         //initialize all veteran related scope variables
                         $scope.veteranDisabled = '';
                         $scope.badgeVeteran = '';

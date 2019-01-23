@@ -1,5 +1,5 @@
 <!--******************************************************************************
-Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="modal-flex-cont">
     <div class="modal-unflex">
@@ -9,7 +9,6 @@ Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
             <div class="clearfix hidden-xs"></div>
             <div class="disp-inherit sm-fix col-sm-12">
                 <label class="input-field-label">{{'personInfo.label.phoneType'|i18n}}</label><br>
-                <!--<input select-box for-select='{"placeholder": "{{"personInfo.placeholder.phoneType"|i18n}}", "action": "PersonalInformationDetails/getTelephoneTypeList", "model": "phone.telephoneType", "showNA": false, "disableOnUpdate": true}' type="hidden" />-->
                 <genssb-xe-dropdown fetch-function="getPhoneTypes" model-holder="phone" model-name="telephoneType"
                                     is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.phoneType'|i18n}}">
                 </genssb-xe-dropdown>

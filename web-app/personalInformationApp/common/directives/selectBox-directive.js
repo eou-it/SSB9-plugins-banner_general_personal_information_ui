@@ -192,10 +192,6 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
                     }).$promise.then(function (response) {
                         _.each(response, function(item) {
                             item.description = getDescriptionFromAddressComponent(item);
-                            // scope.selectItems.push({
-                            //     code: item.code,
-                            //     description: getDescriptionFromAddressComponent(item)
-                            // });
                             scope.selectItems.push(item);
                         });
                         scope.isLoading = false;
