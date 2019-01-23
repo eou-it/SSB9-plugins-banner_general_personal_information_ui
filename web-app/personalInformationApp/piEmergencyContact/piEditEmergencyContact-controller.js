@@ -94,6 +94,10 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             }
         };
 
+        $scope.getRelationships = piCrudService.getListFn('Relationship');
+        $scope.getNations = piCrudService.getListFn('Nation');
+        $scope.getStates = piCrudService.getListFn('State');
+
         this.init = function() {
 
             if (editEmergencyContactProperties.currentEmergencyContact) {
@@ -119,6 +123,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             }
 
             $scope.highestPriority = editEmergencyContactProperties.highestPriority;
+            $scope.priorities = _.range(1, $scope.highestPriority+1);
         };
 
         // INITIALIZE
