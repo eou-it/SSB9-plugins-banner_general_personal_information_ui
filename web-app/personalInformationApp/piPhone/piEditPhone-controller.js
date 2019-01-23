@@ -79,6 +79,8 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
             }
         };
 
+        $scope.getPhoneTypes = piCrudService.getListFn('TelephoneType');
+
         this.init = function() {
 
             if (editPhoneProperties.currentPhone) {
