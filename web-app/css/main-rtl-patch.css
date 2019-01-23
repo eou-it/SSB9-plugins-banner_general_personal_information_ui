@@ -41,11 +41,6 @@
     }
 }
 
-/* Override for userpreferences.css */
-.select2-container .select2-choice .select2-arrow b {
-    background-image: url('../images/select2.png') !important;
-}
-
 /* Overrides for xe-ui-components.css/_select.scss */
 .select2-results .select2-highlighted {
     background: #3875d7 !important;
@@ -55,3 +50,7 @@
     background-image: none !important;
 }
 /* END Overrides for xe-ui-components.css/_select.scss */
+
+ul {
+    padding-left: 0;
+}
