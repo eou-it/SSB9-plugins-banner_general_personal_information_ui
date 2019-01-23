@@ -107,10 +107,10 @@ class PersonalInformationDetailsController {
                 personAddress.streetLine3 = it.streetLine3
                 personAddress.streetLine4 = it.streetLine4
                 personAddress.city = it.city
-                personAddress.county = [code: it.countyCode, description: it.county]
-                personAddress.state = [code: it.stateCode, description: it.state]
+                personAddress.county = it.countyCode ? [code: it.countyCode, description: it.county] : null
+                personAddress.state = it.stateCode ? [code: it.stateCode, description: it.state] : null
                 personAddress.zip = it.zip
-                personAddress.nation = [code: it.nationCode, nation: it.nation]
+                personAddress.nation = it.nationCode ? [code: it.nationCode, nation: it.nation] : null
                 personAddress.isUpdateable = (it.priviledgeIndicator == 'U')
                 personAddress.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber:it.houseNumber,

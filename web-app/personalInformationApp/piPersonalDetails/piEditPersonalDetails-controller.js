@@ -34,7 +34,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
                 }
             },
 
-            maritalStatusFromScope = $scope.personalDetails.maritalStatus,
+            maritalStatusFromScope = $scope.personalDetails.maritalStatus ? $scope.personalDetails.maritalStatus : {},
 
             personalDetailsForUpdate = {
                 id: $scope.personalDetails.id,

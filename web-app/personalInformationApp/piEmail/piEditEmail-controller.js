@@ -13,25 +13,37 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
 
         // CONTROLLER FUNCTIONS
         // --------------------
+        var getNullSafeEmail = function(email) {
+                return {
+                    emailType: email.emailType ? email.emailType : {},
+                    emailAddress: email.emailAddress,
+                    commentData: email.commentData,
+                    preferredIndicator: email.preferredIndicator
+                };
+            },
+            isValidEmail = function () {
+                var email = getNullSafeEmail($scope.email);
+
+                $scope.emailTypeErrMsg = piEmailService.getErrorEmailType(email);
+                $scope.emailAddressErrMsg = piEmailService.getErrorEmailAddress(email);
+
+                return !($scope.emailTypeErrMsg || $scope.emailAddressErrMsg);
+            };
+
         $scope.cancelModal = function () {
             $modalInstance.dismiss('cancel');
             notificationCenterService.clearNotifications();
         };
 
         $scope.removeEmailFieldErrors = function() {
+            var email = getNullSafeEmail($scope.email);
+
             if($scope.emailTypeErrMsg) {
-                $scope.emailTypeErrMsg = piEmailService.getErrorEmailType($scope.email);
+                $scope.emailTypeErrMsg = piEmailService.getErrorEmailType(email);
             }
             if($scope.emailAddressErrMsg) {
-                $scope.emailAddressErrMsg = piEmailService.getErrorEmailAddress($scope.email);
+                $scope.emailAddressErrMsg = piEmailService.getErrorEmailAddress(email);
             }
-        };
-
-        var isValidEmail = function () {
-            $scope.emailTypeErrMsg = piEmailService.getErrorEmailType($scope.email);
-            $scope.emailAddressErrMsg = piEmailService.getErrorEmailAddress($scope.email);
-
-            return !($scope.emailTypeErrMsg || $scope.emailAddressErrMsg);
         };
 
         $scope.saveEmail = function() {
@@ -82,7 +94,7 @@ personalInformationAppControllers.controller('piEditEmailController',['$scope', 
             } else {
                 // Create "new email" object
                 $scope.email = {
-                    emailType: {},
+                    emailType: null,
                     emailAddress: '',
                     commentData: '',
                     preferredIndicator: false

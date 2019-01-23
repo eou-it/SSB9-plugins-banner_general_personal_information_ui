@@ -8,6 +8,27 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
 
         // CONTROLLER VARIABLES
         // --------------------
+        var getNullSafePhone = function(phone){
+                return {
+                    telephoneType: phone.telephoneType ? phone.telephoneType: {},
+                    internationalAccess: phone.internationalAccess,
+                    countryPhone: phone.countryPhone,
+                    phoneArea: phone.phoneArea,
+                    phoneNumber: phone.phoneNumber,
+                    phoneExtension: phone.phoneExtension,
+                    primaryIndicator: phone.primaryIndicator,
+                    unlistIndicator: phone.unlistIndicator
+                };
+            },
+            isValidTelephoneNumber = function () {
+                var phone = getNullSafePhone($scope.phone);
+
+                $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType(phone);
+                $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber(phone);
+
+                return !($scope.phoneTypeErrMsg || $scope.phoneNumberErrMsg);
+            };
+
         $scope.isCreateNew = true;
         $scope.phoneTypeErrMsg = '';
         $scope.phoneNumberErrMsg = '';
@@ -22,19 +43,14 @@ personalInformationAppControllers.controller('piEditPhoneController',['$scope', 
         };
 
         $scope.removePhoneFieldErrors = function() {
+            var phone = getNullSafePhone($scope.phone);
+
             if($scope.phoneTypeErrMsg) {
-                $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType($scope.phone);
+                $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType(phone);
             }
             if($scope.phoneNumberErrMsg) {
-                $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber($scope.phone);
+                $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber(phone);
             }
-        };
-
-        var isValidTelephoneNumber = function () {
-            $scope.phoneTypeErrMsg = piPhoneService.getErrorPhoneType($scope.phone);
-            $scope.phoneNumberErrMsg = piPhoneService.getErrorPhoneNumber($scope.phone);
-
-            return !($scope.phoneTypeErrMsg || $scope.phoneNumberErrMsg);
         };
 
         $scope.savePhone = function() {
