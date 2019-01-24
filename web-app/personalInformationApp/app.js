@@ -1,12 +1,12 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 var personalInformationAppControllers = angular.module('personalInformationAppControllers', []);
 var personalInformationAppDirectives = angular.module('personalInformationAppDirectives', []);
 
 
 var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
-    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components'])
+    'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components', 'ui.select'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {

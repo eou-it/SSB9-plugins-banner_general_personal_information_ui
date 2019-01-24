@@ -1,5 +1,5 @@
 <!--******************************************************************************
-Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="modal-flex-cont">
     <div class="modal-unflex">
@@ -7,9 +7,11 @@ Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
         <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
         <div class="row pad-dialog-lr">
             <div class="clearfix hidden-xs"></div>
-            <div class="select2-container disp-inherit sm-fix col-sm-12">
+            <div class="disp-inherit sm-fix col-sm-12">
                 <label class="input-field-label">{{'personInfo.label.phoneType'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.phoneType"|i18n}}", "action": "PersonalInformationDetails/getTelephoneTypeList", "model": "phone.telephoneType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
+                <genssb-xe-dropdown fetch-function="getPhoneTypes" model-holder="phone" model-name="telephoneType"
+                                    is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.phoneType'|i18n}}">
+                </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!phoneTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{phoneTypeErrMsg|i18n}}</p>
             </div>

@@ -1,5 +1,5 @@
 /******************************************************************************
-Copyright 2017 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************/
 
 package net.hedtech.banner.general
@@ -107,10 +107,10 @@ class PersonalInformationDetailsController {
                 personAddress.streetLine3 = it.streetLine3
                 personAddress.streetLine4 = it.streetLine4
                 personAddress.city = it.city
-                personAddress.county = [code: it.countyCode, description: it.county]
-                personAddress.state = [code: it.stateCode, description: it.state]
+                personAddress.county = it.countyCode ? [code: it.countyCode, description: it.county] : null
+                personAddress.state = it.stateCode ? [code: it.stateCode, description: it.state] : null
                 personAddress.zip = it.zip
-                personAddress.nation = [code: it.nationCode, nation: it.nation]
+                personAddress.nation = it.nationCode ? [code: it.nationCode, nation: it.nation] : null
                 personAddress.isUpdateable = (it.priviledgeIndicator == 'U')
                 personAddress.displayAddress = PersonAddressUtility.formatDefaultAddress(
                         [houseNumber:it.houseNumber,
@@ -1088,7 +1088,7 @@ class PersonalInformationDetailsController {
             emerContact = [:]
             emerContact.id = it.id
             emerContact.version = it.version
-            emerContact.relationship = it.relationship ? [code: it.relationship.code, description: it.relationship.description] : [:]
+            emerContact.relationship = it.relationship ? [code: it.relationship.code, description: it.relationship.description] : null
             emerContact.phoneArea = it.phoneArea
             emerContact.phoneNumber = it.phoneNumber
             emerContact.phoneExtension = it.phoneExtension
@@ -1103,9 +1103,9 @@ class PersonalInformationDetailsController {
             emerContact.streetLine3 = it.streetLine3
             emerContact.streetLine4 = it.streetLine4
             emerContact.city = it.city
-            emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : [:]
+            emerContact.state = it.state ? [code: it.state.code, description: it.state.description] : null
             emerContact.zip = it.zip
-            emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : [:]
+            emerContact.nation = it.nation ? [code: it.nation.code, nation: it.nation.nation] : null
             emerContact.displayAddress = PersonAddressUtility.formatDefaultAddress(
                     [houseNumber: it.houseNumber,
                      streetLine1: it.streetLine1,
