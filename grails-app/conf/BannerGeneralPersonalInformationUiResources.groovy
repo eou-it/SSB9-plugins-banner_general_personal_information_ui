@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
 modules = {
@@ -100,7 +100,6 @@ modules = {
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/responsive.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/banner-icon-font.css'], attrs: [media: 'screen, projection']
-            resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/select2-box.css'], attrs: [media: 'screen, projection']
         }
 
         'personalInformationAppRTL' {
@@ -110,7 +109,6 @@ modules = {
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/responsive-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/banner-icon-font-rtl.css'], attrs: [media: 'screen, projection']
-            resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/select2-box-rtl.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/main-rtl-patch.css'], attrs: [media: 'screen, projection']
             resource url: [plugin: 'banner-general-personal-information-ui', file: 'css/select2-rtl-patch.css'], attrs: [media: 'screen, projection']
         }

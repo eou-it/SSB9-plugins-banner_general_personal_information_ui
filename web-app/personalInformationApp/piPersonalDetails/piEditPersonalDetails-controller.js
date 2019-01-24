@@ -34,7 +34,7 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
                 }
             },
 
-            maritalStatusFromScope = $scope.personalDetails.maritalStatus,
+            maritalStatusFromScope = $scope.personalDetails.maritalStatus ? $scope.personalDetails.maritalStatus : {},
 
             personalDetailsForUpdate = {
                 id: $scope.personalDetails.id,
@@ -53,15 +53,19 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             piCrudService.update('PersonalDetails', personalDetailsForUpdate).$promise.then(handleResponse);
         };
 
+        $scope.getMaritalStatuses = piCrudService.getListFn('MaritalStatus');
+        $scope.getGenders = piCrudService.getListFn('Gender');
+        $scope.getPronouns = piCrudService.getListFn('Pronoun');
+
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);
 
-            if(!$scope.personalDetails.gender) {
-                $scope.personalDetails.gender = {};
+            if(!$scope.personalDetails.gender.code) {
+                $scope.personalDetails.gender = null;
             }
 
-            if(!$scope.personalDetails.pronoun) {
-                $scope.personalDetails.pronoun = {};
+            if(!$scope.personalDetails.pronoun.code) {
+                $scope.personalDetails.pronoun = null;
             }
         };
 

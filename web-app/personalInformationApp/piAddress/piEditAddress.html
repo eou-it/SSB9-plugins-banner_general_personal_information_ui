@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-  Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+  Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="modal-flex-cont">
     <div class="modal-unflex">
@@ -7,9 +7,11 @@
         <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
         <div class="row pad-dialog-lr">
             <div class="clearfix hidden-xs"></div>
-            <div class="select2-container col-xs-12 col-md-4 col-lg-4 disp-inherit">
+            <div class="col-xs-12 col-md-4 col-lg-4 disp-inherit">
                 <label class="input-field-label">{{'personInfo.label.address.type'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.addressType"|i18n}}", "action": "PersonalInformationDetails/getAddressTypeList", "model": "address.addressType", "showNA": false, "disableOnUpdate": true}' type="hidden" />
+                <genssb-xe-dropdown fetch-function="getAddressTypes" model-holder="address" model-name="addressType"
+                                    is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.addressType'|i18n}}">
+                </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!addressTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{addressTypeErrMsg|i18n}}</p>
             </div>
@@ -70,15 +72,19 @@
                 <p class="input-field-label mobile-errors" ng-class="[(!!cityErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{cityErrMsg|i18n}}</p>
             </div>
-            <div class="maybe-clear select2-container sm-fix col-xs-12 col-md-4 col-lg-4">
+            <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.state'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectState"|i18n}}", "action": "PersonalInformationDetails/getStateList", "model": "address.state", "showNA": true}' type="hidden" />
+                <genssb-xe-dropdown fetch-function="getStates" model-holder="address" model-name="state" show-na="true"
+                                    dropdown-placeholder="{{'personInfo.placeholder.selectState'|i18n}}">
+                </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!stateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{stateErrMsg|i18n}}</p>
             </div>
-            <div class="maybe-clear select2-container sm-fix col-xs-12 col-md-4 col-lg-4">
+            <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.county'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCounty"|i18n}}", "action": "PersonalInformationDetails/getCountyList", "model": "address.county", "showNA": true}' type="hidden" />
+                <genssb-xe-dropdown fetch-function="getCounties" model-holder="address" model-name="county" show-na="true"
+                                    dropdown-placeholder="{{'personInfo.placeholder.selectCounty'|i18n}}">
+                </genssb-xe-dropdown>
             </div>
             <div class="maybe-clear col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="zip">{{'personInfo.label.zip'|i18n}}</label><br>
@@ -89,9 +95,11 @@
                 <p class="input-field-label mobile-errors" ng-class="[(!!zipErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{zipErrMsg|i18n}}</p>
             </div>
-            <div class="maybe-clear select2-container sm-fix col-xs-12 col-md-4 col-lg-4">
+            <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
-                <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCountry"|i18n}}", "action": "PersonalInformationDetails/getNationList", "model": "address.nation", "showNA": true}' type="hidden" />
+                <genssb-xe-dropdown fetch-function="getNations" model-holder="address" model-name="nation" show-na="true"
+                                    dropdown-placeholder="{{'personInfo.placeholder.selectCountry'|i18n}}">
+                </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!nationErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{nationErrMsg|i18n}}</p>
             </div>

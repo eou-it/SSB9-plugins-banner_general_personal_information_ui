@@ -1,12 +1,19 @@
 <!--******************************************************************************
-Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmergencyContact':'personInfo.title.editEmergencyContact')|i18n}}</h2>
 <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
 <div class="row pad-dialog-lr">
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+    <div class="sm-fix col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.order'|i18n}}</label><br>
-        <input emergency-contact-priority-select-box highest-priority="{{highestPriority}}" current-contact="emergencyContact" type="hidden" />
+        <xe-ui-select id="select2MultipleLabel" ng-model="emergencyContact.priority" theme="select2" search-enabled="false">
+            <xe-ui-select-match>
+                {{$select.selected}}
+            </xe-ui-select-match>
+            <xe-ui-select-choices repeat="priority in priorities">
+                <div ng-bind-html="priority"></div>
+            </xe-ui-select-choices>
+        </xe-ui-select>
     </div>
     <div class="clearfix hidden-xs"></div>
     <div class="col-sm-12 col-md-4 col-lg-4">
@@ -32,9 +39,11 @@ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
         <p class="input-field-label mobile-errors" ng-class="[(!!lastNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
            role="alert" aria-live="assertive">{{lastNameErrMsg|i18n}}</p>
     </div>
-    <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+    <div class="sm-fix col-sm-12 col-md-4 col-lg-4">
         <label class="input-field-label">{{'personInfo.label.relationship'|i18n}}</label><br>
-        <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectRelationship"|i18n}}", "action": "PersonalInformationDetails/getRelationshipList", "model": "emergencyContact.relationship", "showNA": true}' type="hidden" />
+        <genssb-xe-dropdown fetch-function="getRelationships" model-holder="emergencyContact" model-name="relationship"
+                            show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectRelationship'|i18n}}">
+        </genssb-xe-dropdown>
     </div>
     <div class="clearfix hidden-xs"></div>
     <label class="input-field-label pi-emer-phone col-sm-12 col-md-12 col-lg-12" for="phoneNum">{{('personInfo.label.phoneNumber')|i18n}}</label><br>
@@ -96,9 +105,11 @@ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
             <p class="input-field-label mobile-errors" ng-class="[(!!cityErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{cityErrMsg|i18n}}</p>
         </div>
-        <div class="select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+        <div class="sm-fix col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label">{{'personInfo.label.state'|i18n}}</label><br>
-            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectState"|i18n}}", "action": "PersonalInformationDetails/getStateList", "model": "emergencyContact.state", "showNA": true}' type="hidden" />
+            <genssb-xe-dropdown fetch-function="getStates" model-holder="emergencyContact" model-name="state" show-na="true"
+                                dropdown-placeholder="{{'personInfo.placeholder.selectState'|i18n}}">
+            </genssb-xe-dropdown>
             <p class="input-field-label mobile-errors" ng-class="[(!!stateErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{stateErrMsg|i18n}}</p>
         </div>
@@ -111,9 +122,11 @@ Copyright 2017-2018 Ellucian Company L.P. and its affiliates.
             <p class="input-field-label mobile-errors" ng-class="[(!!zipErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{zipErrMsg|i18n}}</p>
         </div>
-        <div class="maybe-clear select2-container sm-fix col-sm-12 col-md-4 col-lg-4">
+        <div class="maybe-clear sm-fix col-sm-12 col-md-4 col-lg-4">
             <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
-            <input select-box for-select='{"placeholder": "{{"personInfo.placeholder.selectCountry"|i18n}}", "action": "PersonalInformationDetails/getNationList", "model": "emergencyContact.nation", "showNA": true}' type="hidden" />
+            <genssb-xe-dropdown fetch-function="getNations" model-holder="emergencyContact" model-name="nation" show-na="true"
+                                dropdown-placeholder="{{'personInfo.placeholder.selectCountry'|i18n}}">
+            </genssb-xe-dropdown>
             <p class="input-field-label mobile-errors" ng-class="[(!!nationErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{nationErrMsg|i18n}}</p>
         </div>
