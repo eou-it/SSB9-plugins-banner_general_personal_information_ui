@@ -150,7 +150,7 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
             '   <xe-ui-select-match placeholder="{{selPlaceholder}}">\n' +
             '       {{$select.selected.description ? $select.selected.description : selPlaceholder}}\n' +
             '   </xe-ui-select-match>\n' +
-            '   <xe-ui-select-choices minimum-input-length="" refresh-delay="200" repeat="item in selectItems track by $index"\n' +
+            '   <xe-ui-select-choices minimum-input-length="" refresh-delay="200" repeat="item in selectItems"\n' +
             '                         refresh="refreshData($select.search)">\n' +
             '   <span ng-switch="isLoading">\n' +
             '       <span ng-switch-when="true"></span>\n' +
@@ -171,9 +171,9 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
             scope.isDisabled = $parse(attrs.isDisabled)(scope);
 
             scope.refreshData = function(search, loadingMore) {
-                if (!loadingMore) {
+                var isNewSearch = !loadingMore || (stopLoading && scope.selectItems.length === 0);
+                if (isNewSearch) {
                     // new search
-                    scope.selectItems = initItemList();
                     curPage = 0;
                     stopLoading = false;
                 }
@@ -190,6 +190,9 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
                         offset: curPage,
                         max: 10
                     }).$promise.then(function (response) {
+                        if(isNewSearch) {
+                            scope.selectItems = initItemList();
+                        }
                         _.each(response, function(item) {
                             item.description = getDescriptionFromAddressComponent(item);
                             scope.selectItems.push(item);
