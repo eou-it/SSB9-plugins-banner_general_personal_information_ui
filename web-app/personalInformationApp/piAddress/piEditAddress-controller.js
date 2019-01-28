@@ -152,7 +152,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                 // Set up for "update address"
                 $scope.isCreateNew = false;
                 $scope.address = angular.copy(editAddressProperties.currentAddress);
-                if($scope.address.nation.code){
+                if($scope.address.nation) {
                     $scope.address.nation = {
                         code: $scope.address.nation.code,
                         description: $scope.address.nation.nation
