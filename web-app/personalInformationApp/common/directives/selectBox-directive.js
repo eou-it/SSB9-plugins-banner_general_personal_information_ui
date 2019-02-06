@@ -146,7 +146,7 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
         restrict: 'EA',
         scope: true,
         template: '<xe-ui-select ng-model="modelHolder[modelName]" on-select="onSelectFn()"\n' +
-            '             reach-infinity="refreshData($select.search, true)" theme="select2" search-enabled="true" ng-disabled="isDisabled">\n' +
+            '             reach-infinity="refreshData($select.search, true)" theme="select2" search-enabled="searchEnabled" ng-disabled="isDisabled">\n' +
             '   <xe-ui-select-match placeholder="{{selPlaceholder}}">\n' +
             '       {{$select.selected.description ? $select.selected.description : selPlaceholder}}\n' +
             '   </xe-ui-select-match>\n' +
@@ -169,6 +169,7 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
             scope.selPlaceholder = attrs.dropdownPlaceholder;
             scope.selectItems = initItemList();
             scope.isDisabled = $parse(attrs.isDisabled)(scope);
+            scope.searchEnabled = attrs.searchEnabled ? attrs.searchEnabled === 'true' : true;
 
             scope.refreshData = function(search, loadingMore) {
                 var isNewSearch = !loadingMore || (stopLoading && scope.selectItems.length === 0);
