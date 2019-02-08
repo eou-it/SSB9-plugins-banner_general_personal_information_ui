@@ -1810,7 +1810,7 @@ div.dir-profile {
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:767px) {
     .edit-flex-div {
         display: inline;
     }
@@ -1828,7 +1828,7 @@ div.dir-profile {
     }
 }
 
-@media screen and (min-width:769px) {
+@media screen and (min-width:768px) {
     .col-md-6 {
         float: left;
         width: 50%;
@@ -1936,7 +1936,7 @@ div.dir-profile {
     }
 }
 
-@media screen and (min-width:1025px) {
+@media screen and (min-width:1024px) {
     .col-lg-4 {
         width: 33%;
     }
@@ -1973,7 +1973,7 @@ div.dir-profile {
 }
 
 /*Tablet device*/
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
     .view-list div.item-wrapper:nth-child(2n+1),
     .emergency-contact-list div.col-xs-12:nth-child(2n+1),
     .phone-list > .row > div:nth-child(2n+1),
