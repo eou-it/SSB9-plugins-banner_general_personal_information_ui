@@ -15,7 +15,7 @@
 /* Media Query Section */
 /***********************/
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) {
     .clear-row .col-md-4:nth-child(3n+1),
     .edit-addr .maybe-clear:nth-child(3n+1),
     .edit-emer-contact .maybe-clear:nth-child(3n+1),
@@ -24,7 +24,7 @@
     }
 }
 
-@media screen and (min-width:1025px) {
+@media screen and (min-width:1024px) {
     .view-list div.item-wrapper:nth-child(3n+1),
     .emergency-contact-list div.col-xs-12:nth-child(3n+1),
     .addr-list > div:nth-child(3n+1) {
@@ -33,7 +33,7 @@
 }
 
 /*Tablet device*/
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .view-list div.item-wrapper:nth-child(2n+1),
     .emergency-contact-list div.col-xs-12:nth-child(2n+1),
     .addr-list > div:nth-child(2n+1) {
