@@ -7,7 +7,7 @@ personalInformationAppDirectives.directive('raceAndEthnNavigation', [function ()
         restrict: 'A',
         link: function(scope, ele, attr) {
             ele.on('click', function(event) {
-                if(scope.isMobileView()) {
+                if(scope.isMobileView) {
                     sessionStorage.setItem('startingTab', 'additionalDetails');
                 }
             });
