@@ -490,6 +490,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertEquals 2, data.emails.size()
         assertEquals 'ansbates@telstra.com', data.emails[0].emailAddress
+        assertTrue data.isPreferredEmailVisible
     }
 
     @Test
@@ -510,6 +511,21 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
         assertTrue data.failure
+    }
+
+    @Test
+    void testGetEmailsPreferredInvisible() {
+        loginSSB 'GDP000003', '111111'
+
+        controller.request.contentType = "text/json"
+        controller.getEmails()
+
+        def dataForNullCheck = controller.response.contentAsString
+        def data = JSON.parse( dataForNullCheck )
+        assertNotNull data
+        assertEquals 1, data.emails.size()
+        assertEquals 'batescry@theweb.net', data.emails[0].emailAddress
+        assertFalse data.isPreferredEmailVisible
     }
 
     @Test
