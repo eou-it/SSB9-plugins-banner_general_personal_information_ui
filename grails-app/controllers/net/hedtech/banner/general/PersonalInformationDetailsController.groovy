@@ -296,6 +296,8 @@ class PersonalInformationDetailsController {
         if (pidm) {
             model.emails = personEmailService.getDisplayableEmails(pidm)
             personalInformationCompositeService.populateEmailUpdateableStatus(model.emails, getRoles())
+            def prefEmail = personEmailService.findPreferredEmailAddress(pidm)
+            model.isPreferredEmailVisible = prefEmail ? prefEmail.displayWebIndicator : true
 
             JSON.use("deep") {
                 render model as JSON

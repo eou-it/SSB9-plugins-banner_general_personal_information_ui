@@ -197,6 +197,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         $scope.emails = response.emails;
                         putPreferredEmailFirst();
                         $scope.preferredEmail = $scope.emails[0] ? $scope.emails[0] : null;
+                        $scope.isPreferredEmailVisible = response.isPreferredEmailVisible;
                     }
                 });
             }

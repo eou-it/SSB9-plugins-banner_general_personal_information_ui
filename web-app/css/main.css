@@ -1512,6 +1512,10 @@ input[type="radio"] + label.radio-list.pi-fix {
     clear: left;
 }
 
+p.not-preferable {
+    padding: 0.875em 0 0.3em 0;
+}
+
 /*Table and grid section styles*/
 table {
     width: 100%;
