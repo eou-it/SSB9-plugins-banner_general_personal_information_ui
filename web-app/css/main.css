@@ -1748,7 +1748,7 @@ div.dir-profile {
 }
 
 .dir-profile .shaded {
-    background-color: #f2f2f2;
+    background-color: #f2f8fc;
 }
 
 .dir-profile-col-hdg.visible-xs {
@@ -1825,16 +1825,6 @@ div.dir-profile {
     a.email-text:focus {
         color: #333;
         text-decoration: none;
-    }
-}
-
-/* Catches mobile devices up through iPhone X landscape */
-@media screen and (max-width:812px) {
-    /* Fix iPhone-only issue where background scrolls when user touches an <input> element to scroll */
-    body.modal-open {
-        overflow: hidden;
-        position:fixed;
-        width: 100%;
     }
 }
 
@@ -1995,3 +1985,14 @@ div.dir-profile {
         width: 97%;
     }
 }
+
+/* Mobile devices up through iPad landscape */
+@media screen and (max-width:1024px) {
+    /* Fix iOS-only issue where background scrolls when user touches an <input> element to scroll */
+    body.modal-open {
+        overflow: hidden;
+        position:fixed;
+        width: 100%;
+    }
+}
+

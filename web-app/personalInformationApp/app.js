@@ -43,6 +43,8 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
             $rootScope.playAudibleMessage = null;
 
             $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
+
+            _.extend($.i18n.map, window.i18n); //merge i18ns b/c xe-components use different i18n message object
         }
     ]
 );

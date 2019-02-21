@@ -488,7 +488,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
         assertNotNull data
-        assertEquals 1, data.emails.size()
+        assertEquals 2, data.emails.size()
         assertEquals 'ansbates@telstra.com', data.emails[0].emailAddress
     }
 
