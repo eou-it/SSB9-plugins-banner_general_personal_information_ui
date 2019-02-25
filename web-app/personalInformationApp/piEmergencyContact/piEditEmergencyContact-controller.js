@@ -121,6 +121,10 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
             }
         };
 
+        $scope.setupSelectCtrlFocusser = function($selectCtrl) {
+            $selectCtrl.focusserTitle = $filter('i18n')('personInfo.label.order');
+        };
+
         $scope.getRelationships = piCrudService.getListFn('Relationship');
         $scope.getNations = piCrudService.getListFn('Nation');
         $scope.getStates = piCrudService.getListFn('State');

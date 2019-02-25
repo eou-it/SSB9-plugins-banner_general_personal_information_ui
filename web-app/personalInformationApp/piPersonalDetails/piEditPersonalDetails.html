@@ -35,7 +35,8 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
             <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
             <genssb-xe-dropdown ng-if="piConfig.isMaritalStatusUpdateable" fetch-function="getMaritalStatuses"
                                 model-holder="personalDetails" model-name="maritalStatus" show-na="true"
-                                dropdown-placeholder="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}">
+                                dropdown-placeholder="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}"
+                                focus-text="{{'personInfo.label.maritalStatus'|i18n}}">
             </genssb-xe-dropdown>
             <input ng-if="!piConfig.isMaritalStatusUpdateable" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
                    value="{{personalDetails.maritalStatus.description}}" id="maritalStatus" aria-disabled="true" disabled>
@@ -58,7 +59,8 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
                     <genssb-xe-dropdown fetch-function="getPronouns" model-holder="personalDetails" model-name="pronoun"
-                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}">
+                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}"
+                                        focus-text="{{'personInfo.label.personalPronoun'|i18n}}">
                     </genssb-xe-dropdown>
                 </div>
             </div>
@@ -66,7 +68,8 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 <div class="unflex">
                     <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
                     <genssb-xe-dropdown fetch-function="getGenders" model-holder="personalDetails" model-name="gender"
-                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}">
+                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}"
+                                        focus-text="{{'personInfo.label.genderIdentification'|i18n}}">
                     </genssb-xe-dropdown>
                 </div>
             </div>
