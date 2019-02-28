@@ -10,6 +10,8 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
         function ($rootScope, $state, $stateParams, $filter, breadcrumbService, notificationCenterService) {
+            var isMobile, isTablet;
+
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -31,13 +33,14 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
                 window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
             }
 
-            $rootScope.isMobileView = function() { return isMobile(); };
             $rootScope.isRTL = $('meta[name=dir]').attr("content") === 'rtl';
 
-            // Above, we use the isDesktop function implemented in the banner_ui_ss plugin, which thus far has
-            // proven to be satisfactory.  Below we modify the implementation of isTablet from banner_ui_ss to
-            // be consistent with the definition of "is tablet" elsewhere in this app.
-            var isTablet = window.matchMedia("only screen and (min-width: 768px) and (max-width:1024px)");
+            // Modify the implementation of isMobile and isTablet from banner_ui_ss to be consistent with
+            // the definition of "is mobile/tablet" elsewhere in this app.
+            isMobile = window.matchMedia("only screen and (min-width: 0px) and (max-width: 767px)");
+            $rootScope.isMobileView = isMobile.matches;
+
+            isTablet = window.matchMedia("only screen and (min-width: 768px) and (max-width:1024px)");
             $rootScope.isTabletView = isTablet.matches;
 
             $rootScope.playAudibleMessage = null;

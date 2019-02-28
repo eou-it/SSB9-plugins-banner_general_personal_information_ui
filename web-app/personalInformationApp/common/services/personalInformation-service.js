@@ -28,7 +28,7 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
      * @returns {string} Name of appropriate state.
      */
     this.getFullProfileState = function() {
-        return isMobile() ? 'piFullViewMobile' : 'personalInformationMain';
+        return $rootScope.isMobileView ? 'piFullViewMobile' : 'personalInformationMain';
     };
 
     this.stringToDate = function (date) {

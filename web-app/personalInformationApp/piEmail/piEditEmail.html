@@ -10,7 +10,8 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
             <div class="disp-inherit sm-fix col-sm-12 col-md-6 col-lg-6">
                 <label class="input-field-label">{{'personInfo.label.emailType'|i18n}}</label><br>
                 <genssb-xe-dropdown fetch-function="getEmailTypes" model-holder="email" model-name="emailType"
-                                    is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.emailType'|i18n}}">
+                                    is-disabled="!isCreateNew" dropdown-placeholder="{{'personInfo.placeholder.emailType'|i18n}}"
+                                    focus-text="{{'personInfo.label.emailType'|i18n}}">
                 </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!emailTypeErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{emailTypeErrMsg|i18n}}</p>
@@ -31,9 +32,12 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 <textarea ng-model="email.commentData" class="text-input-field gssb-eds-text-field semi-bold form-spacing" rows="2" maxlength="60"
                           placeholder="{{'personInfo.placeholder.enterComment'|i18n}}" id="email-cmnt"></textarea>
             </div>
-            <div ng-if="piConfig.isPreferredEmailUpdateable" class="col-xs-12 float-l">
+            <div ng-if="piConfig.isPreferredEmailUpdateable && isPreferredEmailVisible" class="col-xs-12 float-l">
                 <input ng-model="email.preferredIndicator" class="main-nav-check" id="email-preferred" type="checkbox" aria-describedby="email-preferred-txt"/>
                 <p class="lbl" id="email-preferred-txt"><label for="email-preferred">{{'personInfo.label.markPreferred'|i18n}}</label></p>
+            </div>
+            <div ng-if="!isPreferredEmailVisible" class="col-xs-12 float-l">
+                <p class="not-preferable">{{'personInfo.message.preferredNotVisible'|i18n}}</p>
             </div>
             <p class="input-field-label mobile-errors response-err" ng-class="[(!!emailErrMsg ? 'field-error error-font-size' : 'no-display')]"
                role="alert" aria-live="assertive">{{emailErrMsg}}</p>
