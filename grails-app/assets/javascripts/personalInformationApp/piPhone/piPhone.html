@@ -1,0 +1,23 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+********************************************************************************-->
+<div class="phone-number-wrapper">
+    <div class="clearfix">
+        <div class="phone-type-view break-long-words">
+            {{phone.telephoneType.description}}
+            {{(phone.primaryIndicator==='Y' ? ' ('+('personInfo.label.primary'|i18n)+')' : null)}}
+            {{(phone.unlistIndicator==='Y' ? ' ('+('personInfo.label.unlisted'|i18n)+')' : null)}}
+        </div>
+    </div>
+    <div class="phone-number-view">
+        {{phone.displayPhoneNumber}}
+    </div>
+    <div ng-if="(piConfig.telephoneSectionMode === SECTION_UPDATEABLE) && phone.isUpdateable" class="clearfix">
+        <a class="pi-edit-item-link pi-icon-link" ng-click="openEditPhoneModal(phone)" enter-key="openEditPhoneModal(phone)"
+           title="{{'personInfo.label.editPhone'|i18n}}" tabindex="0"><span class="icon-edit-CO"></span></a>
+        <pi-delete-button item="phone" click-function="confirmPhoneDelete" button-title="{{'personInfo.label.deletePhone'|i18n}}"/>
+    </div>
+    <div ng-if="!phone.isUpdateable" class="nonupdatable-phone">
+        {{'('+ ('personInfo.label.nonUpdateable'|i18n)+')'}}
+    </div>
+</div>

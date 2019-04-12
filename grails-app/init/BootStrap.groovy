@@ -1,6 +1,6 @@
 /*******************************************************************************
-Copyright 2013 Ellucian Company L.P. and its affiliates.
-*******************************************************************************/
+ Copyright 2013-2019 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 
 import net.hedtech.banner.converters.json.JSONBeanMarshaller
 import net.hedtech.banner.converters.json.JSONDomainMarshaller
@@ -9,8 +9,8 @@ import grails.converters.JSON
 import grails.util.Environment
 import org.apache.commons.logging.LogFactory
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.commons.ApplicationAttributes
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import grails.core.ApplicationAttributes
+import org.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.context.i18n.LocaleContextHolder as LCH
 
 /**
@@ -19,8 +19,6 @@ import org.springframework.context.i18n.LocaleContextHolder as LCH
  * -- Configuring the dataSource to ensure connections are tested prior to use
  * */
 class BootStrap {
-
-    def log = Logger.getLogger(this.getClass())
 
     def localizer = { mapToLocalize ->
         new ValidationTagLib().message(mapToLocalize)
@@ -55,7 +53,7 @@ class BootStrap {
 
 
         grailsApplication.controllerClasses.each {
-            log.info "adding log property to controller: $it"
+            logger.info "adding log property to controller: $it"
             // Note: weblogic throws an error if we try to inject the method if it is already present
             if (!it.metaClass.methods.find { m -> m.name.matches("getLog") }) {
                 def name = it.name // needed as this 'it' is not visible within the below closure...
@@ -68,7 +66,7 @@ class BootStrap {
 
         grailsApplication.allClasses.each {
             if (it.name?.contains("plugin.resource")) {
-                log.info "adding log property to plugin.resource: $it"
+                logger.info "adding log property to plugin.resource: $it"
 
                 // Note: weblogic throws an error if we try to inject the method if it is already present
                 if (!it.metaClass.methods.find { m -> m.name.matches("getLog") }) {

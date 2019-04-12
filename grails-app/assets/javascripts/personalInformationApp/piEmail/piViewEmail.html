@@ -1,0 +1,32 @@
+<!--*******************************************************************************
+Copyright 2016 Ellucian Company L.P. and its affiliates.
+*******************************************************************************-->
+<div class="view-list">
+    <notification-box ng-if="emails.length === 0" notification-text="{{'personInfo.message.noEmails'|i18n}}"></notification-box>
+    <div class="row">
+        <div ng-repeat="email in emails" class="item-wrapper col-xs-12 col-md-6 col-lg-4">
+            <div class="email-detail" id="{{$index}}-email">
+                <div class="semi-bold">
+                    {{email.emailType.description + (email.preferredIndicator ? ' ('+ ('personInfo.label.preferred'|i18n)+')' : '')}}
+                </div>
+                <div>
+                    <span class="email-text" dir="ltr">{{email.emailAddress}}</span>
+                </div>
+                <div class="pi-comment break-long-words" ng-if="email.commentData">
+                    {{email.commentData}}
+                </div>
+            </div>
+            <div ng-if="piConfig.emailSectionMode === SECTION_UPDATEABLE && (piConfig.isPreferredEmailUpdateable || !email.preferredIndicator) && email.isUpdateable" class="button-block">
+                <a ng-click="openEditEmailModal(email)" enter-key="openEditEmailModal(email)" class="pi-edit-item-link pi-icon-link"
+                   title="{{'personInfo.button.title.editEmail'|i18n}}" tabindex="0">
+                    <span class="icon-edit-CO"></span>
+                    <div class="hidden-link-text-for-reader">{{'personInfo.button.title.editEmail'|i18n}}</div>
+                </a>
+                <pi-delete-button item="email" click-function="confirmEmailDelete" button-title="{{'personInfo.button.title.deleteEmail'|i18n}}"/>
+            </div>
+            <div ng-if="!email.isUpdateable" class="nonupdatable-email">
+                {{'('+ ('personInfo.label.nonUpdateable'|i18n)+')'}}
+            </div>
+        </div>
+    </div>
+</div>

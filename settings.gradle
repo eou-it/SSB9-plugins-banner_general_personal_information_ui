@@ -7,6 +7,11 @@ project(':banner-general-person').projectDir = new File('../banner_general_perso
 include ':banner-general-validation-common'
 project(':banner-general-validation-common').projectDir = new File('../banner_general_validation_common.git')
 
+include ':banner-ui-ss'
+project(':banner-ui-ss').projectDir = new File('../banner_ui_ss.git')
+
+include ':banner-general-common-ui-ss'
+project(':banner-general-common-ui-ss').projectDir = new File('../banner_general_common_ui_ss.git')
 
 
 // Added these plugins due to Banner-Core plugin is dependent on these plugins.
