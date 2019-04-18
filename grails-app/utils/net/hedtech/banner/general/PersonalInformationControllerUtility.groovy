@@ -3,11 +3,13 @@
  *******************************************************************************/
 package net.hedtech.banner.general
 
+import groovy.util.logging.Slf4j
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.overall.DisplayMaskingColumnRuleView
 import org.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.security.core.context.SecurityContextHolder
 
+@Slf4j
 class PersonalInformationControllerUtility {
 
     def static getPrincipalPidm() {
