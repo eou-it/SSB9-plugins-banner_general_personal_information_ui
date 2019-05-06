@@ -52,7 +52,9 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
     ]
 );
 
-personalInformationApp.constant('webAppResourcePathString', '../plugins/banner-general-personal-information-ui-0.1');
+//personalInformationApp.constant('webAppResourcePathString', '../plugins/banner-general-personal-information-ui-0.1');
+personalInformationApp.constant('webAppResourcePathString', '../assets');
+
 
 personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResourcePathString',
     function($stateProvider, $urlRouterProvider, webAppResourcePathString){
