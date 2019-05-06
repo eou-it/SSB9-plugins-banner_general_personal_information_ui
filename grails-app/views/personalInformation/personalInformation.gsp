@@ -26,16 +26,15 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
         <g:set var="applicationContextRoot" value= "${application.contextPath}"/>
         <meta name="applicationContextRoot" content="${applicationContextRoot}">
 
-%{--        <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">--}%
-%{--            <r:require modules="personalInformationAppRTL"/>--}%
-%{--        </g:if>--}%
-%{--        <g:else>--}%
-%{--            <r:require modules="personalInformationAppLTR"/>--}%
-%{--        </g:else>--}%
+        <asset:stylesheet src="modules/pi-application-mf.css"/>
 
-    %{--TODO: handle RTL (see above) --}%
-%{--        <asset:stylesheet src="modules/dd-application-LTR-mf.css"/>--}%
-        <asset:stylesheet src="modules/pi-application-LTR-mf.css"/>
+        <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
+            <asset:stylesheet src="modules/personalInformationAppRTL-mf.css"/>
+        </g:if>
+        <g:else>
+            <asset:stylesheet src="modules/personalInformationAppLTR-mf.css"/>
+        </g:else>
+
         <asset:javascript src="modules/pi-application-mf.js"/>
 
     </g:applyLayout>
