@@ -1,6 +1,6 @@
 /******************************************************************************
-Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
-*******************************************************************************/
+ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+ ******************************************************************************/
 
 package net.hedtech.banner.general
 
@@ -10,7 +10,7 @@ import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
-import org.codehaus.groovy.grails.web.json.JSONObject
+import org.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
 class PersonalInformationDetailsController {

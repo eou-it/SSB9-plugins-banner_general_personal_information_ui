@@ -1,14 +1,16 @@
+/******************************************************************************
+ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+ *******************************************************************************/
 package net.hedtech.banner.general
 
+import groovy.util.logging.Slf4j
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.general.overall.DisplayMaskingColumnRuleView
-import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
+import org.grails.plugins.web.taglib.ValidationTagLib
 import org.springframework.security.core.context.SecurityContextHolder
 
+@Slf4j
 class PersonalInformationControllerUtility {
-
-    static def log = Logger.getLogger('net.hedtech.banner.general.PersonalInformationControllerUtility')
 
     def static getPrincipalPidm() {
         try {

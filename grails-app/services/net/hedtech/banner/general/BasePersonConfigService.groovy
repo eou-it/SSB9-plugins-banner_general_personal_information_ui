@@ -1,13 +1,15 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
+import grails.gorm.transactions.Transactional
 import net.hedtech.banner.general.overall.IntegrationConfiguration
 import net.hedtech.banner.general.person.PersonUtility
 import org.springframework.transaction.annotation.Propagation
-import org.springframework.transaction.annotation.Transactional
+//import org.springframework.transaction.annotation.Transactional
 
+//TODO: previously used Spring Transactional (see import above). Does it cause problem switching to Grails 3 Transactional?  JDC 4/19
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED )
 abstract class BasePersonConfigService {
     

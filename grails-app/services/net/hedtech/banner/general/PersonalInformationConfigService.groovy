@@ -1,8 +1,12 @@
 /*******************************************************************************
- Copyright 2016-2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
+import grails.gorm.transactions.Transactional
+
+
+@Transactional
 class PersonalInformationConfigService extends BasePersonConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
