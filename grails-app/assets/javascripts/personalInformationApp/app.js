@@ -108,6 +108,7 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
 personalInformationApp.config(['$locationProvider',
     function ($locationProvider) {
         $locationProvider.html5Mode(false);
+        $locationProvider.hashPrefix('');
     }
 ]);
 
