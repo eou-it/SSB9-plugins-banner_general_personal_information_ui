@@ -62,7 +62,7 @@ class PersonalInformationController {
         session.setAttribute("requestPage", "questans")
 
         def id = PersonalInformationControllerUtility.principalUsername
-        def params = [j_username: id]
+        def params = [username: id]
         forward controller : "resetPassword", action: "questans", params : params
     }
 

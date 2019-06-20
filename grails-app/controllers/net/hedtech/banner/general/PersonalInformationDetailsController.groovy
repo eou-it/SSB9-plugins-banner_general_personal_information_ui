@@ -10,7 +10,6 @@ import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
-import org.grails.web.json.JSONObject
 import org.springframework.security.core.context.SecurityContextHolder
 
 class PersonalInformationDetailsController {
@@ -190,8 +189,6 @@ class PersonalInformationDetailsController {
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(newAddress)
-
         try {
             personAddressService.checkAddressFieldsValid(newAddress)
 
@@ -223,8 +220,6 @@ class PersonalInformationDetailsController {
 
         def updatedAddress = request?.JSON ?: params
         updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-
-        fixJSONObjectForCast(updatedAddress)
 
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
@@ -330,8 +325,6 @@ class PersonalInformationDetailsController {
         def newEmail = request?.JSON ?: params
         newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(newEmail)
-
         try {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
             personalInformationCompositeService.validateEmailTypeRule(newEmail.emailType, newEmail.pidm, getRoles())
@@ -362,13 +355,12 @@ class PersonalInformationDetailsController {
         def updatedEmail = request?.JSON ?: params
         updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(updatedEmail)
-
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
             personalInformationCompositeService.validateEmailTypeRule(updatedEmail.emailType, updatedEmail.pidm, getRoles())
 
             def emails = []
+            updatedEmail.remove('isUpdateable')  //Remove field which is not actually part of domain class
             emails[0] = personEmailService.castEmailForUpdate(updatedEmail)
             personEmailService.updatePreferredEmail(updatedEmail)
             personEmailCompositeService.createOrUpdate([personEmails: emails])
@@ -397,6 +389,7 @@ class PersonalInformationDetailsController {
             deletedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(deletedEmail.emailType.code)
             personalInformationCompositeService.validateEmailTypeRule(deletedEmail.emailType, deletedEmail.pidm, getRoles())
 
+            deletedEmail.remove('isUpdateable')  //Remove field which is not actually part of domain class
             personEmailService.inactivateEmail(deletedEmail)
 
             render([failure: false] as JSON)
@@ -464,8 +457,6 @@ class PersonalInformationDetailsController {
         def newPhoneNumber = request?.JSON ?: params
         newPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(newPhoneNumber)
-
         try {
             newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
             personalInformationCompositeService.validateTelephoneTypeRule(newPhoneNumber.telephoneType, newPhoneNumber.pidm, getRoles())
@@ -491,8 +482,6 @@ class PersonalInformationDetailsController {
         def updatedPhoneNumber = request?.JSON ?: params
         updatedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(updatedPhoneNumber)
-
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
             personalInformationCompositeService.validateTelephoneTypeRule(updatedPhoneNumber.telephoneType, updatedPhoneNumber.pidm, getRoles())
@@ -517,8 +506,6 @@ class PersonalInformationDetailsController {
 
         def deletedPhoneNumber = request?.JSON ?: params
         deletedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-
-        fixJSONObjectForCast(deletedPhoneNumber)
 
         try {
             deletedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(deletedPhoneNumber.telephoneType.code)
@@ -586,8 +573,6 @@ class PersonalInformationDetailsController {
         def newContact = request?.JSON ?: params
         newContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
-        fixJSONObjectForCast(newContact)
-
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
             newContact = personalInformationCompositeService.getPersonValidationObjects(newContact)
@@ -613,8 +598,6 @@ class PersonalInformationDetailsController {
 
         def updatedContact = request?.JSON ?: params
         updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-
-        fixJSONObjectForCast(updatedContact)
 
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
@@ -741,8 +724,6 @@ class PersonalInformationDetailsController {
 
         def updatedValues = request?.JSON ?: params
 
-        fixJSONObjectForCast(updatedValues)
-
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
                 id: updatedValues.id,
@@ -866,10 +847,6 @@ class PersonalInformationDetailsController {
         }
 
         def updatedPerson = request?.JSON ?: params
-
-        fixJSONObjectForCast(updatedPerson)
-        fixJSONObjectForCast(updatedPerson.maritalStatus)
-
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
                 id: updatedPerson.id,
@@ -996,20 +973,6 @@ class PersonalInformationDetailsController {
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
-        }
-    }
-
-    private def fixJSONObjectForCast(JSONObject json) {
-        json.each {entry ->
-            // Make JSONObject.NULL a real Java null
-            if (entry.value == JSONObject.NULL) {
-                entry.value = null
-
-//            If we ever want to fix dates, this is one possible solution
-//            } else if (entry.key == "lastModified") {
-//                // Make this date string a real Date object
-//                entry.value = DateUtility.parseDateString(entry.value, "yyyy-MM-dd'T'HH:mm:ss'Z'")
-            }
         }
     }
 
