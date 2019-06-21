@@ -11,11 +11,15 @@ import org.junit.Test
 
 import groovy.sql.Sql
 import grails.util.Holders
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
+import grails.web.context.ServletContextHolder
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken as UPAT
 import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.overall.PinQuestion
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 
+@Integration
+@Rollback
 class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTestCase {
 
     def selfServiceBannerAuthenticationProvider
@@ -38,7 +42,7 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
         // So, we'll set the formContext and then call super(), just as if this were not a controller test.
         // That is, we'll set the controller after we call super() so the base class won't manipulate it.
         if (!isSsbEnabled()) return
-        formContext = ['GUAGMNU']
+        formContext = ['GUAGMNU','SELFSERVICE']
 
         controller = new PersonalInformationQAController()
 

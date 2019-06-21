@@ -7,11 +7,15 @@ package net.hedtech.banner.general
 import grails.converters.JSON
 import groovy.sql.Sql
 import net.hedtech.banner.general.person.PersonUtility
-import org.codehaus.groovy.grails.web.json.JSONObject
+import org.grails.web.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 
+@Integration
+@Rollback
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 
 class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase {
@@ -21,7 +25,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
      */
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU']
+        formContext = ['GUAGMNU','SELFSERVICE']
         controller = new PersonalInformationDetailsController()
         super.setUp()
     }

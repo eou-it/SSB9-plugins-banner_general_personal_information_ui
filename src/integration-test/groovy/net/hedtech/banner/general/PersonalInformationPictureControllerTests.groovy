@@ -7,7 +7,11 @@ package net.hedtech.banner.general
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import grails.gorm.transactions.Rollback
+import grails.testing.mixin.integration.Integration
 
+@Integration
+@Rollback
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 
 class PersonalInformationPictureControllerTests extends BaseIntegrationTestCase {
@@ -17,7 +21,7 @@ class PersonalInformationPictureControllerTests extends BaseIntegrationTestCase 
      */
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU']
+        formContext = ['GUAGMNU','SELFSERVICE']
         controller = new PersonalInformationPictureController()
         super.setUp()
     }
