@@ -12,17 +12,21 @@ import org.junit.Test
 import groovy.sql.Sql
 import grails.util.Holders
 import grails.web.context.ServletContextHolder
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken as UPAT
-import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.overall.PinQuestion
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.util.GrailsWebMockUtil
+import grails.util.Holders
+import grails.web.servlet.context.GrailsWebApplicationContext
+import org.grails.plugins.testing.GrailsMockHttpServletRequest
+import org.grails.plugins.testing.GrailsMockHttpServletResponse
+import org.grails.web.servlet.mvc.GrailsWebRequest
+
 
 @Integration
 @Rollback
 class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTestCase {
 
-    def selfServiceBannerAuthenticationProvider
     def securityQAService
     def generalForStoringResponsesAndPinQuestionService
 
@@ -31,6 +35,15 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
 
     def i_question1 = "Fav destination?"
     def i_question2 = "Fav food?"
+
+
+    def controller
+
+    public GrailsWebRequest mockRequest() {
+        GrailsMockHttpServletRequest mockRequest = new GrailsMockHttpServletRequest();
+        GrailsMockHttpServletResponse mockResponse = new GrailsMockHttpServletResponse();
+        GrailsWebMockUtil.bindMockWebRequest(webAppCtx, mockRequest, mockResponse)
+    }
 
     @Before
     public void setUp() {
@@ -42,9 +55,9 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
         // So, we'll set the formContext and then call super(), just as if this were not a controller test.
         // That is, we'll set the controller after we call super() so the base class won't manipulate it.
         if (!isSsbEnabled()) return
-        formContext = ['GUAGMNU','SELFSERVICE']
-
-        controller = new PersonalInformationQAController()
+        formContext = ['SELFSERVICE']
+        webAppCtx = new GrailsWebApplicationContext()
+        controller = Holders.grailsApplication.getMainContext().getBean("net.hedtech.banner.general.PersonalInformationQAController")
 
         super.setUp()
         ServletContextHolder.servletContext.removeAttribute("gtvsdax")
@@ -59,8 +72,8 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
 
 
     private void setupUser(user){
-        def auth = selfServiceBannerAuthenticationProvider.authenticate(new UPAT(user, '111111'))
-        SecurityContextHolder.getContext().setAuthentication(auth)
+        mockRequest()
+        SSBSetUp(user, '111111')
     }
 
     @Test
@@ -196,7 +209,7 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
             sql = new Sql(sessionFactory.getCurrentSession().connection())
             sql.executeUpdate("update GUBPPRF set GUBPPRF_NO_OF_QSTNS = ?",[noOfQuestions])
         } finally {
-            sql?.close() // note that the test will close the connection, since it's our current session's connection
+          //TODO grails3  sql?.close() // note that the test will close the connection, since it's our current session's connection
         }
     }
 

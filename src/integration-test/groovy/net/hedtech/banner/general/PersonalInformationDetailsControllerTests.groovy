@@ -13,21 +13,37 @@ import org.junit.Before
 import org.junit.Test
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.util.GrailsWebMockUtil
+import grails.util.Holders
+import grails.web.servlet.context.GrailsWebApplicationContext
+import org.grails.plugins.testing.GrailsMockHttpServletRequest
+import org.grails.plugins.testing.GrailsMockHttpServletResponse
+import org.grails.web.servlet.mvc.GrailsWebRequest
+import net.hedtech.banner.testing.BaseIntegrationTestCase
 
 @Integration
 @Rollback
-import net.hedtech.banner.testing.BaseIntegrationTestCase
-
 class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase {
 
+    def controller
+
+
+    public GrailsWebRequest mockRequest() {
+        GrailsMockHttpServletRequest mockRequest = new GrailsMockHttpServletRequest();
+        GrailsMockHttpServletResponse mockResponse = new GrailsMockHttpServletResponse();
+        GrailsWebMockUtil.bindMockWebRequest(webAppCtx, mockRequest, mockResponse)
+    }
+    
     /**
      * The setup method will run before all test case method executions start.
      */
     @Before
     public void setUp() {
-        formContext = ['GUAGMNU','SELFSERVICE']
-        controller = new PersonalInformationDetailsController()
+        formContext = ['SELFSERVICE']
         super.setUp()
+        webAppCtx = new GrailsWebApplicationContext()
+        controller = Holders.grailsApplication.getMainContext().getBean("net.hedtech.banner.general.PersonalInformationDetailsController")
+        mockRequest()
     }
 
     /**
@@ -42,7 +58,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetMaskingRules() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.request.contentType = "text/json"
         controller.getMaskingRules()
@@ -58,7 +74,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetAddressesForCurrentUser() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.request.contentType = "text/json"
         controller.getAddresses()
@@ -72,7 +88,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetAddressesForCurrentUserButHidden() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit access to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
@@ -92,7 +108,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetCountyList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -108,7 +124,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetStateList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "p", offset: 1, max: 10 ]
 
@@ -124,7 +140,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetNationList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 6, max: 10 ]
 
@@ -140,7 +156,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetAddressTypeList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -157,7 +173,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddAddress() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
@@ -198,7 +214,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddAddressWithConfigSetToNotUpdateable() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
@@ -243,7 +259,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateAddress() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressByRoleViewService.getActiveAddressesByRoles(controller.getRoles(), pidm)
@@ -294,7 +310,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateAddressWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
@@ -349,7 +365,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateAddressWithMissingVersion() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
@@ -391,7 +407,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddInvalidAddress() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         // Invalid streetLine1; should not be null
         controller.request.contentType = "text/json"
@@ -434,7 +450,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteAddress() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def addresses = controller.personAddressService.getActiveAddresses([pidm: pidm]).list
@@ -457,7 +473,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteAddressWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.ADDR_MODE): '1']]
@@ -484,7 +500,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmails(){
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         controller.request.contentType = "text/json"
         controller.getEmails()
@@ -499,7 +515,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmailsButHidden(){
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit access to emails
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
@@ -519,7 +535,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmailsPreferredInvisible() {
-        loginSSB 'GDP000003', '111111'
+        SSBSetUp('GDP000003', '111111')
 
         controller.request.contentType = "text/json"
         controller.getEmails()
@@ -534,7 +550,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmailTypeList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 1, max: 10 ]
 
@@ -550,7 +566,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddEmail() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
@@ -574,7 +590,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddEmailWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to email
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
@@ -602,7 +618,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddDupeEmail() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // this email record should already exist
         controller.request.contentType = "text/json"
@@ -627,7 +643,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAdd2ndPreferredEmail() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // this user should already have a preferred email selected
         controller.request.contentType = "text/json"
@@ -652,7 +668,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddEmailReactivate() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // this user's below email should be inactive
         controller.request.contentType = "text/json"
@@ -677,7 +693,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateEmail() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
@@ -708,7 +724,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateEmailWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to email
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
@@ -743,7 +759,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteEmail() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def email = controller.personEmailService.getDisplayableEmails(pidm)[0]
@@ -771,7 +787,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteEmailWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to email
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMAIL_MODE): '1']]
@@ -803,7 +819,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetTelephoneNumbers() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.request.contentType = "text/json"
         controller.getTelephoneNumbers()
@@ -819,7 +835,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetTelephoneNumbersButHidden() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit access to telephone numbers
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
@@ -839,7 +855,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetTelephoneTypeList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -855,7 +871,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddTelephoneNumber() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
@@ -881,7 +897,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddTelephoneNumberWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
@@ -911,7 +927,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateTelephoneNumber() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def phone = controller.personTelephoneService.fetchActiveTelephonesByPidm(pidm)[0]
@@ -943,7 +959,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateTelephoneNumberWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
@@ -979,7 +995,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteTelephoneNumber() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def phone = controller.personTelephoneService.fetchActiveTelephonesByPidm(pidm)[0]
@@ -1010,7 +1026,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteTelephoneNumberWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PHONE_MODE): '1']]
@@ -1045,7 +1061,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetRelationshipList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -1061,7 +1077,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmergencyContactsForCurrentUser() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         controller.request.contentType = "text/json"
         controller.getEmergencyContacts()
@@ -1075,7 +1091,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetEmergencyContactsForCurrentUserButHidden() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '0']]
@@ -1092,7 +1108,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddEmergencyContact() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         controller.request.contentType = "text/json"
         controller.request.json = """{
@@ -1127,7 +1143,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testAddEmergencyContactWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
@@ -1166,7 +1182,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateEmergencyContact() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
@@ -1205,7 +1221,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateEmergencyContactWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
@@ -1248,7 +1264,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteEmergencyContact() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def contacts = controller.personEmergencyContactService.getEmergencyContactsByPidm(pidm)
@@ -1288,7 +1304,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testDeleteEmergencyContactWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to phone number
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '1']]
@@ -1330,7 +1346,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPreferredName() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.getPreferredName()
         def dataForNullCheck = controller.response.contentAsString
@@ -1342,7 +1358,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetUserName() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.getUserName()
         def dataForNullCheck = controller.response.contentAsString
@@ -1350,13 +1366,13 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals '2Curr2ProgSameStudyPath', data.firstName
-        assertEquals JSONObject.NULL, data.middleName
+        assertNull data.middleName
         assertEquals 'EBRUSER1', data.lastName
     }
 
     @Test
     void testGetBannerId() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.getBannerId()
         def dataForNullCheck = controller.response.contentAsString
@@ -1368,7 +1384,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetMaritalStatusList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -1384,7 +1400,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetGenderList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -1400,7 +1416,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPronounList() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def params = [ searchString: "", offset: 0, max: 10 ]
 
@@ -1416,7 +1432,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPersonalDetails() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
@@ -1425,14 +1441,14 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertNotNull data
         assertEquals '03/31/1961', data.birthDate
         assertEquals 'F', data.sex
-        assertEquals JSONObject.NULL, data.preferenceFirstName
+        assertEquals null, data.preferenceFirstName
         assertEquals 'M', data.maritalStatus.code
         assertEquals '1', data.ethnic
     }
 
     @Test
     void testGetPersonalDetailsButHidden() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit access to personal details
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
@@ -1451,7 +1467,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdatePersonalDetails() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
@@ -1487,7 +1503,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdatePersonalDetailsWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to Personal Details
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.PERS_DETAILS_MODE): '1']]
@@ -1519,7 +1535,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdatePersonalDetailsWithGndrConfigSetToOff() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to Personal Details
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.GENDER_PRONOUN): 'N']]
@@ -1555,7 +1571,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetRaces() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.getRaces()
         def dataForNullCheck = controller.response.contentAsString
@@ -1568,7 +1584,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPiConfig() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.getPiConfig()
         def dataForNullCheck = controller.response.contentAsString
@@ -1598,14 +1614,14 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPiConfigSecurityQuestionDisabled() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         def sql
         try {
             sql = new Sql(sessionFactory.getCurrentSession().connection())
             sql.executeUpdate("update GUBPPRF set GUBPPRF_NO_OF_QSTNS = ?",[0])
         } finally {
-            sql?.close() // note that the test will close the connection, since it's our current session's connection
+          //commenting out for grails 3  sql?.close() // note that the test will close the connection, since it's our current session's connection
         }
 
         controller.getPiConfig()
@@ -1636,7 +1652,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetDirectoryProfile() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.getDirectoryProfile()
         def dataForNullCheck = controller.response.contentAsString
@@ -1647,7 +1663,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetDirectoryProfileButHidden() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DIRECTORY_PROFILE): 'N']]
@@ -1663,7 +1679,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateDirectoryProfilePreferences() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
@@ -1691,7 +1707,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateDirectoryProfilePreferencesWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000001', '111111'
+        SSBSetUp('GDP000001', '111111')
 
         // Set configuration to prohibit updates to Directory Profile
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DIRECTORY_PROFILE): 'N']]
@@ -1723,7 +1739,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetDisabilityStatus() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         controller.getDisabilityStatus()
         def dataForNullCheck = controller.response.contentAsString
@@ -1735,7 +1751,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetDisabilityStatusButHidden() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to address
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DISABILITY_STATUS): 'N']]
@@ -1751,7 +1767,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateDisabilityStatus() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.request.contentType = "text/json"
 
@@ -1769,7 +1785,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateDisabilityStatusWithConfigSetToNotUpdateable() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         // Set configuration to prohibit updates to Disability Status
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DISABILITY_STATUS): 'N']]
@@ -1791,7 +1807,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateVeteranClassification() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
@@ -1817,7 +1833,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateVeteranClassificationNoPersRecord() {
-        loginSSB 'HOSH00018', '111111'
+        SSBSetUp('HOSH00018', '111111')
 
         controller.request.contentType = "text/json"
 
@@ -1840,7 +1856,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
     @Test
     void testUpdateVeteranClassificationWithConfigSetToNotUpdateable() {
-        loginSSB 'GDP000005', '111111'
+        SSBSetUp('GDP000005', '111111')
 
         // Set configuration to prohibit updates to Disability Status
         def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.VETERANS_CLASSIFICATION): 'N']]

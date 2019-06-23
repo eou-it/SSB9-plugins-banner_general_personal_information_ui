@@ -7,10 +7,11 @@ import grails.gorm.transactions.Transactional
 import net.hedtech.banner.general.overall.IntegrationConfiguration
 import net.hedtech.banner.general.person.PersonUtility
 import org.springframework.transaction.annotation.Propagation
-//import org.springframework.transaction.annotation.Transactional
+
 
 //TODO: previously used Spring Transactional (see import above). Does it cause problem switching to Grails 3 Transactional?  JDC 4/19
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED )
+//TODO: check. removing required as it raises occasional compilation issues. Requred is default so maybe not needed
+@Transactional(readOnly = false)
 abstract class BasePersonConfigService {
     
     protected abstract String getCacheName();

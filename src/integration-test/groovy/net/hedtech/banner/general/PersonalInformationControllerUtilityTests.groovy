@@ -9,19 +9,27 @@ import org.junit.Before
 import org.junit.Test
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.util.GrailsWebMockUtil
+import grails.util.Holders
+import grails.web.servlet.context.GrailsWebApplicationContext
+import org.grails.plugins.testing.GrailsMockHttpServletRequest
+import org.grails.plugins.testing.GrailsMockHttpServletResponse
+import org.grails.web.servlet.mvc.GrailsWebRequest
 
 @Integration
 @Rollback
 class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase {
 
+    def controller
     /**
      * The setup method will run before all test case method executions start.
      */
     @Before
     public void setUp() {
         formContext = ['GUAGMNU','SELFSERVICE']
-        controller = new PersonalInformationDetailsController()
         super.setUp()
+        webAppCtx = new GrailsWebApplicationContext()
+        controller = Holders.grailsApplication.getMainContext().getBean("net.hedtech.banner.general.PersonalInformationDetailsController")
     }
 
     /**
@@ -34,10 +42,16 @@ class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase 
     }
 
 
+    public GrailsWebRequest mockRequest() {
+        GrailsMockHttpServletRequest mockRequest = new GrailsMockHttpServletRequest();
+        GrailsMockHttpServletResponse mockResponse = new GrailsMockHttpServletResponse();
+        GrailsWebMockUtil.bindMockWebRequest(webAppCtx, mockRequest, mockResponse)
+    }
+
     @Test
     void testGetPrincipalPidmLoggedIn(){
-        loginSSB 'GDP000005', '111111'
-
+        mockRequest()
+        SSBSetUp('GDP000005', '111111')
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         assertNotNull pidm
     }
@@ -50,8 +64,8 @@ class PersonalInformationControllerUtilityTests extends BaseIntegrationTestCase 
 
     @Test
     void testGetPrincipalUsernameLoggedIn(){
-        loginSSB 'GDP000005', '111111'
-
+        mockRequest()
+        SSBSetUp('GDP000005', '111111')
         def username = PersonalInformationControllerUtility.getPrincipalUsername()
         assertNotNull username
         assertEquals 'GDP000005', username

@@ -11,19 +11,27 @@ import org.junit.Before
 import org.junit.Test
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
+import grails.util.GrailsWebMockUtil
+import grails.util.Holders
+import grails.web.servlet.context.GrailsWebApplicationContext
+import org.grails.plugins.testing.GrailsMockHttpServletRequest
+import org.grails.plugins.testing.GrailsMockHttpServletResponse
+import org.grails.web.servlet.mvc.GrailsWebRequest
 
 @Integration
 @Rollback
 class PersonalInformationControllerTests extends BaseIntegrationTestCase {
 
+   def controller
     /**
      * The setup method will run before all test case method executions start.
      */
     @Before
     public void setUp() {
         formContext = ['GUAGMNU','SELFSERVICE']
-        controller = new PersonalInformationController()
         super.setUp()
+        webAppCtx = new GrailsWebApplicationContext()
+        controller = Holders.grailsApplication.getMainContext().getBean("net.hedtech.banner.general.PersonalInformationController")
     }
 
     /**
@@ -35,11 +43,17 @@ class PersonalInformationControllerTests extends BaseIntegrationTestCase {
         super.logout()
     }
 
+    public GrailsWebRequest mockRequest() {
+        GrailsMockHttpServletRequest mockRequest = new GrailsMockHttpServletRequest();
+        GrailsMockHttpServletResponse mockResponse = new GrailsMockHttpServletResponse();
+        GrailsWebMockUtil.bindMockWebRequest(webAppCtx, mockRequest, mockResponse)
+    }
+
 
     @Test
     void testCheckSecurityQuestionsExist() {
-        loginSSB 'HOSS001', '111111'
-
+        mockRequest()
+        SSBSetUp('HOSS001', '111111')
         controller.request.contentType = "text/json"
         controller.checkSecurityQuestionsExist()
         def dataForNullCheck = controller.response.contentAsString
@@ -50,8 +64,8 @@ class PersonalInformationControllerTests extends BaseIntegrationTestCase {
 
     @Test
     void testCheckSecurityQuestionsDoNotExist() {
-        loginSSB 'GDP000005', '111111'
-
+        mockRequest()
+        SSBSetUp('GDP000005', '111111')
         controller.request.contentType = "text/json"
         controller.checkSecurityQuestionsExist()
         def dataForNullCheck = controller.response.contentAsString

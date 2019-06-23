@@ -72,7 +72,7 @@ class PersonalInformationControllerUtility {
         def model = [:]
 
         model.failure = true
-        log.error(e)
+        log.error(e.getMessage())
 
         try {
             def extractError = e.returnMap({ mapToLocalize -> new ValidationTagLib().message(mapToLocalize) })
