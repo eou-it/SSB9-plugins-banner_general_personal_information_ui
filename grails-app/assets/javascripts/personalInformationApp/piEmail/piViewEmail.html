@@ -22,7 +22,13 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <span class="icon-edit-CO"></span>
                     <div class="hidden-link-text-for-reader">{{'personInfo.button.title.editEmail'|i18n}}</div>
                 </a>
-                <pi-delete-button item="email" click-function="confirmEmailDelete" button-title="{{'personInfo.button.title.deleteEmail'|i18n}}"/>
+<!--                <pi-delete-button item="email" click-function="confirmEmailDelete" button-title="{{'personInfo.button.title.deleteEmail'|i18n}}"/>-->
+                <a ng-click="confirmEmailDelete(email)" class="pi-edit-item-link pi-icon-link"
+                   title="{{'personInfo.button.title.deleteEmail'|i18n}}" aria-label="{{'personInfo.button.title.deleteEmail'|i18n}}"
+                   tabindex="0">
+                    <span class="icon-delete-CO"></span>
+                    <span class="visuallyhidden">{{'personInfo.button.title.deleteEmail'|i18n}}</span>
+                </a>
             </div>
             <div ng-if="!email.isUpdateable" class="nonupdatable-email">
                 {{'('+ ('personInfo.label.nonUpdateable'|i18n)+')'}}
