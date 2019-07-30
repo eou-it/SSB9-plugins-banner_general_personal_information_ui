@@ -150,11 +150,11 @@ class PersonalInformationQAControllerIntegrationTests extends BaseIntegrationTes
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         if (!isSsbEnabled()) return
-        def pinQuestion1  = newValidForCreatePinQuestion("TT11" ,i_question1 )
+        def pinQuestion1  = newValidForCreatePinQuestion("PER1" ,i_question1 )
         pinQuestion1.save( failOnError: true, flush: true )
         assertNotNull pinQuestion1.id
 
-        def pinQuestion2  = newValidForCreatePinQuestion("TT12",i_question2)
+        def pinQuestion2  = newValidForCreatePinQuestion("PER2",i_question2)
         pinQuestion2.save( failOnError: true, flush: true )
         assertNotNull pinQuestion2.id
 
