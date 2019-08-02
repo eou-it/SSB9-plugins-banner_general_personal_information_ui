@@ -14,17 +14,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
     </div>
     <div ng-if="(piConfig.telephoneSectionMode === SECTION_UPDATEABLE) && phone.isUpdateable" class="clearfix">
         <a class="pi-edit-item-link pi-icon-link" ng-click="openEditPhoneModal(phone)" enter-key="openEditPhoneModal(phone)"
-           title="{{'personInfo.label.editPhone'|i18n}}" tabindex="0">
-            <span class="icon-edit-CO"></span>
-            <span class="visuallyhidden">{{'personInfo.button.title.editPhone'|i18n}}</span>
-        </a>
-<!--        <pi-delete-button item="phone" click-function="confirmPhoneDelete" button-title="{{'personInfo.label.deletePhone'|i18n}}"/>-->
-        <a ng-click="confirmPhoneDelete(phone)" class="pi-edit-item-link pi-icon-link"
-           title="{{'personInfo.label.deletePhone'|i18n}}" aria-label="{{'personInfo.label.deletePhone'|i18n}}"
-           tabindex="0">
-            <span class="icon-delete-CO"></span>
-            <span class="visuallyhidden">{{'personInfo.label.deletePhone'|i18n}}</span>
-        </a>
+           title="{{'personInfo.label.editPhone'|i18n}}" tabindex="0"><span class="icon-edit-CO"></span></a>
+        <pi-delete-button item="phone" click-function="confirmPhoneDelete" button-title="{{'personInfo.label.deletePhone'|i18n}}"/>
     </div>
     <div ng-if="!phone.isUpdateable" class="nonupdatable-phone">
         {{'('+ ('personInfo.label.nonUpdateable'|i18n)+')'}}
