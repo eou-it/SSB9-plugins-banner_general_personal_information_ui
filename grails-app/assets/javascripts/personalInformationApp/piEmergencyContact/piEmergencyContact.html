@@ -38,17 +38,8 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
         </div>
         <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="clearfix">
             <a class="pi-edit-item-link pi-icon-link" ng-click="openEditEmergencyContactModal(contact)" enter-key="openEditEmergencyContactModal(contact)"
-               title="{{'personInfo.label.editEmergencyContact'|i18n}}" tabindex="0">
-                <span class="icon-edit-CO"></span>
-                <span class="visuallyhidden">{{'personInfo.button.title.editEmergencyContact'|i18n}}</span>
-            </a>
-<!--            <pi-delete-button item="contact" click-function="confirmEmergencyContactDelete" button-title="{{'personInfo.label.deleteEmergencyContact'|i18n}}"/>-->
-            <a ng-click="confirmEmergencyContactDelete(contact)" class="pi-edit-item-link pi-icon-link"
-               title="{{'personInfo.label.deleteEmergencyContact'|i18n}}" aria-label="{{'personInfo.label.deleteEmergencyContact'|i18n}}"
-               tabindex="0">
-                <span class="icon-delete-CO"></span>
-                <span class="visuallyhidden">{{'personInfo.label.deleteEmergencyContact'|i18n}}</span>
-            </a>
+               title="{{'personInfo.label.editEmergencyContact'|i18n}}" tabindex="0"><span class="icon-edit-CO"></span></a>
+            <pi-delete-button item="contact" click-function="confirmEmergencyContactDelete" button-title="{{'personInfo.label.deleteEmergencyContact'|i18n}}"/>
         </div>
     </div>
 </div>
