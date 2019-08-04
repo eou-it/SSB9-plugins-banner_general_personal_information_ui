@@ -16,11 +16,19 @@ class PersonalInformationInterceptorSpec extends Specification implements Interc
 
     }
 
-    void "Test personalInformation interceptor matching"() {
-        when:"A request matches the interceptor"
+    void "Test personalInformation interceptor not matching"() {
+        when:"A request does not match the interceptor"
             withRequest(controller:"personalInformation")
 
+        then:"The interceptor does not match"
+            !interceptor.doesMatch()
+    }
+
+    void "Test personalInformation interceptor matching"() {
+        when:"A request matches the interceptor"
+        withRequest(controller:"personalInformationPicture")
+
         then:"The interceptor does match"
-            interceptor.doesMatch()
+        interceptor.doesMatch()
     }
 }
