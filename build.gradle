@@ -101,6 +101,9 @@ integrationTest {
         ignoreFailures = true
 }
 
+test {
+        ignoreFailures = true
+}
 assets {
     packagePlugin = true
 }
