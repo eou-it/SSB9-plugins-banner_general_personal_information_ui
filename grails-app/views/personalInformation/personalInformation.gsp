@@ -26,13 +26,13 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
         <g:set var="applicationContextRoot" value= "${application.contextPath}"/>
         <meta name="applicationContextRoot" content="${applicationContextRoot}">
 
-        <asset:stylesheet src="modules/pi-application-mf.css"/>
-
         <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
             <asset:stylesheet src="modules/personalInformationAppRTL-mf.css"/>
+            <asset:stylesheet src="pi-applicationRTL-mf.css"/>
         </g:if>
         <g:else>
             <asset:stylesheet src="modules/personalInformationAppLTR-mf.css"/>
+            <asset:stylesheet src="pi-applicationLTR-mf.css"/>
         </g:else>
 
         <asset:javascript src="modules/pi-application-mf.js"/>
