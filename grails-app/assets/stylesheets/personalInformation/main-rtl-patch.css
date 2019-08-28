@@ -54,3 +54,10 @@
 ul {
     padding-left: 0;
 }
+
+.ui-select-container .select2-choice
+{
+    width: inherit;
+    border-color: #151618;
+    margin: 0;
+}
