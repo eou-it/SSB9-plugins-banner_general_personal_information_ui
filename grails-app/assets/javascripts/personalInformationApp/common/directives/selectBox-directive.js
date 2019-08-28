@@ -148,7 +148,7 @@ personalInformationAppDirectives.directive('genssbXeDropdown', ['$parse', '$filt
         template: '<xe-ui-select ng-model="modelHolder[modelName]" on-select="onSelectFn()"\n' +
             '             reach-infinity="refreshData($select.search, true)" theme="select2" search-enabled="searchEnabled" ng-disabled="isDisabled">\n' +
             '   <xe-ui-select-match ng-init="setupSelectCtrlFocusser($select)" placeholder="{{selPlaceholder}}">\n' +
-            '       {{$select.selected.description ? $select.selected.description : selPlaceholder}}\n' +
+            '   <div ng-bind-html="$select.selected.description ? $select.selected.description : selPlaceholder"></div>\n' +
             '   </xe-ui-select-match>\n' +
             '   <xe-ui-select-choices minimum-input-length="" refresh-delay="200" repeat="item in selectItems"\n' +
             '                         refresh="refreshData($select.search)">\n' +
