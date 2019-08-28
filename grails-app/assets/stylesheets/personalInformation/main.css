@@ -687,6 +687,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 .text-input-field {
     border-radius: 4px;
     width: 100%;
+    max-width: 211.7%;
 }
 
 input.hasMultiCalendarPicker.pi-date-input {
@@ -1872,7 +1873,7 @@ div.dir-profile {
         font-size: 24px;
         padding: 1em 1em 0.75em;
     }
-    
+
     button.closebtn {
         padding: 2.35em;
     }
@@ -1997,6 +1998,13 @@ div.dir-profile {
         overflow: hidden;
         position:fixed;
         width: 100%;
+    }
+}
+
+/* Mobile device */
+@media screen and (max-width:767px) {
+    .text-input-field {
+        max-width: 100%;
     }
 }
 
