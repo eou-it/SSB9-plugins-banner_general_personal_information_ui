@@ -684,10 +684,10 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     font-weight: normal;
 }
 
-.text-input-field {
+#email-cmnt {
     border-radius: 4px;
     width: 100%;
-    max-width: 211.7%;
+    max-width: 197.5%;
 }
 
 input.hasMultiCalendarPicker.pi-date-input {
