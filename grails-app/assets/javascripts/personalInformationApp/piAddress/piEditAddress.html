@@ -76,7 +76,7 @@
             <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.state'|i18n}}</label><br>
                 <genssb-xe-dropdown fetch-function="getStates" model-holder="address" model-name="state" show-na="true"
-                                    dropdown-placeholder="{{'personInfo.placeholder.selectState'|i18n}}"
+                                    dropdown-placeholder="{{isCreateNew ? ('personInfo.placeholder.selectState'|i18n) : ('personInfo.label.notApplicable'|i18n)}}"
                                     focus-text="{{'personInfo.label.state'|i18n}}">
                 </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!stateErrMsg ? 'field-error error-font-size' : 'no-display')]"
@@ -85,7 +85,7 @@
             <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.county'|i18n}}</label><br>
                 <genssb-xe-dropdown fetch-function="getCounties" model-holder="address" model-name="county" show-na="true"
-                                    dropdown-placeholder="{{'personInfo.placeholder.selectCounty'|i18n}}"
+                                    dropdown-placeholder="{{isCreateNew ? ('personInfo.placeholder.selectCounty'|i18n) : ('personInfo.label.notApplicable'|i18n)}}"
                                     focus-text="{{'personInfo.label.county'|i18n}}">
                 </genssb-xe-dropdown>
             </div>
@@ -101,7 +101,7 @@
             <div class="maybe-clear sm-fix col-xs-12 col-md-4 col-lg-4">
                 <label class="input-field-label">{{'personInfo.label.country'|i18n}}</label><br>
                 <genssb-xe-dropdown fetch-function="getNations" model-holder="address" model-name="nation" show-na="true"
-                                    dropdown-placeholder="{{'personInfo.placeholder.selectCountry'|i18n}}"
+                                    dropdown-placeholder="{{isCreateNew ? ('personInfo.placeholder.selectCountry'|i18n) : ('personInfo.label.notApplicable'|i18n)}}"
                                     focus-text="{{'personInfo.label.country'|i18n}}">
                 </genssb-xe-dropdown>
                 <p class="input-field-label mobile-errors" ng-class="[(!!nationErrMsg ? 'field-error error-font-size' : 'no-display')]"

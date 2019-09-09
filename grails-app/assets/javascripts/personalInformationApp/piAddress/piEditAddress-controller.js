@@ -38,6 +38,24 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                     zip: address.zip
                 };
             },
+            getSaveSafeAddress = function(address) {
+                return {
+                    id: address.id,
+                    county: address.county ? (address.county.code ? address.county : null) : null,
+                    state: address.state ? (address.state.code ? address.state : null) : null,
+                    nation: address.nation ? (address.nation.code ? address.nation : null) : null,
+                    addressType: address.addressType ? address.addressType : {},
+                    city: address.city,
+                    fromDate: address.fromDate,
+                    toDate: address.toDate,
+                    houseNumber: address.houseNumber,
+                    streetLine1: address.streetLine1,
+                    streetLine2: address.streetLine2,
+                    streetLine3: address.streetLine3,
+                    streetLine4: address.streetLine4,
+                    zip: address.zip
+                };
+            },
             isValidAddress = function (address) {
                 address = getNullSafeAddress(address);
 
@@ -96,7 +114,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
 
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
-                var addressToSave = angular.copy($scope.address);
+                var addressToSave = getSaveSafeAddress(angular.copy($scope.address));
                 addressToSave.fromDate = personalInformationService.stringToDate($scope.address.fromDate);
                 addressToSave.toDate = personalInformationService.stringToDate($scope.address.toDate);
 
