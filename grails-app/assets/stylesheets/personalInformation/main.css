@@ -687,7 +687,7 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
 #email-cmnt {
     border-radius: 4px;
     width: 100%;
-    max-width: 197.5%;
+    resize: none;
 }
 
 input.hasMultiCalendarPicker.pi-date-input {
@@ -1998,13 +1998,6 @@ div.dir-profile {
         overflow: hidden;
         position:fixed;
         width: 100%;
-    }
-}
-
-/* Mobile device */
-@media screen and (max-width:767px) {
-    .text-input-field {
-        max-width: 100%;
     }
 }
 
