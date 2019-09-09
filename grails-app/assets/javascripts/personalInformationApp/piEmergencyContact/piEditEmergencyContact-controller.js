@@ -43,6 +43,29 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
                     zip: contact.zip
                 };
             },
+            getSaveSafeContact = function(contact) {
+                return {
+                    id: contact.id,
+                    priority: contact.priority,
+                    firstName: contact.firstName,
+                    middleName: contact.middleName,
+                    lastName: contact.lastName,
+                    relationship: contact.relationship ? (contact.relationship.code ? contact.relationship : null) : null,
+                    countryPhone: contact.countryPhone,
+                    phoneArea: contact.phoneArea,
+                    phoneNumber: contact.phoneNumber,
+                    phoneExtension: contact.phoneExtension,
+                    state: contact.state ? (contact.state.code ? contact.state : null) : null,
+                    nation: contact.nation ? (contact.nation.code ? contact.nation : null) : null,
+                    city: contact.city,
+                    houseNumber: contact.houseNumber,
+                    streetLine1: contact.streetLine1,
+                    streetLine2: contact.streetLine2,
+                    streetLine3: contact.streetLine3,
+                    streetLine4: contact.streetLine4,
+                    zip: contact.zip
+                };
+            },
             isValidContact = function (contact) {
                 contact = getNullSafeContact(contact);
 
@@ -91,6 +114,9 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
 
         $scope.saveEmergencyContact = function() {
             if(isValidContact($scope.emergencyContact)) {
+
+                $scope.emergencyContact = getSaveSafeContact($scope.emergencyContact);
+
                 var handleResponse = function (response) {
                     if (response.failure) {
                         $scope.addressErrMsg = response.message;
