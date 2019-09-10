@@ -13,10 +13,19 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
                 return $.calendars.instance('islamic');
             }
             else {
-                dateFmt = $filter('i18n')('default.date.format').toLowerCase();
+                dateFmt = $filter('i18n')('default.date.format');
                 return $.calendars.instance();
             }
-        }());
+        }()),
+            /*The jquery calendar uses M for short months (I.E. Jan, Feb) instead of MMM
+            * It also uses mm for numeric month of year instead of MM.*/
+        getJqueryCalendarSafeFormat = function (dateFormat) {
+            var jqueryCalendarSafeFormat;
+            jqueryCalendarSafeFormat = dateFormat;
+            jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MMM', 'M');
+            jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MM', 'mm');
+            return jqueryCalendarSafeFormat;
+        };
 
     // CONSTANTS
     this.AUDIBLE_MSG_UPDATED = 'audible-msg-updated';
@@ -34,7 +43,8 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
     this.stringToDate = function (date) {
         var result;
         try {
-            result = calendar.parseDate(dateFmt, date).toJSDate();
+            var format = getJqueryCalendarSafeFormat(dateFmt);
+            result = calendar.parseDate(format, date).toJSDate();
             return result;
         }
         catch (exception) {
