@@ -367,11 +367,11 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.clearNotifications();
         };
 
-        var localeLang = $('meta[name=locale]').attr("content").split('-')[0];
+        var locale = window.i18n.locale;
         $scope.stringToDate = function(date) {
             var result = personalInformationService.stringToDate(date);
 
-            if(result && localeLang === 'ar') {
+            if(result && locale.split('-')[0] === 'ar') {
                 return result.toLocaleDateString('ar-SA-u-nu-latn-ca-islamic', {year: 'numeric', month: 'long', day: 'numeric'});
             }
             else {

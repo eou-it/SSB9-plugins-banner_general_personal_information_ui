@@ -18,12 +18,18 @@ personalInformationApp.service('personalInformationService', ['$rootScope', '$fi
             }
         }()),
             /*The jquery calendar uses M for short months (I.E. Jan, Feb) instead of MMM
-            * It also uses mm for numeric month of year instead of MM.*/
+            * It also uses mm for numeric month of year instead of MM.
+            * It uses MM for long month formats instead of MMMM.*/
         getJqueryCalendarSafeFormat = function (dateFormat) {
             var jqueryCalendarSafeFormat;
             jqueryCalendarSafeFormat = dateFormat;
-            jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MMM', 'M');
-            jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MM', 'mm');
+            if (jqueryCalendarSafeFormat.indexOf('MMMM') !== -1) {
+                jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MMMM', 'MM');
+            }
+            else {
+                jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MMM', 'M');
+                jqueryCalendarSafeFormat = jqueryCalendarSafeFormat.replace('MM', 'mm');
+            }
             return jqueryCalendarSafeFormat;
         };
 
