@@ -10,6 +10,7 @@ import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
+import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.security.core.context.SecurityContextHolder
 
 class PersonalInformationDetailsController {
@@ -48,7 +49,6 @@ class PersonalInformationDetailsController {
 
     def getMaskingRules() {
         def maskingRules = [:]
-
         try {
             maskingRules = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
         } catch (ApplicationException e) {
@@ -188,6 +188,10 @@ class PersonalInformationDetailsController {
 
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        newAddress.state?.code = StringEscapeUtils.unescapeHtml4(newAddress.state?.code)
+        newAddress.nation?.code = StringEscapeUtils.unescapeHtml4(newAddress.nation?.code)
+        newAddress.county?.code = StringEscapeUtils.unescapeHtml4(newAddress.county?.code)
+        newAddress.addressType?.code = StringEscapeUtils.unescapeHtml4(newAddress.addressType?.code)
 
         try {
             personAddressService.checkAddressFieldsValid(newAddress)
@@ -324,6 +328,7 @@ class PersonalInformationDetailsController {
 
         def newEmail = request?.JSON ?: params
         newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        newEmail.emailType?.code = StringEscapeUtils.unescapeHtml4(newEmail.emailType?.code)
 
         try {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
@@ -456,6 +461,7 @@ class PersonalInformationDetailsController {
 
         def newPhoneNumber = request?.JSON ?: params
         newPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        newPhoneNumber.telephoneType?.code = StringEscapeUtils.unescapeHtml4(newPhoneNumber.telephoneType?.code)
 
         try {
             newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
@@ -572,6 +578,9 @@ class PersonalInformationDetailsController {
 
         def newContact = request?.JSON ?: params
         newContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        newContact.relationship?.code = StringEscapeUtils.unescapeHtml4(newContact.relationship?.code)
+        newContact.state?.code = StringEscapeUtils.unescapeHtml4(newContact.state?.code)
+        newContact.nation?.code = StringEscapeUtils.unescapeHtml4(newContact.nation?.code)
 
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
@@ -827,7 +836,7 @@ class PersonalInformationDetailsController {
             if (!model) {
                 model = [:] // Force it to be a map, which is what is expected to be rendered
             }
-            
+
             render model as JSON
         }
         catch (ApplicationException e) {
@@ -847,6 +856,7 @@ class PersonalInformationDetailsController {
         }
 
         def updatedPerson = request?.JSON ?: params
+        updatedPerson.maritalStatus?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.maritalStatus?.code)
         def person = [
                 pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
                 id: updatedPerson.id,
@@ -856,6 +866,8 @@ class PersonalInformationDetailsController {
         ]
 
         if(personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y') {
+            updatedPerson.gender?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.gender?.code)
+            updatedPerson.pronoun?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.pronoun?.code)
             person.gender = updatedPerson.gender
             person.pronoun = updatedPerson.pronoun
         }
