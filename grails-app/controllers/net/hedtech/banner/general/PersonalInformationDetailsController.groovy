@@ -224,6 +224,10 @@ class PersonalInformationDetailsController {
 
         def updatedAddress = request?.JSON ?: params
         updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedAddress.state?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.state?.code)
+        updatedAddress.nation?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.nation?.code)
+        updatedAddress.county?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.county?.code)
+        updatedAddress.addressType?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.addressType?.code)
 
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
@@ -359,6 +363,7 @@ class PersonalInformationDetailsController {
 
         def updatedEmail = request?.JSON ?: params
         updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedEmail.emailType?.code = StringEscapeUtils.unescapeHtml4(updatedEmail.emailType?.code)
 
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
@@ -487,6 +492,7 @@ class PersonalInformationDetailsController {
 
         def updatedPhoneNumber = request?.JSON ?: params
         updatedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedPhoneNumber.telephoneType?.code = StringEscapeUtils.unescapeHtml4(updatedPhoneNumber.telephoneType?.code)
 
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
@@ -607,6 +613,10 @@ class PersonalInformationDetailsController {
 
         def updatedContact = request?.JSON ?: params
         updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedContact.relationship?.code = StringEscapeUtils.unescapeHtml4(updatedContact.relationship?.code)
+        updatedContact.state?.code = StringEscapeUtils.unescapeHtml4(updatedContact.state?.code)
+        updatedContact.nation?.code = StringEscapeUtils.unescapeHtml4(updatedContact.nation?.code)
+
 
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
