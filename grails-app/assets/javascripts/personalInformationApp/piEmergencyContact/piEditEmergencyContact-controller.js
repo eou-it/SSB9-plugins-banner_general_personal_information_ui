@@ -114,8 +114,7 @@ personalInformationAppControllers.controller('piEditEmergencyContactController',
 
         $scope.saveEmergencyContact = function() {
             if(isValidContact($scope.emergencyContact)) {
-
-                $scope.emergencyContact = getSaveSafeContact($scope.emergencyContact);
+                $scope.emergencyContact = _.extend($scope.emergencyContact, getSaveSafeContact($scope.emergencyContact));
 
                 var handleResponse = function (response) {
                     if (response.failure) {
