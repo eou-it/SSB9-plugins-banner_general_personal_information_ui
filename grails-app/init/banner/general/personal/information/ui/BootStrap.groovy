@@ -7,12 +7,15 @@ import net.hedtech.banner.converters.json.JSONBeanMarshaller
 import net.hedtech.banner.converters.json.JSONDomainMarshaller
 import net.hedtech.banner.i18n.LocalizeUtil
 import grails.converters.JSON
+import grails.util.Environment
 
 class BootStrap {
     def dateConverterService
 
     def init = { servletContext ->
-        registerJSONMarshallers()
+        if (Environment.current == Environment.TEST) {
+            registerJSONMarshallers()
+        }
     }
     def destroy = {
     }
