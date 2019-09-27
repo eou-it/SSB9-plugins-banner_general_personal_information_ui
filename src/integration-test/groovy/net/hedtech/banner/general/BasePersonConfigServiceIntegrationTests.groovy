@@ -95,7 +95,6 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
         def configService = getMockPersonalInfoConfigService()
         configService.createConfig(personConfig, configService.getCacheName(),configService.getProcessCode(), configService.getExcludedProperties())
         def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
-
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PREF_EMAIL]
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PROFILE_PICTURE]
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR]
@@ -106,14 +105,12 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PASSWORD_CHANGE]
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.SECURITY_QA_CHANGE]
         assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.VETERANS_CLASSIFICATION]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.MARITAL_STATUS]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.EMAIL_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.PHONE_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.ADDR_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.EMER_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.PERS_DETAILS_MODE]
         assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.ETHN_RACE_MODE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.GENDER_PRONOUN]
         assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_PHONE]
         assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_ADDR]
     }
