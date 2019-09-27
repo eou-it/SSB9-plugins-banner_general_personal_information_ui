@@ -365,6 +365,7 @@ class PersonalInformationDetailsController {
 
         def updatedEmail = request?.JSON ?: params
         updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedEmail.emailType?.code = StringEscapeUtils.unescapeHtml4(updatedEmail.emailType?.code)
 
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
