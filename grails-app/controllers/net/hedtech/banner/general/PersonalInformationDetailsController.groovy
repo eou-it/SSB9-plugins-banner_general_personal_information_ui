@@ -5,6 +5,7 @@
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import grails.util.Holders
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
@@ -827,7 +828,7 @@ class PersonalInformationDetailsController {
             if (!model) {
                 model = [:] // Force it to be a map, which is what is expected to be rendered
             }
-            
+
             render model as JSON
         }
         catch (ApplicationException e) {
@@ -848,18 +849,21 @@ class PersonalInformationDetailsController {
 
         def updatedPerson = request?.JSON ?: params
         def person = [
-                pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
-                id: updatedPerson.id,
-                version: updatedPerson.version,
-                preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: updatedPerson.maritalStatus
+                pidm               : PersonalInformationControllerUtility.getPrincipalPidm(),
+                id                 : updatedPerson.id,
+                version            : updatedPerson.version,
+                preferenceFirstName: updatedPerson.preferenceFirstName
         ]
 
-        if(personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y') {
-            person.gender = updatedPerson.gender
-            person.pronoun = updatedPerson.pronoun
+        if (Holders?.config?.'gss.personalInfo.personalDetail.maritalStatus' == 2) {
+            person.maritalStatus = updatedPerson?.maritalStatus
         }
-
+        if (Holders?.config?.'gss.personalInfo.personalDetail.personalPronoun' == 2) {
+            person.pronoun = updatedPerson?.pronoun
+        }
+        if (Holders?.config?.'gss.personalInfo.personalDetail.genderIdentification' == 2) {
+            person.gender = updatedPerson?.gender
+        }
 
         try {
             personGenderPronounCompositeService.updatePerson(person)
@@ -945,7 +949,6 @@ class PersonalInformationDetailsController {
             model.isSecurityQandADisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'
             model.isPasswordChangeDisplayable =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PASSWORD_CHANGE, 'Y') == 'Y'
             model.isDisabilityStatusDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISABILITY_STATUS, 'Y') == 'Y'
-            model.isMaritalStatusUpdateable =      personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.MARITAL_STATUS, 'Y') == 'Y'
             model.ethnRaceMode =                   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ETHN_RACE_MODE,    PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.emailSectionMode =               personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.telephoneSectionMode =           personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
@@ -953,7 +956,10 @@ class PersonalInformationDetailsController {
             model.emergencyContactSectionMode =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.personalDetailsSectionMode =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
             model.additionalDetailsSectionMode =   (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN)||(model.isVetClassificationDisplayable)||(model.isDisabilityStatusDisplayable)
-            model.isGenderPronounDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y'
+            model.legalSexMode = Holders?.config?.'gss.personalInfo.personalDetail.legalSex'
+            model.maritalStatusMode = Holders?.config?.'gss.personalInfo.personalDetail.maritalStatus'
+            model.personalPronounMode = Holders?.config?.'gss.personalInfo.personalDetail.personalPronoun'
+            model.genderIdentificationMode = Holders?.config?.'gss.personalInfo,personalDetail.genderIdentification'
 
             def personConfig = PersonUtility.getPersonConfigFromSession()
             def noOfQuestions = personConfig[PersonalInformationConfigService.NO_OF_QSTNS]

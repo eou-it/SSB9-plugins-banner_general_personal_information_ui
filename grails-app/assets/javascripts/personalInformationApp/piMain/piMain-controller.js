@@ -367,6 +367,14 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.clearNotifications();
         };
 
+        $scope.isFieldViewable = function(configValue){
+            return configValue === 1 || configValue === 2
+        };
+
+        $scope.isFieldUpdatable = function(configValue) {
+            return configValue === 2
+        };
+
         var localeLang = $('meta[name=locale]').attr("content").split('-')[0];
         $scope.stringToDate = function(date) {
             var result = personalInformationService.stringToDate(date);
