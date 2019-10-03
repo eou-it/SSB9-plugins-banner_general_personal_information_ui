@@ -15,6 +15,14 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             notificationCenterService.clearNotifications();
         };
 
+        $scope.isFieldViewable = function(configValue){
+            return configValue === 1 || configValue === 2
+        };
+
+        $scope.isFieldUpdatable = function(configValue) {
+            return configValue === 2
+        };
+
         $scope.savePersonalDetails = function() {
             var handleResponse = function (response) {
                 if (response.failure) {

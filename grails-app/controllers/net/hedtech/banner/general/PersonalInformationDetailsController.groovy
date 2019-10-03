@@ -5,6 +5,7 @@
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import grails.util.Holders
 import net.hedtech.banner.exceptions.ApplicationException
 import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
@@ -49,6 +50,7 @@ class PersonalInformationDetailsController {
 
     def getMaskingRules() {
         def maskingRules = [:]
+
         try {
             maskingRules = PersonalInformationControllerUtility.getMaskingRule('PERSONALINFORMATION')
         } catch (ApplicationException e) {
@@ -841,13 +843,13 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            def model = personGenderPronounCompositeService.fetchPersonalDetails(pidm)
-
+            def model = personGenderPronounCompositeService.fetchPersonalDetails(pidm, personalInformationConfigService.getFieldDisplayConfigurationsHashMap())
             if (!model) {
                 model = [:] // Force it to be a map, which is what is expected to be rendered
             }
 
             render model as JSON
+
         }
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
@@ -857,35 +859,35 @@ class PersonalInformationDetailsController {
     def updatePersonalDetails() {
         try {
             checkActionPermittedPerConfiguration([
-                  name: PersonalInformationConfigService.PERS_DETAILS_MODE,
-                  minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
+                    name           : PersonalInformationConfigService.PERS_DETAILS_MODE,
+                    minRequiredMode: PersonalInformationConfigService.SECTION_UPDATEABLE
             ])
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
             return
         }
-
         def updatedPerson = request?.JSON ?: params
-        updatedPerson.maritalStatus?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.maritalStatus?.code)
+        updatedPerson?.maritalStatus?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.maritalStatus?.code)
+        updatedPerson?.pronoun?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.pronoun?.code)
+        updatedPerson?.gender?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.gender?.code)
         def person = [
-                pidm: PersonalInformationControllerUtility.getPrincipalPidm(),
-                id: updatedPerson.id,
-                version: updatedPerson.version,
-                preferenceFirstName: updatedPerson.preferenceFirstName,
-                maritalStatus: updatedPerson.maritalStatus
+                pidm               : PersonalInformationControllerUtility.getPrincipalPidm(),
+                id                 : updatedPerson.id,
+                version            : updatedPerson.version,
+                preferenceFirstName: updatedPerson.preferenceFirstName
         ]
 
-        if(personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y') {
-            updatedPerson.gender?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.gender?.code)
-            updatedPerson.pronoun?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.pronoun?.code)
-            person.gender = updatedPerson.gender
-            person.pronoun = updatedPerson.pronoun
-        }
-
+        //Only include fields which are authorized to be updated
+        personalInformationConfigService.getFieldDisplayConfigurationsHashMap().forEach({ key, value ->
+            if (personalInformationConfigService.isFieldUpdateable(value)){
+                if (updatedPerson.containsKey(key)){
+                    person.put(key, updatedPerson.get(key))
+                }
+            }
+        })
 
         try {
             personGenderPronounCompositeService.updatePerson(person)
-
             render([failure: false] as JSON)
         }
         catch (ApplicationException e) {
@@ -956,26 +958,30 @@ class PersonalInformationDetailsController {
     def getPiConfig() {
         def model = [:]
 
+        personalInformationConfigService.updateFieldDisplayConfigurations()
+
         try {
             model.isPreferredEmailUpdateable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PREF_EMAIL, 'Y') == 'Y'
             model.isProfilePicDisplayable =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PROFILE_PICTURE, 'Y') == 'Y'
             model.isOverviewAddressDisplayable =   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR, 'Y') == 'Y'
             model.isOverviewPhoneDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE, 'Y') == 'Y'
             model.isOverviewEmailDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL, 'Y') == 'Y'
-            model.isDirectoryProfileDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DIRECTORY_PROFILE, 'Y') == 'Y'
+            model.isDirectoryProfileDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DIRECTORY_PROFILE, 'Y') == 'Y'
             model.isVetClassificationDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y') == 'Y'
-            model.isSecurityQandADisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'
-            model.isPasswordChangeDisplayable =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PASSWORD_CHANGE, 'Y') == 'Y'
-            model.isDisabilityStatusDisplayable =  personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISABILITY_STATUS, 'Y') == 'Y'
-            model.isMaritalStatusUpdateable =      personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.MARITAL_STATUS, 'Y') == 'Y'
-            model.ethnRaceMode =                   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ETHN_RACE_MODE,    PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emailSectionMode =               personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode =           personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE,        PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode =             personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emergencyContactSectionMode =    personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE,         PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.personalDetailsSectionMode =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.additionalDetailsSectionMode =   (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN)||(model.isVetClassificationDisplayable)||(model.isDisabilityStatusDisplayable)
-            model.isGenderPronounDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.GENDER_PRONOUN, 'Y') == 'Y'
+            model.isSecurityQandADisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'
+            model.isPasswordChangeDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PASSWORD_CHANGE, 'Y') == 'Y'
+            model.isDisabilityStatusDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISABILITY_STATUS, 'Y') == 'Y'
+            model.ethnRaceMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ETHN_RACE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emailSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.telephoneSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.addressSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.personalDetailsSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
+            model.additionalDetailsSectionMode = (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN) || (model.isVetClassificationDisplayable) || (model.isDisabilityStatusDisplayable)
+            model.personalPronounMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.PRONOUN_MODE)
+            model.maritalStatusMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.MARITAL_STATUS_MODE)
+            model.genderIdentificationMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.GENDER_MODE)
+            model.legalSexMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.LEGAL_SEX_MODE)
 
             def personConfig = PersonUtility.getPersonConfigFromSession()
             def noOfQuestions = personConfig[PersonalInformationConfigService.NO_OF_QSTNS]

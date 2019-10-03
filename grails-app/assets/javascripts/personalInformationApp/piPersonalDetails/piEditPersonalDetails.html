@@ -9,45 +9,43 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 aria-label="{{'personInfo.message.notUpdateablePersonalDetails'|i18n}}"></button>
     </h2>
     <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
-    <div class="row pad-dialog-lr">
-        <div class="clearfix hidden-xs"></div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
-            <input ng-model="userName.firstName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="firstName"
-                aria-disabled="true" disabled>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label" for="middleName">{{'personInfo.label.middleName'|i18n}}</label><br>
-            <input ng-model="userName.middleName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="middleName"
-                aria-disabled="true" disabled>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label" for="lastName">{{'personInfo.label.lastName'|i18n}}</label><br>
-            <input ng-model="userName.lastName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="lastName"
-                aria-disabled="true" disabled>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label" for="dateOfBirth">{{'personInfo.label.dateOfBirth'|i18n}}</label><br>
-            <input class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
-                value="{{stringToDate(personalDetails.birthDate)|date:'longDate'}}" id="dateOfBirth" aria-disabled="true" disabled>
-        </div>
-        <div class="sm-fix col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
-            <genssb-xe-dropdown ng-if="piConfig.isMaritalStatusUpdateable" fetch-function="getMaritalStatuses"
-                                model-holder="personalDetails" model-name="maritalStatus" show-na="true"
-                                dropdown-placeholder="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}"
-                                focus-text="{{'personInfo.label.maritalStatus'|i18n}}">
-            </genssb-xe-dropdown>
-            <input ng-if="!piConfig.isMaritalStatusUpdateable" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
-                   value="{{personalDetails.maritalStatus.description}}" id="maritalStatus" aria-disabled="true" disabled>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <label class="input-field-label" for="legalSex">{{'personInfo.label.legalSex'|i18n}}</label><br>
-            <input class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
-                value="{{sexDescription|i18n}}" id="legalSex" aria-disabled="true" disabled>
-        </div>
-        <div class="clearfix hidden-xs"></div>
-        <div class="edit-flex-div">
+        <div class="row pad-dialog-lr">
+            <div class="clearfix hidden-xs"></div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label" for="firstName">{{'personInfo.label.firstName'|i18n}}</label><br>
+                <input ng-model="userName.firstName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="firstName"
+                       aria-disabled="true" disabled>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label" for="middleName">{{'personInfo.label.middleName'|i18n}}</label><br>
+                <input ng-model="userName.middleName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="middleName"
+                       aria-disabled="true" disabled>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label" for="lastName">{{'personInfo.label.lastName'|i18n}}</label><br>
+                <input ng-model="userName.lastName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" id="lastName"
+                       aria-disabled="true" disabled>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label" for="dateOfBirth">{{'personInfo.label.dateOfBirth'|i18n}}</label><br>
+                <input class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       value="{{stringToDate(personalDetails.birthDate)|date:'longDate'}}" id="dateOfBirth" aria-disabled="true" disabled>
+            </div>
+            <div ng-if="isFieldViewable(piConfig.maritalStatusMode)" class="sm-fix col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label">{{'personInfo.label.maritalStatus'|i18n}}</label><br>
+                <genssb-xe-dropdown ng-if="isFieldUpdatable(piConfig.maritalStatusMode)" fetch-function="getMaritalStatuses"
+                                    model-holder="personalDetails" model-name="maritalStatus" show-na="true"
+                                    dropdown-placeholder="{{'personInfo.placeholder.selectMaritalStatus'|i18n}}"
+                                    focus-text="{{'personInfo.label.maritalStatus'|i18n}}">
+                </genssb-xe-dropdown>
+                <input ng-if="!isFieldUpdatable(piConfig.maritalStatusMode)" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       value="{{personalDetails.maritalStatus.description}}" id="maritalStatus" aria-disabled="true" disabled>
+            </div>
+            <div ng-if="piConfig.legalSexMode === 1" class="col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label" for="legalSex">{{'personInfo.label.legalSex'|i18n}}</label><br>
+                <input class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       value="{{sexDescription|i18n}}" id="legalSex" aria-disabled="true" disabled>
+            </div>
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <label class="input-field-label" for="preferredFirstName">{{'personInfo.label.preferredFirstName'|i18n}}</label><br>
                 <input ng-model="personalDetails.preferenceFirstName" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
@@ -55,31 +53,30 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 <p class="input-field-label mobile-errors" ng-class="[(!!preferredFirstNameErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{preferredFirstNameErrMsg|i18n}}</p>
             </div>
-            <div ng-if="piConfig.isGenderPronounDisplayable" class="sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
-                <div class="unflex">
-                    <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
-                    <genssb-xe-dropdown fetch-function="getPronouns" model-holder="personalDetails" model-name="pronoun"
-                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}"
-                                        focus-text="{{'personInfo.label.personalPronoun'|i18n}}">
-                    </genssb-xe-dropdown>
-                </div>
+            <div ng-if="isFieldViewable(piConfig.personalPronounMode)" class="sm-fix col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label">{{'personInfo.label.personalPronoun'|i18n}}</label><br>
+                <genssb-xe-dropdown ng-if="isFieldUpdatable(piConfig.personalPronounMode)" fetch-function="getPronouns" model-holder="personalDetails" model-name="pronoun"
+                                    show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectPersonalPronoun'|i18n}}"
+                                    focus-text="{{'personInfo.label.personalPronoun'|i18n}}">
+                </genssb-xe-dropdown>
+                <input ng-if="!isFieldUpdatable(piConfig.personalPronounMode)" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       value="{{personalDetails.pronoun.description}}" id="personalPronoun" aria-disabled="true" disabled>
             </div>
-            <div ng-if="piConfig.isGenderPronounDisplayable" class="sm-fix col-sm-12 col-md-4 col-lg-4 flex-end">
-                <div class="unflex">
-                    <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
-                    <genssb-xe-dropdown fetch-function="getGenders" model-holder="personalDetails" model-name="gender"
-                                        show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}"
-                                        focus-text="{{'personInfo.label.genderIdentification'|i18n}}">
-                    </genssb-xe-dropdown>
-                </div>
+            <div ng-if="isFieldViewable(piConfig.genderIdentificationMode)" class="sm-fix col-sm-12 col-md-4 col-lg-4">
+                <label class="input-field-label">{{'personInfo.label.genderIdentification'|i18n}}</label><br>
+                <genssb-xe-dropdown ng-if="isFieldUpdatable(piConfig.genderIdentificationMode)" fetch-function="getGenders" model-holder="personalDetails" model-name="gender"
+                                    show-na="true" dropdown-placeholder="{{'personInfo.placeholder.selectGenderIdentification'|i18n}}"
+                                    focus-text="{{'personInfo.label.genderIdentification'|i18n}}">
+                </genssb-xe-dropdown>
+                <input ng-if="!isFieldUpdatable(piConfig.genderIdentificationMode)" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       value="{{personalDetails.gender.description}}" id="genderIdentification" aria-disabled="true" disabled>
+            </div>
+            <p ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]" class="input-field-label mobile-errors response-err"
+               role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
+            <div id="personalDetailsErr" class="visuallyhidden" tabindex="-1">
+                <span>{{personalDetailsErrMsg}}</span>
             </div>
         </div>
-        <p ng-class="[(!!personalDetailsErrMsg ? 'field-error error-font-size' : 'no-display')]" class="input-field-label mobile-errors response-err"
-           role="alert" aria-live="assertive">{{personalDetailsErrMsg}}</p>
-        <div id="personalDetailsErr" class="visuallyhidden" tabindex="-1">
-            <span>{{personalDetailsErrMsg}}</span>
-        </div>
-    </div>
     <div class="dialog-footer-margin pi-modal-footer">
         <button ng-click="cancelModal()" ng-class="['two-btn-layout']" class="dialog-btn cancel-btn">
             {{'personInfo.label.button.cancel'|i18n}}

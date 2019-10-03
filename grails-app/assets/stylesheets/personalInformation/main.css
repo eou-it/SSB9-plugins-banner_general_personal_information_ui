@@ -434,7 +434,7 @@ a.pi-icon-link:focus {
 /* END Overrides for xe-ui-components.css/_select.scss */
 
 .select2-container {
-    height: 48px;
+    height: 46px;
     width: 100%;
     margin-bottom: 0px;
 }

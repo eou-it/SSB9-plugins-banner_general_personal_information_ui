@@ -4,6 +4,7 @@
 package net.hedtech.banner.general
 
 import grails.gorm.transactions.Transactional
+import grails.util.Holders
 
 
 @Transactional
@@ -11,41 +12,36 @@ class PersonalInformationConfigService extends BasePersonConfigService {
 
     static final String PERSONAL_INFO_CONFIG_CACHE_NAME = 'generalPersonalInfoConfig'
     static final String PERSONAL_INFO_PROCESS_CODE = 'PERSONAL_INFORMATION_SSB'
-
     static final String OVERVIEW_ADDR = 'OVERVIEW.ADDRESS.TYPE'
     static final String OVERVIEW_PHONE = 'OVERVIEW.PHONE.TYPE'
     static final String DISPLAY_OVERVIEW_ADDR = 'DISPLAY.OVERVIEW.ADDRESS'
     static final String DISPLAY_OVERVIEW_PHONE = 'DISPLAY.OVERVIEW.PHONE'
     static final String DISPLAY_OVERVIEW_EMAIL = 'DISPLAY.OVERVIEW.EMAIL'
     static final String PROFILE_PICTURE = 'DISPLAY.PROFILE.PICTURE'
-
-    static final String MARITAL_STATUS = 'MARITAL.STATUS.UPDATABILITY'
     static final String PREF_EMAIL = 'PREFERRED.EMAIL.UPDATABILITY'
-
     static final String PERS_DETAILS_MODE = 'PERSONAL.DETAIL.SECTION.MODE'
     static final String EMAIL_MODE = 'EMAIL.SECTION.MODE'
     static final String PHONE_MODE = 'PHONE.SECTION.MODE'
     static final String ADDR_MODE = 'ADDRESS.SECTION.MODE'
     static final String EMER_MODE = 'EMERGENCY.CONTACT.SECTION.MODE'
-
     static final String ETHN_RACE_MODE = 'ETHNICITY.RACE.MODE'
     static final String VETERANS_CLASSIFICATION = 'ENABLE.VETERAN.CLASSIFICATION'
     static final String DISABILITY_STATUS = 'ENABLE.DISABILITY.STATUS'
-
     static final String DIRECTORY_PROFILE = 'ENABLE.DIRECTORY.PROFILE'
     static final String SECURITY_QA_CHANGE = 'ENABLE.SECURITY.QA.CHANGE'
     static final String PASSWORD_CHANGE = 'ENABLE.PASSWORD.CHANGE'
-
     static final String NO_OF_QSTNS = 'GUBPPRF_NO_OF_QSTNS'
-
-    static final String GENDER_PRONOUN = 'ENABLE.GENDER.IDENTITY.PRONOUN'
-
     static final String SECTION_HIDDEN = '0'
     static final String SECTION_READONLY = '1'
     static final String SECTION_UPDATEABLE = '2'
-
     static final String YES = 'Y'
     static final String NO = 'N'
+    static final String GENDER_MODE = "gender"
+    static final String PRONOUN_MODE = "pronoun"
+    static final String LEGAL_SEX_MODE = "sex"
+    static final String MARITAL_STATUS_MODE = "maritalStatus"
+
+    HashMap<String, Integer> fieldDisplayConfigurations = createFieldDisplayConfigurations()
 
     @Override
     protected String getCacheName() {
@@ -61,5 +57,33 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     protected List getExcludedProperties() {
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
         return [OVERVIEW_ADDR, OVERVIEW_PHONE]
+    }
+
+    protected getFieldDisplayConfigurationsHashMap(){
+        updateFieldDisplayConfigurations()
+        return fieldDisplayConfigurations
+    }
+
+    protected def getFieldConfiguration (mode) {
+        return fieldDisplayConfigurations.get(mode)
+    }
+
+    protected isFieldUpdateable(field) {
+         return field == 2
+    }
+
+    protected updateFieldDisplayConfigurations() {
+        fieldDisplayConfigurations = createFieldDisplayConfigurations()
+    }
+
+    private createFieldDisplayConfigurations() {
+        return new HashMap<String, Integer>() {
+            {
+                put(GENDER_MODE, Holders?.config?.'personalInfo.personalDetail.genderIdentification' as Integer)
+                put(PRONOUN_MODE, Holders?.config?.'personalInfo.personalDetail.personalPronoun' as Integer)
+                put(LEGAL_SEX_MODE, Holders?.config?.'personalInfo.personalDetail.legalSex' as Integer)
+                put(MARITAL_STATUS_MODE, Holders?.config?.'personalInfo.personalDetail.maritalStatus' as Integer)
+            }
+        }
     }
 }
