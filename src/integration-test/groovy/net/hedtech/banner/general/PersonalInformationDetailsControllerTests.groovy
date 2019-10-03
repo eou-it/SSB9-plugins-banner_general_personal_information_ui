@@ -1435,8 +1435,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetails() {
         SSBSetUp('GDP000005', '111111')
-        configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 1)
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
+
 
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
@@ -1453,8 +1454,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetailsWithLegalSexAndMaritalStatusNotUpdateable(){
         SSBSetUp('GDP000005', '111111')
-        configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, 0)
-        configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 0)
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 0
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = 0
 
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
@@ -1468,8 +1469,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetailsWithGenderAndPronounNotUpdateable() {
         SSBSetUp('GDP000005', '111111')
-        configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 0)
-        configService.fieldDisplayConfigurations.replace(configService.PRONOUN_MODE, 0)
+       // configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 0)
+       // configService.fieldDisplayConfigurations.replace(configService.PRONOUN_MODE, 0)
+        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 0
+        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 0
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
@@ -1481,8 +1484,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetailsWithInvalidConfigurations(){
         SSBSetUp('GDP000005', '111111')
-        configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, null)
-        configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 55)
+        //configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, null)
+        //configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 55)
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 55
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = null
 
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
@@ -1586,7 +1591,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testUpdatePersonalDetailsWithGndrConfigSetToOff() {
         SSBSetUp('GDP000005', '111111')
-        configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 0)//Set gender identification to disabled
+        //configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 0)//Set gender identification to disabled
+        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 0
 
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         def details = controller.personBasicPersonBaseService.getPersonalDetailsForPersonalInformation(pidm)
@@ -1635,10 +1641,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         controller.getPiConfig()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
-        configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.PRONOUN_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 1)
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
+        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 2
+        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
 
         assertNotNull data
         assertTrue data.isPreferredEmailUpdateable
@@ -1671,10 +1677,10 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def sql
         sql = new Sql(sessionFactory.getCurrentSession().connection())
         sql.executeUpdate("update GUBPPRF set GUBPPRF_NO_OF_QSTNS = ?", [0])
-        configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.PRONOUN_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, 2)
-        configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 1)
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
+        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 2
+        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
 
         controller.getPiConfig()
         def dataForNullCheck = controller.response.contentAsString

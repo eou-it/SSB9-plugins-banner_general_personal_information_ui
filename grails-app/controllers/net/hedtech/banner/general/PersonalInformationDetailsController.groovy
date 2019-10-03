@@ -843,7 +843,7 @@ class PersonalInformationDetailsController {
         def pidm = PersonalInformationControllerUtility.getPrincipalPidm()
 
         try {
-            def model = personGenderPronounCompositeService.fetchPersonalDetailsWithoutHiddenFields(pidm, personalInformationConfigService.getFieldDisplayConfigurationsHashMap())
+            def model = personGenderPronounCompositeService.fetchPersonalDetails(pidm, personalInformationConfigService.getFieldDisplayConfigurationsHashMap())
             if (!model) {
                 model = [:] // Force it to be a map, which is what is expected to be rendered
             }
