@@ -4,6 +4,7 @@
 package net.hedtech.banner.general
 
 import grails.gorm.transactions.Transactional
+import grails.util.Holders
 
 
 @Transactional
@@ -35,6 +36,12 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     static final String SECTION_UPDATEABLE = '2'
     static final String YES = 'Y'
     static final String NO = 'N'
+    static final String GENDER_MODE = "gender"
+    static final String PRONOUN_MODE = "pronoun"
+    static final String LEGAL_SEX_MODE = "sex"
+    static final String MARITAL_STATUS_MODE = "maritalStatus"
+
+    HashMap<String, Integer> fieldDisplayConfigurations = createFieldDisplayConfigurations()
 
     @Override
     protected String getCacheName() {
@@ -50,5 +57,33 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     protected List getExcludedProperties() {
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
         return [OVERVIEW_ADDR, OVERVIEW_PHONE]
+    }
+
+    protected getFieldDisplayConfigurationsHashMap(){
+        updateFieldDisplayConfigurations()
+        return fieldDisplayConfigurations
+    }
+
+    protected def getFieldConfiguration (mode) {
+        return fieldDisplayConfigurations.get(mode)
+    }
+
+    protected isFieldUpdateable(field) {
+         return field == 2
+    }
+
+    protected updateFieldDisplayConfigurations() {
+        fieldDisplayConfigurations = createFieldDisplayConfigurations()
+    }
+
+    private createFieldDisplayConfigurations() {
+        return new HashMap<String, Integer>() {
+            {
+                put(GENDER_MODE, Holders?.config?.'personalInfo.personalDetail.genderIdentification' as Integer)
+                put(PRONOUN_MODE, Holders?.config?.'personalInfo.personalDetail.personalPronoun' as Integer)
+                put(LEGAL_SEX_MODE, Holders?.config?.'personalInfo.personalDetail.legalSex' as Integer)
+                put(MARITAL_STATUS_MODE, Holders?.config?.'personalInfo.personalDetail.maritalStatus' as Integer)
+            }
+        }
     }
 }

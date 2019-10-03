@@ -14,14 +14,14 @@ class BootStrap {
 
     def init = { servletContext ->
         if (Environment.current == Environment.TEST) {
-            registerJSONMarshallers()
+            registerJsonMarshallersForTesting()
         }
     }
     def destroy = {
     }
 
     //Used by integration tests for parsing dates when rendering as JSON.
-    private def registerJSONMarshallers() {
+    private def registerJsonMarshallersForTesting() {
         JSON.registerObjectMarshaller(Date) {
            dateConverterService.parseGregorianToDefaultCalendar(LocalizeUtil.formatDate(it))
         }
