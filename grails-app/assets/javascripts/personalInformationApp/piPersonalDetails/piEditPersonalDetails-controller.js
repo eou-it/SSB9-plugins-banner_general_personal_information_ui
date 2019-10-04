@@ -65,6 +65,11 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
         $scope.getGenders = piCrudService.getListFn('Gender');
         $scope.getPronouns = piCrudService.getListFn('Pronoun');
 
+        $scope.htmlDecode = function (string) {
+            var doc = new DOMParser().parseFromString(string, "text/html");
+            return doc.documentElement.textContent;
+        };
+
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);
 
