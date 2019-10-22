@@ -29,6 +29,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     static final String ETHN_RACE_MODE = 'personalInfo.additionalDetails.ethnicityRaceMode'
     static final String VETERANS_CLASSIFICATION = 'personalInfo.additionalDetails.veteranClassificationMode'
     static final String DISABILITY_STATUS = 'personalInfo.additionalDetails.disabilityStatusMode'
+    static final String ADDITIONAL_DETAILS_MODE = 'personalInfo.additionalDetailsSectionMode'
     static final String DIRECTORY_PROFILE = 'personalInfo.enableDirectoryProfile'
     static final String SECURITY_QA_CHANGE = 'personalInfo.enableSecurityQaChange'
     static final String PASSWORD_CHANGE = 'personalInfo.enablePasswordChange'
@@ -68,11 +69,11 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * In GUROCFG, these codes and priorities are entered as JSON. After retrieving this JSON from
      * Holders, it will be mapped to a LinkedHashMap.
      *
-     * @param configurationName The configuration name as listed in GUROCFG.
+     * @param String configurationName The configuration name as listed in GUROCFG.
      * @return LinkedHashMap <String, Integer> which contains key to value pairs of a cross-reference code
      * to the priority which these items should appear depending on what information the user has.
      */
-    protected LinkedHashMap getSequenceConfiguration(configurationName) {
+    protected LinkedHashMap getSequenceConfiguration(String configurationName) {
         try {
             def mapper = new ObjectMapper()
             return mapper.readValue(Holders?.config?.get(configurationName).toUpperCase(), LinkedHashMap.class) as LinkedHashMap
@@ -83,36 +84,36 @@ class PersonalInformationConfigService extends BasePersonConfigService {
         }
     }
 
-    protected def getFieldDisplayConfigurationsHashMap() {
+    protected getFieldDisplayConfigurationsHashMap() {
         updateFieldDisplayConfigurations()
         return fieldDisplayConfigurations
     }
 
-    protected def getFieldConfiguration(mode) {
+    protected getFieldConfiguration(mode) {
         return fieldDisplayConfigurations.get(mode)
     }
 
     //If the field is not a valid value, then set the field as default (updatable).
-    protected static def isFieldUpdateable(field) {
+    protected static isFieldUpdateable(field) {
         return (field == SECTION_HIDDEN || field == SECTION_READONLY || field == SECTION_UPDATEABLE) ? (field == SECTION_UPDATEABLE) : true
     }
 
     //If the field is not a valid value, then set the field as default (displayable).
-    protected static def isFieldDisplayable(field) {
+    protected static isFieldDisplayable(field) {
         return (field == SECTION_HIDDEN || field == SECTION_READONLY || field == SECTION_UPDATEABLE) ? (field == SECTION_READONLY || field == SECTION_UPDATEABLE) : true
     }
 
     //If field is not a valid value, then set the field as default (enabled).
-    protected static def isFieldEnabled(field) {
+    protected static isFieldEnabled(field) {
         return (field == SECTION_HIDDEN || field == SECTION_READONLY) ? field == SECTION_READONLY : true
     }
 
     //If the field is not a valid value, then set the field as default (updatable).
-    protected static def getMode(field) {
+    protected static getMode(field) {
         return (field == SECTION_HIDDEN || field == SECTION_READONLY || field == SECTION_UPDATEABLE) ? field as Integer : 2
     }
 
-    protected def updateFieldDisplayConfigurations() {
+    protected updateFieldDisplayConfigurations() {
         fieldDisplayConfigurations = createFieldDisplayConfigurations()
     }
 
@@ -126,10 +127,10 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * 1: Visible and not updatable OR enabled and updatable (depending on the configuration).
      * 2: Visible and updatable.
      *
-     * @param Map model - Map of Personal Information configuration names to configuration values.
+     * @param model - A map of Personal Information configuration names to configuration values.
      * @return Map - Personal Information Configuration map updated with values retrieved from Holders.
      */
-    protected def getUpdatedPersonalInformationConfigurations(model) {
+    protected getUpdatedPersonalInformationConfigurations(model) {
         model.isPreferredEmailUpdateable = isFieldEnabled(Holders?.config?.'personalInfo.prefEmailUpdatability')
         model.isProfilePicDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewPicture')
         model.isOverviewAddressDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewAddress')
@@ -156,7 +157,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
         model
     }
 
-    protected def getOtherSectionConfigurations(model, numberOfSecurityQuestions) {
+    protected getOtherSectionConfigurations(model, numberOfSecurityQuestions) {
         model.isSecurityQandADisplayable = model.isSecurityQandADisplayable && numberOfSecurityQuestions > 0
         model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
         model
@@ -167,10 +168,10 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * within the section, the section's configuration is returned. If the individual item is
      * more restrictive, then the item's configuration is returned.
      *
-     * @param String setting - The configuration name in GUROCFG.
+     * @param Integer setting - The configuration value for a field within the Additional Details section.
      * @return Integer
      */
-    protected static getMostRestrictiveAdditionalDetailsSetting(setting) {
+    protected static getMostRestrictiveAdditionalDetailsSetting(Integer setting) {
         def additionalDetailsSectionMode = getMode(Holders?.config?.'personalInfo.additionalDetailsSectionMode')
         setting = getMode(setting)
         return setting < additionalDetailsSectionMode ? setting : additionalDetailsSectionMode
@@ -185,7 +186,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      *
      * @param model - A map which should contain the following keys; ethnRaceMode, isVetClassificationDisplayable and isDisabilityStatusDisplayable.
      */
-    protected static def getAdditionalDetailsSectionMode(model) {
+    protected static getAdditionalDetailsSectionMode(model) {
         return ((!isFieldDisplayable(model.ethnRaceMode) && !model.isVetClassificationDisplayable && !model.isDisabilityStatusDisplayable) ?
                 SECTION_HIDDEN :
                 Holders?.config?.'personalInfo.additionalDetailsSectionMode')
@@ -194,7 +195,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     /**
      * @return HashMap<String, Integer>  with updated values from Holders for Personal Information Personal Details configurations.
      */
-    private def createFieldDisplayConfigurations() {
+    private createFieldDisplayConfigurations() {
         return new HashMap<String, Integer>() {
             {
                 put(GENDER_MODE, getMode(Holders?.config?.'personalInfo.personalDetail.genderIdentification'))
@@ -206,7 +207,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     }
 
     //Can only be set to 0 or 1 and returns an integer
-    private def getLegalSexMode(legalSexConfiguration) {
+    private getLegalSexMode(legalSexConfiguration) {
         return (legalSexConfiguration == SECTION_HIDDEN || legalSexConfiguration == SECTION_READONLY) ? legalSexConfiguration as Integer : 1
     }
 }

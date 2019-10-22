@@ -857,21 +857,19 @@ class PersonalInformationDetailsController {
      *When either of these are disabled in GUROCFG, they should be removed from the model
      *so they are not revealed to the front-end or though http requests.
      */
-    private static def removeUnauthorizedFieldsFromPersonalDetails(model){
-        def updatedModel = model
+    private static removeUnauthorizedFieldsFromPersonalDetails(model){
         def personalDetailsSectionEnabled = Holders?.config?.'personalInfo.personalDetailSectionMode' != 0
         def veteranClassificationFieldEnabled = Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' != 0
-
         if (!personalDetailsSectionEnabled){
-            updatedModel = removePersonalDetailsSectionFieldsFromModel(updatedModel)
+            model = removePersonalDetailsSectionFieldsFromModel(model)
         }
         if(!veteranClassificationFieldEnabled){
-            updatedModel = removeVeteranClassificationFromModel(updatedModel)
+            model = removeVeteranClassificationFromModel(model)
         }
-        updatedModel
+        model
     }
 
-    private static def removePersonalDetailsSectionFieldsFromModel(model){
+    private static removePersonalDetailsSectionFieldsFromModel(model){
         def personalDetailsSectionFields = ['preferenceFirstName', 'sex', 'birthDate', 'maritalStatus',
         'gender', 'pronoun']
         personalDetailsSectionFields.each {field ->
@@ -880,7 +878,7 @@ class PersonalInformationDetailsController {
         model
     }
 
-    private static def removeVeteranClassificationFromModel(model){
+    private static removeVeteranClassificationFromModel(model){
         def veteranClassificationFields = ['activeDutySeprDate', 'armedServiceMedalVetIndicator', 'sdvetIndicator',
         'vetcFileNumber', 'veraIndicator']
         veteranClassificationFields.each {field ->
@@ -1060,7 +1058,8 @@ class PersonalInformationDetailsController {
         } else if (param.name == PersonalInformationConfigService.PHONE_MODE) {
             associatedMode = Holders?.config?.get(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE)
         } else if (param.name == PersonalInformationConfigService.PERS_DETAILS_MODE) {
-            associatedMode = Holders?.config?.get(PersonalInformationConfigService.VETERANS_CLASSIFICATION)
+            //Get the more restrictive setting out of the additional details section or the veterans classification field.
+            associatedMode = PersonalInformationConfigService.getMostRestrictiveAdditionalDetailsSetting(Holders?.config?.get(PersonalInformationConfigService.VETERANS_CLASSIFICATION))
         } else
             associatedMode = 'N'
 
@@ -1074,7 +1073,7 @@ class PersonalInformationDetailsController {
         }
     }
 
-    private static def modeIsNotSetToEnabled(mode){
+    private static modeIsNotSetToEnabled(mode){
         return mode != 'Y' && mode != 1 && mode != 2
     }
 
