@@ -87,10 +87,7 @@ class PersonalInformationDetailsController {
             }
 
             model.addresses = []
-
-            // Define configuration to fetch phone sequence from GORICCR
-            def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: PersonalInformationConfigService.OVERVIEW_ADDR]
-            def addressDisplaySequence = PersonUtility.getDisplaySequence('addressDisplaySequence', sequenceConfig)
+            def addressDisplaySequence = personalInformationConfigService.getSequenceConfiguration(PersonalInformationConfigService.OVERVIEW_ADDR)
             def personAddress
 
             addresses.each { it ->
@@ -98,7 +95,7 @@ class PersonalInformationDetailsController {
                 personAddress.id = it.id
                 personAddress.version = it.version
                 personAddress.addressType = [code: it.addressType, description: it.addressTypeDescription]
-                personAddress.displayPriority = addressDisplaySequence[personAddress.addressType.code]
+                personAddress.displayPriority = addressDisplaySequence ? addressDisplaySequence[personAddress.addressType.code] : null
                 personAddress.fromDate = it.fromDate
                 personAddress.toDate = it.toDate
                 personAddress.isFuture = isDateInFuture(it.fromDate)
@@ -429,10 +426,8 @@ class PersonalInformationDetailsController {
 
         if (pidm) {
             try {
-                // Define configuration to fetch phone sequence from GORICCR
-                def sequenceConfig = [processCode: 'PERSONAL_INFORMATION_SSB', settingName: PersonalInformationConfigService.OVERVIEW_PHONE]
-
-                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, sequenceConfig, true)
+                model.telephones = personTelephoneService.fetchActiveTelephonesByPidm(pidm, null, true,
+                        personalInformationConfigService.getSequenceConfiguration(PersonalInformationConfigService.OVERVIEW_PHONE))
                 personalInformationCompositeService.populateTelephoneUpdateableStatus(model.telephones, getRoles())
             } catch (ApplicationException e) {
                 render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
@@ -844,6 +839,7 @@ class PersonalInformationDetailsController {
 
         try {
             def model = personGenderPronounCompositeService.fetchPersonalDetails(pidm, personalInformationConfigService.getFieldDisplayConfigurationsHashMap())
+            model = removeUnauthorizedFieldsFromPersonalDetails(model)
             if (!model) {
                 model = [:] // Force it to be a map, which is what is expected to be rendered
             }
@@ -854,6 +850,43 @@ class PersonalInformationDetailsController {
         catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
         }
+    }
+
+    /**
+     *Get personal details returns a combination of personal details and veteran classification.
+     *When either of these are disabled in GUROCFG, they should be removed from the model
+     *so they are not revealed to the front-end or though http requests.
+     */
+    private static def removeUnauthorizedFieldsFromPersonalDetails(model){
+        def updatedModel = model
+        def personalDetailsSectionEnabled = Holders?.config?.'personalInfo.personalDetailSectionMode' != 0
+        def veteranClassificationFieldEnabled = Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' != 0
+
+        if (!personalDetailsSectionEnabled){
+            updatedModel = removePersonalDetailsSectionFieldsFromModel(updatedModel)
+        }
+        if(!veteranClassificationFieldEnabled){
+            updatedModel = removeVeteranClassificationFromModel(updatedModel)
+        }
+        updatedModel
+    }
+
+    private static def removePersonalDetailsSectionFieldsFromModel(model){
+        def personalDetailsSectionFields = ['preferenceFirstName', 'sex', 'birthDate', 'maritalStatus',
+        'gender', 'pronoun']
+        personalDetailsSectionFields.each {field ->
+            model?.remove(field)
+        }
+        model
+    }
+
+    private static def removeVeteranClassificationFromModel(model){
+        def veteranClassificationFields = ['activeDutySeprDate', 'armedServiceMedalVetIndicator', 'sdvetIndicator',
+        'vetcFileNumber', 'veraIndicator']
+        veteranClassificationFields.each {field ->
+            model?.remove(field)
+        }
+        model
     }
 
     def updatePersonalDetails() {
@@ -957,32 +990,9 @@ class PersonalInformationDetailsController {
 
     def getPiConfig() {
         def model = [:]
-
         personalInformationConfigService.updateFieldDisplayConfigurations()
-
         try {
-            model.isPreferredEmailUpdateable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PREF_EMAIL, 'Y') == 'Y'
-            model.isProfilePicDisplayable =        personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PROFILE_PICTURE, 'Y') == 'Y'
-            model.isOverviewAddressDisplayable =   personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR, 'Y') == 'Y'
-            model.isOverviewPhoneDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE, 'Y') == 'Y'
-            model.isOverviewEmailDisplayable =     personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL, 'Y') == 'Y'
-            model.isDirectoryProfileDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DIRECTORY_PROFILE, 'Y') == 'Y'
-            model.isVetClassificationDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y') == 'Y'
-            model.isSecurityQandADisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.SECURITY_QA_CHANGE, 'Y') == 'Y'
-            model.isPasswordChangeDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PASSWORD_CHANGE, 'Y') == 'Y'
-            model.isDisabilityStatusDisplayable = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISABILITY_STATUS, 'Y') == 'Y'
-            model.ethnRaceMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ETHN_RACE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emailSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMAIL_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.telephoneSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PHONE_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.addressSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.ADDR_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.emergencyContactSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.EMER_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.personalDetailsSectionMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.PERS_DETAILS_MODE, PersonalInformationConfigService.SECTION_UPDATEABLE)
-            model.additionalDetailsSectionMode = (model.ethnRaceMode != PersonalInformationConfigService.SECTION_HIDDEN) || (model.isVetClassificationDisplayable) || (model.isDisabilityStatusDisplayable)
-            model.personalPronounMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.PRONOUN_MODE)
-            model.maritalStatusMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.MARITAL_STATUS_MODE)
-            model.genderIdentificationMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.GENDER_MODE)
-            model.legalSexMode = personalInformationConfigService.getFieldConfiguration(personalInformationConfigService.LEGAL_SEX_MODE)
-
+            model = personalInformationConfigService.getUpdatedPersonalInformationConfigurations(model)
             def personConfig = PersonUtility.getPersonConfigFromSession()
             def noOfQuestions = personConfig[PersonalInformationConfigService.NO_OF_QSTNS]
             if(noOfQuestions == null) {
@@ -993,10 +1003,7 @@ class PersonalInformationDetailsController {
                 personConfig[PersonalInformationConfigService.NO_OF_QSTNS] = noOfQuestions
                 PersonUtility.setPersonConfigInSession(personConfig)
             }
-
-            model.isSecurityQandADisplayable = model.isSecurityQandADisplayable && noOfQuestions > 0
-            model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
-
+            model = personalInformationConfigService.getOtherSectionConfigurations(model, noOfQuestions)
             render model as JSON
         }
         catch (ApplicationException e) {
@@ -1042,26 +1049,33 @@ class PersonalInformationDetailsController {
         // in the UI in the first place, however, to prevent spoofing, etc. we make a check here as well.)
         def SECTION_UPDATEABLE = PersonalInformationConfigService.SECTION_UPDATEABLE
         def mode = personalInformationConfigService.getParamFromSession(param.name, SECTION_UPDATEABLE)
+        if (!mode){
+            mode = Holders?.config?.get(param.name)
+        }
         def associatedMode   //query even if hidden if associated entity is displayable
         if (param.name == PersonalInformationConfigService.EMAIL_MODE) {
-            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL, 'Y')
+            associatedMode = Holders?.config?.get(PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL)
         } else if (param.name == PersonalInformationConfigService.ADDR_MODE) {
-            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR, 'Y')
+            associatedMode = Holders?.config?.get(PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR)
         } else if (param.name == PersonalInformationConfigService.PHONE_MODE) {
-            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE, 'Y')
+            associatedMode = Holders?.config?.get(PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE)
         } else if (param.name == PersonalInformationConfigService.PERS_DETAILS_MODE) {
-            associatedMode = personalInformationConfigService.getParamFromSession(PersonalInformationConfigService.VETERANS_CLASSIFICATION, 'Y')
+            associatedMode = Holders?.config?.get(PersonalInformationConfigService.VETERANS_CLASSIFICATION)
         } else
             associatedMode = 'N'
 
-        if (mode != 'Y' ) {
-            if (mode == 'N' || (mode == PersonalInformationConfigService.SECTION_HIDDEN && associatedMode == 'N') ||
+        if (modeIsNotSetToEnabled(mode)) {
+            if (mode == 'N' || (mode == PersonalInformationConfigService.SECTION_HIDDEN && (associatedMode == 'N' || associatedMode == 0)) ||
                 (param.minRequiredMode == SECTION_UPDATEABLE && mode != SECTION_UPDATEABLE)) {
 
                 log.error("Unauthorized attempt to access Personal Information data was prevented. Configured value for parameter ${param.name}: ${mode}")
                 throw new ApplicationException(PersonalInformationDetailsController, "@@r1:operation.not.authorized@@")
             }
         }
+    }
+
+    private static def modeIsNotSetToEnabled(mode){
+        return mode != 'Y' && mode != 1 && mode != 2
     }
 
     /**

@@ -320,8 +320,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER CONSTANTS
         // --------------------
-        $scope.SECTION_HIDDEN = '0';
-        $scope.SECTION_UPDATEABLE = '2';
+        $scope.SECTION_HIDDEN = 0;
+        $scope.SECTION_UPDATEABLE = 2;
 
 
         // CONTROLLER VARIABLES
