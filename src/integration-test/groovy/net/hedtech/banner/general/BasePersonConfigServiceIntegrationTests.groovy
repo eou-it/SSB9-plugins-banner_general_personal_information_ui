@@ -1,8 +1,9 @@
 /*******************************************************************************
- Copyright 2017 Ellucian Company L.P. and its affiliates.
+ Copyright 2019 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
+import grails.util.Holders
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
@@ -17,6 +18,7 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
 
     @Before
     public void setUp() {
+        Holders.config.'personalInfo.prefEmailUpdatability' = 1
         formContext = ['GUAGMNU','SELFSERVICE']
         super.setUp()
     }
@@ -30,20 +32,9 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
     @Test
     void testGetParamFromSessionWithNoPreexistingConfig() {
         def configService = getMockPersonalInfoConfigService()
-        def val = configService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
+        def val = configService.getParamFromSession('personalInfo.prefEmailUpdatability', 'dummy_default_value')
 
-        assertEquals PersonalInformationConfigService.YES, val
-    }
-
-    @Test
-    void testGetParamFromSessionWithPreexistingConfig() {
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): ['PREFERRED.EMAIL.UPDATABILITY': 'Y']]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
-        def configService = getMockPersonalInfoConfigService()
-        def val = configService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
-
-        assertEquals PersonalInformationConfigService.YES, val
+        assertEquals PersonalInformationConfigService.SECTION_READONLY, val
     }
 
     @Test
@@ -52,9 +43,9 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
         PersonUtility.setPersonConfigInSession(personConfigInSession)
 
         def configService = getMockPersonalInfoConfigService()
-        def val = configService.getParamFromSession('PREFERRED.EMAIL.UPDATABILITY', 'dummy_default_value')
+        def val = configService.getParamFromSession('personalInfo.prefEmailUpdatability', 'dummy_default_value')
 
-        assertEquals PersonalInformationConfigService.YES, val
+        assertEquals PersonalInformationConfigService.SECTION_READONLY, val
     }
 
     @Test
@@ -79,40 +70,6 @@ class BasePersonConfigServiceIntegrationTests extends BaseIntegrationTestCase {
         def val = configService.getParamFromSession(PersonalInformationConfigService.OVERVIEW_PHONE, null)
 
         assertNull val
-    }
-
-    @Test
-    void testGetPersonalInfoConfigFromSession() {
-        def configService = getMockPersonalInfoConfigService()
-        def config = configService.getPersonConfigFromSession(configService.getCacheName(),configService.getProcessCode(), configService.getExcludedProperties())
-
-        assertEquals PersonalInformationConfigService.YES, config["PREFERRED.EMAIL.UPDATABILITY"]
-    }
-
-    @Test
-    void testCreateConfig() {
-        def personConfig = [:]
-        def configService = getMockPersonalInfoConfigService()
-        configService.createConfig(personConfig, configService.getCacheName(),configService.getProcessCode(), configService.getExcludedProperties())
-        def personalInfoConfig = personConfig[PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PREF_EMAIL]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PROFILE_PICTURE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DIRECTORY_PROFILE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.DISABILITY_STATUS]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.PASSWORD_CHANGE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.SECURITY_QA_CHANGE]
-        assertEquals PersonalInformationConfigService.YES, personalInfoConfig[PersonalInformationConfigService.VETERANS_CLASSIFICATION]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.EMAIL_MODE]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.PHONE_MODE]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.ADDR_MODE]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.EMER_MODE]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.PERS_DETAILS_MODE]
-        assertEquals PersonalInformationConfigService.SECTION_UPDATEABLE, personalInfoConfig[PersonalInformationConfigService.ETHN_RACE_MODE]
-        assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_PHONE]
-        assertNull        personalInfoConfig[PersonalInformationConfigService.OVERVIEW_ADDR]
     }
 
     private def getMockPersonalInfoConfigService(){

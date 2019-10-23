@@ -40,6 +40,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
      */
     @Before
     public void setUp() {
+        setHoldersConfig()
         formContext = ['SELFSERVICE']
         super.setUp()
         webAppCtx = new GrailsWebApplicationContext()
@@ -91,13 +92,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetAddressesForCurrentUserButHidden() {
         SSBSetUp('GDP000005', '111111')
-
-        // Set configuration to prohibit access to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
-                (PersonalInformationConfigService.ADDR_MODE): '0',
-                (PersonalInformationConfigService.DISPLAY_OVERVIEW_ADDR): 'N',
-        ]]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
+        Holders?.config?.'personalInfo.overview.displayOverviewAddress' = 0
+        Holders?.config?.'personalInfo.addressSectionMode' = 0
 
         controller.request.contentType = "text/json"
         controller.getAddresses()
@@ -518,13 +514,8 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetEmailsButHidden(){
         SSBSetUp('GDP000001', '111111')
-
-        // Set configuration to prohibit access to emails
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
-                (PersonalInformationConfigService.EMAIL_MODE): '0',
-                (PersonalInformationConfigService.DISPLAY_OVERVIEW_EMAIL): 'N'
-        ]]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
+        Holders?.config?.'personalInfo.overview.displayOverviewEmail' = 0
+        Holders?.config?.'personalInfo.emailSectionMode' = 0
 
         controller.request.contentType = "text/json"
         controller.getEmails()
@@ -838,14 +829,9 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetTelephoneNumbersButHidden() {
         SSBSetUp('GDP000005', '111111')
-
-        // Set configuration to prohibit access to telephone numbers
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
-                (PersonalInformationConfigService.PHONE_MODE): '0',
-                (PersonalInformationConfigService.DISPLAY_OVERVIEW_PHONE): 'N'
-        ]]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
+        Holders?.config?.'personalInfo.phoneSectionMode' = 0
+        Holders?.config?.'personalInfo.overviewPhoneType' = "{}"
+        Holders?.config?.'personalInfo.overview.displayOverviewPhone' = 0
         controller.request.contentType = "text/json"
         controller.getTelephoneNumbers()
 
@@ -1094,11 +1080,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetEmergencyContactsForCurrentUserButHidden() {
         SSBSetUp('GDP000001', '111111')
-
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.EMER_MODE): '0']]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
+        Holders?.config?.'personalInfo.emergencyContactSectionMode' = 0
         controller.request.contentType = "text/json"
         controller.getEmergencyContacts()
         def dataForNullCheck = controller.response.contentAsString
@@ -1469,8 +1451,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetailsWithGenderAndPronounNotUpdateable() {
         SSBSetUp('GDP000005', '111111')
-       // configService.fieldDisplayConfigurations.replace(configService.GENDER_MODE, 0)
-       // configService.fieldDisplayConfigurations.replace(configService.PRONOUN_MODE, 0)
         Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 0
         Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 0
         controller.getPersonalDetails()
@@ -1484,8 +1464,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetPersonalDetailsWithInvalidConfigurations(){
         SSBSetUp('GDP000005', '111111')
-        //configService.fieldDisplayConfigurations.replace(configService.MARITAL_STATUS_MODE, null)
-        //configService.fieldDisplayConfigurations.replace(configService.LEGAL_SEX_MODE, 55)
         Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 55
         Holders?.config?.'personalInfo.personalDetail.legalSex' = null
 
@@ -1495,22 +1473,17 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertEquals '03/31/1961', data.birthDate
-        //When config values are invalid, the fields should not appear
-        assertNull(data.sex)
-        assertNull(data.maritalStatus)
+        //When config values are invalid, the fields should appear
+        assertNotNull(data.sex)
+        assertNotNull(data.maritalStatus)
         assertEquals '1', data.ethnic
     }
 
     @Test
     void testGetPersonalDetailsButHidden() {
         SSBSetUp('GDP000005', '111111')
-
-        // Set configuration to prohibit access to personal details
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [
-                (PersonalInformationConfigService.PERS_DETAILS_MODE): '0',
-                (PersonalInformationConfigService.VETERANS_CLASSIFICATION): 'N'
-        ]]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
+        Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' = 0
+        Holders?.config?.'personalInfo.personalDetailSectionMode' = 0
 
         controller.getPersonalDetails()
         def dataForNullCheck = controller.response.contentAsString
@@ -1641,10 +1614,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         controller.getPiConfig()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
-        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
-        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 2
-        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
-        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
 
         assertNotNull data
         assertTrue data.isPreferredEmailUpdateable
@@ -1657,17 +1626,17 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.isSecurityQandADisplayable
         assertTrue data.isPasswordChangeDisplayable
         assertTrue data.isDisabilityStatusDisplayable
-        assertTrue data.additionalDetailsSectionMode
+        assertEquals 2, data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
-        assertEquals(2, data.maritalStatusMode)
-        assertEquals(2, data.genderIdentificationMode)
-        assertEquals(2, data.personalPronounMode)
-        assertEquals(1, data.legalSexMode)
-        assertEquals '2',data.emailSectionMode
-        assertEquals '2',data.telephoneSectionMode
-        assertEquals '2',data.addressSectionMode
-        assertEquals '2',data.personalDetailsSectionMode
-        assertEquals '2',data.emergencyContactSectionMode
+        assertEquals 2, data.maritalStatusMode
+        assertEquals 2, data.genderIdentificationMode
+        assertEquals 2, data.personalPronounMode
+        assertEquals 1, data.legalSexMode
+        assertEquals 2,data.emailSectionMode
+        assertEquals 2,data.telephoneSectionMode
+        assertEquals 2,data.addressSectionMode
+        assertEquals 2,data.personalDetailsSectionMode
+        assertEquals 2,data.emergencyContactSectionMode
     }
 
     @Test
@@ -1677,10 +1646,6 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         def sql
         sql = new Sql(sessionFactory.getCurrentSession().connection())
         sql.executeUpdate("update GUBPPRF set GUBPPRF_NO_OF_QSTNS = ?", [0])
-        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
-        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 2
-        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
-        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
 
         controller.getPiConfig()
         def dataForNullCheck = controller.response.contentAsString
@@ -1697,17 +1662,17 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertFalse data.isSecurityQandADisplayable
         assertTrue data.isPasswordChangeDisplayable
         assertTrue data.isDisabilityStatusDisplayable
-        assertTrue data.additionalDetailsSectionMode
+        assertEquals 2, data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
-        assertEquals(2, data.maritalStatusMode)
-        assertEquals(1, data.legalSexMode)
-        assertEquals(2, data.genderIdentificationMode)
-        assertEquals(2, data.personalPronounMode)
-        assertEquals '2',data.emailSectionMode
-        assertEquals '2',data.telephoneSectionMode
-        assertEquals '2',data.addressSectionMode
-        assertEquals '2',data.personalDetailsSectionMode
-        assertEquals '2',data.emergencyContactSectionMode
+        assertEquals 2, data.maritalStatusMode
+        assertEquals 1, data.legalSexMode
+        assertEquals 2, data.genderIdentificationMode
+        assertEquals 2, data.personalPronounMode
+        assertEquals 2,data.emailSectionMode
+        assertEquals 2,data.telephoneSectionMode
+        assertEquals 2,data.addressSectionMode
+        assertEquals 2,data.personalDetailsSectionMode
+        assertEquals 2,data.emergencyContactSectionMode
     }
 
     @Test
@@ -1724,11 +1689,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetDirectoryProfileButHidden() {
         SSBSetUp('GDP000005', '111111')
-
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DIRECTORY_PROFILE): 'N']]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
+        Holders?.config?.'personalInfo.enableDirectoryProfile' = 0
         controller.getDirectoryProfile()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
@@ -1812,11 +1773,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
     @Test
     void testGetDisabilityStatusButHidden() {
         SSBSetUp('GDP000005', '111111')
-
-        // Set configuration to prohibit updates to address
-        def personConfigInSession = [(PersonalInformationConfigService.PERSONAL_INFO_CONFIG_CACHE_NAME): [(PersonalInformationConfigService.DISABILITY_STATUS): 'N']]
-        PersonUtility.setPersonConfigInSession(personConfigInSession)
-
+        Holders?.config?.'personalInfo.additionalDetails.disabilityStatusMode' = 0
         controller.getDisabilityStatus()
         def dataForNullCheck = controller.response.contentAsString
         def data = JSON.parse( dataForNullCheck )
@@ -1942,5 +1899,31 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertTrue data.failure
+    }
+
+    private static void setHoldersConfig() {
+        Holders?.config?.'personalInfo.prefEmailUpdatability' = 1
+        Holders?.config?.'personalInfo.overview.displayOverviewPicture' = 1
+        Holders?.config?.'personalInfo.overview.displayOverviewAddress' = 1
+        Holders?.config?.'personalInfo.overview.displayOverviewPhone' = 1
+        Holders?.config?.'personalInfo.overview.displayOverviewEmail' = 1
+        Holders?.config?.'personalInfo.enableDirectoryProfile' = 1
+        Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' = 2
+        Holders?.config?.'personalInfo.additionalDetails.disabilityStatusMode' = 2
+        Holders?.config?.'personalInfo.additionalDetails.ethnicityRaceMode' = 2
+        Holders?.config?.'personalInfo.enableSecurityQaChange' = 1
+        Holders?.config?.'personalInfo.enablePasswordChange' = 1
+        Holders?.config?.'personalInfo.emailSectionMode' = 2
+        Holders?.config?.'personalInfo.phoneSectionMode' = 2
+        Holders?.config?.'personalInfo.addressSectionMode' = 2
+        Holders?.config?.'personalInfo.emergencyContactSectionMode' = 2
+        Holders?.config?.'personalInfo.additionalDetailsSectionMode' = 2
+        Holders?.config?.'personalInfo.personalDetailSectionMode' = 2
+        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = 2
+        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
+        Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
+        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
+        Holders?.config?.'personalInfo.overviewAddressType' = "{\"OT\": 2, \"MA\": 1}"
+        Holders?.config?.'personalInfo.overviewPhoneType' = "{\"EM\": 2, \"MA\": 1}"
     }
 }

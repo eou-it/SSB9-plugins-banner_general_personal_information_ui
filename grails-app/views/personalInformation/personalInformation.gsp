@@ -77,7 +77,7 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 <body>
 
 <div class="body-overlay"></div>
-<div id="content" ng-app="personalInformationApp" class="container-fluid" aria-relevant="additions" role="main">
+<div id="content" ng-app="personalInformationApp" class="container-fluid pi-background-color" aria-relevant="additions" role="main">
     <div ui-view></div>
 </div>
 </body>

@@ -303,6 +303,10 @@ input:disabled {
     background: #EFF4F8
 }
 
+.pi-background-color {
+    background: #EFF4F8
+}
+
 .dd-notification-box {
     display: table;
     margin-bottom: 12px;
