@@ -56,8 +56,8 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                     zip: address.zip
                 };
             },
-            isValidAddress = function (address) {
-                address = getNullSafeAddress(address);
+            isValidAddress = function (scopeAddress) {
+                var address = getNullSafeAddress(angular.copy(scopeAddress));
 
                 $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
                 $scope.fromDateErrMsg = piAddressService.getErrorFromDate(address);
@@ -80,7 +80,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         };
 
         $scope.removeAddressFieldErrors = function() {
-            var address = getNullSafeAddress($scope.address);
+            var address = getNullSafeAddress(angular.copy($scope.address));
 
             if($scope.addressTypeErrMsg) {
                 $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
@@ -114,7 +114,9 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
 
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
-                var addressToSave = _.extend($scope.address, getSaveSafeAddress(angular.copy($scope.address)));
+                var copiedAddress = angular.copy($scope.address),
+                    addressToSave = _.extend(copiedAddress, getSaveSafeAddress(copiedAddress));
+
                 addressToSave.fromDate = personalInformationService.stringToDate($scope.address.fromDate);
                 addressToSave.toDate = personalInformationService.stringToDate($scope.address.toDate);
 
