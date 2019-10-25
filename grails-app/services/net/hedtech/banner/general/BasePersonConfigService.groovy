@@ -26,6 +26,10 @@ abstract class BasePersonConfigService {
 
         def paramVal = personalInfoConfig[param] ? personalInfoConfig[param] : Holders?.config?.get(param) //If there is no param from GORICCR, get the param from GUROCFG.
 
+        if (getExcludedProperties().contains(param)){
+            paramVal = null //Should not work with excluded properties.
+        }
+
         if (paramVal != 0 && !paramVal) {
             log.error("No value found for integration configuration setting \"" + param + "\". " +
                     "This should be configured in GORICCR or GUROCFG. Using default value of \"" + defaultVal + "\".")

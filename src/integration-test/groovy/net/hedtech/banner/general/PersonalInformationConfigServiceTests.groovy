@@ -6,6 +6,7 @@ package net.hedtech.banner.general
 
 import grails.util.Holders
 import net.hedtech.banner.testing.BaseIntegrationTestCase
+import org.grails.config.NavigableMap
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -40,9 +41,23 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     //When configurations are invalid, configs should be the least restrictive settings to provide the full form as provided.
     @Test
     void testGetUpdatedPersonalInformationConfigurationsWithNullConfigurationSettings() {
-        setConfigurationsInHoldersToNull()
+        def backupConfig = Holders?.config
+        setConfigurationsInHoldersToNullSafeNavigators()
+        assertEquals NavigableMap.NullSafeNavigator.getClass(), (Holders?.config?.'personalInfo.prefEmailUpdatability').getClass()
         def personalInfoConfig = personalInformationConfigService.getUpdatedPersonalInformationConfigurations([:])
         checkThatConfigurationsAreDefaultSettings(personalInfoConfig)
+        Holders?.config = backupConfig
+    }
+
+    /**
+     *Holders configurations return NullSafeNavigators when they cannot find a value they are looking for.
+     *We can test for missing Holders configurations by making making the values of the configurations
+     *NullSafeNavigators.
+     */
+    private static def setConfigurationsInHoldersToNullSafeNavigators() {
+        Holders?.config?.each {config ->
+            config.value = NavigableMap.NullSafeNavigator
+        }
     }
 
     //When configurations are missing, configs should be the least restrictive settings to provide the full form as provided.
@@ -208,31 +223,5 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         Holders?.config?.'personalInfo.personalDetail.personalPronoun' = 2
         Holders?.config?.'personalInfo.personalDetail.legalSex' = 1
         Holders?.config?.'personalInfo.personalDetail.maritalStatus' = 2
-    }
-
-    private static def setConfigurationsInHoldersToNull() {
-        Holders?.config?.'personalInfo.prefEmailUpdatability' = null
-        Holders?.config?.'personalInfo.overview.displayOverviewPicture' = null
-        Holders?.config?.'personalInfo.overview.displayOverviewAddress' = null
-        Holders?.config?.'personalInfo.overview.displayOverviewPhone' = null
-        Holders?.config?.'personalInfo.overview.displayOverviewEmail' = null
-        Holders?.config?.'personalInfo.enableDirectoryProfile' = null
-        Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' = null
-        Holders?.config?.'personalInfo.additionalDetails.disabilityStatusMode' = null
-        Holders?.config?.'personalInfo.additionalDetails.ethnicityRaceMode' = null
-        Holders?.config?.'personalInfo.enableSecurityQaChange' = null
-        Holders?.config?.'personalInfo.enablePasswordChange' = null
-        Holders?.config?.'personalInfo.emailSectionMode' = null
-        Holders?.config?.'personalInfo.phoneSectionMode' = null
-        Holders?.config?.'personalInfo.addressSectionMode' = null
-        Holders?.config?.'personalInfo.emergencyContactSectionMode' = null
-        Holders?.config?.'personalInfo.additionalDetailsSectionMode' = null
-        Holders?.config?.'personalInfo.personalDetailSectionMode' = null
-        Holders?.config?.'personalInfo.personalDetail.genderIdentification' = null
-        Holders?.config?.'personalInfo.personalDetail.personalPronoun' = null
-        Holders?.config?.'personalInfo.personalDetail.legalSex' = null
-        Holders?.config?.'personalInfo.personalDetail.maritalStatus' = null
-        Holders?.config?.'personalInfo.overviewAddressType' = null
-        Holders?.config?.'personalInfo.overviewAddressType' = null
     }
 }

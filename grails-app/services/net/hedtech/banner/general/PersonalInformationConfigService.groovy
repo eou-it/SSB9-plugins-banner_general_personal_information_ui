@@ -168,10 +168,10 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * within the section, the section's configuration is returned. If the individual item is
      * more restrictive, then the item's configuration is returned.
      *
-     * @param Integer setting - The configuration value for a field within the Additional Details section.
+     * @param setting - The configuration value for a field within the Additional Details section.
      * @return Integer
      */
-    protected static getMostRestrictiveAdditionalDetailsSetting(Integer setting) {
+    protected static getMostRestrictiveAdditionalDetailsSetting(setting) {
         def additionalDetailsSectionMode = getMode(Holders?.config?.'personalInfo.additionalDetailsSectionMode')
         setting = getMode(setting)
         return setting < additionalDetailsSectionMode ? setting : additionalDetailsSectionMode
