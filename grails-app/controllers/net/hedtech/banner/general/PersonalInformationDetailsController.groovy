@@ -187,10 +187,7 @@ class PersonalInformationDetailsController {
 
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        newAddress.state?.code = StringEscapeUtils.unescapeHtml4(newAddress.state?.code)
-        newAddress.nation?.code = StringEscapeUtils.unescapeHtml4(newAddress.nation?.code)
-        newAddress.county?.code = StringEscapeUtils.unescapeHtml4(newAddress.county?.code)
-        newAddress.addressType?.code = StringEscapeUtils.unescapeHtml4(newAddress.addressType?.code)
+        newAddress = unescapeHtml(newAddress, ["state", "nation", "county", "addressType"])
 
         try {
             personAddressService.checkAddressFieldsValid(newAddress)
@@ -223,11 +220,7 @@ class PersonalInformationDetailsController {
 
         def updatedAddress = request?.JSON ?: params
         updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        updatedAddress.state?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.state?.code)
-        updatedAddress.nation?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.nation?.code)
-        updatedAddress.county?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.county?.code)
-        updatedAddress.addressType?.code = StringEscapeUtils.unescapeHtml4(updatedAddress.addressType?.code)
-
+        updatedAddress = unescapeHtml(updatedAddress, ["state", "nation", "county", "addressType"])
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
 
@@ -331,7 +324,7 @@ class PersonalInformationDetailsController {
 
         def newEmail = request?.JSON ?: params
         newEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        newEmail.emailType?.code = StringEscapeUtils.unescapeHtml4(newEmail.emailType?.code)
+        newEmail = unescapeHtml(newEmail, ["emailType"])
 
         try {
             newEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(newEmail.emailType.code)
@@ -362,8 +355,7 @@ class PersonalInformationDetailsController {
 
         def updatedEmail = request?.JSON ?: params
         updatedEmail.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        updatedEmail.emailType?.code = StringEscapeUtils.unescapeHtml4(updatedEmail.emailType?.code)
-
+        updatedEmail = unescapeHtml(updatedEmail, ["emailType"])
         try {
             updatedEmail.emailType = emailTypeService.fetchByCodeAndWebDisplayable(updatedEmail.emailType.code)
             personalInformationCompositeService.validateEmailTypeRule(updatedEmail.emailType, updatedEmail.pidm, getRoles())
@@ -463,7 +455,7 @@ class PersonalInformationDetailsController {
 
         def newPhoneNumber = request?.JSON ?: params
         newPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        newPhoneNumber.telephoneType?.code = StringEscapeUtils.unescapeHtml4(newPhoneNumber.telephoneType?.code)
+        newPhoneNumber = unescapeHtml(newPhoneNumber, ["telephoneType"])
 
         try {
             newPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(newPhoneNumber.telephoneType.code)
@@ -489,7 +481,7 @@ class PersonalInformationDetailsController {
 
         def updatedPhoneNumber = request?.JSON ?: params
         updatedPhoneNumber.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        updatedPhoneNumber.telephoneType?.code = StringEscapeUtils.unescapeHtml4(updatedPhoneNumber.telephoneType?.code)
+        updatedPhoneNumber = unescapeHtml(updatedPhoneNumber, ["telephoneType"])
 
         try {
             updatedPhoneNumber.telephoneType = telephoneTypeService.fetchValidByCode(updatedPhoneNumber.telephoneType.code)
@@ -581,10 +573,7 @@ class PersonalInformationDetailsController {
 
         def newContact = request?.JSON ?: params
         newContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        newContact.relationship?.code = StringEscapeUtils.unescapeHtml4(newContact.relationship?.code)
-        newContact.state?.code = StringEscapeUtils.unescapeHtml4(newContact.state?.code)
-        newContact.nation?.code = StringEscapeUtils.unescapeHtml4(newContact.nation?.code)
-
+        newContact = unescapeHtml(newContact, ["relationship", "state", "nation"])
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(newContact)
             newContact = personalInformationCompositeService.getPersonValidationObjects(newContact)
@@ -610,11 +599,7 @@ class PersonalInformationDetailsController {
 
         def updatedContact = request?.JSON ?: params
         updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
-        updatedContact.relationship?.code = StringEscapeUtils.unescapeHtml4(updatedContact.relationship?.code)
-        updatedContact.state?.code = StringEscapeUtils.unescapeHtml4(updatedContact.state?.code)
-        updatedContact.nation?.code = StringEscapeUtils.unescapeHtml4(updatedContact.nation?.code)
-
-
+        updatedContact = unescapeHtml(updatedContact, ["relationship", "state", "nation"])
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
             updatedContact = personalInformationCompositeService.getPersonValidationObjects(updatedContact)
@@ -898,9 +883,7 @@ class PersonalInformationDetailsController {
             return
         }
         def updatedPerson = request?.JSON ?: params
-        updatedPerson?.maritalStatus?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.maritalStatus?.code)
-        updatedPerson?.pronoun?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.pronoun?.code)
-        updatedPerson?.gender?.code = StringEscapeUtils.unescapeHtml4(updatedPerson.gender?.code)
+        updatedPerson = unescapeHtml(updatedPerson, ["maritalStatus", "pronoun", "gender"])
         def person = [
                 pidm               : PersonalInformationControllerUtility.getPrincipalPidm(),
                 id                 : updatedPerson.id,
@@ -1075,6 +1058,17 @@ class PersonalInformationDetailsController {
 
     private static modeIsNotSetToEnabled(mode){
         return mode != 'Y' && mode != 1 && mode != 2
+    }
+
+    /**
+     *Unescapes any HTML that may appear as a result of special character codes being entered in the database by users
+     * and being interpreted as escaped html entities.
+     */
+    private unescapeHtml(map, propertiesThatCouldHaveEscapedCodes){
+        propertiesThatCouldHaveEscapedCodes?.each{ property ->
+            map?.get(property)?.code = StringEscapeUtils.unescapeHtml4(map?.get(property)?.code)
+        }
+        map
     }
 
     /**
