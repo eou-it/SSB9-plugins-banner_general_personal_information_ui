@@ -5,6 +5,7 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 package net.hedtech.banner.general
 
 import grails.converters.JSON
+import groovy.json.JsonSlurper
 import groovy.sql.Sql
 import net.hedtech.banner.general.person.PersonUtility
 import org.grails.web.json.JSONObject
@@ -1899,6 +1900,18 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
 
         assertNotNull data
         assertTrue data.failure
+    }
+
+    @Test
+    void testUnescapeHtml(){
+        def jsonSlurper = new JsonSlurper()
+        //Map with escaped html entities for property one and two, and text property three to test that normal text is unaffected by this method.
+        def map = jsonSlurper.parseText("{\"property\":{\"code\": \"&Epsilon;&Lambda;&Lambda;\"},\"propertyTwo\":{\"code\": \"&Sigma;&Omega;\"},\"propertyThree\":{\"code\": \"Text\"}}")
+        map = controller.unescapeHtml(map, ["property", "propertyTwo", "propertyThree"])
+
+        assertEquals "ΕΛΛ", map.property.code
+        assertEquals "ΣΩ", map.propertyTwo.code
+        assertEquals "Text", map.propertyThree.code
     }
 
     private static void setHoldersConfig() {
