@@ -3,7 +3,6 @@
  *******************************************************************************/
 package net.hedtech.banner.general
 
-
 import grails.util.Holders
 import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.grails.config.NavigableMap
@@ -41,12 +40,12 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
     //When configurations are invalid, configs should be the least restrictive settings to provide the full form as provided.
     @Test
     void testGetUpdatedPersonalInformationConfigurationsWithNullConfigurationSettings() {
-        def backupConfig = Holders?.config
+        def backupConfig = getMapOfHoldersConfigurations()
         setConfigurationsInHoldersToNullSafeNavigators()
         assertEquals NavigableMap.NullSafeNavigator.getClass(), (Holders?.config?.'personalInfo.prefEmailUpdatability').getClass()
         def personalInfoConfig = personalInformationConfigService.getUpdatedPersonalInformationConfigurations([:])
+        setHoldersWithMapOfConfigurations(backupConfig)
         checkThatConfigurationsAreDefaultSettings(personalInfoConfig)
-        Holders?.config = backupConfig
     }
 
     /**
@@ -54,24 +53,26 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
      *We can test for missing Holders configurations by making making the values of the configurations
      *NullSafeNavigators.
      */
-    private static def setConfigurationsInHoldersToNullSafeNavigators() {
-        Holders?.config?.each {config ->
+    private static setConfigurationsInHoldersToNullSafeNavigators() {
+        Holders.config.each { config ->
             config.value = NavigableMap.NullSafeNavigator
         }
     }
 
-    //When configurations are missing, configs should be the least restrictive settings to provide the full form as provided.
-    @Test
-    void testGetUpdatedPersonalInformationConfigurationsWithNoConfigurationsInHolders() {
-        def backupConfig = Holders.config
-        Holders.config = null
-        assertNull Holders?.config?.'personalInfo.prefEmailUpdatability'
-        def personalInfoConfig = personalInformationConfigService.getUpdatedPersonalInformationConfigurations([:])
-        checkThatConfigurationsAreDefaultSettings(personalInfoConfig)
-        Holders.config = backupConfig
+    private getMapOfHoldersConfigurations() {
+        def copyOfConfig = [:]
+        Holders.config.each { config ->
+            copyOfConfig << config
+        }
+        copyOfConfig
     }
 
-    private def checkThatConfigurationsAreDefaultSettings(personalInfoConfig) {
+    private setHoldersWithMapOfConfigurations(Map configurations) {
+        Holders.config.clear()
+        Holders.config.putAll(configurations)
+    }
+
+    private checkThatConfigurationsAreDefaultSettings(personalInfoConfig) {
         assertTrue personalInfoConfig.isPreferredEmailUpdateable
         assertTrue personalInfoConfig.isProfilePicDisplayable
         assertTrue personalInfoConfig.isOverviewAddressDisplayable
@@ -201,7 +202,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         assertNull personalInformationConfigService.getSequenceConfiguration('personalInfo.overviewAddressType')
     }
 
-    private static def setHoldersConfig() {
+    private static setHoldersConfig() {
         Holders?.config?.'personalInfo.prefEmailUpdatability' = 1
         Holders?.config?.'personalInfo.overview.displayOverviewPicture' = 1
         Holders?.config?.'personalInfo.overview.displayOverviewAddress' = 1
