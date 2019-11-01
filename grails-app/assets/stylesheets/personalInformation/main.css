@@ -426,6 +426,10 @@ a.pi-icon-link:focus {
     margin-bottom: 1px;
 }
 
+.full-width {
+    width: 100%;
+}
+
 
 /* Overrides for xe-ui-components.css/_select.scss */
 .select2-results .select2-highlighted {
@@ -1819,6 +1823,7 @@ div.dir-profile {
     }
 }
 
+/*Mobile device*/
 @media screen and (max-width:767px) {
     .edit-flex-div {
         display: inline;
