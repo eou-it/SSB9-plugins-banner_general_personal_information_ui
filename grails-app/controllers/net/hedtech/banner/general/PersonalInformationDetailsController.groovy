@@ -1066,7 +1066,7 @@ class PersonalInformationDetailsController {
      */
     private unescapeHtml(map, propertiesThatCouldHaveEscapedCodes){
         propertiesThatCouldHaveEscapedCodes?.each{ property ->
-            map?.get(property)?.code = StringEscapeUtils.unescapeHtml4(map?.get(property)?.code)
+            map?.getAt(property)?.code = StringEscapeUtils.unescapeHtml4(map?.getAt(property)?.code)
         }
         map
     }
