@@ -33,18 +33,26 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     static final String DIRECTORY_PROFILE = 'personalInfo.enableDirectoryProfile'
     static final String SECURITY_QA_CHANGE = 'personalInfo.enableSecurityQaChange'
     static final String PASSWORD_CHANGE = 'personalInfo.enablePasswordChange'
+    static final String GENDER_MODE = 'personalInfo.personalDetail.genderIdentification'
+    static final String PRONOUN_MODE = 'personalInfo.personalDetail.personalPronoun'
+    static final String LEGAL_SEX_MODE = 'personalInfo.personalDetail.legalSex'
+    static final String MARITAL_STATUS_MODE = 'personalInfo.personalDetail.maritalStatus'
+    static final String GENDER_KEY = 'gender'
+    static final String PRONOUN_KEY = 'pronoun'
+    static final String MARITAL_STATUS_KEY = 'maritalStatus'
+    static final String LEGAL_SEX_KEY = 'sex'
     static final String NO_OF_QSTNS = 'GUBPPRF_NO_OF_QSTNS'
     static final Integer SECTION_HIDDEN = 0
     static final Integer SECTION_READONLY = 1
     static final Integer SECTION_UPDATEABLE = 2
     static final String YES = 'Y'
     static final String NO = 'N'
-    static final String GENDER_MODE = "gender"
-    static final String PRONOUN_MODE = "pronoun"
-    static final String LEGAL_SEX_MODE = "sex"
-    static final String MARITAL_STATUS_MODE = "maritalStatus"
 
     HashMap<String, Integer> fieldDisplayConfigurations = createFieldDisplayConfigurations()
+
+    private static getConfigurationFromDatabase(configurationName) {
+        return Holders?.config?.get(configurationName)
+    }
 
     @Override
     protected String getCacheName() {
@@ -60,28 +68,6 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     protected List getExcludedProperties() {
         // These are sequences, not simple key-value pairs, and are not a part of this particular configuration
         return [OVERVIEW_ADDR, OVERVIEW_PHONE]
-    }
-
-    /**
-     * Each phone type or address type contains an identifying code and a priority in which
-     * it should appear depending on which of the types the student has listed in personal information.
-     *
-     * In GUROCFG, these codes and priorities are entered as JSON. After retrieving this JSON from
-     * Holders, it will be mapped to a LinkedHashMap.
-     *
-     * @param String configurationName The configuration name as listed in GUROCFG.
-     * @return LinkedHashMap <String, Integer> which contains key to value pairs of a cross-reference code
-     * to the priority which these items should appear depending on what information the user has.
-     */
-    protected LinkedHashMap getSequenceConfiguration(String configurationName) {
-        try {
-            def mapper = new ObjectMapper()
-            return mapper.readValue(Holders?.config?.get(configurationName).toUpperCase(), LinkedHashMap.class) as LinkedHashMap
-        }
-        catch (JsonMappingException) {
-            log.error("The JSON structure for " + configurationName + " was incorrectly entered in the database.")
-            return null
-        }
     }
 
     protected getFieldDisplayConfigurationsHashMap() {
@@ -131,29 +117,29 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * @return Map - Personal Information Configuration map updated with values retrieved from Holders.
      */
     protected getUpdatedPersonalInformationConfigurations(model) {
-        model.isPreferredEmailUpdateable = isFieldEnabled(Holders?.config?.'personalInfo.prefEmailUpdatability')
-        model.isProfilePicDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewPicture')
-        model.isOverviewAddressDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewAddress')
-        model.isOverviewPhoneDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewPhone')
-        model.isOverviewEmailDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.overview.displayOverviewEmail')
-        model.isDirectoryProfileDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.enableDirectoryProfile')
-        model.veteranClassificationMode = getMostRestrictiveAdditionalDetailsSetting(Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode')
+        model.isPreferredEmailUpdateable = isFieldEnabled(getConfigurationFromDatabase(PREF_EMAIL))
+        model.isProfilePicDisplayable = isFieldEnabled(getConfigurationFromDatabase(PROFILE_PICTURE))
+        model.isOverviewAddressDisplayable = isFieldEnabled(getConfigurationFromDatabase(DISPLAY_OVERVIEW_ADDR))
+        model.isOverviewPhoneDisplayable = isFieldEnabled(getConfigurationFromDatabase(DISPLAY_OVERVIEW_PHONE))
+        model.isOverviewEmailDisplayable = isFieldEnabled(getConfigurationFromDatabase(DISPLAY_OVERVIEW_EMAIL))
+        model.isDirectoryProfileDisplayable = isFieldEnabled(getConfigurationFromDatabase(DIRECTORY_PROFILE))
+        model.veteranClassificationMode = getMostRestrictiveAdditionalDetailsSetting(getConfigurationFromDatabase(VETERANS_CLASSIFICATION))
         model.isVetClassificationDisplayable = isFieldDisplayable(model.veteranClassificationMode)
-        model.isSecurityQandADisplayable = isFieldEnabled(Holders?.config?.'personalInfo.enableSecurityQaChange')
-        model.isPasswordChangeDisplayable = isFieldEnabled(Holders?.config?.'personalInfo.enablePasswordChange')
-        model.disabilityStatusMode = getMostRestrictiveAdditionalDetailsSetting(Holders?.config?.'personalInfo.additionalDetails.disabilityStatusMode')
+        model.isSecurityQandADisplayable = isFieldEnabled(getConfigurationFromDatabase(SECURITY_QA_CHANGE))
+        model.isPasswordChangeDisplayable = isFieldEnabled(getConfigurationFromDatabase(PASSWORD_CHANGE))
+        model.disabilityStatusMode = getMostRestrictiveAdditionalDetailsSetting(getConfigurationFromDatabase(DISABILITY_STATUS))
         model.isDisabilityStatusDisplayable = isFieldDisplayable(model.disabilityStatusMode)
-        model.ethnRaceMode = getMostRestrictiveAdditionalDetailsSetting(Holders?.config?.'personalInfo.additionalDetails.ethnicityRaceMode')
-        model.emailSectionMode = getMode(Holders?.config?.'personalInfo.emailSectionMode')
-        model.telephoneSectionMode = getMode(Holders?.config?.'personalInfo.phoneSectionMode')
-        model.addressSectionMode = getMode(Holders?.config?.'personalInfo.addressSectionMode')
-        model.emergencyContactSectionMode = getMode(Holders?.config?.'personalInfo.emergencyContactSectionMode')
-        model.personalDetailsSectionMode = getMode(Holders?.config?.'personalInfo.personalDetailSectionMode')
+        model.ethnRaceMode = getMostRestrictiveAdditionalDetailsSetting(getConfigurationFromDatabase(ETHN_RACE_MODE))
+        model.emailSectionMode = getMode(getConfigurationFromDatabase(EMAIL_MODE))
+        model.telephoneSectionMode = getMode(getConfigurationFromDatabase(PHONE_MODE))
+        model.addressSectionMode = getMode(getConfigurationFromDatabase(ADDR_MODE))
+        model.emergencyContactSectionMode = getMode(getConfigurationFromDatabase(EMER_MODE))
+        model.personalDetailsSectionMode = getMode(getConfigurationFromDatabase(PERS_DETAILS_MODE))
         model.additionalDetailsSectionMode = getAdditionalDetailsSectionMode(model)
-        model.personalPronounMode = getFieldConfiguration(PRONOUN_MODE)
-        model.maritalStatusMode = getFieldConfiguration(MARITAL_STATUS_MODE)
-        model.genderIdentificationMode = getFieldConfiguration(GENDER_MODE)
-        model.legalSexMode = getFieldConfiguration(LEGAL_SEX_MODE)
+        model.personalPronounMode = getFieldConfiguration(PRONOUN_KEY)
+        model.maritalStatusMode = getFieldConfiguration(MARITAL_STATUS_KEY)
+        model.genderIdentificationMode = getFieldConfiguration(GENDER_KEY)
+        model.legalSexMode = getFieldConfiguration(LEGAL_SEX_KEY)
         model
     }
 
@@ -171,8 +157,8 @@ class PersonalInformationConfigService extends BasePersonConfigService {
      * @param setting - The configuration value for a field within the Additional Details section.
      * @return Integer
      */
-    protected static getMostRestrictiveAdditionalDetailsSetting(setting) {
-        def additionalDetailsSectionMode = getMode(Holders?.config?.'personalInfo.additionalDetailsSectionMode')
+    protected  static getMostRestrictiveAdditionalDetailsSetting(setting) {
+        def additionalDetailsSectionMode = getMode(getConfigurationFromDatabase(ADDITIONAL_DETAILS_MODE))
         setting = getMode(setting)
         return setting < additionalDetailsSectionMode ? setting : additionalDetailsSectionMode
     }
@@ -189,7 +175,29 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     protected static getAdditionalDetailsSectionMode(model) {
         return ((!isFieldDisplayable(model.ethnRaceMode) && !model.isVetClassificationDisplayable && !model.isDisabilityStatusDisplayable) ?
                 SECTION_HIDDEN :
-                Holders?.config?.'personalInfo.additionalDetailsSectionMode')
+                getConfigurationFromDatabase(ADDITIONAL_DETAILS_MODE))
+    }
+
+    /**
+     * Each phone type or address type contains an identifying code and a priority in which
+     * it should appear depending on which of the types the student has listed in personal information.
+     *
+     * In GUROCFG, these codes and priorities are entered as JSON. After retrieving this JSON from
+     * Holders, it will be mapped to a LinkedHashMap.
+     *
+     * @param String configurationName The configuration name as listed in GUROCFG.
+     * @return LinkedHashMap <String, Integer> which contains key to value pairs of a cross-reference code
+     * to the priority which these items should appear depending on what information the user has.
+     */
+    protected LinkedHashMap getSequenceConfiguration(String configurationName) {
+        try {
+            def mapper = new ObjectMapper()
+            return mapper.readValue(getConfigurationFromDatabase(configurationName).toUpperCase(), LinkedHashMap.class) as LinkedHashMap
+        }
+        catch (JsonMappingException) {
+            log.error("The JSON structure for " + configurationName + " was incorrectly entered in the database.")
+            return null
+        }
     }
 
     /**
@@ -198,10 +206,10 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     private createFieldDisplayConfigurations() {
         return new HashMap<String, Integer>() {
             {
-                put(GENDER_MODE, getMode(Holders?.config?.'personalInfo.personalDetail.genderIdentification'))
-                put(PRONOUN_MODE, getMode(Holders?.config?.'personalInfo.personalDetail.personalPronoun'))
-                put(LEGAL_SEX_MODE, getLegalSexMode(Holders?.config?.'personalInfo.personalDetail.legalSex'))
-                put(MARITAL_STATUS_MODE, getMode(Holders?.config?.'personalInfo.personalDetail.maritalStatus'))
+                put(GENDER_KEY, getMode(getConfigurationFromDatabase(GENDER_MODE)))
+                put(PRONOUN_KEY, getMode(getConfigurationFromDatabase(PRONOUN_MODE)))
+                put(LEGAL_SEX_KEY, getLegalSexMode(getConfigurationFromDatabase(LEGAL_SEX_MODE)))
+                put(MARITAL_STATUS_KEY, getMode(getConfigurationFromDatabase(MARITAL_STATUS_MODE)))
             }
         }
     }
