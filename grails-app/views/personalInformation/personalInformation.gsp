@@ -42,8 +42,6 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
     <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
 
-    <g:bannerMessages/>
-
     <script type="text/javascript">
         <g:i18n_setup/>
     </script>
