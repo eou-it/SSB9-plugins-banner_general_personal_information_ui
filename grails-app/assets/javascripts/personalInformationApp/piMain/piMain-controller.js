@@ -375,7 +375,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return configValue === 2
         };
 
-        var locale = window.i18n.locale;
+        var locale = $('meta[name=locale]').attr("content");
         $scope.stringToDate = function(date) {
             var result = personalInformationService.stringToDate(date);
 
