@@ -1,5 +1,5 @@
 /********************************************************************************
-  Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+  Copyright 2016-2020 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /* General Styles */
 body {
@@ -1758,6 +1758,7 @@ div.dir-profile {
 
 .dir-profile .row {
     padding: 3px 0;
+    word-wrap: break-word;
 }
 
 .dir-profile .shaded {
