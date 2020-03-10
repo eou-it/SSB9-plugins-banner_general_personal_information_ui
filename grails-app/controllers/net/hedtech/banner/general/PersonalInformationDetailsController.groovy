@@ -600,6 +600,11 @@ class PersonalInformationDetailsController {
         def updatedContact = request?.JSON ?: params
         updatedContact.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
         updatedContact = unescapeHtml(updatedContact, ["relationship", "state", "nation"])
+
+        /*We want the activity date to be updated for the emergency contact
+        * upon the user saving the record, even if no data has been changed.*/
+        updatedContact.put('lastModified', new Date())
+
         try {
             personEmergencyContactService.checkEmergencyContactFieldsValid(updatedContact)
             updatedContact = personalInformationCompositeService.getPersonValidationObjects(updatedContact)
