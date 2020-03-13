@@ -1,5 +1,5 @@
 <!--******************************************************************************
-Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <h2 class="pi-modal-title">{{(isCreateNew?'personInfo.title.addEmergencyContact':'personInfo.title.editEmergencyContact')|i18n}}</h2>
 <button class="close closebtn" ng-click="cancelModal()" title="{{'personInfo.button.title.close'|i18n}}"></button>
@@ -148,10 +148,10 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
     </div>
 </div>
 <div class="dialog-footer-margin pi-modal-footer">
-    <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+    <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn-cancel cancel-btn">
         {{'personInfo.label.button.cancel'|i18n}}
     </button>
-    <button ng-click="saveEmergencyContact()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn save-btn">
+    <button ng-click="saveEmergencyContact()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn primary">
         {{(isCreateNew?'personInfo.label.button.add':'personInfo.label.button.update')|i18n}}
     </button>
 </div>

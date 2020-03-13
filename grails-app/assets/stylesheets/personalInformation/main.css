@@ -432,8 +432,8 @@ a.pi-icon-link:focus {
 
 
 /* Overrides for xe-ui-components.css/_select.scss */
-.select2-results .select2-highlighted {
-    background: #3875d7 !important;
+.select2-results .select2-highlighted .select2-result-label {
+    color: inherit !important;
 }
 
 .select2-dropdown-open .select2-choice {
@@ -838,6 +838,18 @@ button.closebtn {
 
 .dialog-btn {
     box-sizing: border-box;
+    max-height: 58px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    border-style: none;
+    line-height: normal;
+    padding: 1em;
+}
+
+.dialog-btn-cancel {
+    box-sizing: border-box;
     display: table-cell;
     text-align: center;
     vertical-align: middle;
@@ -850,12 +862,12 @@ button.closebtn {
     padding: 1em;
 }
 
-.dialog-btn:hover {
+.dialog-btn-cancel:hover {
     color: #FFFFFF;
     background: #065AA5;
 }
 
-.dialog-btn:focus {
+.dialog-btn-cancel:focus {
     color: #FFFFFF;
     background: #065AA5;
     border-top: 1px solid #81C8FF;

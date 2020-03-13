@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-  Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+  Copyright 2016-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************-->
 <div class="modal-flex-cont">
     <div class="modal-unflex">
@@ -124,10 +124,10 @@
         </div>
     </div>
     <div class="dialog-footer-margin pi-modal-footer">
-        <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn cancel-btn">
+        <button ng-click="cancelModal()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn-cancel cancel-btn">
             {{'personInfo.label.button.cancel'|i18n}}
         </button>
-        <button ng-click="saveAddress()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn save-btn">
+        <button ng-click="saveAddress()" ng-class="[(isCreateNew ? 'one-btn-layout' : 'two-btn-layout')]" class="dialog-btn primary">
             {{(isCreateNew?'personInfo.label.button.add':'personInfo.label.button.update')|i18n}}
         </button>
     </div>
