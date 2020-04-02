@@ -1,5 +1,5 @@
 /******************************************************************************
- Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
  ******************************************************************************/
 
 package net.hedtech.banner.general
@@ -11,8 +11,10 @@ import net.hedtech.banner.DateUtility
 import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
+import net.hedtech.banner.general.system.SdaCrosswalkConversion
 import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.security.core.context.SecurityContextHolder
+import net.hedtech.banner.general.system.AddressSource
 
 class PersonalInformationDetailsController {
     def addressRolePrivilegesCompositeService
@@ -187,6 +189,7 @@ class PersonalInformationDetailsController {
 
         def newAddress = request?.JSON ?: params
         newAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        newAddress.addressSource = getWebAddressSource()
         newAddress = unescapeHtml(newAddress, ["state", "nation", "county", "addressType"])
 
         try {
@@ -220,6 +223,7 @@ class PersonalInformationDetailsController {
 
         def updatedAddress = request?.JSON ?: params
         updatedAddress.pidm = PersonalInformationControllerUtility.getPrincipalPidm()
+        updatedAddress.addressSource = getWebAddressSource()
         updatedAddress = unescapeHtml(updatedAddress, ["state", "nation", "county", "addressType"])
         try {
             personAddressService.checkAddressFieldsValid(updatedAddress)
@@ -1128,5 +1132,9 @@ class PersonalInformationDetailsController {
         }
 
         model
+    }
+
+    private static AddressSource getWebAddressSource(){
+        return AddressSource?.findByCode(SdaCrosswalkConversion?.findByInternal('WEBGEN')?.external)
     }
 }
