@@ -1,8 +1,8 @@
 /*******************************************************************************
 Copyright 2013 Ellucian Company L.P. and its affiliates.
-*******************************************************************************/ 
+*******************************************************************************/
 
-
+package banner.general.personal.information.ui
 
  /**
   * Specifies all of the URL mappings supported by the application.
