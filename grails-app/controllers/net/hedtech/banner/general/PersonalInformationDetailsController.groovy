@@ -12,6 +12,7 @@ import net.hedtech.banner.general.person.MedicalInformation
 import net.hedtech.banner.general.person.PersonAddressUtility
 import net.hedtech.banner.general.person.PersonUtility
 import net.hedtech.banner.general.system.SdaCrosswalkConversion
+import net.hedtech.banner.general.utility.InformationTextUtility
 import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.security.core.context.SecurityContextHolder
 import net.hedtech.banner.general.system.AddressSource
@@ -665,6 +666,23 @@ class PersonalInformationDetailsController {
         }
     }
 
+    def getVoluntarySelfIdentificationOfDisabilityFormText() {
+        try {
+            def disabilityFormTextMessages = InformationTextUtility?.getMessages('GENERALDISABILITYFORM')
+            def disabilityFormTextMessagesMap = ["SECTION_ONE"  : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.SECTION.ONE"),
+                                                 "SECTION_TWO"  : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.SECTION.TWO"),
+                                                 "SECTION_THREE": disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.SECTION.THREE"),
+                                                 "SECTION_FOUR" : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.SECTION.FOUR"),
+                                                 "BUTTON_DY"    : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.BUTTON.DY"),
+                                                 "BUTTON_DN"    : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.BUTTON.DN"),
+                                                 "BUTTON_NA"    : disabilityFormTextMessages?.get("GENERAL.DISABILITY.FORM.BUTTON.NA")]
+            render disabilityFormTextMessagesMap as JSON
+        }
+        catch (ApplicationException e) {
+            render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
+        }
+    }
+
     //get the disability classification status of the person. Return the internal sequence of the
     //equivalent sdax record for the DISA value.
     def getDisabilityStatus() {
@@ -683,6 +701,7 @@ class PersonalInformationDetailsController {
         try {
             MedicalInformation mi = MedicalInformation.fetchByPidmForDisabSurvey(pidm)
             model.disabilityStatusCode = mi?.id ? mi.disability.code : 0
+            model.disabilityStatusText = getDisabilityStatusTextByCode(model?.disabilityStatusCode)
             render model as JSON
         } catch (ApplicationException e) {
             render PersonalInformationControllerUtility.returnFailureMessage(e) as JSON
@@ -1132,6 +1151,15 @@ class PersonalInformationDetailsController {
         }
 
         model
+    }
+
+    private def getDisabilityStatusTextByCode(code){
+        def disabilityFormTextMessages = InformationTextUtility?.getMessages('GENERALDISABILITYFORM')
+        def disabilityStatusText = disabilityFormTextMessages?.get('GENERAL.DISABILITY.FORM.BUTTON.' + code)
+        if (!disabilityStatusText){
+            disabilityStatusText = ""
+        }
+        disabilityStatusText
     }
 
     private static AddressSource getWebAddressSource(){

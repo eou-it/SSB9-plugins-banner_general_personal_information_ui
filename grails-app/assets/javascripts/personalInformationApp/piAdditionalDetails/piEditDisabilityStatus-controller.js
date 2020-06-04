@@ -10,10 +10,20 @@ personalInformationAppControllers.controller('piEditDisabilityStatusController',
         $scope.isDisablilityTextClipped = true;
         $scope.disabilityErrMsg = '';
         $scope.disabilityUpdateErrMsg = '';
+        $scope.disabilityStatusTextMessages = [];
 
 
         // CONTROLLER FUNCTIONS
         // --------------------
+
+        piCrudService.get('VoluntarySelfIdentificationOfDisabilityFormText').$promise.then(function (response) {
+            if (response.failure) {
+                notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
+            } else {
+                $scope.disabilityStatusTextMessages = response
+            }
+        });
+
         $scope.cancelModal = function () {
             $modalInstance.dismiss('cancel');
             notificationCenterService.clearNotifications();
