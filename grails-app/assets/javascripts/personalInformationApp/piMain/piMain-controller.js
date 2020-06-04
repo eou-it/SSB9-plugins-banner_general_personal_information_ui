@@ -290,7 +290,7 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
                         notificationCenterService.displayNotification(response.message, $scope.notificationErrorType);
                     } else {
                         $scope.disabilityStatus = response.disabilityStatusCode;
-                        $scope.disabilityStatusText = $filter('i18n')('personinfo.disability.' + response.disabilityStatusCode);
+                        $scope.disabilityStatusText = response.disabilityStatusText !== "" ? response.disabilityStatusText : $filter('i18n')('personinfo.disability.' + response.disabilityStatusCode);
                     }
                 });
             } else {
