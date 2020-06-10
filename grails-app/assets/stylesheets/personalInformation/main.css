@@ -916,6 +916,10 @@ button.closebtn {
     margin: 0.75em 0em;
 }
 
+.disability-container ul li {
+    margin-bottom: 0;
+}
+
 
 /************************/
 /* Person Detail Layout */
@@ -1187,7 +1191,7 @@ path#Path {
     overflow-y: hidden;
     clear: right;
 }
-
+.pi-disability-section-1 p,
 .form-id-item {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -1201,6 +1205,7 @@ path#Path {
     float: right;
 }
 
+.pi-disability-section-1 p:nth-child(-n+2),
 .disability-status .pad-dialog-lr .form-id-item:nth-child(-n+2) {
     width: 100%;
 }
@@ -1222,10 +1227,6 @@ path#Path {
 
 .disability-status .lbl.radio-list > label {
     font-weight: normal;
-}
-
-.disability-item {
-    margin-bottom: 0;
 }
 
 .input-field-label.input-field-label.pi-accom-notice {
