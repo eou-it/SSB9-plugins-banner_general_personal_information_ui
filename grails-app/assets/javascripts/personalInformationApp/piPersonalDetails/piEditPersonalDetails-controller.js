@@ -15,6 +15,14 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
             notificationCenterService.clearNotifications();
         };
 
+        $scope.isFieldViewable = function(configValue){
+            return configValue === 1 || configValue === 2
+        };
+
+        $scope.isFieldUpdatable = function(configValue) {
+            return configValue === 2
+        };
+
         $scope.savePersonalDetails = function() {
             var handleResponse = function (response) {
                 if (response.failure) {
@@ -56,6 +64,11 @@ personalInformationAppControllers.controller('piEditPersonalDetailsController',[
         $scope.getMaritalStatuses = piCrudService.getListFn('MaritalStatus');
         $scope.getGenders = piCrudService.getListFn('Gender');
         $scope.getPronouns = piCrudService.getListFn('Pronoun');
+
+        $scope.htmlDecode = function (string) {
+            var doc = new DOMParser().parseFromString(string, "text/html");
+            return doc.documentElement.textContent;
+        };
 
         this.init = function() {
             $scope.personalDetails = angular.copy($scope.personalDetails);

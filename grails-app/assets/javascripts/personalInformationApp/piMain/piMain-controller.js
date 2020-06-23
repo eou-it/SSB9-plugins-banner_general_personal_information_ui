@@ -320,8 +320,8 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
 
         // CONTROLLER CONSTANTS
         // --------------------
-        $scope.SECTION_HIDDEN = '0';
-        $scope.SECTION_UPDATEABLE = '2';
+        $scope.SECTION_HIDDEN = 0;
+        $scope.SECTION_UPDATEABLE = 2;
 
 
         // CONTROLLER VARIABLES
@@ -367,11 +367,19 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             notificationCenterService.clearNotifications();
         };
 
-        var localeLang = $('meta[name=locale]').attr("content").split('-')[0];
+        $scope.isFieldViewable = function(configValue){
+            return configValue === 1 || configValue === 2
+        };
+
+        $scope.isFieldUpdatable = function(configValue) {
+            return configValue === 2
+        };
+
+        var locale = $('meta[name=locale]').attr("content");
         $scope.stringToDate = function(date) {
             var result = personalInformationService.stringToDate(date);
 
-            if(result && localeLang === 'ar') {
+            if(result && locale.split('-')[0] === 'ar') {
                 return result.toLocaleDateString('ar-SA-u-nu-latn-ca-islamic', {year: 'numeric', month: 'long', day: 'numeric'});
             }
             else {

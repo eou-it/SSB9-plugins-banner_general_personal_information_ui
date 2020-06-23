@@ -1,5 +1,5 @@
 /********************************************************************************
-  Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+  Copyright 2016-2020 Ellucian Company L.P. and its affiliates.
 ********************************************************************************/
 /* General Styles */
 body {
@@ -303,6 +303,10 @@ input:disabled {
     background: #EFF4F8
 }
 
+.pi-background-color {
+    background: #EFF4F8
+}
+
 .dd-notification-box {
     display: table;
     margin-bottom: 12px;
@@ -422,6 +426,10 @@ a.pi-icon-link:focus {
     margin-bottom: 1px;
 }
 
+.full-width {
+    width: 100%;
+}
+
 
 /* Overrides for xe-ui-components.css/_select.scss */
 .select2-results .select2-highlighted {
@@ -434,7 +442,7 @@ a.pi-icon-link:focus {
 /* END Overrides for xe-ui-components.css/_select.scss */
 
 .select2-container {
-    height: 48px;
+    height: 46px;
     width: 100%;
     margin-bottom: 0px;
 }
@@ -684,9 +692,10 @@ input.hasMultiCalendarPicker.pi-date-input::-ms-clear {
     font-weight: normal;
 }
 
-.text-input-field {
+#email-cmnt {
     border-radius: 4px;
     width: 100%;
+    resize: none;
 }
 
 input.hasMultiCalendarPicker.pi-date-input {
@@ -1749,6 +1758,7 @@ div.dir-profile {
 
 .dir-profile .row {
     padding: 3px 0;
+    word-wrap: break-word;
 }
 
 .dir-profile .shaded {
@@ -1814,6 +1824,7 @@ div.dir-profile {
     }
 }
 
+/*Mobile device*/
 @media screen and (max-width:767px) {
     .edit-flex-div {
         display: inline;
@@ -1872,7 +1883,7 @@ div.dir-profile {
         font-size: 24px;
         padding: 1em 1em 0.75em;
     }
-    
+
     button.closebtn {
         padding: 2.35em;
     }

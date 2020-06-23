@@ -38,8 +38,26 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
                     zip: address.zip
                 };
             },
-            isValidAddress = function (address) {
-                address = getNullSafeAddress(address);
+            getSaveSafeAddress = function(address) {
+                return {
+                    id: address.id,
+                    county: address.county ? (address.county.code ? address.county : null) : null,
+                    state: address.state ? (address.state.code ? address.state : null) : null,
+                    nation: address.nation ? (address.nation.code ? address.nation : null) : null,
+                    addressType: address.addressType ? address.addressType : {},
+                    city: address.city,
+                    fromDate: address.fromDate,
+                    toDate: address.toDate,
+                    houseNumber: address.houseNumber,
+                    streetLine1: address.streetLine1,
+                    streetLine2: address.streetLine2,
+                    streetLine3: address.streetLine3,
+                    streetLine4: address.streetLine4,
+                    zip: address.zip
+                };
+            },
+            isValidAddress = function (scopeAddress) {
+                var address = getNullSafeAddress(angular.copy(scopeAddress));
 
                 $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
                 $scope.fromDateErrMsg = piAddressService.getErrorFromDate(address);
@@ -62,7 +80,7 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
         };
 
         $scope.removeAddressFieldErrors = function() {
-            var address = getNullSafeAddress($scope.address);
+            var address = getNullSafeAddress(angular.copy($scope.address));
 
             if($scope.addressTypeErrMsg) {
                 $scope.addressTypeErrMsg = piAddressService.getErrorAddressType(address);
@@ -96,7 +114,9 @@ personalInformationAppControllers.controller('piEditAddressController',['$scope'
 
         $scope.saveAddress = function() {
             if(isValidAddress($scope.address)) {
-                var addressToSave = angular.copy($scope.address);
+                var copiedAddress = angular.copy($scope.address),
+                    addressToSave = _.extend(copiedAddress, getSaveSafeAddress(copiedAddress));
+
                 addressToSave.fromDate = personalInformationService.stringToDate($scope.address.fromDate);
                 addressToSave.toDate = personalInformationService.stringToDate($scope.address.toDate);
 

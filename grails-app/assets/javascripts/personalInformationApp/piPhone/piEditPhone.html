@@ -43,7 +43,7 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 </label><br>
                 <div>
                     <input ng-model="phone.internationalAccess" ng-blur="intlAccessFocused=false; removePhoneFieldErrors()" ng-focus="intlAccessFocused=true"
-                       ng-class="[(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-error' : null)]" class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text"
+                       ng-class="[(!!phoneNumberErrMsg && !intlAccessFocused ? 'input-field-error' : null)]" class="text-input-field gssb-eds-text-field semi-bold form-spacing full-width" type="text"
                        placeholder="{{'personInfo.placeholder.intlAccess'|i18n}}" maxlength="16" id="intlAccess">
                 </div>
                 <p class="input-field-label" ng-class="[(!!phoneNumberErrMsg ? 'field-error error-font-size' : 'no-display')]"

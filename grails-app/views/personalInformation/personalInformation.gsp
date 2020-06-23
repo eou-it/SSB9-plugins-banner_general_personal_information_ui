@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.context.i18n.LocaleContextHolder" %>
 %{--*******************************************************************************
 Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 *******************************************************************************--}%
@@ -18,7 +19,7 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 
     </script>
     <g:applyLayout name="bannerSelfServicePage">
-        <meta name="locale" content="${request.locale.toLanguageTag()}" >
+        <meta name="locale" content="${LocaleContextHolder.getLocale()}" >
         <meta name="menuEndPoint" content="${request.contextPath}/ssb/menu"/>
         <meta name="menuBaseURL" content="${request.contextPath}/ssb"/>
         <meta name="menuBase" content="${request.contextPath}"/>
@@ -42,9 +43,8 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
     <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
 
-    <script type="text/javascript">
-        <g:i18n_setup/>
-    </script>
+    <g:bannerMessages/>
+
     <script type="text/javascript">
         // Track calling page for breadcrumbs
         (function () {
@@ -77,7 +77,7 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
 <body>
 
 <div class="body-overlay"></div>
-<div id="content" ng-app="personalInformationApp" class="container-fluid" aria-relevant="additions" role="main">
+<div id="content" ng-app="personalInformationApp" class="container-fluid pi-background-color" aria-relevant="additions" role="main">
     <div ui-view></div>
 </div>
 </body>

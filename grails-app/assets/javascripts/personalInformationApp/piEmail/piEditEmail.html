@@ -22,7 +22,7 @@ Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
                 </label><br>
                 <input ng-model="email.emailAddress" ng-blur="emailAddrFocused=false; removeEmailFieldErrors()" ng-focus="emailAddrFocused=true"
                        ng-class="[(!!emailAddressErrMsg && !emailAddrFocused ? 'input-field-error' : null)]"
-                       class="text-input-field gssb-eds-text-field semi-bold form-spacing" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
+                       class="text-input-field gssb-eds-text-field semi-bold form-spacing full-width" type="text" placeholder="{{'personInfo.placeholder.enterEmail'|i18n}}"
                        maxlength="128" id="emailAddr" dir="ltr">
                 <p class="input-field-label mobile-errors" ng-class="[(!!emailAddressErrMsg ? 'field-error error-font-size' : 'no-display')]"
                    role="alert" aria-live="assertive">{{emailAddressErrMsg|i18n}}</p>

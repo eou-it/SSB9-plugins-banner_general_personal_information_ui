@@ -4,6 +4,7 @@
 package net.hedtech.banner.general
 
 import grails.gorm.transactions.Transactional
+import grails.util.Holders
 import net.hedtech.banner.general.overall.IntegrationConfiguration
 import net.hedtech.banner.general.person.PersonUtility
 import org.springframework.transaction.annotation.Propagation
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Propagation
 //TODO: check. removing required as it raises occasional compilation issues. Requred is default so maybe not needed
 @Transactional(readOnly = false)
 abstract class BasePersonConfigService {
-    
+
     protected abstract String getCacheName();
 
     protected abstract String getProcessCode();
@@ -23,11 +24,15 @@ abstract class BasePersonConfigService {
     def getParamFromSession(param, defaultVal) {
         def personalInfoConfig = getPersonConfigFromSession(getCacheName(), getProcessCode(), getExcludedProperties())
 
-        def paramVal = personalInfoConfig[param]
+        def paramVal = personalInfoConfig[param] ? personalInfoConfig[param] : Holders?.config?.get(param) //If there is no param from GORICCR, get the param from GUROCFG.
 
-        if (!paramVal) {
+        if (getExcludedProperties().contains(param)){
+            paramVal = null //Should not work with excluded properties.
+        }
+
+        if (paramVal != 0 && !paramVal) {
             log.error("No value found for integration configuration setting \"" + param + "\". " +
-                    "This should be configured in GORICCR. Using default value of \"" + defaultVal + "\".")
+                    "This should be configured in GORICCR or GUROCFG. Using default value of \"" + defaultVal + "\".")
 
             paramVal = defaultVal
         }
