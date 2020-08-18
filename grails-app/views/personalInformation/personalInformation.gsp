@@ -1,6 +1,6 @@
 <%@ page import="org.springframework.context.i18n.LocaleContextHolder" %>
 %{--*******************************************************************************
-Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************--}%
 <!DOCTYPE html>
 <!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="personalInformationApp" id="ng-app" class="ie9"> <![endif]-->
@@ -28,15 +28,14 @@ Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
         <meta name="applicationContextRoot" content="${applicationContextRoot}">
 
         <g:if test="${message(code: 'default.language.direction')  == 'rtl'}">
-            <asset:stylesheet src="modules/pi-applicationRTL-mf.css"/>
             <asset:stylesheet src="modules/personalInformationAppRTL-mf.css"/>
         </g:if>
         <g:else>
-            <asset:stylesheet src="modules/pi-applicationLTR-mf.css"/>
             <asset:stylesheet src="modules/personalInformationAppLTR-mf.css"/>
         </g:else>
 
         <asset:javascript src="modules/pi-application-mf.js"/>
+        <g:theme/>
 
     </g:applyLayout>
 

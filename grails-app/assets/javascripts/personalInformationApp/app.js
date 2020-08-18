@@ -73,9 +73,9 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/personalInformationMain.html',
                 controller: 'piMainController',
                 resolve: {
-                    piConfigResolve: function (piCrudService) {
+                    piConfigResolve: ['piCrudService', function (piCrudService) {
                         return piCrudService.get('PiConfig').$promise;
-                    }
+                    }]
                 },
                 data: {
                     breadcrumbs: []
@@ -90,9 +90,9 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                 templateUrl: webAppResourcePathString + '/personalInformationApp/piMain/piMobileFullView.html',
                 controller: 'piMainController',
                 resolve: {
-                    piConfigResolve: function (piCrudService) {
+                    piConfigResolve: ['piCrudService', function (piCrudService) {
                         return piCrudService.get('PiConfig').$promise;
-                    }
+                    }]
                 },
                 data: {
                     breadcrumbs: []
@@ -120,7 +120,7 @@ personalInformationApp.config(['$httpProvider',
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         $httpProvider.defaults.cache = false;
         $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
-        $httpProvider.interceptors.push(function ($q, $window,$rootScope) {
+        $httpProvider.interceptors.push(['$q', '$window','$rootScope', function ($q, $window,$rootScope) {
             $rootScope.ActiveAjaxConectionsWithouthNotifications = 0;
             var checker = function(parameters,status){
                 //YOU CAN USE parameters.url TO IGNORE SOME URL
@@ -160,7 +160,7 @@ personalInformationApp.config(['$httpProvider',
                     return $q.reject(rejection);
                 }
             };
-        });
+        }]);
     }
 ]);
 
