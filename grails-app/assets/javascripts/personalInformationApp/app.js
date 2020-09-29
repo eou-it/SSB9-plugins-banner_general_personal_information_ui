@@ -184,9 +184,6 @@ personalInformationApp.config(['$httpProvider',
                 },
                 'responseError': function(rejection) {
                     checker(rejection.config,"response");
-                    if (rejection.status === 403) {
-                        window.location.href = '/login/denied';
-                    }
                     return $q.reject(rejection);
                 }
             };
