@@ -1,0 +1,136 @@
+<!--*******************************************************************************
+Copyright 2020 Ellucian Company L.P. and its affiliates.
+********************************************************************************-->
+<div class="answer-survey-container" xe-section="answerSurveySection" xe-dynamic>
+    <div class="answer-survey-header">
+        <h1 xe-field="surveyHeader">{{'personInfo.label.answerSurvey' | i18n}}</h1>
+    </div>
+    <hr role="presentation"/>
+
+    <div class="info-header" ng-if="error">
+        <div class="survey-info-text" ng-bind="error"></div>
+    </div>
+
+    <div ng-if="!error">
+        <div class="info-header" xe-section="instructions-section">
+            <div class="question-info-text" xe-field="instructions">
+                    <p ng-repeat="infoText in infoTexts">{{infoText}}</p>
+            </div>
+        </div>
+
+        <div class="row select-survey-section" xe-section="selectSurveySection">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" xe-field="surveyDropdown">
+                <label id="surveyLabel" class="surveyLabel">{{'personInfo.answerSurvey.survey.title' |
+                    i18n}}</label>
+                <xe-ui-select id="surveyList" ng-model="selectedSurvey.selected" tabindex="0"
+                              on-select="fetchQuesAnswers()" theme="select2"
+                              text-selected="surveyTitle" title="{{$select.selected.surveyTitle}}">
+                    <xe-ui-select-match
+                            placeholder="{{'personInfo.answerSurvey.survey.placeholder.text'|i18n}}">
+                        <span ng-bind-html="$select.selected.surveyTitle"></span>
+                    </xe-ui-select-match>
+                    <xe-ui-select-choices repeat="survey in surveys | propsFilter: {surveyTitle: $select.search}">
+                        <div ng-bind-html="survey.surveyTitle | highlight: $select.search"></div>
+                    </xe-ui-select-choices>
+                </xe-ui-select>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12" xe-section="infoHeaderText">
+                <div class="info-header" ng-if="selectedSurvey.selected.surveyInfo">
+                    <div class="survey-info-text" ng-bind="selectedSurvey.selected.surveyInfo"></div>
+                </div>
+            </div>
+        </div>
+        <hr role="presentation"/>
+
+        <div xe-dynamic class="ques-ans-section" xe-section="quesAnswerSection" ng-if="questionDetails">
+            <section class="ques-content-section" xe-section="questionSection">
+                <header class="ques-section-header">
+                    <h2 xe-field="questionHeader">{{selectedSurvey.selected.surveyTitle}}</h2>
+                </header>
+                <div class="ques-section-body">
+                    <div aria-live="assertive" aria-atomic="true">
+                        <a xe-field="return-to-beginning" class="return-to-beginning" tabindex="0" role="link"
+                           ng-keypress="saveSurveyResponse($event, 6)"
+                           aria-label="{{questionIndex}}, {{'personInfo.answerSurvey.survey.questions.button.returnToBeginning' | i18n}}"
+                           ng-click="saveSurveyResponse($event, 6)" title="{{'personInfo.answerSurvey.survey.questions.button.returnToBeginning' | i18n}}"
+                           ng-disabled="hidePrevious"
+                           aria-disabled="{{hidePrevious}}"
+                           ng-bind="questionIndex"></a>
+                        <div xe-field="question-text" class="question-text">
+                            <p ng-bind="questionText"></p>
+                        </div>
+                    </div>
+
+                    <div xe-section="response-section" class="response-section" ng-repeat="response in questionDetails.responseList">
+                        <div ng-if="questionDetails.multiResponseInd == 'Y'">
+                            <xe-checkbox xe-name="{{response.name}}"
+                                         xe-id="{{response.name}}{{$index}}"
+                                         xe-label="{{response.responseText}}"
+                                         xe-field="{{response.name}}"
+                                         xe-value="{{response.value}}"
+                                         xe-model="response.checked"
+                                         xe-disabled="false"></xe-checkbox>
+                        </div>
+                        <div ng-if="questionDetails.multiResponseInd == 'N'">
+                            <xe-radio-button xe-name="{{response.name}}"
+                                             ng-value="response.value"
+                                             xe-label="{{response.responseText}}"
+                                             ng-model="questionDetails.radioValue"
+                                             xe-field="{{response.name}}{{$index}}"
+                                             xe-id="{{response.name}}{{$index}}"></xe-radio-button>
+                        </div>
+                    </div>
+                    <div xe-dynamic xe-section="comments-section" ng-if="questionDetails.allowComments == 'Y'">
+                        <xe-text-area ng-model="questionDetails.comment"
+                                      xe-name="{{questionDetails.commentName}}"
+                                      xe-label="questionDetails.commentsLabel"
+                                      xe-field="comments"
+                                      xe-char-counter="2000">
+                        </xe-text-area>
+                    </div>
+                    <div xe-section="buttons-section" class="buttons-section clearfix">
+                        <span class="survey-buttons">
+                            <xe-button role="button" xe-field="previousBtn" xe-type="secondary"
+                                       xe-label="{{'personInfo.answerSurvey.survey.questions.button.previous' | i18n}}"
+                                       xe-aria-label="{{'personInfo.answerSurvey.survey.questions.button.previous' | i18n}}"
+                                       ng-click="saveSurveyResponse($event, 1)"
+                                       ng-keypress="saveSurveyResponse($event, 1)"
+                                       xe-disabled="hidePrevious"
+                                       aria-disabled="{{hidePrevious}}" tabindex="0"></xe-button>
+                        </span>
+                        <span class="survey-buttons">
+                            <xe-button role="button" xe-field="nextBtn" xe-type="secondary"
+                                       xe-label="{{'personInfo.answerSurvey.survey.questions.button.next' | i18n}}"
+                                       xe-aria-label="{{'personInfo.answerSurvey.survey.questions.button.next' | i18n}}"
+                                       ng-click="saveSurveyResponse($event, 2)"
+                                       ng-keypress="saveSurveyResponse($event, 2)"
+                                       xe-disabled="hideNext"
+                                       aria-disabled="{{hideNext}}" tabindex="0"></xe-button>
+                        </span>
+                        <span class="survey-buttons">
+                            <xe-button role="button" xe-field="finishLaterBtn" xe-type="secondary"
+                                       xe-label="{{'personInfo.answerSurvey.survey.questions.button.finishLater' | i18n}}"
+                                       xe-aria-label="{{'personInfo.answerSurvey.survey.questions.button.finishLater' | i18n}}"
+                                       ng-click="saveSurveyResponse($event, 3)"
+                                       ng-keypress="saveSurveyResponse($event, 3)"
+                                       tabindex="0"></xe-button>
+                        </span>
+                        <span class="survey-buttons">
+                            <xe-button role="button" xe-field="surveyCompleteBtn" xe-type="primary"
+                                       xe-label="{{'personInfo.answerSurvey.survey.questions.button.surveyComplete' | i18n}}"
+                                       xe-aria-label="{{'personInfo.answerSurvey.survey.questions.button.surveyComplete' | i18n}}"
+                                       ng-click="saveSurveyResponse($event, 4)"
+                                       ng-keypress="saveSurveyResponse($event, 4)"
+                                       tabindex="0"></xe-button>
+                        </span>
+                        <span class="remove-survey">
+                            <a role="link" xe-field="removeSurveyLink" tabindex="0"
+                               ng-click="saveSurveyResponse($event, 5)"
+                               ng-keypress="saveSurveyResponse($event, 5)">{{'personInfo.answerSurvey.survey.questions.button.removeSurveyFromList' | i18n}}</a>
+                        </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

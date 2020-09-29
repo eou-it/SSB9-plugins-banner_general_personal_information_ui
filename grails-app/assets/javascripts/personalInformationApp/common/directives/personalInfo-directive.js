@@ -103,6 +103,20 @@ personalInformationAppDirectives.directive('dropdownHelper', [function () {
     };
 }]);
 
+personalInformationAppDirectives.directive('xeCheckbox', function () {
+    return {
+        restrict: "E",
+        compile: function () {
+            return {
+                post: function (scope, elem) {
+                    elem.attr('aria-live', null);
+                }
+            };
+        }
+    };
+});
+
+
 personalInformationAppDirectives.directive('menuControls', [function () {
     var PREV = -1, NEXT = 1;
 
