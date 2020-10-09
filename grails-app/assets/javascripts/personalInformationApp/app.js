@@ -1,11 +1,11 @@
 /*******************************************************************************
- Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 var personalInformationAppControllers = angular.module('personalInformationAppControllers', []);
 var personalInformationAppDirectives = angular.module('personalInformationAppDirectives', []);
 
 
-var personalInformationApp = angular.module('personalInformationApp', ['ngResource','ui.router','personalInformationAppControllers',
+var personalInformationApp = angular.module('personalInformationApp', ['extensibility','ngResource','ui.router','personalInformationAppControllers',
     'personalInformationAppDirectives','ui.bootstrap','I18n','datePickerApp', 'xe-ui-components', 'ui.select'])
     .run(
     ['$rootScope', '$state', '$stateParams', '$filter', 'breadcrumbService', 'notificationCenterService',
@@ -17,8 +17,18 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $state.previous = fromState;
                 $state.previousParams = fromParams;
+                if(toState.name === 'answerSurvey'){
+                    sessionStorage.setItem('personalInfoCallingPage', true);
+                    sessionStorage.removeItem('answerSurveyMessage');
+                }
                 breadcrumbService.setBreadcrumbs(toState.data.breadcrumbs);
                 breadcrumbService.refreshBreadcrumbs();
+                sessionStorage.removeItem('personalInfoCallingPage');
+                let answerSurveyMessage = sessionStorage.getItem('answerSurveyMessage');
+                if(answerSurveyMessage){
+                    notificationCenterService.displayNotification(answerSurveyMessage, $rootScope.notificationSuccessType, $rootScope.flashNotification);
+                    sessionStorage.removeItem('answerSurveyMessage');
+                }
             });
             $rootScope.$on('$viewContentLoaded', function () {
             });
@@ -54,7 +64,13 @@ var personalInformationApp = angular.module('personalInformationApp', ['ngResour
 
 //personalInformationApp.constant('webAppResourcePathString', '../plugins/banner-general-personal-information-ui-0.1');
 personalInformationApp.constant('webAppResourcePathString', '../assets');
-
+personalInformationApp.constant('answer_survey_constants', {
+    'PREVIOUS_QUESTION':'Previous',
+    'NEXT_QUESTION': 'Next',
+    'FINISH_LATER': 'Finish Later',
+    'SURVEY_COMPLETE': 'Survey Complete',
+    'REMOVE_SURVEY': 'Remove Survey from List',
+    'RETURN_TO_BEGINNING': 'Return to Beginning of Survey'});
 
 personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppResourcePathString',
     function($stateProvider, $urlRouterProvider, webAppResourcePathString){
@@ -101,7 +117,20 @@ personalInformationApp.config(['$stateProvider', '$urlRouterProvider', 'webAppRe
                     onLoadNotifications: [],
                     startingTab: ''
                 }
-            });
+            })
+            .state('answerSurvey', {
+                url: "/answerSurvey",
+                templateUrl: webAppResourcePathString + '/personalInformationApp/piAnswerSurvey/piAnswerSurvey.html',
+                controller: 'piAnswerSurveyController',
+                data: {
+                    breadcrumbs: [{label: 'personInfo.label.answerSurvey'}]
+                },
+                params: {
+                    onLoadNotifications: [],
+                    startingTab: ''
+                }
+            })
+        ;
     }
 ]);
 
@@ -120,8 +149,9 @@ personalInformationApp.config(['$httpProvider',
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         $httpProvider.defaults.cache = false;
         $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
-        $httpProvider.interceptors.push(['$q', '$window','$rootScope', function ($q, $window,$rootScope) {
+        $httpProvider.interceptors.push(['$q', '$window','$rootScope', function ($q, $window, $rootScope) {
             $rootScope.ActiveAjaxConectionsWithouthNotifications = 0;
+
             var checker = function(parameters,status){
                 //YOU CAN USE parameters.url TO IGNORE SOME URL
                 if(status === "request"){

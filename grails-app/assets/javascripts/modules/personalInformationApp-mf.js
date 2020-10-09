@@ -28,3 +28,5 @@
 //= require /personalInformationApp/common/directives/piPopover-directive.js
 //= require /personalInformationApp/piEmail/piEmail-directive.js
 //= require /personalInformationApp/piAdditionalDetails/piAdditionalDetails-directive.js
+//= require /personalInformationApp/piAnswerSurvey/piAnswerSurvey-controller.js
+//= require /personalInformationApp/common/services/answerSurvey-service.js

@@ -18,7 +18,7 @@ Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
         var url = '${url}'
 
     </script>
-    <g:applyLayout name="bannerSelfServicePage">
+    <g:applyLayout name="bannerWebPage">
         <meta name="locale" content="${LocaleContextHolder.getLocale()}" >
         <meta name="menuEndPoint" content="${request.contextPath}/ssb/menu"/>
         <meta name="menuBaseURL" content="${request.contextPath}/ssb"/>
