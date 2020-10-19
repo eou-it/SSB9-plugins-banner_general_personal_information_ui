@@ -162,6 +162,9 @@ personalInformationAppControllers.controller('piAnswerSurveyController', ['$scop
                 formDirty = false;
                 if (response.questionDetails && response.questionDetails.length > 0) {
                     setQuestionDetailsToScope(response);
+                    $timeout(function() {
+                        $('.return-to-beginning').focus();
+                    }, 100);
                 } else {
                     sessionStorage.setItem('answerSurveyMessage', response.message);
                     window.location = $rootScope.applicationContextRoot + '/ssb/personalInformation';
@@ -179,9 +182,6 @@ personalInformationAppControllers.controller('piAnswerSurveyController', ['$scop
             $scope.commentLabel = $scope.questionDetails.commentsLabel || $.i18n.prop('personInfo.answerSurvey.survey.comment.label');
             $scope.hidePrevious = parseInt($scope.questionNumber) === 1;
             $scope.hideNext = parseInt($scope.questionNumber) === $scope.totalQuestions;
-            $timeout(function() {
-                $('.return-to-beginning').focus();
-            }, 100);
         };
 
         this.init = function () {
