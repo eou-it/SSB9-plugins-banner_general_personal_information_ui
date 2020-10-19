@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2020 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
@@ -79,6 +79,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         assertTrue personalInfoConfig.isOverviewPhoneDisplayable
         assertTrue personalInfoConfig.isOverviewEmailDisplayable
         assertTrue personalInfoConfig.isDirectoryProfileDisplayable
+        assertTrue personalInfoConfig.isAnswerSurveyDisplayable
         assertTrue personalInfoConfig.isVetClassificationDisplayable
         assertTrue personalInfoConfig.isSecurityQandADisplayable
         assertTrue personalInfoConfig.isPasswordChangeDisplayable
@@ -111,6 +112,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         Holders?.config?.'personalInfo.enableDirectoryProfile' = 0
         Holders?.config?.'personalInfo.enableSecurityQaChange' = 1
         Holders?.config?.'personalInfo.enablePasswordChange' = 0
+        Holders?.config?.'personalInfo.enableAnswerSurvey' = 0
         def configurations = personalInformationConfigService.getUpdatedPersonalInformationConfigurations([:])
         configurations = personalInformationConfigService.getOtherSectionConfigurations(configurations, 1)
         assertTrue configurations.isSecurityQandADisplayable
@@ -122,6 +124,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         Holders?.config?.'personalInfo.enableDirectoryProfile' = 0
         Holders?.config?.'personalInfo.enableSecurityQaChange' = 0
         Holders?.config?.'personalInfo.enablePasswordChange' = 0
+        Holders?.config?.'personalInfo.enableAnswerSurvey' = 0
         def configurations = personalInformationConfigService.getUpdatedPersonalInformationConfigurations([:])
         configurations = personalInformationConfigService.getOtherSectionConfigurations(configurations, 0)
         assertFalse configurations.isSecurityQandADisplayable
@@ -209,6 +212,7 @@ class PersonalInformationConfigServiceTests extends BaseIntegrationTestCase {
         Holders?.config?.'personalInfo.overview.displayOverviewPhone' = 1
         Holders?.config?.'personalInfo.overview.displayOverviewEmail' = 1
         Holders?.config?.'personalInfo.enableDirectoryProfile' = 1
+        Holders?.config?.'personalInfo.enableAnswerSurvey' = 1
         Holders?.config?.'personalInfo.additionalDetails.veteranClassificationMode' = 2
         Holders?.config?.'personalInfo.additionalDetails.disabilityStatusMode' = 2
         Holders?.config?.'personalInfo.additionalDetails.ethnicityRaceMode' = 2

@@ -1,5 +1,5 @@
 /******************************************************************************
-Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
 *******************************************************************************/
 
 package net.hedtech.banner.general
@@ -1627,6 +1627,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertTrue data.isSecurityQandADisplayable
         assertTrue data.isPasswordChangeDisplayable
         assertTrue data.isDisabilityStatusDisplayable
+        assertTrue data.isAnswerSurveyDisplayable
         assertEquals 2, data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
         assertEquals 2, data.maritalStatusMode
@@ -1663,6 +1664,7 @@ class PersonalInformationDetailsControllerTests extends BaseIntegrationTestCase 
         assertFalse data.isSecurityQandADisplayable
         assertTrue data.isPasswordChangeDisplayable
         assertTrue data.isDisabilityStatusDisplayable
+        assertTrue data.isAnswerSurveyDisplayable
         assertEquals 2, data.additionalDetailsSectionMode
         assertTrue data.otherSectionMode
         assertEquals 2, data.maritalStatusMode

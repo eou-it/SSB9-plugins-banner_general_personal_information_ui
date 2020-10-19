@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2016-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2020 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 package net.hedtech.banner.general
 
@@ -47,6 +47,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
     static final Integer SECTION_UPDATEABLE = 2
     static final String YES = 'Y'
     static final String NO = 'N'
+    static final String ANSWER_SURVEY = 'personalInfo.enableAnswerSurvey'
 
     HashMap<String, Integer> fieldDisplayConfigurations = createFieldDisplayConfigurations()
 
@@ -127,6 +128,7 @@ class PersonalInformationConfigService extends BasePersonConfigService {
         model.isVetClassificationDisplayable = isFieldDisplayable(model.veteranClassificationMode)
         model.isSecurityQandADisplayable = isFieldEnabled(getConfigurationFromDatabase(SECURITY_QA_CHANGE))
         model.isPasswordChangeDisplayable = isFieldEnabled(getConfigurationFromDatabase(PASSWORD_CHANGE))
+        model.isAnswerSurveyDisplayable = isFieldEnabled(getConfigurationFromDatabase(ANSWER_SURVEY))
         model.disabilityStatusMode = getMostRestrictiveAdditionalDetailsSetting(getConfigurationFromDatabase(DISABILITY_STATUS))
         model.isDisabilityStatusDisplayable = isFieldDisplayable(model.disabilityStatusMode)
         model.ethnRaceMode = getMostRestrictiveAdditionalDetailsSetting(getConfigurationFromDatabase(ETHN_RACE_MODE))
@@ -145,7 +147,8 @@ class PersonalInformationConfigService extends BasePersonConfigService {
 
     protected getOtherSectionConfigurations(model, numberOfSecurityQuestions) {
         model.isSecurityQandADisplayable = model.isSecurityQandADisplayable && numberOfSecurityQuestions > 0
-        model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) || (model.isPasswordChangeDisplayable)
+        model.otherSectionMode = (model.isDirectoryProfileDisplayable) || (model.isSecurityQandADisplayable) ||
+                (model.isPasswordChangeDisplayable) || ((model.isAnswerSurveyDisplayable))
         model
     }
 
