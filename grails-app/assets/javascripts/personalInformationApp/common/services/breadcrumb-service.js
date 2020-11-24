@@ -12,7 +12,7 @@ personalInformationApp.service( 'breadcrumbService', ['$filter', '$rootScope', f
         PERSONAL_INFORMATION_PAGE_URL;
 
     $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
-    GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general$');
+    GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general#$');
     PERSONAL_INFORMATION_PAGE_URL = $rootScope.applicationContextRoot  + '/ssb/personalInformation' + '#';
 
     this.reset = function() {
