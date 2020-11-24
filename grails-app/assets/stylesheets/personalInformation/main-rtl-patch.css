@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2017-2019 Ellucian Company L.P. and its affiliates.
+ Copyright 2017-2020 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 /* adjust styling just for rtl page */
 
@@ -9,6 +9,10 @@
 
 .disability-act-text {
     display: inline-block;
+}
+
+.answer-survey-container .return-to-beginning {
+    background: url('../icon-pagination-next.svg') no-repeat center right;
 }
 
 /***********************/

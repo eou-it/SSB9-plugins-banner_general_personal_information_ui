@@ -769,8 +769,9 @@ personalInformationAppControllers.controller('piMainController',['$scope', '$roo
             return $scope.emergencyContacts.length >= MAX_EMERGENCY_CONTACTS;
         };
 
-
-
+        $scope.openSurvey = function() {
+            $state.go('answerSurvey');
+        };
 
         // INITIALIZE
         // ----------
