@@ -14,7 +14,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                 </div>
                 <!-- TODO: update with proper config code when available -->
                 <div ng-if="piConfig.personalDetailsSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditPersonalDetailsModal()" enter-key="openEditPersonalDetailsModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditPersonalDetailsModal()" enter-key="openEditPersonalDetailsModal()" class="add-item-link" tabindex="0" role="button">
                         <span class="icon-edit-CO"></span> <span>{{'personInfo.label.edit'|i18n}}</span>
                     </a>
                 </div>
@@ -28,7 +28,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.emailSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditEmailModal()" enter-key="openEditEmailModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditEmailModal()" enter-key="openEditEmailModal()" class="add-item-link" tabindex="0" role="button">
                         <span class="icon-add-CO"></span> <span>{{'personInfo.label.addNew'|i18n}}</span>
                     </a>
                 </div>
@@ -42,7 +42,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.telephoneSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditPhoneModal()" enter-key="openEditPhoneModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditPhoneModal()" enter-key="openEditPhoneModal()" class="add-item-link" tabindex="0" role="button">
                         <span class="icon-add-CO"></span> <span>{{'personInfo.label.addNew'|i18n}}</span>
                     </a>
                 </div>
@@ -56,7 +56,7 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.addressSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-click="openEditAddressModal()" enter-key="openEditAddressModal()" class="add-item-link" tabindex="0">
+                    <a ng-click="openEditAddressModal()" enter-key="openEditAddressModal()" class="add-item-link" tabindex="0" role="button">
                         <span class="icon-add-CO"></span> <span>{{'personInfo.label.addNew'|i18n}}</span>
                     </a>
                 </div>
@@ -70,11 +70,11 @@ Copyright 2016 Ellucian Company L.P. and its affiliates.
                     <div class="pi-title-divider"><span></span></div>
                 </div>
                 <div ng-if="piConfig.emergencyContactSectionMode === SECTION_UPDATEABLE" class="details-section-edit">
-                    <a ng-if="!hasMaxEmergencyContacts" ng-click="openEditEmergencyContactModal()" enter-key="openEditEmergencyContactModal()" class="add-item-link" tabindex="0">
+                    <a ng-if="!hasMaxEmergencyContacts" ng-click="openEditEmergencyContactModal()" enter-key="openEditEmergencyContactModal()" class="add-item-link" tabindex="0" role="button">
                         <span class="icon-add-CO"></span> <span>{{'personInfo.label.addNew'|i18n}}</span>
                     </a>
                     <a ng-if="hasMaxEmergencyContacts" pi-pop-over popover-msg="personInfo.message.maxEmergencyContacts" popover-position="left" popover-width="220px"
-                       enter-key="togglePopover()" class="add-item-link disabled" aria-disabled="true" tabindex="0">
+                       enter-key="togglePopover()" class="add-item-link disabled" aria-disabled="true" tabindex="0" role="button">
                         <span class="icon-add-CO"></span> <span>{{'personInfo.label.addNew'|i18n}}</span>
                     </a>
 
