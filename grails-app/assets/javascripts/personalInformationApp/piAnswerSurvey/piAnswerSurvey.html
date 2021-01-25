@@ -36,7 +36,7 @@ Copyright 2020 Ellucian Company L.P. and its affiliates.
             </div>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12" xe-section="infoHeaderText">
                 <div class="info-header" ng-if="selectedSurvey.selected.surveyInfo">
-                    <div class="survey-info-text" ng-bind="selectedSurvey.selected.surveyInfo"></div>
+                    <div class="survey-info-text" ng-bind-html="selectedSurvey.selected.surveyInfo"></div>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ Copyright 2020 Ellucian Company L.P. and its affiliates.
                            aria-disabled="{{hidePrevious}}"
                            ng-bind="questionIndex"></a>
                         <div xe-field="question-text" class="question-text">
-                            <p ng-bind="questionText"></p>
+                            <p ng-bind-html="questionText"></p>
                         </div>
                     </div>
 
