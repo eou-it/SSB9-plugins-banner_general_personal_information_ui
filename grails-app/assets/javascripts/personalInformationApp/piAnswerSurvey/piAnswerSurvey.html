@@ -1,5 +1,5 @@
 <!--*******************************************************************************
-Copyright 2020 Ellucian Company L.P. and its affiliates.
+Copyright 2020-2021 Ellucian Company L.P. and its affiliates.
 ********************************************************************************-->
 <div class="answer-survey-container" xe-section="answerSurveySection" xe-dynamic>
     <div class="answer-survey-header">
@@ -77,7 +77,8 @@ Copyright 2020 Ellucian Company L.P. and its affiliates.
                                              xe-label="{{response.responseText}}"
                                              ng-model="questionDetails.radioValue"
                                              xe-field="{{response.name}}{{$index}}"
-                                             xe-id="{{response.name}}{{$index}}"></xe-radio-button>
+                                             xe-id="{{response.name}}{{$index}}"
+                                             xe-bind-html></xe-radio-button>
                         </div>
                     </div>
                     <div xe-dynamic xe-section="comments-section" ng-if="questionDetails.allowComments == 'Y'">
