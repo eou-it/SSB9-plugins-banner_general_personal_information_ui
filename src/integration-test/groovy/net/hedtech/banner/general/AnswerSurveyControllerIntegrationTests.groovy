@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 package net.hedtech.banner.general
@@ -11,8 +11,6 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 
 @Integration
 @Rollback
@@ -42,7 +40,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchSurveys() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         controller.fetchSurveys()
         def dataForNullCheck = controller.response.contentAsString
@@ -54,7 +52,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchSurveysNoSurveys() {
-        loginSSB('JABS-0001', '111111')
+        loginSSB('ANSY-0001', '111111')
         controller.request.contentType = "text/json"
         controller.fetchSurveys()
         def dataForNullCheck = controller.response.contentAsString
@@ -66,7 +64,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchQuestionAnswers() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
 
         def inputJSON = [
@@ -97,7 +95,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchQuestionAnswersWithSavedResponse() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName: 'REUNION',
@@ -129,7 +127,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchQuestionAnswersWithComments() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName: 'AGE',
@@ -159,7 +157,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testSaveResponsePreviousAction() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName  : "REUNION",
@@ -200,7 +198,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testSaveResponseSurveyCompleteAction() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON =  [
                     "surveyName":"REUNION",
