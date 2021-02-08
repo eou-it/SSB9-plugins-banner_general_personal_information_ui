@@ -82,13 +82,12 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals('qust1', result[0].questionCode)
         assertEquals('N', result[0].multiResponseInd)
         assertEquals(3, result[0].responseList.size())
-        assertEquals(false, result[0].responseList[0].checked)
+        assertNull result[0].radioValue
         assertEquals('rsp11', result[0].responseList[0].name)
-        assertEquals(1, result[0].responseList[0].value)
+        assertEquals('1', result[0].responseList[0].value)
         assertEquals('Yes', result[0].responseList[0].responseText)
-        assertEquals(false, result[0].responseList[1].checked)
         assertEquals('rsp11', result[0].responseList[1].name)
-        assertEquals(2, result[0].responseList[1].value)
+        assertEquals('2', result[0].responseList[1].value)
         assertEquals('No', result[0].responseList[1].responseText)
         assertEquals('N', result[0].allowComments)
     }
@@ -183,13 +182,12 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals('qust1', result[0].questionCode)
         assertEquals('N', result[0].multiResponseInd)
         assertEquals(2, result[0].responseList.size())
-        assertEquals(false, result[0].responseList[0].checked)
+        assertNull result[0].radioValue
         assertEquals('rsp11', result[0].responseList[0].name)
-        assertEquals(1, result[0].responseList[0].value)
+        assertEquals('1', result[0].responseList[0].value)
         assertEquals('Yes', result[0].responseList[0].responseText)
-        assertEquals(false, result[0].responseList[1].checked)
         assertEquals('rsp11', result[0].responseList[1].name)
-        assertEquals(2, result[0].responseList[1].value)
+        assertEquals('2', result[0].responseList[1].value)
         assertEquals('No', result[0].responseList[1].responseText)
         assertEquals('N', result[0].allowComments)
         assertNull result[0].commentName
