@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2016-2018 Ellucian Company L.P. and its affiliates.
+ Copyright 2016-2021 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
 personalInformationAppDirectives.directive('setStartingTab', [function () {
@@ -106,7 +106,9 @@ personalInformationAppDirectives.directive('dropdownHelper', [function () {
 personalInformationAppDirectives.directive('xeCheckbox', function () {
     return {
         restrict: "E",
-        compile: function () {
+        compile: function (elem) {
+            elem.find('label').empty();
+            elem.find('label').attr('ng-bind-html', 'xeLabel');
             return {
                 post: function (scope, elem) {
                     elem.attr('aria-live', null);
@@ -114,8 +116,27 @@ personalInformationAppDirectives.directive('xeCheckbox', function () {
             };
         }
     };
+}).directive('xeRadioButton', function () {
+    return {
+        restrict: "E",
+        compile: function (elem, attrs) {
+            if (attrs.hasOwnProperty('xeBindHtml')) {
+                elem.find('xe-label')[0].setAttribute('xe-bind-html', '');
+            }
+        }
+    }
+}).directive('xeLabel', function() {
+    return {
+        restrict: 'E',
+        compile: function(elem, attrs) {
+            if (attrs.hasOwnProperty('xeBindHtml')) {
+                elem.find('span').removeAttr('ng-bind');
+                elem.find('span').removeAttr('aria-label');
+                elem.find('span').attr('ng-bind-html', 'xeValue');
+            }
+        }
+    };
 });
-
 
 personalInformationAppDirectives.directive('menuControls', [function () {
     var PREV = -1, NEXT = 1;

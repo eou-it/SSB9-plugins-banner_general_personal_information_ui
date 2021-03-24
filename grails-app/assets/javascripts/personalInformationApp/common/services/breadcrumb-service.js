@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2020-2021 Ellucian Company L.P. and its affiliates.
  *******************************************************************************/
 
 personalInformationApp.service( 'breadcrumbService', ['$filter', '$rootScope', function ($filter, $rootScope) {
@@ -12,7 +12,7 @@ personalInformationApp.service( 'breadcrumbService', ['$filter', '$rootScope', f
         PERSONAL_INFORMATION_PAGE_URL;
 
     $rootScope.applicationContextRoot = $('meta[name=applicationContextRoot]').attr("content");
-    GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general$');
+    GEN_LANDING_PAGE_SIGNATURE = new RegExp($rootScope.applicationContextRoot +'/ssb/general#$');
     PERSONAL_INFORMATION_PAGE_URL = $rootScope.applicationContextRoot  + '/ssb/personalInformation' + '#';
 
     this.reset = function() {
@@ -25,7 +25,9 @@ personalInformationApp.service( 'breadcrumbService', ['$filter', '$rootScope', f
             }
         ];
 
-        callingUrl = sessionStorage.getItem('genAppCallingPage') + '#';
+        if (sessionStorage.getItem('genAppCallingPage')){
+            callingUrl = sessionStorage.getItem('genAppCallingPage') + '#';
+        }
 
         if (callingUrl) {
             label = GEN_LANDING_PAGE_SIGNATURE.test(callingUrl) ? 'banner.generalssb.landingpage.title' : 'default.paginate.prev';

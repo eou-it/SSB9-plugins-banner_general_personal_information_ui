@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright 2020 Ellucian Company L.P. and its affiliates.
+ Copyright 2021 Ellucian Company L.P. and its affiliates.
  ********************************************************************************/
 
 package net.hedtech.banner.general
@@ -11,8 +11,6 @@ import net.hedtech.banner.testing.BaseIntegrationTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 
 @Integration
 @Rollback
@@ -42,7 +40,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchSurveys() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         controller.fetchSurveys()
         def dataForNullCheck = controller.response.contentAsString
@@ -54,7 +52,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchSurveysNoSurveys() {
-        loginSSB('JABS-0001', '111111')
+        loginSSB('ANSY-0001', '111111')
         controller.request.contentType = "text/json"
         controller.fetchSurveys()
         def dataForNullCheck = controller.response.contentAsString
@@ -66,7 +64,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchQuestionAnswers() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
 
         def inputJSON = [
@@ -84,20 +82,19 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals('qust1', result[0].questionCode)
         assertEquals('N', result[0].multiResponseInd)
         assertEquals(3, result[0].responseList.size())
-        assertEquals(false, result[0].responseList[0].checked)
+        assertNull result[0].radioValue
         assertEquals('rsp11', result[0].responseList[0].name)
-        assertEquals(1, result[0].responseList[0].value)
+        assertEquals('1', result[0].responseList[0].value)
         assertEquals('Yes', result[0].responseList[0].responseText)
-        assertEquals(false, result[0].responseList[1].checked)
         assertEquals('rsp11', result[0].responseList[1].name)
-        assertEquals(2, result[0].responseList[1].value)
+        assertEquals('2', result[0].responseList[1].value)
         assertEquals('No', result[0].responseList[1].responseText)
         assertEquals('N', result[0].allowComments)
     }
 
     @Test
     void testFetchQuestionAnswersWithSavedResponse() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName: 'REUNION',
@@ -129,7 +126,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testFetchQuestionAnswersWithComments() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName: 'AGE',
@@ -159,7 +156,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testSaveResponsePreviousAction() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON = [
                 surveyName  : "REUNION",
@@ -185,13 +182,12 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
         assertEquals('qust1', result[0].questionCode)
         assertEquals('N', result[0].multiResponseInd)
         assertEquals(2, result[0].responseList.size())
-        assertEquals(false, result[0].responseList[0].checked)
+        assertNull result[0].radioValue
         assertEquals('rsp11', result[0].responseList[0].name)
-        assertEquals(1, result[0].responseList[0].value)
+        assertEquals('1', result[0].responseList[0].value)
         assertEquals('Yes', result[0].responseList[0].responseText)
-        assertEquals(false, result[0].responseList[1].checked)
         assertEquals('rsp11', result[0].responseList[1].name)
-        assertEquals(2, result[0].responseList[1].value)
+        assertEquals('2', result[0].responseList[1].value)
         assertEquals('No', result[0].responseList[1].responseText)
         assertEquals('N', result[0].allowComments)
         assertNull result[0].commentName
@@ -200,7 +196,7 @@ class AnswerSurveyControllerIntegrationTests extends BaseIntegrationTestCase {
 
     @Test
     void testSaveResponseSurveyCompleteAction() {
-        loginSSB('HOSS001', '111111')
+        loginSSB('ANSY-0003', '111111')
         controller.request.contentType = "text/json"
         def inputJSON =  [
                     "surveyName":"REUNION",
